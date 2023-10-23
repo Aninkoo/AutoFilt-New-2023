@@ -188,14 +188,13 @@ Request Again"""
 ○ 𝖲𝗎𝗉𝗉𝗈𝗋𝗍 𝖦𝗋𝗈𝗎𝗉 : <a href='https://t.me/isaiminiprime_support'>𝖳𝖺𝗉 𝖧𝖾𝗋𝖾</a>
 """
 
-    NORSLTS = """
-#NoResults 
+    NORSLTS = """#NoResult
+★ Group Name: {}
+★ Group ID: <code>{}</code>
+★ Name: {}
 
-ID <b>: {}</b>
-
-Name <b>: {}</b>
-
-Message <b>: {}</b>"""
+★ Message: {}
+"""
 
     CAPTION = """
     <b>©️ Main Channel:-  \n<a href=https://t.me/isaimini_updates>❤️ 𝗜𝘀𝗮𝗶𝗺𝗶𝗻𝗶 𝗣𝗿𝗶𝗺𝗲 ❤️</a></b> \n\n<b>FILE : <code>{file_name}</code> \n\nSize : {file_size}</b>"""
