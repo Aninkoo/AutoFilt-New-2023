@@ -188,12 +188,13 @@ Request Again"""
 ○ 𝖲𝗎𝗉𝗉𝗈𝗋𝗍 𝖦𝗋𝗈𝗎𝗉 : <a href='https://t.me/isaiminiprime_support'>𝖳𝖺𝗉 𝖧𝖾𝗋𝖾</a>
 """
 
-    NORSLTS = """#NoResult
-★ Group Name: {}
-★ Group ID: <code>{}</code>
-★ Name: {}
+    NORSLTS = """#NoResults 
 
-★ Message: {}
+ID <b>: {}</b>
+
+Name <b>: {}</b>
+
+Message <b>: {}</b>
 """
 
     CAPTION = """
