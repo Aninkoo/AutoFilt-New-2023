@@ -320,8 +320,6 @@ async def advantage_spoll_choker(bot, query):
         return await query.answer(script.OLD_ALRT_TXT.format(query.from_user.first_name), show_alert=True)
     if int(user) != 0 and query.from_user.id != int(user):
         return await query.answer(script.ALRT_TXT.format(query.from_user.first_name), show_alert=True)
-    if movie_ == "close_spellcheck":
-        return await query.message.delete()
 
     movie = await get_poster(id, id=True)
     search = movie.get('title')
@@ -1623,7 +1621,7 @@ async def advantage_spell_chok(message):
         for movie in movies
     ]
     buttons.append(
-        [InlineKeyboardButton("🚫 ᴄʟᴏsᴇ 🚫", callback_data=f'spol#{reqstr1}#close_spellcheck#{key}')]
+        [InlineKeyboardButton("🚫 ᴄʟᴏsᴇ 🚫", callback_data="close_data")]
     )
     s = await message.reply_photo(
         photo=(SPELL_IMG),
