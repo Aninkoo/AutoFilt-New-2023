@@ -1630,7 +1630,7 @@ async def advantage_spell_chok(client, msg):
     movielist += [(re.sub(r'(\-|\(|\)|_)', '', i, flags=re.IGNORECASE)).strip() for i in gs_parsed]
     movielist = list(dict.fromkeys(movielist))  # removing duplicates
     if not movielist:
-         reqst_gle = mv_rqst.replace(" ", "+")
+        reqst_gle = mv_rqst.replace(" ", "+")
         button = [[
                    InlineKeyboardButton("🔎 𝖦𝗈𝗈𝗀𝗅𝖾", url=f"https://www.google.com/search?q={reqst_gle}")
         ]]
