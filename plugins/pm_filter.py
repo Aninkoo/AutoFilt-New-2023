@@ -315,7 +315,7 @@ async def next_page(bot, query):
 @Client.on_callback_query(filters.regex(r"^spolling"))
 async def advantage_spoll_choker(bot, query):
     _, user, movie_, key = query.data.split('#')
-    movies = temp.SPELL_CHECK.get(key)
+    movies = SPELL_CHECK.get(query.message.reply_to_message.id)
     if not movies:
         return await query.answer(script.OLD_ALRT_TXT.format(query.from_user.first_name), show_alert=True)
     if int(user) != 0 and query.from_user.id != int(user):
@@ -345,7 +345,18 @@ async def advantage_spoll_choker(bot, query):
 @Client.on_callback_query()
 async def cb_handler(client: Client, query: CallbackQuery):
     if query.data == "close_data":
+        try:
+            user = query.message.reply_to_message.from_user.id
+        except:
+            user = query.from_user.id
+        if int(user) != 0 and query.from_user.id != int(user):
+            return await query.answer(f"Hello {query.from_user.first_name},\nThis Is Not For You!", show_alert=True)
+        await query.answer("Closed!")
         await query.message.delete()
+        try:
+            await query.message.reply_to_message.delete()
+        except:
+            pass
     elif query.data == "gfiltersdeleteallconfirm":
         await del_allg(query.message, 'gfilters')
         await query.answer("Done !")
