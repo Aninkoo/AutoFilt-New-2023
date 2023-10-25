@@ -74,7 +74,7 @@ async def give_filter(client, message):
 async def pv_filter(client, message):
     kd = await global_filters(client, message)
     if kd == False:
-        files, n_offset, total = await get_search_results(query.message.text, filter=True)
+        files, n_offset, total = await get_search_results(0, query.message.text, filter=True)
         if int(total) != 0:
                 btn = [[
             InlineKeyboardButton('🎬𝐌Ծ𝐕𝐈Ξ 𝐒ΞΛᏒ𝐂𝐇𝐈И𝐆 𝐆ᏒԾ𝐔Ꭾ 𝐋𝐈И𝐊𝐒🎬', url="https://t.me/isaimini_updates/110")
