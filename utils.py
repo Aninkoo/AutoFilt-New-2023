@@ -436,6 +436,25 @@ def remove_escapes(text: str) -> str:
     return res
 
 
+async def get_verify_status(user_id):
+    verify = await db.get_verify_status(user_id)
+    return verify
+
+async def update_verify_status(user_id, verify_token="", is_verified=False, verified_time=0, link=""):
+    current = await get_verify_status(user_id)
+    current['verify_token'] = verify_token
+    current['is_verified'] = is_verified
+    current['verified_time'] = verified_time
+    current['link'] = link
+    await db.update_verify_status(user_id, current)
+    
+
+async def get_shortlink(url, api, link):
+    shortzy = Shortzy(api_key=api, base_site=url)
+    link = await shortzy.convert(link)
+    return link
+
+
 def humanbytes(size):
     if not size:
         return ""
