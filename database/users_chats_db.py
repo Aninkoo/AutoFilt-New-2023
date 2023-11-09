@@ -10,6 +10,13 @@ class Database:
         self.grp = self.db.groups
 
 
+    default_verify = {
+        'is_verified': False,
+        'verified_time': 0,
+        'verify_token': "",
+        'link': ""
+    }
+
     def new_user(self, id, name):
         return dict(
             id = id,
@@ -18,7 +25,12 @@ class Database:
                 is_banned=False,
                 ban_reason="",
             ),
-        )
+            verify_status=dict(
+                is_verified=False,
+                verified_time="",
+                verify_token="",
+                link=""
+        ))
 
 
     def new_group(self, id, title):
@@ -130,6 +142,18 @@ class Database:
             reason=reason,
             )
         await self.grp.update_one({'id': int(chat)}, {'$set': {'chat_status': chat_status}})
+        
+
+    async def get_verify_status(self, user_id):
+        user = await self.col.find_one({'id':int(user_id)})
+        if user:
+            return user.get('verify_status', self.default_verify)
+        return self.default_verify
+        
+
+    async def update_verify_status(self, user_id, verify):
+        await self.col.update_one({'id': int(user_id)}, {'$set': {'verify_status': verify}})
+
     
 
     async def total_chat_count(self):
