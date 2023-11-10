@@ -1890,6 +1890,7 @@ async def global_filters(client, message, text=False):
                                         #await auto_filter(client, message)
                                         try:
                                             if settings['auto_delete']:
+                                                await asyncio.sleep(300)
                                                 await piroxrk.delete()
                                         except KeyError:
                                             grpid = await active_connection(str(message.from_user.id))
@@ -1943,6 +1944,7 @@ async def global_filters(client, message, text=False):
                                         #await auto_filter(client, message)
                                         try:
                                             if settings['auto_delete']:
+                                                await asyncio.sleep(300)
                                                 await piroxrk.delete()
                                         except KeyError:
                                             grpid = await active_connection(str(message.from_user.id))
@@ -1994,6 +1996,7 @@ async def global_filters(client, message, text=False):
                                     #await auto_filter(client, message)
                                     try:
                                         if settings['auto_delete']:
+                                            await asyncio.sleep(300)
                                             await piroxrk.delete()
                                     except KeyError:
                                         grpid = await active_connection(str(message.from_user.id))
@@ -2046,6 +2049,7 @@ async def global_filters(client, message, text=False):
                                     #await auto_filter(client, message)
                                     try:
                                         if settings['auto_delete']:
+                                            await asyncio.sleep(300)
                                             await piroxrk.delete()
                                     except KeyError:
                                         grpid = await active_connection(str(message.from_user.id))
