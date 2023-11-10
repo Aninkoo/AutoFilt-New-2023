@@ -322,6 +322,247 @@ async def next_page(bot, query):
         pass
     await query.answer()
 
+@Client.on_callback_query(filters.regex(r"^languages"))
+async def languages_cb_handler(client: Client, query: CallbackQuery):
+    _, key, req, offset = query.data.split("#")
+    if int(req) != query.from_user.id:
+        return await query.answer(script.ALRT_TXT.format(query.from_user.first_name), show_alert=True)
+
+    langs = ['english', 'tamil', 'hindi', 'malayalam', 'telugu', 'kannada']
+    btn = [
+        [
+            InlineKeyboardButton(
+                text=lang.title(),
+                callback_data=f"lang_search#{lang}#{key}#{offset}#{req}"
+                ),
+        ]
+        for lang in langs
+    ]
+
+    btn.append([InlineKeyboardButton(text="⪻ ʙᴀᴄᴋ ᴛᴏ ᴍᴀɪɴ ᴘᴀɢᴇ", callback_data=f"next_{req}_{key}_{offset}")])
+    await query.message.edit_text("<b>ɪɴ ᴡʜɪᴄʜ ʟᴀɴɢᴜᴀɢᴇ ᴅᴏ ʏᴏᴜ ᴡᴀɴᴛ, sᴇʟᴇᴄᴛ ʜᴇʀᴇ</b>", disable_web_page_preview=True, reply_markup=InlineKeyboardMarkup(btn))
+
+@Client.on_callback_query(filters.regex(r"^lang_search"))
+async def filter_languages_cb_handler(client: Client, query: CallbackQuery):
+    _, lang, key, offset, req = query.data.split("#")
+    if int(req) != query.from_user.id:
+        return await query.answer(script.ALRT_TXT.format(query.from_user.first_name), show_alert=True)
+        
+    search = BUTTONS.get(key)
+    cap = CAP.get(key)
+    if not search:
+        await query.answer(script.OLD_ALRT_TXT.format(query.from_user.first_name),show_alert=True)
+        return 
+
+    files, l_offset, total_results = await get_search_results(query.message.chat.id, search, filter=True, lang=lang)
+    if not files:
+        await query.answer(f"sᴏʀʀʏ '{lang.title()}' ʟᴀɴɢᴜᴀɢᴇ ꜰɪʟᴇs ɴᴏᴛ ꜰᴏᴜɴᴅ 😕", show_alert=1)
+        return
+    settings = await get_settings(query.message.chat.id)
+    pre = 'filep' if settings['file_secure'] else 'file'
+    temp.FILES[key] = files
+    if settings['button']:
+        btn = [
+            [
+                InlineKeyboardButton(
+                   text=f"📂{get_size(file.file_size)} 🎥{file.file_name}", callback_data=f'{pre}#{file.file_id}'
+                ),
+            ]
+            for file in files
+        ]
+    else:
+        btn = [
+            [
+                InlineKeyboardButton(
+                    text=f"{file.file_name}", callback_data=f'{pre}#{file.file_id}'
+                ),
+                InlineKeyboardButton(
+                    text=f"{get_size(file.file_size)}",
+                    callback_data=f'{pre}#{file.file_id}',
+                ),
+            ]
+            for file in files
+        ]
+    try:
+        if settings['auto_delete']:
+            btn.insert(0, 
+            [
+                InlineKeyboardButton(f'📟 𝖥𝗂𝗅𝖾𝗌: {len(files)}', 'dupe'),
+                InlineKeyboardButton(f'📮 Info', 'tips'),
+                InlineKeyboardButton(f'🎁 𝖳𝗂𝗉𝗌', 'info')
+            ]
+            )
+
+        else:
+            btn.insert(0, 
+            [
+                InlineKeyboardButton(f'📟 𝖥𝗂𝗅𝖾𝗌: {len(files)}', 'dupe'),
+                InlineKeyboardButton(f'📮 Info', 'tips'),
+                InlineKeyboardButton(f'🎁 𝖳𝗂𝗉𝗌', 'info')
+            ]
+            )
+                
+    except KeyError:
+        grpid = await active_connection(str(query.message.from_user.id))
+        await save_group_settings(grpid, 'auto_delete', True)
+        settings = await get_settings(query.message.chat.id)
+        if settings['auto_delete']:
+            btn.insert(0, 
+            [
+                InlineKeyboardButton(f'📟 𝖥𝗂𝗅𝖾𝗌: {len(files)}', 'dupe'),
+                InlineKeyboardButton(f'📮 Info', 'tips'),
+                InlineKeyboardButton(f'🎁 𝖳𝗂𝗉𝗌', 'info')
+            ]
+            )
+
+        else:
+            btn.insert(0, 
+            [
+                InlineKeyboardButton(f'📟 𝖥𝗂𝗅𝖾𝗌: {len(files)}', 'dupe'),
+                InlineKeyboardButton(f'📮 Info', 'tips'),
+                InlineKeyboardButton(f'🎁 𝖳𝗂𝗉𝗌', 'info')
+            ]
+            )
+     if l_offset != "":
+        btn.append(
+            [InlineKeyboardButton(text=f"ᴘᴀɢᴇs 1 / {math.ceil(int(total_results) / 10)}", callback_data="pages"),
+             InlineKeyboardButton(text="ɴᴇxᴛ »", callback_data=f"lang_next#{req}#{key}#{lang}#{l_offset}#{offset}")]
+        )
+    else:
+        btn.append(
+            [InlineKeyboardButton(text="🚸 ɴᴏ ᴍᴏʀᴇ ᴘᴀɢᴇs 🚸", callback_data="pages")]
+        )
+    btn.append([InlineKeyboardButton(text="⪻ ʙᴀᴄᴋ ᴛᴏ ᴍᴀɪɴ ᴘᴀɢᴇ", callback_data=f"next_{req}_{key}_{offset}")])
+    try:
+        await query.edit_message_reply_markup(
+            reply_markup=InlineKeyboardMarkup(btn)
+        )
+    except MessageNotModified:
+        pass
+    await query.answer()
+
+@Client.on_callback_query(filters.regex(r"^lang_next"))
+async def lang_next_page(bot, query):
+    ident, req, key, lang, l_offset, offset = query.data.split("#")
+    if int(req) != query.from_user.id:
+        return await query.answer(script.ALRT_TXT.format(query.from_user.first_name), show_alert=True)
+
+    try:
+        l_offset = int(l_offset)
+    except:
+        l_offset = 0
+
+    search = BUTTONS.get(key)
+    cap = CAP.get(key)
+    pre = 'filep' if settings['file_secure'] else 'file'
+    settings = await get_settings(query.message.chat.id)
+    if not search:
+        await query.answer(script.OLD_ALRT_TXT.format(query.from_user.first_name),show_alert=True)
+        return 
+
+    files, n_offset, total = await get_search_results(query.message.chat.id, search, filter=True, offset=l_offset, lang=lang)
+    if not files:
+        return
+    temp.FILES[key] = files
+    try:
+        n_offset = int(n_offset)
+    except:
+        n_offset = 0
+    if settings['button']:
+        btn = [
+            [
+                InlineKeyboardButton(
+                   text=f"📂{get_size(file.file_size)} 🎥{file.file_name}", callback_data=f'{pre}#{file.file_id}'
+                ),
+            ]
+            for file in files
+        ]
+    else:
+        btn = [
+            [
+                InlineKeyboardButton(
+                    text=f"{file.file_name}", callback_data=f'{pre}#{file.file_id}'
+                ),
+                InlineKeyboardButton(
+                    text=f"{get_size(file.file_size)}",
+                    callback_data=f'{pre}#{file.file_id}',
+                ),
+            ]
+            for file in files
+        ]
+    try:
+        if settings['auto_delete']:
+            btn.insert(0, 
+            [
+                InlineKeyboardButton(f'📟 𝖥𝗂𝗅𝖾𝗌: {len(files)}', 'dupe'),
+                InlineKeyboardButton(f'📮 Info', 'tips'),
+                InlineKeyboardButton(f'🎁 𝖳𝗂𝗉𝗌', 'info')
+            ]
+            )
+
+        else:
+            btn.insert(0, 
+            [
+                InlineKeyboardButton(f'📟 𝖥𝗂𝗅𝖾𝗌: {len(files)}', 'dupe'),
+                InlineKeyboardButton(f'📮 Info', 'tips'),
+                InlineKeyboardButton(f'🎁 𝖳𝗂𝗉𝗌', 'info')
+            ]
+            )
+                
+    except KeyError:
+        grpid = await active_connection(str(query.message.from_user.id))
+        await save_group_settings(grpid, 'auto_delete', True)
+        settings = await get_settings(query.message.chat.id)
+        if settings['auto_delete']:
+            btn.insert(0, 
+            [
+                InlineKeyboardButton(f'📟 𝖥𝗂𝗅𝖾𝗌: {len(files)}', 'dupe'),
+                InlineKeyboardButton(f'📮 Info', 'tips'),
+                InlineKeyboardButton(f'🎁 𝖳𝗂𝗉𝗌', 'info')
+            ]
+            )
+
+        else:
+            btn.insert(0, 
+            [
+                InlineKeyboardButton(f'📟 𝖥𝗂𝗅𝖾𝗌: {len(files)}', 'dupe'),
+                InlineKeyboardButton(f'📮 Info', 'tips'),
+                InlineKeyboardButton(f'🎁 𝖳𝗂𝗉𝗌', 'info')
+            ]
+            )
+    if 0 < l_offset <= 10:
+        b_offset = 0
+    elif l_offset == 0:
+        b_offset = None
+    else:
+        b_offset = l_offset - 10
+
+    if n_offset == 0:
+        btn.append(
+            [InlineKeyboardButton("« ʙᴀᴄᴋ", callback_data=f"lang_next#{req}#{key}#{lang}#{b_offset}#{offset}"),
+             InlineKeyboardButton(f"ᴘᴀɢᴇs {math.ceil(int(l_offset) / 10) + 1} / {math.ceil(total / 10)}", callback_data="pages")]
+        )
+    elif b_offset is None:
+        btn.append(
+            [InlineKeyboardButton(f"ᴘᴀɢᴇs {math.ceil(int(l_offset) / 10) + 1} / {math.ceil(total / 10)}", callback_data="pages"),
+             InlineKeyboardButton("ɴᴇxᴛ »", callback_data=f"lang_next#{req}#{key}#{lang}#{n_offset}#{offset}")]
+        )
+    else:
+        btn.append(
+            [InlineKeyboardButton("« ʙᴀᴄᴋ", callback_data=f"lang_next#{req}#{key}#{lang}#{b_offset}#{offset}"),
+             InlineKeyboardButton(f"{math.ceil(int(l_offset) / 10) + 1} / {math.ceil(total / 10)}", callback_data="pages"),
+             InlineKeyboardButton("ɴᴇxᴛ »", callback_data=f"lang_next#{req}#{key}#{lang}#{n_offset}#{offset}")]
+        )
+    btn.append([InlineKeyboardButton(text="⪻ ʙᴀᴄᴋ ᴛᴏ ᴍᴀɪɴ ᴘᴀɢᴇ", callback_data=f"next_{req}_{key}_{offset}")])
+    try:
+        await query.edit_message_reply_markup(
+            reply_markup=InlineKeyboardMarkup(btn)
+        )
+    except MessageNotModified:
+        pass
+    await query.answer()
+    
+
 
 @Client.on_callback_query(filters.regex(r"^spolling"))
 async def advantage_spoll_choker(bot, query):
