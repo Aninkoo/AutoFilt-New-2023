@@ -67,7 +67,7 @@ async def save_file(media):
 
 
 
-async def get_search_results(chat_id, query, file_type=None, max_results=10, offset=0, filter=False):
+async def get_search_results(chat_id, query, file_type=None, max_results=10, offset=0, filter=False, lang=None):
     """For given query return (results, next_offset)"""
     if chat_id is not None:
         settings = await get_settings(int(chat_id))
@@ -108,15 +108,24 @@ async def get_search_results(chat_id, query, file_type=None, max_results=10, off
     if file_type:
         filter['file_type'] = file_type
 
+    cursor = Media.find(filter)
+    # Sort by recent
+    cursor.sort('$natural', -1)
+
+    if lang:
+        lang_files = [file async for file in cursor if lang in file.file_name.lower()]
+        files = lang_files[offset:][:max_results]
+        total_results = len(lang_files)
+        next_offset = offset + max_results
+        if next_offset > total_results:
+            next_offset = ''
+        return files, next_offset, total_results
+
     total_results = await Media.count_documents(filter)
     next_offset = offset + max_results
 
     if next_offset > total_results:
         next_offset = ''
-
-    cursor = Media.find(filter)
-    # Sort by recent
-    cursor.sort('$natural', -1)
     # Slice files according to offset and max results
     cursor.skip(offset).limit(max_results)
     # Get list of files
