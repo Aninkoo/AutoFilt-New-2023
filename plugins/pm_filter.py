@@ -308,7 +308,7 @@ async def next_page(bot, query):
                     ],
                 )
 
-     btn.insert(0,
+    btn.insert(0,
                [InlineKeyboardButton("📰 ʟᴀɴɢᴜᴀɢᴇs", callback_data=f"languages#{key}#{req}#{offset}")]
               )
     btn.insert(0, [
@@ -1433,7 +1433,7 @@ async def auto_filter(client, msg, spoll=False):
                 InlineKeyboardButton(f'🎁 𝖳𝗂𝗉𝗌', 'info')
             ])
             
-     btn.insert(0,
+    btn.insert(0,
                [InlineKeyboardButton("📰 ʟᴀɴɢᴜᴀɢᴇs", callback_data=f"languages#{key}#{req}#{offset}")]
               )                 
     btn.insert(0, [
