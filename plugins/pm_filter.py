@@ -61,7 +61,7 @@ async def give_filter(client, message):
         await update_verify_status(message.from_user.id, is_verified=False)
             
     verify_status = await get_verify_status(message.from_user.id)
-    elif IS_VERIFY and not verify_status['is_verified']:
+    if IS_VERIFY and not verify_status['is_verified']:
         btn = [[
                 InlineKeyboardButton("🛠 Click To Verify 🛠", url=f'https://t.me/{temp.U_NAME}?start=inline_verify')
             ]]
