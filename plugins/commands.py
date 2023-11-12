@@ -8,8 +8,8 @@ from pyrogram.errors import ChatAdminRequired, FloodWait
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from database.ia_filterdb import Media, get_file_details, unpack_new_file_id, get_bad_files
 from database.users_chats_db import db
-from info import CHANNELS, ADMINS, AUTH_CHANNEL, LOG_CHANNEL, PICS, BATCH_FILE_CAPTION, CUSTOM_FILE_CAPTION, SUPPORT_CHAT, PROTECT_CONTENT, REQST_CHANNEL, SUPPORT_CHAT_ID, MAX_B_TN
-from utils import get_settings, get_size, is_subscribed, save_group_settings, temp
+from info import CHANNELS, ADMINS, AUTH_CHANNEL, IS_VERIFY, VERIFY_EXPIRE, SHORTLINK_API, SHORTLINK_URL, LOG_CHANNEL, PICS, BATCH_FILE_CAPTION, CUSTOM_FILE_CAPTION, SUPPORT_CHAT, PROTECT_CONTENT, REQST_CHANNEL, SUPPORT_CHAT_ID, MAX_B_TN
+from utils import get_settings, get_size, get_shortlink, get_verify_status, update_verify_status, is_subscribed, save_group_settings, temp
 from database.connections_mdb import active_connection
 import re
 import json
@@ -50,7 +50,12 @@ async def start(client, message):
     if not await db.is_user_exist(message.from_user.id):
         await db.add_user(message.from_user.id, message.from_user.first_name)
         await client.send_message(LOG_CHANNEL, script.LOG_TEXT_P.format(message.from_user.id, message.from_user.mention))
-    if len(message.command) != 2:
+
+    verify_status = await get_verify_status(message.from_user.id)
+    if verify_status['is_verified'] and VERIFY_EXPIRE < (time.time() - verify_status['verified_time']):
+        await update_verify_status(message.from_user.id, is_verified=False)
+    
+    if len(message.command) != 2 or (len(message.command) == 2 and message.command[1] == 'start'):
         buttons = [[
                     InlineKeyboardButton('⚚ ΛᎠᎠ MΞ ϮԾ YԾUᏒ GᏒԾUᎮ ⚚', url=f"http://t.me/{temp.U_NAME}?startgroup=true")
                 ],[
@@ -100,6 +105,7 @@ async def start(client, message):
             parse_mode=enums.ParseMode.MARKDOWN
             )
         return
+        
     if len(message.command) == 2 and message.command[1] in ["subscribe", "error", "okay", "help"]:
         buttons = [[
                     InlineKeyboardButton('⚚ ΛᎠᎠ MΞ ϮԾ YԾUᏒ GᏒԾUᎮ ⚚', url=f"http://t.me/{temp.U_NAME}?startgroup=true")
@@ -122,7 +128,37 @@ async def start(client, message):
             parse_mode=enums.ParseMode.HTML
         )
         return
+
     data = message.command[1]
+    if data.startswith('verify'):
+        _, token = data.split("_", 1)
+        verify_status = await get_verify_status(message.from_user.id)
+        if verify_status['verify_token'] != token:
+            return await message.reply("Your verify token is invalid.")
+        await update_verify_status(message.from_user.id, is_verified=True, verified_time=time.time())
+        if verify_status["link"] == "":
+            reply_markup = None
+        else:
+            btn = [[
+                InlineKeyboardButton("📌 Get File 📌", url=f'https://t.me/{temp.U_NAME}?start={verify_status["link"]}')
+            ]]
+            reply_markup = InlineKeyboardMarkup(btn)
+        await message.reply(f"✅ You successfully verified until: {get_readable_time(VERIFY_EXPIRE)}", reply_markup=reply_markup, protect_content=True)
+        return
+    
+    verify_status = await get_verify_status(message.from_user.id)
+    if IS_VERIFY and not verify_status['is_verified']:
+        token = ''.join(random.choices(string.ascii_letters + string.digits, k=10))
+        await update_verify_status(message.from_user.id, verify_token=token, link="" if data == 'inline_verify' else data)
+        link = await get_shortlink(SHORTLINK_URL, SHORTLINK_API, f'https://t.me/{temp.U_NAME}?start=verify_{token}')
+        btn = [[
+            InlineKeyboardButton("🧿 Verify 🧿", url=link)
+        ],[
+            InlineKeyboardButton('🗳 Tutorial 🗳', url="https://t.me/isaimini_updates/110")
+        ]]
+        await message.reply("You not verified today! Kindly verify now. 🔐", reply_markup=InlineKeyboardMarkup(btn), protect_content=True)
+        return
+
     try:
         pre, file_id = data.split('_', 1)
     except:
