@@ -9,5 +9,7 @@ bs4
 git+https://github.com/ritheshrkrm/cinemagoer
 datetime
 pytz
+shortzy
 aiohttp
+aiofiles
 psutil==5.9.4
