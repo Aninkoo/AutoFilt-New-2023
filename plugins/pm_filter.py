@@ -15,7 +15,7 @@ from info import ADMINS, AUTH_CHANNEL, IS_VERIFY, VERIFY_EXPIRE, AUTH_USERS, SUP
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery, InputMediaPhoto
 from pyrogram import Client, filters, enums
 from pyrogram.errors import FloodWait, UserIsBlocked, MessageNotModified, PeerIdInvalid
-from utils import get_size, is_subscribed, get_poster, get_shortlink, get_verify_status, update_verify_status, search_gagala, temp, get_settings, save_group_settings, send_all
+from utils import get_size, is_subscribed, get_poster, get_shortlink, get_verify_status, update_verify_status, get_readable_time, search_gagala, temp, get_settings, save_group_settings, send_all
 from database.users_chats_db import db
 from database.ia_filterdb import Media, get_file_details, get_search_results, get_bad_files
 from database.filters_mdb import (
@@ -57,21 +57,21 @@ async def give_filter(client, message):
             )
 
     verify_status = await get_verify_status(message.from_user.id)
-        if verify_status['is_verified'] and VERIFY_EXPIRE < (time.time() - verify_status['verified_time']):
-            await update_verify_status(message.from_user.id, is_verified=False)
+    if verify_status['is_verified'] and VERIFY_EXPIRE < (time.time() - verify_status['verified_time']):
+        await update_verify_status(message.from_user.id, is_verified=False)
             
     verify_status = await get_verify_status(message.from_user.id)
     elif IS_VERIFY and not verify_status['is_verified']:
-            btn = [[
+        btn = [[
                 InlineKeyboardButton("🛠 Click To Verify 🛠", url=f'https://t.me/{temp.U_NAME}?start=inline_verify')
             ]]
-            k = await message.reply(f"You not verified today!. 🤦‍♂️", reply_markup=InlineKeyboardMarkup(btn), protect_content=True)
-            await asyncio.sleep(300)
-            await k.delete()
-            try:
-                await message.delete()
-            except:
-                pass       
+        k = await message.reply(f"You not verified today!. 🤦‍♂️", reply_markup=InlineKeyboardMarkup(btn), protect_content=True)
+        await asyncio.sleep(300)
+        await k.delete()
+        try:
+            await message.delete()
+        except:
+            pass       
     else: #a better logic to avoid repeated lines of code in auto_filter function
         glob = await global_filters(client, message)
         if glob == False:
