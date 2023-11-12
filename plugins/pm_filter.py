@@ -10,12 +10,12 @@ from Script import script
 import pyrogram
 from database.connections_mdb import active_connection, all_connections, delete_connection, if_active, make_active, \
     make_inactive
-from info import ADMINS, AUTH_CHANNEL, AUTH_USERS, SUPPORT_CHAT_ID, SUPPORT_CHAT, CUSTOM_FILE_CAPTION, PICS, AUTH_GROUPS, P_TTI_SHOW_OFF, NOR_IMG, LOG_CHANNEL, SPELL_IMG, MAX_B_TN, IMDB, \
+from info import ADMINS, AUTH_CHANNEL, IS_VERIFY, VERIFY_EXPIRE, AUTH_USERS, SUPPORT_CHAT_ID, SUPPORT_CHAT, CUSTOM_FILE_CAPTION, PICS, AUTH_GROUPS, P_TTI_SHOW_OFF, NOR_IMG, LOG_CHANNEL, SPELL_IMG, MAX_B_TN, IMDB, \
     SINGLE_BUTTON, SPELL_CHECK_REPLY, IMDB_TEMPLATE, NO_RESULTS_MSG
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery, InputMediaPhoto
 from pyrogram import Client, filters, enums
 from pyrogram.errors import FloodWait, UserIsBlocked, MessageNotModified, PeerIdInvalid
-from utils import get_size, is_subscribed, get_poster, search_gagala, temp, get_settings, save_group_settings, send_all
+from utils import get_size, is_subscribed, get_poster, get_shortlink, get_verify_status, update_verify_status, search_gagala, temp, get_settings, save_group_settings, send_all
 from database.users_chats_db import db
 from database.ia_filterdb import Media, get_file_details, get_search_results, get_bad_files
 from database.filters_mdb import (
@@ -40,22 +40,7 @@ CAP = {}
 
 @Client.on_message(filters.group & filters.text & filters.incoming)
 async def give_filter(client, message):
-    if message.chat.id != SUPPORT_CHAT_ID:
-        glob = await global_filters(client, message)
-        if glob == False:
-            manual = await manual_filters(client, message)
-            if manual == False:
-                settings = await get_settings(message.chat.id)
-                try:
-                    if settings['auto_ffilter']:
-                        await auto_filter(client, message)
-                except KeyError:
-                    grpid = await active_connection(str(message.from_user.id))
-                    await save_group_settings(grpid, 'auto_ffilter', True)
-                    settings = await get_settings(message.chat.id)
-                    if settings['auto_ffilter']:
-                        await auto_filter(client, message)
-    else: #a better logic to avoid repeated lines of code in auto_filter function
+    if message.chat.id == SUPPORT_CHAT_ID:
         search = message.text
         temp_files, temp_offset, total_results = await get_search_results(chat_id=message.chat.id, query=search.lower(), offset=0, filter=True)
         if total_results == 0:
@@ -70,6 +55,22 @@ async def give_filter(client, message):
                 f"<b>👋 𝖧𝖾𝗒 {message.from_user.mention} \n📁 {str(total_results)} 𝖱𝖾𝗌𝗎𝗅𝗍𝗌 𝖺𝗋𝖾 𝖿𝗈𝗎𝗇𝖽 𝖿𝗈𝗋 𝗒𝗈𝗎𝗋 𝗊𝗎𝖾𝗋𝗒 {search}.\n\nKindly ask movies or series in Movie Request Groups, Links available here⬇</b>",
                 reply_markup=buttons
             )
+            
+    else: #a better logic to avoid repeated lines of code in auto_filter function
+        glob = await global_filters(client, message)
+        if glob == False:
+            manual = await manual_filters(client, message)
+            if manual == False:
+                settings = await get_settings(message.chat.id)
+                try:
+                    if settings['auto_ffilter']:
+                        await auto_filter(client, message)
+                except KeyError:
+                    grpid = await active_connection(str(message.from_user.id))
+                    await save_group_settings(grpid, 'auto_ffilter', True)
+                    settings = await get_settings(message.chat.id)
+                    if settings['auto_ffilter']:
+                        await auto_filter(client, message)
 
 @Client.on_message(filters.private & filters.text & filters.incoming)
 async def pv_filter(client, message):
@@ -81,7 +82,7 @@ async def pv_filter(client, message):
                 btn = [[
             InlineKeyboardButton('🎬𝐌Ծ𝐕𝐈Ξ 𝐒ΞΛᏒ𝐂𝐇𝐈И𝐆 𝐆ᏒԾ𝐔Ꭾ 𝐋𝐈И𝐊𝐒🎬', url="https://t.me/isaimini_updates/110")
         ]]
-                await message.reply_text(f'Total {total} results found in this group', reply_markup=InlineKeyboardMarkup(btn))
+                await message.reply_text(f'<b>👋 𝖧𝖾𝗒 \n📁 {str(total_results)} 𝖱𝖾𝗌𝗎𝗅𝗍𝗌 𝖺𝗋𝖾 𝖿𝗈𝗎𝗇𝖽 𝖿𝗈𝗋 𝗒𝗈𝗎𝗋 𝗊𝗎𝖾𝗋𝗒 {search}.\n\nKindly ask movies or series in Movie Request Groups, Links available here⬇</b>"', reply_markup=InlineKeyboardMarkup(btn))
 
 @Client.on_callback_query(filters.regex(r"^next"))
 async def next_page(bot, query):
