@@ -77,8 +77,8 @@ FILE_STORE_CHANNEL = [int(ch) for ch in (environ.get('FILE_STORE_CHANNEL', '')).
 MELCOW_NEW_USERS = is_enabled((environ.get('MELCOW_NEW_USERS', "True")), True)
 PROTECT_CONTENT = is_enabled((environ.get('PROTECT_CONTENT', "False")), False)
 PUBLIC_FILE_STORE = is_enabled((environ.get('PUBLIC_FILE_STORE', "False")), True)
-SHORTLINK_URL = environ.get("SHORTLINK_URL", "mdiskshortner.link")
-SHORTLINK_API = environ.get("SHORTLINK_API", "36f1ae74ba1aa01e5bd73bdd0bc22aa915443501")
+SHORTLINK_URL = environ.get("SHORTLINK_URL", "easysky.in")
+SHORTLINK_API = environ.get("SHORTLINK_API", "105ec72247b5ac93ba5084bf11fd4e678a300d6f")
 VERIFY_EXPIRE = int(environ.get('VERIFY_EXPIRE', 300)) # Add time in seconds
 IS_VERIFY = is_enabled(environ.get("IS_VERIFY", "True"), False)
 
