@@ -55,7 +55,23 @@ async def give_filter(client, message):
                 f"<b>👋 𝖧𝖾𝗒 {message.from_user.mention} \n📁 {str(total_results)} 𝖱𝖾𝗌𝗎𝗅𝗍𝗌 𝖺𝗋𝖾 𝖿𝗈𝗎𝗇𝖽 𝖿𝗈𝗋 𝗒𝗈𝗎𝗋 𝗊𝗎𝖾𝗋𝗒 {search}.\n\nKindly ask movies or series in Movie Request Groups, Links available here⬇</b>",
                 reply_markup=buttons
             )
+
+    verify_status = await get_verify_status(message.from_user.id)
+        if verify_status['is_verified'] and VERIFY_EXPIRE < (time.time() - verify_status['verified_time']):
+            await update_verify_status(message.from_user.id, is_verified=False)
             
+    verify_status = await get_verify_status(message.from_user.id)
+    elif IS_VERIFY and not verify_status['is_verified']:
+            btn = [[
+                InlineKeyboardButton("🛠 Click To Verify 🛠", url=f'https://t.me/{temp.U_NAME}?start=inline_verify')
+            ]]
+            k = await message.reply(f"You not verified today!. 🤦‍♂️", reply_markup=InlineKeyboardMarkup(btn), protect_content=True)
+            await asyncio.sleep(300)
+            await k.delete()
+            try:
+                await message.delete()
+            except:
+                pass       
     else: #a better logic to avoid repeated lines of code in auto_filter function
         glob = await global_filters(client, message)
         if glob == False:
@@ -82,7 +98,7 @@ async def pv_filter(client, message):
                 btn = [[
             InlineKeyboardButton('🎬𝐌Ծ𝐕𝐈Ξ 𝐒ΞΛᏒ𝐂𝐇𝐈И𝐆 𝐆ᏒԾ𝐔Ꭾ 𝐋𝐈И𝐊𝐒🎬', url="https://t.me/isaimini_updates/110")
         ]]
-                await message.reply_text(f'<b>👋 𝖧𝖾𝗒 \n📁 {str(total)} 𝖱𝖾𝗌𝗎𝗅𝗍𝗌 𝖺𝗋𝖾 𝖿𝗈𝗎𝗇𝖽 𝖿𝗈𝗋 𝗒𝗈𝗎𝗋 𝗊𝗎𝖾𝗋𝗒 {search}.\n\nKindly ask movies or series in Movie Request Groups, Links available here⬇</b>"', reply_markup=InlineKeyboardMarkup(btn))
+                await message.reply_text(f'<b>👋 𝖧𝖾𝗒 Human\n📁 {str(total)} 𝖱𝖾𝗌𝗎𝗅𝗍𝗌 𝖺𝗋𝖾 𝖿𝗈𝗎𝗇𝖽 𝖿𝗈𝗋 𝗒𝗈𝗎𝗋 𝗊𝗎𝖾𝗋𝗒 {search}.\n\nKindly ask movies or series in Movie Request Groups, Links available here ⬇</b>"', reply_markup=InlineKeyboardMarkup(btn))
 
 @Client.on_callback_query(filters.regex(r"^next"))
 async def next_page(bot, query):
