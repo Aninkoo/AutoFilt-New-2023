@@ -10,7 +10,7 @@ from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from database.ia_filterdb import Media, get_file_details, unpack_new_file_id, get_bad_files
 from database.users_chats_db import db
 from info import CHANNELS, ADMINS, AUTH_CHANNEL, IS_VERIFY, VERIFY_EXPIRE, SHORTLINK_API, SHORTLINK_URL, LOG_CHANNEL, PICS, BATCH_FILE_CAPTION, CUSTOM_FILE_CAPTION, SUPPORT_CHAT, PROTECT_CONTENT, REQST_CHANNEL, SUPPORT_CHAT_ID, MAX_B_TN
-from utils import get_settings, get_size, get_shortlink, get_verify_status, update_verify_status, is_subscribed, save_group_settings, temp
+from utils import get_settings, get_size, get_shortlink, get_verify_status, update_verify_status, is_subscribed, get_readable_time, save_group_settings, temp
 from database.connections_mdb import active_connection
 import re
 import json
@@ -151,7 +151,7 @@ async def start(client, message):
     if IS_VERIFY and not verify_status['is_verified']:
         token = ''.join(random.choices(string.ascii_letters + string.digits, k=10))
         await update_verify_status(message.from_user.id, verify_token=token, link="" if data == 'inline_verify' else data)
-        link = await get_shortlink(SHORTLINK_URL, SHORTLINK_API, f'https://t.me/{temp.U_NAME}?start=verify_{token}')
+        link = await get_shortlink(SHORTLINK_URL, SHORTLINK_API, f'https://telegram.dog/{temp.U_NAME}?start=verify_{token}')
         btn = [[
             InlineKeyboardButton("🧿 Verify 🧿", url=link)
         ],[
