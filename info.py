@@ -80,7 +80,7 @@ PUBLIC_FILE_STORE = is_enabled((environ.get('PUBLIC_FILE_STORE', "False")), True
 SHORTLINK_URL = environ.get("SHORTLINK_URL", "easysky.in")
 SHORTLINK_API = environ.get("SHORTLINK_API", "105ec72247b5ac93ba5084bf11fd4e678a300d6f")
 VERIFY_EXPIRE = int(environ.get('VERIFY_EXPIRE', 300)) # Add time in seconds
-IS_VERIFY = is_enabled(environ.get("IS_VERIFY", "True"), False)
+IS_VERIFY = is_enabled(environ.get("IS_VERIFY", "False"), False)
 
 LOG_STR = "Current Cusomized Configurations are:-\n"
 LOG_STR += ("IMDB Results are enabled, Bot will be showing imdb details for you queries.\n" if IMDB else "IMBD Results are disabled.\n")
