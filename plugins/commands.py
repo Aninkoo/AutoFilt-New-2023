@@ -13,6 +13,7 @@ from info import CHANNELS, ADMINS, AUTH_CHANNEL, IS_VERIFY, VERIFY_EXPIRE, SHORT
 from utils import get_settings, get_size, get_shortlink, get_verify_status, update_verify_status, is_subscribed, get_readable_time, save_group_settings, temp
 from database.connections_mdb import active_connection
 import re
+from datetime import datetime, timedelta
 import json
 import base64
 logger = logging.getLogger(__name__)
@@ -55,6 +56,9 @@ async def start(client, message):
     verify_status = await get_verify_status(message.from_user.id)
     if verify_status['is_verified'] and VERIFY_EXPIRE < (time.time() - verify_status['verified_time']):
         await update_verify_status(message.from_user.id, is_verified=False)
+
+    time_until_next_verify = timedelta(seconds=VERIFY_EXPIRE - (time.time() - verify_status['verified_time']))
+    time_until_next_verify_readable = get_readable_time(time_until_next_verify.total_seconds())
     
     if len(message.command) != 2 or (len(message.command) == 2 and message.command[1] == 'start'):
         buttons = [[
@@ -144,7 +148,7 @@ async def start(client, message):
                 InlineKeyboardButton("📌 Get File 📌", url=f'https://t.me/{temp.U_NAME}?start={verify_status["link"]}')
             ]]
             reply_markup = InlineKeyboardMarkup(btn)
-        await message.reply(f"✅ You successfully verified until: {get_readable_time(VERIFY_EXPIRE)}", reply_markup=reply_markup, protect_content=True)
+        await message.reply(f"✅ You successfully verified until: {time_until_next_verify_readable}", reply_markup=reply_markup, protect_content=True)
         return
     
     verify_status = await get_verify_status(message.from_user.id)
