@@ -57,8 +57,12 @@ async def start(client, message):
     if verify_status['is_verified'] and VERIFY_EXPIRE < (time.time() - verify_status['verified_time']):
         await update_verify_status(message.from_user.id, is_verified=False)
 
-    time_until_next_verify = timedelta(seconds=VERIFY_EXPIRE - (time.time() - verify_status['verified_time']))
-    time_until_next_verify_readable = get_readable_time(time_until_next_verify.total_seconds())
+    now = datetime.now(tz=timezone('Asia/Kolkata'))
+    next_verify_time = now + timedelta(seconds=VERIFY_EXPIRE)
+    time_until_next_verify = next_verify_time - now
+    hours, remainder = divmod(time_until_next_verify.seconds, 3600)
+    minutes, seconds = divmod(remainder, 60)
+    next_verify_str = f"{hours} hours, {minutes} minutes, and {seconds} seconds"
     
     if len(message.command) != 2 or (len(message.command) == 2 and message.command[1] == 'start'):
         buttons = [[
@@ -148,7 +152,7 @@ async def start(client, message):
                 InlineKeyboardButton("📌 Get File 📌", url=f'https://t.me/{temp.U_NAME}?start={verify_status["link"]}')
             ]]
             reply_markup = InlineKeyboardMarkup(btn)
-        await message.reply(f"✅ You successfully verified until: {time_until_next_verify_readable}", reply_markup=reply_markup, protect_content=True)
+        await message.reply(f"✅ You successfully verified until: {next_verify_str}", reply_markup=reply_markup, protect_content=True)
         return
     
     verify_status = await get_verify_status(message.from_user.id)
