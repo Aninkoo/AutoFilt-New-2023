@@ -15,6 +15,7 @@ from database.connections_mdb import active_connection
 import re
 from datetime import datetime, timedelta, timezone
 import json
+import pytz
 import base64
 logger = logging.getLogger(__name__)
 
@@ -57,12 +58,10 @@ async def start(client, message):
     if verify_status['is_verified'] and VERIFY_EXPIRE < (time.time() - verify_status['verified_time']):
         await update_verify_status(message.from_user.id, is_verified=False)
 
-    now = datetime.now(tz=timezone('Asia/Kolkata'))
-    next_verify_time = now + timedelta(seconds=VERIFY_EXPIRE)
-    time_until_next_verify = next_verify_time - now
-    hours, remainder = divmod(time_until_next_verify.seconds, 3600)
-    minutes, seconds = divmod(remainder, 60)
-    next_verify_str = f"{hours} hours, {minutes} minutes, and {seconds} seconds"
+    t_z = pytz.timezone('Asia/Kolkata')
+    t_now = datetime.now(t_z)
+    verify_expire_time = t_now + timedelta(seconds=VERIFY_EXPIRE)
+    next_verify_str = verify_expire_time.strftime("%H:%M:%S %p")
     
     if len(message.command) != 2 or (len(message.command) == 2 and message.command[1] == 'start'):
         buttons = [[
