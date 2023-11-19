@@ -13,7 +13,7 @@ from info import CHANNELS, ADMINS, AUTH_CHANNEL, IS_VERIFY, VERIFY_EXPIRE, SHORT
 from utils import get_settings, get_size, get_shortlink, get_verify_status, update_verify_status, is_subscribed, get_readable_time, save_group_settings, temp
 from database.connections_mdb import active_connection
 import re
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 import json
 import base64
 logger = logging.getLogger(__name__)
