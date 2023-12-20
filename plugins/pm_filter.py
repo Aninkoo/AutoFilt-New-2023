@@ -868,7 +868,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
                         file_id=file_id,
                         caption=f_caption,
                         protect_content=True if ident == "filep" else False,
-                        reply_markup=InlineKeyboardMarkup( [ [ InlineKeyboardButton('⭕ 𝗝𝗼𝗶𝗻 𝗠𝗮𝗶𝗻 𝗖𝗵𝗮𝗻𝗻𝗲𝗹 ⭕', url='https://t.me/isaimini_updates') ] ] ))
+                        reply_markup=InlineKeyboardMarkup( [ [ InlineKeyboardButton('⭕ 𝗝𝗼𝗶𝗻 𝗠𝗮𝗶𝗻 𝗖𝗵𝗮𝗻𝗻𝗲𝗹 ⭕', url='https://t.me/isaimini_updates') ],[InlineKeyboardButton("✛ ᴡᴀᴛᴄʜ & ᴅᴏᴡɴʟᴏᴀᴅ ✛", callback_data=f"stream#{file.file_id}")]] ))
                 else:
                     await query.answer(f"𝖧𝖾𝗒 {query.from_user.first_name}, Don't Touch other's Request !", show_alert=True)
                 await query.answer('𝖢𝗁𝖾𝖼𝗄 𝖯𝖬, 𝖨 𝗁𝖺𝗏𝖾 𝗌𝖾𝗇𝗍 𝖿𝗂𝗅𝖾𝗌 𝗂𝗇 𝖯𝖬', show_alert=True)
@@ -906,7 +906,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
             file_id=file_id,
             caption=f_caption,
             protect_content=True if ident == 'checksubp' else False,
-            reply_markup=InlineKeyboardMarkup( [ [ InlineKeyboardButton('⭕ 𝗝𝗼𝗶𝗻 𝗠𝗮𝗶𝗻 𝗖𝗵𝗮𝗻𝗻𝗲𝗹 ⭕', url='https://t.me/isaimini_updates') ] ] ))
+            reply_markup=InlineKeyboardMarkup( [[ InlineKeyboardButton('⭕ 𝗝𝗼𝗶𝗻 𝗠𝗮𝗶𝗻 𝗖𝗵𝗮𝗻𝗻𝗲𝗹 ⭕', url='https://t.me/isaimini_updates') ],[InlineKeyboardButton("✛ ᴡᴀᴛᴄʜ & ᴅᴏᴡɴʟᴏᴀᴅ ✛", callback_data=f"stream#{file.file_id}")]] ))
     elif query.data == "pages":
         await query.answer()
 
