@@ -208,7 +208,7 @@ async def start(client, message):
                 chat_id=message.from_user.id,
                 file_id=file_id,
                 protect_content=True if pre == 'filep' else False,
-                reply_markup=InlineKeyboardMarkup( [ [ InlineKeyboardButton('⭕ 𝗝𝗼𝗶𝗻 𝗠𝗮𝗶𝗻 𝗖𝗵𝗮𝗻𝗻𝗲𝗹 ⭕', url='https://t.me/isaimini_updates') ] ] ),
+                reply_markup=InlineKeyboardMarkup( [ [ InlineKeyboardButton('⭕ 𝗝𝗼𝗶𝗻 𝗠𝗮𝗶𝗻 𝗖𝗵𝗮𝗻𝗻𝗲𝗹 ⭕', url='https://t.me/isaimini_updates') ],[InlineKeyboardButton("✛ ᴡᴀᴛᴄʜ & ᴅᴏᴡɴʟᴏᴀᴅ ✛", callback_data=f"stream#{file_id}")]] ),
             )
             filetype = msg.media
             file = getattr(msg, filetype.value)
@@ -242,7 +242,7 @@ async def start(client, message):
         file_id=file_id,
         caption=f_caption,
         protect_content=True if pre == 'filep' else False,
-        reply_markup=InlineKeyboardMarkup( [ [ InlineKeyboardButton('⭕ 𝗝𝗼𝗶𝗻 𝗠𝗮𝗶𝗻 𝗖𝗵𝗮𝗻𝗻𝗲𝗹 ⭕', url='https://t.me/isaimini_updates') ] ] ),
+        reply_markup=InlineKeyboardMarkup( [ [ InlineKeyboardButton('⭕ 𝗝𝗼𝗶𝗻 𝗠𝗮𝗶𝗻 𝗖𝗵𝗮𝗻𝗻𝗲𝗹 ⭕', url='https://t.me/isaimini_updates') ],[InlineKeyboardButton("✛ ᴡᴀᴛᴄʜ & ᴅᴏᴡɴʟᴏᴀᴅ ✛", callback_data=f"stream#{file_id}")]] ),
     )
                     
 
