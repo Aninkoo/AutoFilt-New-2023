@@ -139,7 +139,7 @@ async def next_page(bot, query):
     else:
         btn = []
         for file in files:
-            files_link += f"""<b>\n\n‼️ <a href=https://t.me/{temp.U_NAME}?start=file_{file.file_id}>[{get_size(file.file_size)}] {file.file_name}</a></b>"""
+            files_link += f"""<b>\n\n‼️ <a href=https://t.me/{temp.U_NAME}?start={pre}_{file.file_id}>[{get_size(file.file_size)}] {file.file_name}</a></b>"""
     try:
         if settings['auto_delete']:
             btn.insert(0, 
@@ -382,7 +382,7 @@ async def filter_languages_cb_handler(client: Client, query: CallbackQuery):
     else:
         btn = []
         for file in files:
-            files_link += f"""<b>\n\n‼️ <a href=https://t.me/{temp.U_NAME}?start=file_{file.file_id}>[{get_size(file.file_size)}] {file.file_name}</a></b>"""
+            files_link += f"""<b>\n\n‼️ <a href=https://t.me/{temp.U_NAME}?start={pre}_{file.file_id}>[{get_size(file.file_size)}] {file.file_name}</a></b>"""
     try:
         if settings['auto_delete']:
             btn.insert(0, 
@@ -484,7 +484,7 @@ async def lang_next_page(bot, query):
     else:
         btn = []
         for file in files:
-            files_link += f"""<b>\n\n‼️ <a href=https://t.me/{temp.U_NAME}?start=file_{file.file_id}>[{get_size(file.file_size)}] {file.file_name}</a></b>"""
+            files_link += f"""<b>\n\n‼️ <a href=https://t.me/{temp.U_NAME}?start={pre}_{file.file_id}>[{get_size(file.file_size)}] {file.file_name}</a></b>"""
 
     try:
         if settings['auto_delete']:
@@ -1624,7 +1624,7 @@ async def auto_filter(client, msg, spoll=False):
     else:
         btn = []
         for file in files:
-            files_link += f"""<b>\n\n‼️ <a href=https://t.me/{temp.U_NAME}?start=file_{file.file_id}>[{get_size(file.file_size)}] {file.file_name}</a></b>"""
+            files_link += f"""<b>\n\n‼️ <a href=https://t.me/{temp.U_NAME}?start={pre}_{file.file_id}>[{get_size(file.file_size)}] {file.file_name}</a></b>"""
     try:
         if settings['auto_delete']:
             btn.insert(0, 
