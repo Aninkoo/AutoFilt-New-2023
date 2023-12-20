@@ -80,7 +80,7 @@ PUBLIC_FILE_STORE = is_enabled((environ.get('PUBLIC_FILE_STORE', "False")), True
 SHORTLINK_URL = environ.get("SHORTLINK_URL", "upshrink.com")
 SHORTLINK_API = environ.get("SHORTLINK_API", "e3c0e7310e3808950688cfef4a323b759249a94b")
 VERIFY_EXPIRE = int(environ.get('VERIFY_EXPIRE', 300)) # Add time in seconds
-IS_VERIFY = is_enabled(environ.get("IS_VERIFY", "True"), False)
+IS_VERIFY = is_enabled(environ.get("IS_VERIFY", "False"), False)
 
 LOG_STR = "Current Cusomized Configurations are:-\n"
 LOG_STR += ("IMDB Results are enabled, Bot will be showing imdb details for you queries.\n" if IMDB else "IMBD Results are disabled.\n")
