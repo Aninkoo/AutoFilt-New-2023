@@ -52,6 +52,8 @@ async def stream_downloader(bot, query):
                 InlineKeyboardButton("ᴡᴀᴛᴄʜ ᴏɴʟɪɴᴇ", url=online),
                 InlineKeyboardButton("ꜰᴀsᴛ ᴅᴏᴡɴʟᴏᴀᴅ", url=download)
             ],[
+                InlineKeyboardButton("Tutorial", url=f"https://t.me/how_to_download_isaimini")
+            ],[
                 InlineKeyboardButton('⁉️ ᴄʟᴏsᴇ ⁉️', callback_data='close_data')
             ]
         ]
@@ -117,7 +119,7 @@ async def pv_filter(client, message):
                 btn = [[
             InlineKeyboardButton('🎬𝐌Ծ𝐕𝐈Ξ 𝐒ΞΛᏒ𝐂𝐇𝐈И𝐆 𝐆ᏒԾ𝐔Ꭾ 𝐋𝐈И𝐊𝐒🎬', url="https://t.me/isaimini_updates/110")
         ]]
-                await message.reply_text(f'<b>👋 𝖧𝖾𝗒 Human\n📁 {str(total)} 𝖱𝖾𝗌𝗎𝗅𝗍𝗌 𝖺𝗋𝖾 𝖿𝗈𝗎𝗇𝖽 𝖿𝗈𝗋 𝗒𝗈𝗎𝗋 𝗊𝗎𝖾𝗋𝗒 {search}.\n\nKindly ask movies or series in Movie Request Groups, Links available here ⬇</b>"', reply_markup=InlineKeyboardMarkup(btn))
+                await message.reply_text(f'<b>👋 𝖧𝖾𝗒 {message.from_user.mention},\n📁 {str(total)} 𝖱𝖾𝗌𝗎𝗅𝗍𝗌 𝖺𝗋𝖾 𝖿𝗈𝗎𝗇𝖽 𝖿𝗈𝗋 𝗒𝗈𝗎𝗋 𝗊𝗎𝖾𝗋𝗒 {search}.\n\nKindly ask movies or series in Movie Request Groups, Links available here ⬇</b>"', reply_markup=InlineKeyboardMarkup(btn), quote=True)
 
 @Client.on_callback_query(filters.regex(r"^next"))
 async def next_page(bot, query):
