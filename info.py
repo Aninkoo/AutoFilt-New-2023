@@ -49,7 +49,7 @@ reqst_channel = environ.get('REQST_CHANNEL_ID','-1001905521512')
 REQST_CHANNEL = int(reqst_channel) if reqst_channel and id_pattern.search(reqst_channel) else None
 SUPPORT_CHAT_ID = -1001987439557
 NO_RESULTS_MSG = bool(environ.get("NO_RESULTS_MSG", False))
-BIN_CHANNEL = environ.get("BIN_CHANNEL", "-1002044951526")
+BIN_CHANNEL = int(environ.get("BIN_CHANNEL", "-1002044951526"))
 URL = environ.get("URL", "https://new1-rxqfvoeh.b4a.run/")
 
 # MongoDB information
