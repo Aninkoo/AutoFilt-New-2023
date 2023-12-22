@@ -25,23 +25,24 @@ BATCH_FILES = {}
 async def start(client, message):
     if message.chat.type in [enums.ChatType.GROUP, enums.ChatType.SUPERGROUP]:
         buttons = [[
-                    InlineKeyboardButton('-·=»‡«=·- + ᴀᴅᴅ ᴍᴇ ᴛᴏ ɢʀᴏᴜᴘ + -·=»‡«=·-', url=f"http://t.me/{temp.U_NAME}?startgroup=true")
+                    InlineKeyboardButton('◦•●◉✿ ➕ ᴀᴅᴅ ᴍᴇ ᴛᴏ ɢʀᴏᴜᴘ ➕ ✿◉●•◦', url=f"http://t.me/{temp.U_NAME}?startgroup=true")
                 ],[
-                    InlineKeyboardButton('╚»★«╝ᴄʜᴀɴɴᴇʟ╚»★«╝', url="https://t.me/isaimini_updates"),
-                    InlineKeyboardButton('╚»★«╝sᴜᴘᴘᴏʀᴛ ɢʀᴏᴜᴘ╚»★«╝', url=f"https://t.me/isaiminiprime_support")
+                    InlineKeyboardButton('★⭕ ᴄʜᴀɴɴᴇʟ ⭕★', url="https://t.me/isaimini_updates"),
+                    InlineKeyboardButton('★⭕ sᴜᴘᴘᴏʀᴛ ɢʀᴏᴜᴘ ⭕★', url=f"https://t.me/isaiminiprime_support")
                 ],[
                     InlineKeyboardButton(']|I{•---» ᴍᴏᴠɪᴇ sᴇᴀʀᴄʜɪɴɢ ɢʀᴏᴜᴘ ʟɪɴᴋs «---•}I|[', url="https://t.me/isaimini_updates/110")
                 ],[
-                    InlineKeyboardButton('╚»★«╝ ʜᴇʟᴘ ╚»★«╝', callback_data='help'),
-                    InlineKeyboardButton('╚»★«╝ ᴀʙᴏᴜᴛ ╚»★«╝', callback_data='about'),
+                    InlineKeyboardButton('★♻️ ʜᴇʟᴘ ♻️★', callback_data='help'),
+                    InlineKeyboardButton('★♻️ ᴀʙᴏᴜᴛ ♻️★', callback_data='about'),
                 ],[
-                    InlineKeyboardButton('◦•●◉✿ ᴅᴏɴᴀᴛᴇ ᴜs ✿◉●•◦', url='https://t.me/isaimini_donation/5')
+                    InlineKeyboardButton('◦•●◉✿ ✅ ᴅᴏɴᴀᴛᴇ ᴍᴇ ✅ ✿◉●•◦', url='https://t.me/isaimini_donation/5')
                   ]]
         reply_markup = InlineKeyboardMarkup(buttons)
         await message.reply_photo(
             photo=random.choice(PICS),
             caption=script.START_TXT.format(message.from_user.mention, temp.U_NAME, temp.B_NAME),
             reply_markup=reply_markup,
+            quote=True,
             parse_mode=enums.ParseMode.HTML
         )
         await asyncio.sleep(2)
@@ -65,23 +66,24 @@ async def start(client, message):
     
     if len(message.command) != 2 or (len(message.command) == 2 and message.command[1] == 'start'):
         buttons = [[
-                    InlineKeyboardButton('-·=»‡«=·- + ᴀᴅᴅ ᴍᴇ ᴛᴏ ɢʀᴏᴜᴘ + -·=»‡«=·-', url=f"http://t.me/{temp.U_NAME}?startgroup=true")
+                    InlineKeyboardButton('◦•●◉✿ ➕ ᴀᴅᴅ ᴍᴇ ᴛᴏ ɢʀᴏᴜᴘ ➕ ✿◉●•◦', url=f"http://t.me/{temp.U_NAME}?startgroup=true")
                 ],[
-                    InlineKeyboardButton('╚»★«╝ᴄʜᴀɴɴᴇʟ╚»★«╝', url="https://t.me/isaimini_updates"),
-                    InlineKeyboardButton('╚»★«╝sᴜᴘᴘᴏʀᴛ ɢʀᴏᴜᴘ╚»★«╝', url=f"https://t.me/isaiminiprime_support")
+                    InlineKeyboardButton('★⭕ ᴄʜᴀɴɴᴇʟ ⭕★', url="https://t.me/isaimini_updates"),
+                    InlineKeyboardButton('★⭕ sᴜᴘᴘᴏʀᴛ ɢʀᴏᴜᴘ ⭕★', url=f"https://t.me/isaiminiprime_support")
                 ],[
                     InlineKeyboardButton(']|I{•---» ᴍᴏᴠɪᴇ sᴇᴀʀᴄʜɪɴɢ ɢʀᴏᴜᴘ ʟɪɴᴋs «---•}I|[', url="https://t.me/isaimini_updates/110")
                 ],[
-                    InlineKeyboardButton('╚»★«╝ ʜᴇʟᴘ ╚»★«╝', callback_data='help'),
-                    InlineKeyboardButton('╚»★«╝ ᴀʙᴏᴜᴛ ╚»★«╝', callback_data='about'),
+                    InlineKeyboardButton('★♻️ ʜᴇʟᴘ ♻️★', callback_data='help'),
+                    InlineKeyboardButton('★♻️ ᴀʙᴏᴜᴛ ♻️★', callback_data='about'),
                 ],[
-                    InlineKeyboardButton('◦•●◉✿ ᴅᴏɴᴀᴛᴇ ᴜs ✿◉●•◦', url='https://t.me/isaimini_donation/5')
+                    InlineKeyboardButton('◦•●◉✿ ✅ ᴅᴏɴᴀᴛᴇ ᴍᴇ ✅ ✿◉●•◦', url='https://t.me/isaimini_donation/5')
                   ]]
         reply_markup = InlineKeyboardMarkup(buttons)
         await message.reply_photo(
             photo=random.choice(PICS),
             caption=script.START_TXT.format(message.from_user.mention, temp.U_NAME, temp.B_NAME),
             reply_markup=reply_markup,
+            quote=True,
             parse_mode=enums.ParseMode.HTML
         )
         return
@@ -116,23 +118,24 @@ async def start(client, message):
         
     if len(message.command) == 2 and message.command[1] in ["subscribe", "error", "okay", "help"]:
         buttons = [[
-                    InlineKeyboardButton('-·=»‡«=·- + ᴀᴅᴅ ᴍᴇ ᴛᴏ ɢʀᴏᴜᴘ + -·=»‡«=·-', url=f"http://t.me/{temp.U_NAME}?startgroup=true")
+                    InlineKeyboardButton('◦•●◉✿ ➕ ᴀᴅᴅ ᴍᴇ ᴛᴏ ɢʀᴏᴜᴘ ➕ ✿◉●•◦', url=f"http://t.me/{temp.U_NAME}?startgroup=true")
                 ],[
-                    InlineKeyboardButton('╚»★«╝ᴄʜᴀɴɴᴇʟ╚»★«╝', url="https://t.me/isaimini_updates"),
-                    InlineKeyboardButton('╚»★«╝sᴜᴘᴘᴏʀᴛ ɢʀᴏᴜᴘ╚»★«╝', url=f"https://t.me/isaiminiprime_support")
+                    InlineKeyboardButton('★⭕ ᴄʜᴀɴɴᴇʟ ⭕★', url="https://t.me/isaimini_updates"),
+                    InlineKeyboardButton('★⭕ sᴜᴘᴘᴏʀᴛ ɢʀᴏᴜᴘ ⭕★', url=f"https://t.me/isaiminiprime_support")
                 ],[
                     InlineKeyboardButton(']|I{•---» ᴍᴏᴠɪᴇ sᴇᴀʀᴄʜɪɴɢ ɢʀᴏᴜᴘ ʟɪɴᴋs «---•}I|[', url="https://t.me/isaimini_updates/110")
                 ],[
-                    InlineKeyboardButton('╚»★«╝ ʜᴇʟᴘ ╚»★«╝', callback_data='help'),
-                    InlineKeyboardButton('╚»★«╝ ᴀʙᴏᴜᴛ ╚»★«╝', callback_data='about'),
+                    InlineKeyboardButton('★♻️ ʜᴇʟᴘ ♻️★', callback_data='help'),
+                    InlineKeyboardButton('★♻️ ᴀʙᴏᴜᴛ ♻️★', callback_data='about'),
                 ],[
-                    InlineKeyboardButton('◦•●◉✿ ᴅᴏɴᴀᴛᴇ ᴜs ✿◉●•◦', url='https://t.me/isaimini_donation/5')
+                    InlineKeyboardButton('◦•●◉✿ ✅ ᴅᴏɴᴀᴛᴇ ᴍᴇ ✅ ✿◉●•◦', url='https://t.me/isaimini_donation/5')
                   ]]
         reply_markup = InlineKeyboardMarkup(buttons)
         await message.reply_photo(
             photo=random.choice(PICS),
             caption=script.START_TXT.format(message.from_user.mention, temp.U_NAME, temp.B_NAME),
             reply_markup=reply_markup,
+            quote=True,
             parse_mode=enums.ParseMode.HTML
         )
         return
@@ -173,33 +176,6 @@ async def start(client, message):
         file_id = data
         pre = ""
         
-    if data.startswith("all"):
-        _, key, pre = data.split("_", 2)
-        files = temp.FILES_IDS.get(key)
-        if not files:
-            return await message.reply('<b><i>No such file exist.</b></i>')
-        
-        for file in files:
-            title = file.file_name
-            size=get_size(file.file_size)
-            f_caption=file.caption
-            if CUSTOM_FILE_CAPTION:
-                try:
-                    f_caption=CUSTOM_FILE_CAPTION.format(file_name= '' if title is None else title, file_size='' if size is None else size, file_caption='' if f_caption is None else f_caption)
-                except:
-                    f_caption=f_caption
-            if f_caption is None:
-                f_caption = f"{file.file_name}"
-            await client.send_cached_media(
-                chat_id=message.from_user.id,
-                file_id=file.file_id,
-                caption=f_caption,
-                protect_content=True if pre == 'filep' else False,
-                reply_markup=InlineKeyboardMarkup( [ [ InlineKeyboardButton('⭕ 𝗝𝗼𝗶𝗻 𝗠𝗮𝗶𝗻 𝗖𝗵𝗮𝗻𝗻𝗲𝗹 ⭕', url='https://t.me/isaimini_updates') ] ] ),
-            )
-        return
-
-    
     files_ = await get_file_details(file_id)           
     if not files_:
         pre, file_id = ((base64.urlsafe_b64decode(data + "=" * (-len(data) % 4))).decode("ascii")).split("_", 1)
