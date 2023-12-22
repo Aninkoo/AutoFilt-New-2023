@@ -10,7 +10,7 @@ from Script import script
 import pyrogram
 from database.connections_mdb import active_connection, all_connections, delete_connection, if_active, make_active, \
     make_inactive
-from info import ADMINS, AUTH_CHANNEL, BIN_CHANNEL, URL, IS_VERIFY, VERIFY_EXPIRE, AUTH_USERS, SUPPORT_CHAT_ID, SUPPORT_CHAT, CUSTOM_FILE_CAPTION, PICS, AUTH_GROUPS, P_TTI_SHOW_OFF, NOR_IMG, LOG_CHANNEL, SPELL_IMG, MAX_B_TN, IMDB, \
+from info import ADMINS, AUTH_CHANNEL, BIN_CHANNEL, URL, IS_VERIFY, VERIFY_EXPIRE, SHORTLINK_API, SHORTLINK_URL, AUTH_USERS, SUPPORT_CHAT_ID, SUPPORT_CHAT, CUSTOM_FILE_CAPTION, PICS, AUTH_GROUPS, P_TTI_SHOW_OFF, NOR_IMG, LOG_CHANNEL, SPELL_IMG, MAX_B_TN, IMDB, \
     SINGLE_BUTTON, SPELL_CHECK_REPLY, IMDB_TEMPLATE, NO_RESULTS_MSG
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery, InputMediaPhoto
 from pyrogram import Client, filters, enums
@@ -43,8 +43,8 @@ async def stream_downloader(bot, query):
     msg = await bot.send_cached_media(
         chat_id=BIN_CHANNEL,
         file_id=file_id)
-    online = f"{URL}watch/{msg.id}"
-    download = f"{URL}download/{msg.id}"
+    online = await get_shortlink(SHORTLINK_URL, SHORTLINK_API, f"{URL}watch/{msg.id}")
+    download = await get_shortlink(SHORTLINK_URL, SHORTLINK_API, f"{URL}download/{msg.id}")
     await query.edit_message_reply_markup(
         reply_markup=InlineKeyboardMarkup(
         [
@@ -69,7 +69,7 @@ async def give_filter(client, message):
         else:
             buttons = InlineKeyboardMarkup(
                 [
-                    [InlineKeyboardButton('🎬𝐌Ծ𝐕𝐈Ξ 𝐒ΞΛᏒ𝐂𝐇𝐈И𝐆 𝐆ᏒԾ𝐔Ꭾ 𝐋𝐈И𝐊𝐒🎬', url="https://t.me/isaimini_updates/110")]
+                    [InlineKeyboardButton(']|I{•------» 𝐌𝐨𝐯𝐢𝐞 𝐒𝐞𝐚𝐫𝐜𝐡𝐢𝐧𝐠 𝐆𝐫𝐨𝐮𝐩 𝐋𝐢𝐧𝐤𝐬 «------•}I|[', url="https://t.me/isaimini_updates/110")]
                 ]
             )
             await message.reply_text(
@@ -117,7 +117,7 @@ async def pv_filter(client, message):
         files, n_offset, total = await get_search_results(0, query=search.lower(), offset=0, filter=True)
         if int(total) != 0:
                 btn = [[
-            InlineKeyboardButton('🎬𝐌Ծ𝐕𝐈Ξ 𝐒ΞΛᏒ𝐂𝐇𝐈И𝐆 𝐆ᏒԾ𝐔Ꭾ 𝐋𝐈И𝐊𝐒🎬', url="https://t.me/isaimini_updates/110")
+            InlineKeyboardButton(']|I{•------» 𝐌𝐨𝐯𝐢𝐞 𝐒𝐞𝐚𝐫𝐜𝐡𝐢𝐧𝐠 𝐆𝐫𝐨𝐮𝐩 𝐋𝐢𝐧𝐤𝐬 «------•}I|[', url="https://t.me/isaimini_updates/110")
         ]]
                 await message.reply_text(f'<b>👋 𝖧𝖾𝗒 {message.from_user.mention},\n📁 {str(total)} 𝖱𝖾𝗌𝗎𝗅𝗍𝗌 𝖺𝗋𝖾 𝖿𝗈𝗎𝗇𝖽 𝖿𝗈𝗋 𝗒𝗈𝗎𝗋 𝗊𝗎𝖾𝗋𝗒 {search}.\n\nKindly ask movies or series in Movie Request Groups, Links available here ⬇</b>"', reply_markup=InlineKeyboardMarkup(btn), quote=True)
 
@@ -1151,7 +1151,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
                 InlineKeyboardButton("✅ 𝖴𝗉𝗅𝗈𝖺𝖽𝖾𝖽 ✅", callback_data=f"upalert#{from_user}")
               ]]
         btn2 = [[
-                 InlineKeyboardButton('🎬MԾVIΞ SΞΛᏒCHIИG GᏒԾUᎮ LIИKS🎬', url="https://t.me/isaimini_updates/110")
+                 InlineKeyboardButton(']|I{•------» 𝐌𝐨𝐯𝐢𝐞 𝐒𝐞𝐚𝐫𝐜𝐡𝐢𝐧𝐠 𝐆𝐫𝐨𝐮𝐩 𝐋𝐢𝐧𝐤𝐬 «------•}I|[', url="https://t.me/isaimini_updates/110")
                ],[
                  InlineKeyboardButton("❕ 𝖵𝗂𝖾𝗐 𝖲𝗍𝖺𝗍𝗎𝗌 ❕", url=f"{query.message.link}")
         ]]
@@ -1175,7 +1175,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
                 InlineKeyboardButton("🔰 𝖠𝗅𝗋𝖾𝖺𝖽𝗒 𝖠𝗏𝖺𝗂𝗅𝖺𝖻𝗅𝖾 🔰", callback_data=f"alalert#{from_user}")
               ]]
         btn2 = [[
-                 InlineKeyboardButton('🎬MԾVIΞ SΞΛᏒCHIИG GᏒԾUᎮ LIИKS🎬', url="https://t.me/isaimini_updates/110")
+                 InlineKeyboardButton(']|I{•------» 𝐌𝐨𝐯𝐢𝐞 𝐒𝐞𝐚𝐫𝐜𝐡𝐢𝐧𝐠 𝐆𝐫𝐨𝐮𝐩 𝐋𝐢𝐧𝐤𝐬 «------•}I|[', url="https://t.me/isaimini_updates/110")
         ],[
                  InlineKeyboardButton("❕ 𝖵𝗂𝖾𝗐 𝖲𝗍𝖺𝗍𝗎𝗌 ❕", url=f"{query.message.link}")
                ]]
@@ -1231,17 +1231,17 @@ async def cb_handler(client: Client, query: CallbackQuery):
 
     elif query.data == "start":
         buttons = [[
-                    InlineKeyboardButton('⚚ ΛᎠᎠ MΞ ϮԾ YԾUᏒ GᏒԾUᎮ ⚚', url=f"http://t.me/{temp.U_NAME}?startgroup=true")
+                    InlineKeyboardButton('-·=»‡«=·- + ᴀᴅᴅ ᴍᴇ ᴛᴏ ɢʀᴏᴜᴘ + -·=»‡«=·-', url=f"http://t.me/{temp.U_NAME}?startgroup=true")
                 ],[
-                    InlineKeyboardButton('⭕️ CHΛИИΞL ⭕️', url="https://t.me/isaimini_updates"),
-                    InlineKeyboardButton('💠 SUᎮᎮԾᏒϮ GᏒԾUᎮ 💠', url=f"https://t.me/isaiminiprime_support")
+                    InlineKeyboardButton('╚»★«╝ᴄʜᴀɴɴᴇʟ╚»★«╝', url="https://t.me/isaimini_updates"),
+                    InlineKeyboardButton('╚»★«╝sᴜᴘᴘᴏʀᴛ ɢʀᴏᴜᴘ╚»★«╝', url=f"https://t.me/isaiminiprime_support")
                 ],[
-                    InlineKeyboardButton('🎬 MԾVIΞ SΞΛᏒCHIИG GᏒԾUᎮ LIИKS 🎬', url="https://t.me/isaimini_updates/110")
+                    InlineKeyboardButton(']|I{•---» ᴍᴏᴠɪᴇ sᴇᴀʀᴄʜɪɴɢ ɢʀᴏᴜᴘ ʟɪɴᴋs «---•}I|[', url="https://t.me/isaimini_updates/110")
                 ],[
-                    InlineKeyboardButton('♻️ HΞLᎮ ♻️', callback_data='help'),
-                    InlineKeyboardButton('♻️ ΛBOUT ♻️', callback_data='about'),
+                    InlineKeyboardButton('╚»★«╝ ʜᴇʟᴘ ╚»★«╝', callback_data='help'),
+                    InlineKeyboardButton('╚»★«╝ ᴀʙᴏᴜᴛ ╚»★«╝', callback_data='about'),
                 ],[
-                    InlineKeyboardButton('✅ 🅓🅞🅝🅐🅣🅔 🅤🅢 ✅', url='https://t.me/isaimini_donation/5')
+                    InlineKeyboardButton('◦•●◉✿ ᴅᴏɴᴀᴛᴇ ᴜs ✿◉●•◦', url='https://t.me/isaimini_donation/5')
                   ]]
         
         reply_markup = InlineKeyboardMarkup(buttons)
@@ -1255,7 +1255,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
             reply_markup=reply_markup,
             parse_mode=enums.ParseMode.HTML
         )
-        await query.answer('𝖯𝗂𝗋𝖺𝖼𝗒 𝗂𝗌 𝖢𝗋𝗂𝗆𝖾 !')
+        await query.answer('↤↤↤↤↤ ᴄᴏɴsɪᴅᴇʀ ᴅᴏɴᴀᴛɪᴏɴ ↦↦↦↦↦')
 
     elif query.data == "filters":
         buttons = [[
