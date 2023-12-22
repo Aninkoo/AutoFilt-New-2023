@@ -154,7 +154,7 @@ async def start(client, message):
                 InlineKeyboardButton("📌 Get File 📌", url=f'https://t.me/{temp.U_NAME}?start={verify_status["link"]}')
             ]]
             reply_markup = InlineKeyboardMarkup(btn)
-        await message.reply(f"✅ You successfully verified until: {next_verify_str}", reply_markup=reply_markup, protect_content=True)
+        await message.reply(f"✅ Your token successfully verified and valid for: {next_verify_str}\nThank You For Using Our Service!", reply_markup=reply_markup, quote=True, protect_content=True)
         return
     
     verify_status = await get_verify_status(message.from_user.id)
@@ -163,11 +163,11 @@ async def start(client, message):
         await update_verify_status(message.from_user.id, verify_token=token, link="" if data == 'inline_verify' else data)
         link = await get_shortlink(SHORTLINK_URL, SHORTLINK_API, f'https://telegram.dog/{temp.U_NAME}?start=verify_{token}')
         btn = [[
-            InlineKeyboardButton("🧿 Verify 🧿", url=link)
+            InlineKeyboardButton("]|I{•------» 𝙲𝚕𝚒𝚌𝚔 𝚑𝚎𝚛𝚎 «------•}I|[", url=link)
         ],[
-            InlineKeyboardButton('🗳 Tutorial 🗳', url="https://t.me/isaimini_updates/110")
+            InlineKeyboardButton(']|I{•------» 𝚃𝚞𝚝𝚘𝚛𝚒𝚊𝚕 «------•}I|[', url="https://t.me/how_to_download_isaimini")
         ]]
-        await message.reply("You not verified today! Kindly verify now. 🔐", reply_markup=InlineKeyboardMarkup(btn), protect_content=True)
+        await message.reply("Your Ads token is expired, refresh your token and try again.\n\nToken Timeout: {get_readable_time(VERIFY_EXPIRE)}\n\nWhat is the token?\n\nThis is an ads token. If you pass 1 ad, you can use the bot for {get_readable_time(VERIFY_EXPIRE)} after passing the ad", reply_markup=InlineKeyboardMarkup(btn), quote=True, protect_content=True)
         return
 
     try:
