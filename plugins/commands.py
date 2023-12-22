@@ -25,17 +25,17 @@ BATCH_FILES = {}
 async def start(client, message):
     if message.chat.type in [enums.ChatType.GROUP, enums.ChatType.SUPERGROUP]:
         buttons = [[
-                    InlineKeyboardButton('⚚ ΛᎠᎠ MΞ ϮԾ YԾUᏒ GᏒԾUᎮ ⚚', url=f"http://t.me/{temp.U_NAME}?startgroup=true")
+                    InlineKeyboardButton('-·=»‡«=·- + ᴀᴅᴅ ᴍᴇ ᴛᴏ ɢʀᴏᴜᴘ + -·=»‡«=·-', url=f"http://t.me/{temp.U_NAME}?startgroup=true")
                 ],[
-                    InlineKeyboardButton('⭕️ CHΛИИΞL ⭕️', url="https://t.me/isaimini_updates"),
-                    InlineKeyboardButton('💠 SUᎮᎮԾᏒϮ GᏒԾUᎮ 💠', url=f"https://t.me/isaiminiprime_support")
+                    InlineKeyboardButton('╚»★«╝ᴄʜᴀɴɴᴇʟ╚»★«╝', url="https://t.me/isaimini_updates"),
+                    InlineKeyboardButton('╚»★«╝sᴜᴘᴘᴏʀᴛ ɢʀᴏᴜᴘ╚»★«╝', url=f"https://t.me/isaiminiprime_support")
                 ],[
-                    InlineKeyboardButton('🎬 MԾVIΞ SΞΛᏒCHIИG GᏒԾUᎮ LIИKS 🎬', url="https://t.me/isaimini_updates/110")
+                    InlineKeyboardButton(']|I{•---» ᴍᴏᴠɪᴇ sᴇᴀʀᴄʜɪɴɢ ɢʀᴏᴜᴘ ʟɪɴᴋs «---•}I|[', url="https://t.me/isaimini_updates/110")
                 ],[
-                    InlineKeyboardButton('♻️ HΞLᎮ ♻️', callback_data='help'),
-                    InlineKeyboardButton('♻️ ΛBOUT ♻️', callback_data='about'),
+                    InlineKeyboardButton('╚»★«╝ ʜᴇʟᴘ ╚»★«╝', callback_data='help'),
+                    InlineKeyboardButton('╚»★«╝ ᴀʙᴏᴜᴛ ╚»★«╝', callback_data='about'),
                 ],[
-                    InlineKeyboardButton('✅ 🅓🅞🅝🅐🅣🅔 🅤🅢 ✅', url='https://t.me/isaimini_donation/5')
+                    InlineKeyboardButton('◦•●◉✿ ᴅᴏɴᴀᴛᴇ ᴜs ✿◉●•◦', url='https://t.me/isaimini_donation/5')
                   ]]
         reply_markup = InlineKeyboardMarkup(buttons)
         await message.reply_photo(
@@ -65,17 +65,17 @@ async def start(client, message):
     
     if len(message.command) != 2 or (len(message.command) == 2 and message.command[1] == 'start'):
         buttons = [[
-                    InlineKeyboardButton('⚚ ΛᎠᎠ MΞ ϮԾ YԾUᏒ GᏒԾUᎮ ⚚', url=f"http://t.me/{temp.U_NAME}?startgroup=true")
+                    InlineKeyboardButton('-·=»‡«=·- + ᴀᴅᴅ ᴍᴇ ᴛᴏ ɢʀᴏᴜᴘ + -·=»‡«=·-', url=f"http://t.me/{temp.U_NAME}?startgroup=true")
                 ],[
-                    InlineKeyboardButton('⭕️ CHΛИИΞL ⭕️', url="https://t.me/isaimini_updates"),
-                    InlineKeyboardButton('💠 SUᎮᎮԾᏒϮ GᏒԾUᎮ 💠', url=f"https://t.me/isaiminiprime_support")
+                    InlineKeyboardButton('╚»★«╝ᴄʜᴀɴɴᴇʟ╚»★«╝', url="https://t.me/isaimini_updates"),
+                    InlineKeyboardButton('╚»★«╝sᴜᴘᴘᴏʀᴛ ɢʀᴏᴜᴘ╚»★«╝', url=f"https://t.me/isaiminiprime_support")
                 ],[
-                    InlineKeyboardButton('🎬 MԾVIΞ SΞΛᏒCHIИG GᏒԾUᎮ LIИKS 🎬', url="https://t.me/isaimini_updates/110")
+                    InlineKeyboardButton(']|I{•---» ᴍᴏᴠɪᴇ sᴇᴀʀᴄʜɪɴɢ ɢʀᴏᴜᴘ ʟɪɴᴋs «---•}I|[', url="https://t.me/isaimini_updates/110")
                 ],[
-                    InlineKeyboardButton('♻️ HΞLᎮ ♻️', callback_data='help'),
-                    InlineKeyboardButton('♻️ ΛBOUT ♻️', callback_data='about'),
+                    InlineKeyboardButton('╚»★«╝ ʜᴇʟᴘ ╚»★«╝', callback_data='help'),
+                    InlineKeyboardButton('╚»★«╝ ᴀʙᴏᴜᴛ ╚»★«╝', callback_data='about'),
                 ],[
-                    InlineKeyboardButton('✅ 🅓🅞🅝🅐🅣🅔 🅤🅢 ✅', url='https://t.me/isaimini_donation/5')
+                    InlineKeyboardButton('◦•●◉✿ ᴅᴏɴᴀᴛᴇ ᴜs ✿◉●•◦', url='https://t.me/isaimini_donation/5')
                   ]]
         reply_markup = InlineKeyboardMarkup(buttons)
         await message.reply_photo(
@@ -116,17 +116,17 @@ async def start(client, message):
         
     if len(message.command) == 2 and message.command[1] in ["subscribe", "error", "okay", "help"]:
         buttons = [[
-                    InlineKeyboardButton('⚚ ΛᎠᎠ MΞ ϮԾ YԾUᏒ GᏒԾUᎮ ⚚', url=f"http://t.me/{temp.U_NAME}?startgroup=true")
+                    InlineKeyboardButton('-·=»‡«=·- + ᴀᴅᴅ ᴍᴇ ᴛᴏ ɢʀᴏᴜᴘ + -·=»‡«=·-', url=f"http://t.me/{temp.U_NAME}?startgroup=true")
                 ],[
-                    InlineKeyboardButton('⭕️ CHΛИИΞL ⭕️', url="https://t.me/isaimini_updates"),
-                    InlineKeyboardButton('💠 SUᎮᎮԾᏒϮ GᏒԾUᎮ 💠', url=f"https://t.me/isaiminiprime_support")
+                    InlineKeyboardButton('╚»★«╝ᴄʜᴀɴɴᴇʟ╚»★«╝', url="https://t.me/isaimini_updates"),
+                    InlineKeyboardButton('╚»★«╝sᴜᴘᴘᴏʀᴛ ɢʀᴏᴜᴘ╚»★«╝', url=f"https://t.me/isaiminiprime_support")
                 ],[
-                    InlineKeyboardButton('🎬 MԾVIΞ SΞΛᏒCHIИG GᏒԾUᎮ LIИKS 🎬', url="https://t.me/isaimini_updates/110")
+                    InlineKeyboardButton(']|I{•---» ᴍᴏᴠɪᴇ sᴇᴀʀᴄʜɪɴɢ ɢʀᴏᴜᴘ ʟɪɴᴋs «---•}I|[', url="https://t.me/isaimini_updates/110")
                 ],[
-                    InlineKeyboardButton('♻️ HΞLᎮ ♻️', callback_data='help'),
-                    InlineKeyboardButton('♻️ ΛBOUT ♻️', callback_data='about'),
+                    InlineKeyboardButton('╚»★«╝ ʜᴇʟᴘ ╚»★«╝', callback_data='help'),
+                    InlineKeyboardButton('╚»★«╝ ᴀʙᴏᴜᴛ ╚»★«╝', callback_data='about'),
                 ],[
-                    InlineKeyboardButton('✅ 🅓🅞🅝🅐🅣🅔 🅤🅢 ✅', url='https://t.me/isaimini_donation/5')
+                    InlineKeyboardButton('◦•●◉✿ ᴅᴏɴᴀᴛᴇ ᴜs ✿◉●•◦', url='https://t.me/isaimini_donation/5')
                   ]]
         reply_markup = InlineKeyboardMarkup(buttons)
         await message.reply_photo(
