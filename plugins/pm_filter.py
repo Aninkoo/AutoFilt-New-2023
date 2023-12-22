@@ -213,7 +213,7 @@ async def next_page(bot, query):
             if n_offset == 0:
                 btn.append(
             [
-            InlineKeyboardButton('✅ 🅓🅞🅝🅐🅣🅔 🅤🅢 ✅', url='https://t.me/isaimini_donation/5')
+            InlineKeyboardButton('◦•●◉✿ ✅ ᴅᴏɴᴀᴛᴇ ᴍᴇ ✅ ✿◉●•◦', url='https://t.me/isaimini_donation/5')
             ])
                 btn.append(
                     [InlineKeyboardButton("◀️ 𝖡𝖠𝖢𝖪", callback_data=f"next_{req}_{key}_{off_set}"), InlineKeyboardButton(f"{math.ceil(int(offset)/10)+1} / {math.ceil(total/10)}", callback_data="pages")]
@@ -221,13 +221,13 @@ async def next_page(bot, query):
             elif off_set is None:
                 btn.append(
             [
-            InlineKeyboardButton('✅ 🅓🅞🅝🅐🅣🅔 🅤🅢 ✅', url='https://t.me/isaimini_donation/5')
+            InlineKeyboardButton('◦•●◉✿ ✅ ᴅᴏɴᴀᴛᴇ ᴍᴇ ✅ ✿◉●•◦', url='https://t.me/isaimini_donation/5')
             ])
                 btn.append([InlineKeyboardButton("📃", callback_data="pages"), InlineKeyboardButton(f"{math.ceil(int(offset)/10)+1} / {math.ceil(total/10)}", callback_data="pages"), InlineKeyboardButton("𝖭𝖤𝖷𝖳 ▶️", callback_data=f"next_{req}_{key}_{n_offset}")])
             else:
                 btn.append(
             [
-            InlineKeyboardButton('✅ 🅓🅞🅝🅐🅣🅔 🅤🅢 ✅', url='https://t.me/isaimini_donation/5')
+            InlineKeyboardButton('◦•●◉✿ ✅ ᴅᴏɴᴀᴛᴇ ᴍᴇ ✅ ✿◉●•◦', url='https://t.me/isaimini_donation/5')
             ])
                 btn.append(
                     [
@@ -246,7 +246,7 @@ async def next_page(bot, query):
             if n_offset == 0:
                 btn.append(
             [
-            InlineKeyboardButton('✅ 🅓🅞🅝🅐🅣🅔 🅤🅢 ✅', url='https://t.me/isaimini_donation/5')
+            InlineKeyboardButton('◦•●◉✿ ✅ ᴅᴏɴᴀᴛᴇ ᴍᴇ ✅ ✿◉●•◦', url='https://t.me/isaimini_donation/5')
             ])
                 btn.append(
                     [InlineKeyboardButton("◀️ 𝖡𝖠𝖢𝖪", callback_data=f"next_{req}_{key}_{off_set}"), InlineKeyboardButton(f"{math.ceil(int(offset)/int(MAX_B_TN))+1} / {math.ceil(total/int(MAX_B_TN))}", callback_data="pages")]
@@ -254,13 +254,13 @@ async def next_page(bot, query):
             elif off_set is None:
                 btn.append(
             [
-            InlineKeyboardButton('✅ 🅓🅞🅝🅐🅣🅔 🅤🅢 ✅', url='https://t.me/isaimini_donation/5')
+            InlineKeyboardButton('◦•●◉✿ ✅ ᴅᴏɴᴀᴛᴇ ᴍᴇ ✅ ✿◉●•◦', url='https://t.me/isaimini_donation/5')
             ])
                 btn.append([InlineKeyboardButton("📃", callback_data="pages"), InlineKeyboardButton(f"{math.ceil(int(offset)/int(MAX_B_TN))+1} / {math.ceil(total/int(MAX_B_TN))}", callback_data="pages"), InlineKeyboardButton("𝖭𝖤𝖷𝖳 ▶️", callback_data=f"next_{req}_{key}_{n_offset}")])
             else:
                 btn.append(
             [
-            InlineKeyboardButton('✅ 🅓🅞🅝🅐🅣🅔 🅤🅢 ✅', url='https://t.me/isaimini_donation/5')
+            InlineKeyboardButton('◦•●◉✿ ✅ ᴅᴏɴᴀᴛᴇ ᴍᴇ ✅ ✿◉●•◦', url='https://t.me/isaimini_donation/5')
             ])
                 btn.append(
                     [
@@ -282,7 +282,7 @@ async def next_page(bot, query):
             if n_offset == 0:
                 btn.append(
             [
-            InlineKeyboardButton('✅ 🅓🅞🅝🅐🅣🅔 🅤🅢 ✅', url='https://t.me/isaimini_donation/5')
+            InlineKeyboardButton('◦•●◉✿ ✅ ᴅᴏɴᴀᴛᴇ ᴍᴇ ✅ ✿◉●•◦', url='https://t.me/isaimini_donation/5')
             ])
                 btn.append(
                     [InlineKeyboardButton("◀️ 𝖡𝖠𝖢𝖪", callback_data=f"next_{req}_{key}_{off_set}"), InlineKeyboardButton(f"{math.ceil(int(offset)/10)+1} / {math.ceil(total/10)}", callback_data="pages")]
@@ -290,13 +290,13 @@ async def next_page(bot, query):
             elif off_set is None:
                 btn.append(
             [
-            InlineKeyboardButton('✅ 🅓🅞🅝🅐🅣🅔 🅤🅢 ✅', url='https://t.me/isaimini_donation/5')
+            InlineKeyboardButton('◦•●◉✿ ✅ ᴅᴏɴᴀᴛᴇ ᴍᴇ ✅ ✿◉●•◦', url='https://t.me/isaimini_donation/5')
             ])
                 btn.append([InlineKeyboardButton("📃", callback_data="pages"), InlineKeyboardButton(f"{math.ceil(int(offset)/10)+1} / {math.ceil(total/10)}", callback_data="pages"), InlineKeyboardButton("𝖭𝖤𝖷𝖳 ▶️", callback_data=f"next_{req}_{key}_{n_offset}")])
             else:
                 btn.append(
             [
-            InlineKeyboardButton('✅ 🅓🅞🅝🅐🅣🅔 🅤🅢 ✅', url='https://t.me/isaimini_donation/5')
+            InlineKeyboardButton('◦•●◉✿ ✅ ᴅᴏɴᴀᴛᴇ ᴍᴇ ✅ ✿◉●•◦', url='https://t.me/isaimini_donation/5')
             ])
                 btn.append(
                     [
@@ -315,7 +315,7 @@ async def next_page(bot, query):
             if n_offset == 0:
                 btn.append(
             [
-            InlineKeyboardButton('✅ 🅓🅞🅝🅐🅣🅔 🅤🅢 ✅', url='https://t.me/isaimini_donation/5')
+            InlineKeyboardButton('◦•●◉✿ ✅ ᴅᴏɴᴀᴛᴇ ᴍᴇ ✅ ✿◉●•◦', url='https://t.me/isaimini_donation/5')
             ])
                 btn.append(
                     [InlineKeyboardButton("◀️ 𝖡𝖠𝖢𝖪", callback_data=f"next_{req}_{key}_{off_set}"), InlineKeyboardButton(f"{math.ceil(int(offset)/int(MAX_B_TN))+1} / {math.ceil(total/int(MAX_B_TN))}", callback_data="pages")]
@@ -323,13 +323,13 @@ async def next_page(bot, query):
             elif off_set is None:
                 btn.append(
             [
-            InlineKeyboardButton('✅ 🅓🅞🅝🅐🅣🅔 🅤🅢 ✅', url='https://t.me/isaimini_donation/5')
+            InlineKeyboardButton('◦•●◉✿ ✅ ᴅᴏɴᴀᴛᴇ ᴍᴇ ✅ ✿◉●•◦', url='https://t.me/isaimini_donation/5')
             ])
                 btn.append([InlineKeyboardButton("📃", callback_data="pages"), InlineKeyboardButton(f"{math.ceil(int(offset)/int(MAX_B_TN))+1} / {math.ceil(total/int(MAX_B_TN))}", callback_data="pages"), InlineKeyboardButton("𝖭𝖤𝖷𝖳 ▶️", callback_data=f"next_{req}_{key}_{n_offset}")])
             else:
                 btn.append(
             [
-            InlineKeyboardButton('✅ 🅓🅞🅝🅐🅣🅔 🅤🅢 ✅', url='https://t.me/isaimini_donation/5')
+            InlineKeyboardButton('◦•●◉✿ ✅ ᴅᴏɴᴀᴛᴇ ᴍᴇ ✅ ✿◉●•◦', url='https://t.me/isaimini_donation/5')
             ])
                 btn.append(
                     [
@@ -447,7 +447,7 @@ async def filter_languages_cb_handler(client: Client, query: CallbackQuery):
     if l_offset != "":
         btn.append(
             [
-            InlineKeyboardButton('✅ 🅓🅞🅝🅐🅣🅔 🅤🅢 ✅', url='https://t.me/isaimini_donation/5')
+            InlineKeyboardButton('◦•●◉✿ ✅ ᴅᴏɴᴀᴛᴇ ᴍᴇ ✅ ✿◉●•◦', url='https://t.me/isaimini_donation/5')
             ])
         btn.append(
             [InlineKeyboardButton(text=f"ᴘᴀɢᴇs 1 / {math.ceil(int(total_results) / 10)}", callback_data="pages"),
@@ -456,7 +456,7 @@ async def filter_languages_cb_handler(client: Client, query: CallbackQuery):
     else:
         btn.append(
             [
-            InlineKeyboardButton('✅ 🅓🅞🅝🅐🅣🅔 🅤🅢 ✅', url='https://t.me/isaimini_donation/5')
+            InlineKeyboardButton('◦•●◉✿ ✅ ᴅᴏɴᴀᴛᴇ ᴍᴇ ✅ ✿◉●•◦', url='https://t.me/isaimini_donation/5')
             ])
         btn.append(
             [InlineKeyboardButton(text="🚸 ɴᴏ ᴍᴏʀᴇ ᴘᴀɢᴇs 🚸", callback_data="pages")]
@@ -557,7 +557,7 @@ async def lang_next_page(bot, query):
     if n_offset == 0:
         btn.append(
             [
-            InlineKeyboardButton('✅ 🅓🅞🅝🅐🅣🅔 🅤🅢 ✅', url='https://t.me/isaimini_donation/5')
+            InlineKeyboardButton('◦•●◉✿ ✅ ᴅᴏɴᴀᴛᴇ ᴍᴇ ✅ ✿◉●•◦', url='https://t.me/isaimini_donation/5')
             ])
         btn.append(
             [InlineKeyboardButton("◀️ 𝖡𝖠𝖢𝖪", callback_data=f"lang_next#{req}#{key}#{lang}#{b_offset}#{offset}"),
@@ -566,7 +566,7 @@ async def lang_next_page(bot, query):
     elif b_offset is None:
         btn.append(
             [
-            InlineKeyboardButton('✅ 🅓🅞🅝🅐🅣🅔 🅤🅢 ✅', url='https://t.me/isaimini_donation/5')
+            InlineKeyboardButton('◦•●◉✿ ✅ ᴅᴏɴᴀᴛᴇ ᴍᴇ ✅ ✿◉●•◦', url='https://t.me/isaimini_donation/5')
             ])
         btn.append(
             [InlineKeyboardButton(f"ᴘᴀɢᴇs {math.ceil(int(l_offset) / 10) + 1} / {math.ceil(total / 10)}", callback_data="pages"),
@@ -575,7 +575,7 @@ async def lang_next_page(bot, query):
     else:
         btn.append(
             [
-            InlineKeyboardButton('✅ 🅓🅞🅝🅐🅣🅔 🅤🅢 ✅', url='https://t.me/isaimini_donation/5')
+            InlineKeyboardButton('◦•●◉✿ ✅ ᴅᴏɴᴀᴛᴇ ᴍᴇ ✅ ✿◉●•◦', url='https://t.me/isaimini_donation/5')
             ])
         btn.append(
             [InlineKeyboardButton("◀️ 𝖡𝖠𝖢𝖪", callback_data=f"lang_next#{req}#{key}#{lang}#{b_offset}#{offset}"),
@@ -1231,17 +1231,17 @@ async def cb_handler(client: Client, query: CallbackQuery):
 
     elif query.data == "start":
         buttons = [[
-                    InlineKeyboardButton('-·=»‡«=·- + ᴀᴅᴅ ᴍᴇ ᴛᴏ ɢʀᴏᴜᴘ + -·=»‡«=·-', url=f"http://t.me/{temp.U_NAME}?startgroup=true")
+                    InlineKeyboardButton('◦•●◉✿ ➕ ᴀᴅᴅ ᴍᴇ ᴛᴏ ɢʀᴏᴜᴘ ➕ ✿◉●•◦', url=f"http://t.me/{temp.U_NAME}?startgroup=true")
                 ],[
-                    InlineKeyboardButton('╚»★«╝ᴄʜᴀɴɴᴇʟ╚»★«╝', url="https://t.me/isaimini_updates"),
-                    InlineKeyboardButton('╚»★«╝sᴜᴘᴘᴏʀᴛ ɢʀᴏᴜᴘ╚»★«╝', url=f"https://t.me/isaiminiprime_support")
+                    InlineKeyboardButton('★⭕ ᴄʜᴀɴɴᴇʟ ⭕★', url="https://t.me/isaimini_updates"),
+                    InlineKeyboardButton('★⭕ sᴜᴘᴘᴏʀᴛ ɢʀᴏᴜᴘ ⭕★', url=f"https://t.me/isaiminiprime_support")
                 ],[
                     InlineKeyboardButton(']|I{•---» ᴍᴏᴠɪᴇ sᴇᴀʀᴄʜɪɴɢ ɢʀᴏᴜᴘ ʟɪɴᴋs «---•}I|[', url="https://t.me/isaimini_updates/110")
                 ],[
-                    InlineKeyboardButton('╚»★«╝ ʜᴇʟᴘ ╚»★«╝', callback_data='help'),
-                    InlineKeyboardButton('╚»★«╝ ᴀʙᴏᴜᴛ ╚»★«╝', callback_data='about'),
+                    InlineKeyboardButton('★♻️ ʜᴇʟᴘ ♻️★', callback_data='help'),
+                    InlineKeyboardButton('★♻️ ᴀʙᴏᴜᴛ ♻️★', callback_data='about'),
                 ],[
-                    InlineKeyboardButton('◦•●◉✿ ᴅᴏɴᴀᴛᴇ ᴜs ✿◉●•◦', url='https://t.me/isaimini_donation/5')
+                    InlineKeyboardButton('◦•●◉✿ ✅ ᴅᴏɴᴀᴛᴇ ᴍᴇ ✅ ✿◉●•◦', url='https://t.me/isaimini_donation/5')
                   ]]
         
         reply_markup = InlineKeyboardMarkup(buttons)
@@ -1253,6 +1253,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
         await query.message.edit_text(
             text=script.START_TXT.format(query.from_user.mention, temp.U_NAME, temp.B_NAME),
             reply_markup=reply_markup,
+            quote=True,
             parse_mode=enums.ParseMode.HTML
         )
         await query.answer('↤↤↤↤↤ ᴄᴏɴsɪᴅᴇʀ ᴅᴏɴᴀᴛɪᴏɴ ↦↦↦↦↦')
@@ -1700,7 +1701,7 @@ async def auto_filter(client, msg, spoll=False):
             if settings['max_btn']:
                 btn.append(
             [
-            InlineKeyboardButton('✅ 🅓🅞🅝🅐🅣🅔 🅤🅢 ✅', url='https://t.me/isaimini_donation/5')
+            InlineKeyboardButton('◦•●◉✿ ✅ ᴅᴏɴᴀᴛᴇ ᴍᴇ ✅ ✿◉●•◦', url='https://t.me/isaimini_donation/5')
             ])
                 btn.append(
                     [InlineKeyboardButton("📃", callback_data="pages"), InlineKeyboardButton(text=f"1/{math.ceil(int(total_results)/10)}",callback_data="pages"), InlineKeyboardButton(text="𝖭𝖤𝖷𝖳 ▶️",callback_data=f"next_{req}_{key}_{offset}")]
@@ -1708,7 +1709,7 @@ async def auto_filter(client, msg, spoll=False):
             else:
                 btn.append(
             [
-            InlineKeyboardButton('✅ 🅓🅞🅝🅐🅣🅔 🅤🅢 ✅', url='https://t.me/isaimini_donation/5')
+            InlineKeyboardButton('◦•●◉✿ ✅ ᴅᴏɴᴀᴛᴇ ᴍᴇ ✅ ✿◉●•◦', url='https://t.me/isaimini_donation/5')
             ])
                 btn.append(
                     [InlineKeyboardButton("📃", callback_data="pages"), InlineKeyboardButton(text=f"1/{math.ceil(int(total_results)/int(MAX_B_TN))}",callback_data="pages"), InlineKeyboardButton(text="𝖭𝖤𝖷𝖳 ▶️",callback_data=f"next_{req}_{key}_{offset}")]
@@ -1719,7 +1720,7 @@ async def auto_filter(client, msg, spoll=False):
             if settings['max_btn']:
                 btn.append(
             [
-            InlineKeyboardButton('✅ 🅓🅞🅝🅐🅣🅔 🅤🅢 ✅', url='https://t.me/isaimini_donation/5')
+            InlineKeyboardButton('◦•●◉✿ ✅ ᴅᴏɴᴀᴛᴇ ᴍᴇ ✅ ✿◉●•◦', url='https://t.me/isaimini_donation/5')
             ])
                 btn.append(
                     [InlineKeyboardButton("📃", callback_data="pages"), InlineKeyboardButton(text=f"1/{math.ceil(int(total_results)/10)}",callback_data="pages"), InlineKeyboardButton(text="𝖭𝖤𝖷𝖳 ▶️",callback_data=f"next_{req}_{key}_{offset}")]
@@ -1727,7 +1728,7 @@ async def auto_filter(client, msg, spoll=False):
             else:
                 btn.append(
             [
-            InlineKeyboardButton('✅ 🅓🅞🅝🅐🅣🅔 🅤🅢 ✅', url='https://t.me/isaimini_donation/5')
+            InlineKeyboardButton('◦•●◉✿ ✅ ᴅᴏɴᴀᴛᴇ ᴍᴇ ✅ ✿◉●•◦', url='https://t.me/isaimini_donation/5')
             ])
                 btn.append(
                     [InlineKeyboardButton("📃", callback_data="pages"), InlineKeyboardButton(text=f"1/{math.ceil(int(total_results)/int(MAX_B_TN))}",callback_data="pages"), InlineKeyboardButton(text="𝖭𝖤𝖷𝖳 ▶️",callback_data=f"next_{req}_{key}_{offset}")]
@@ -1735,7 +1736,7 @@ async def auto_filter(client, msg, spoll=False):
     else:
         btn.append(
             [
-            InlineKeyboardButton('✅ 🅓🅞🅝🅐🅣🅔 🅤🅢 ✅', url='https://t.me/isaimini_donation/5')
+            InlineKeyboardButton('◦•●◉✿ ✅ ᴅᴏɴᴀᴛᴇ ᴍᴇ ✅ ✿◉●•◦', url='https://t.me/isaimini_donation/5')
             ])
         btn.append(
             [InlineKeyboardButton(text="❌ 𝖭𝗈 𝖬𝗈𝗋𝖾 𝖯𝖺𝗀𝖾𝗌 𝖠𝗏𝖺𝗂𝗅𝖺𝖻𝗅𝖾 ! ❌",callback_data="pages")]
