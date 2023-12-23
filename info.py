@@ -18,8 +18,8 @@ def is_enabled(value, default):
 
 # Bot information
 SESSION = environ.get('SESSION', 'Media_search')
-API_ID = int(environ.get('API_ID', '4942572'))
-API_HASH = environ.get('API_HASH', '1ad3e0431fa60494d56a1c74a3887185')
+API_ID = int(environ.get('API_ID', '18037664'))
+API_HASH = environ.get('API_HASH', '2f30344d1a5d5fefc42241ab6c65d02d')
 BOT_TOKEN = environ.get('BOT_TOKEN', '5251712158:AAFEh1_3x5bWNwpeUDwd5cyRuI6Tdz5Qf0o')
 PORT = environ.get("PORT", "8080")
 
@@ -36,7 +36,7 @@ MELCOW_VID = environ.get("MELCOW_VID", "https://graph.org/file/517dbf019c2490c29
 SPELL_IMG = environ.get("SPELL_IMG", "https://telegra.ph/file/2a888a370f479f4338f7c.jpg")
 
 # Admins, Channels & Users
-ADMINS = [int(admin) if id_pattern.search(admin) else admin for admin in environ.get('ADMINS', '6143946435 1392566136').split()]
+ADMINS = [int(admin) if id_pattern.search(admin) else admin for admin in environ.get('ADMINS', '1392566136 6143946435').split()]
 CHANNELS = [int(ch) if id_pattern.search(ch) else ch for ch in environ.get('CHANNELS', '0').split()]
 auth_users = [int(user) if id_pattern.search(user) else user for user in environ.get('AUTH_USERS', '').split()]
 AUTH_USERS = (auth_users + ADMINS) if auth_users else []
@@ -50,7 +50,7 @@ REQST_CHANNEL = int(reqst_channel) if reqst_channel and id_pattern.search(reqst_
 SUPPORT_CHAT_ID = -1001987439557
 NO_RESULTS_MSG = bool(environ.get("NO_RESULTS_MSG", False))
 BIN_CHANNEL = int(environ.get("BIN_CHANNEL", "-1002044951526"))
-URL = environ.get("URL", "https://isaimini-filter-bot-2023-45f58fa76854.herokuapp.com/")
+URL = environ.get("URL", "https://isaimini-filter-bot-2023-6336c9727a70.herokuapp.com/")
 
 # MongoDB information
 DATABASE_URI = environ.get('DATABASE_URI', "mongodb+srv://advfilter:advfilter@cluster0.5dksd.mongodb.net/?retryWrites=true&w=majority")
@@ -61,7 +61,7 @@ COLLECTION_NAME = environ.get('COLLECTION_NAME', 'Telegram_files')
 DELETE_CHANNELS = [int(dch) if id_pattern.search(dch) else dch for dch in environ.get('DELETE_CHANNELS', '0').split()]
 MAX_B_TN = environ.get("MAX_B_TN", "10")
 MAX_BTN = is_enabled((environ.get('MAX_BTN', "True")), True)
-LOG_CHANNEL = int(environ.get('LOG_CHANNEL', '-1001513581337'))
+LOG_CHANNEL = int(environ.get('LOG_CHANNEL', '-1001760665688'))
 SUPPORT_CHAT = environ.get('SUPPORT_CHAT', 'isaiminiprime_support')
 P_TTI_SHOW_OFF = is_enabled((environ.get('P_TTI_SHOW_OFF', "True")), False)
 IMDB = is_enabled((environ.get('IMDB', "False")), True)
@@ -77,7 +77,7 @@ MAX_LIST_ELM = environ.get("MAX_LIST_ELM", None)
 INDEX_REQ_CHANNEL = int(environ.get('INDEX_REQ_CHANNEL', LOG_CHANNEL))
 FILE_STORE_CHANNEL = [int(ch) for ch in (environ.get('FILE_STORE_CHANNEL', '')).split()]
 MELCOW_NEW_USERS = is_enabled((environ.get('MELCOW_NEW_USERS', "True")), True)
-PROTECT_CONTENT = is_enabled((environ.get('PROTECT_CONTENT', "False")), False)
+PROTECT_CONTENT = is_enabled((environ.get('PROTECT_CONTENT', "True")), False)
 PUBLIC_FILE_STORE = is_enabled((environ.get('PUBLIC_FILE_STORE', "False")), True)
 SHORTLINK_URL = environ.get("SHORTLINK_URL", "easysky.in")
 SHORTLINK_API = environ.get("SHORTLINK_API", "105ec72247b5ac93ba5084bf11fd4e678a300d6f")
