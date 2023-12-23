@@ -50,7 +50,7 @@ REQST_CHANNEL = int(reqst_channel) if reqst_channel and id_pattern.search(reqst_
 SUPPORT_CHAT_ID = -1001987439557
 NO_RESULTS_MSG = bool(environ.get("NO_RESULTS_MSG", False))
 BIN_CHANNEL = int(environ.get("BIN_CHANNEL", "-1002044951526"))
-URL = environ.get("URL", "https://new1-rxqfvoeh.b4a.run/")
+URL = environ.get("URL", "https://isaimini-filter-bot-2023-45f58fa76854.herokuapp.com/")
 
 # MongoDB information
 DATABASE_URI = environ.get('DATABASE_URI', "mongodb+srv://advfilter:advfilter@cluster0.5dksd.mongodb.net/?retryWrites=true&w=majority")
