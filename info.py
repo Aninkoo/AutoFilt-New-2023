@@ -30,8 +30,8 @@ BOT_START_TIME = time()
 
 # Bot images & videos
 PICS = (environ.get('PICS', 'https://telegra.ph/file/6866eb1188bbe61e21411.jpg https://telegra.ph/file/25b5ccb4837abda41818e.jpg https://telegra.ph/file/0582d4846795a617fb62c.jpg')).split()
-REQ_PICS = (environ.get('REQ_PICS', 'https://graph.org/file/5cb80fa6096997b7226b3.jpg')).split()
-NOR_IMG = environ.get("NOR_IMG", "https://telegra.ph/file/0593a3103ba1b9a5855bf.jpg")
+REQ_PICS = (environ.get('REQ_PICS', 'https://graph.org/file/4bad65318f2f6164a40a3.mp4')).split()
+NOR_IMG = environ.get("NOR_IMG", "https://graph.org/file/1f03e7fdc717424b1b7be.jpg")
 MELCOW_VID = environ.get("MELCOW_VID", "https://graph.org/file/517dbf019c2490c29d8fa.mp4")
 SPELL_IMG = environ.get("SPELL_IMG", "https://telegra.ph/file/2a888a370f479f4338f7c.jpg")
 
@@ -50,7 +50,7 @@ REQST_CHANNEL = int(reqst_channel) if reqst_channel and id_pattern.search(reqst_
 SUPPORT_CHAT_ID = -1001987439557
 NO_RESULTS_MSG = bool(environ.get("NO_RESULTS_MSG", False))
 BIN_CHANNEL = int(environ.get("BIN_CHANNEL", "-1002044951526"))
-URL = environ.get("URL", "https://intense-temple-25140-fa0c33595b4d.herokuapp.com/")
+URL = environ.get("URL", "https://new1-rxqfvoeh.b4a.run/")
 
 # MongoDB information
 DATABASE_URI = environ.get('DATABASE_URI', "mongodb+srv://itsme:itsme@cluster0.b4hh3yz.mongodb.net/?retryWrites=true&w=majority")
