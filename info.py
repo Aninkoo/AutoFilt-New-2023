@@ -18,9 +18,9 @@ def is_enabled(value, default):
 
 # Bot information
 SESSION = environ.get('SESSION', 'Media_search')
-API_ID = int(environ.get('API_ID', '18037664'))
-API_HASH = environ.get('API_HASH', '2f30344d1a5d5fefc42241ab6c65d02d')
-BOT_TOKEN = environ.get('BOT_TOKEN', '5251712158:AAFEh1_3x5bWNwpeUDwd5cyRuI6Tdz5Qf0o')
+API_ID = int(environ.get('API_ID', '4942572'))
+API_HASH = environ.get('API_HASH', '1ad3e0431fa60494d56a1c74a3887185')
+BOT_TOKEN = environ.get('BOT_TOKEN', '6108815912:AAHWjkYZqeABg8Vo7Negy4H_srfAXo5iUwE')
 PORT = environ.get("PORT", "8080")
 
 # Bot settings
@@ -40,7 +40,7 @@ ADMINS = [int(admin) if id_pattern.search(admin) else admin for admin in environ
 CHANNELS = [int(ch) if id_pattern.search(ch) else ch for ch in environ.get('CHANNELS', '0').split()]
 auth_users = [int(user) if id_pattern.search(user) else user for user in environ.get('AUTH_USERS', '').split()]
 AUTH_USERS = (auth_users + ADMINS) if auth_users else []
-auth_channel = environ.get('AUTH_CHANNEL',"-1001676503062")
+auth_channel = environ.get('AUTH_CHANNEL',"")
 auth_grp = environ.get('AUTH_GROUP')
 AUTH_CHANNEL = int(auth_channel) if auth_channel and id_pattern.search(auth_channel) else None
 AUTH_GROUPS = [int(ch) for ch in auth_grp.split()] if auth_grp else None
@@ -53,15 +53,15 @@ BIN_CHANNEL = int(environ.get("BIN_CHANNEL", "-1002044951526"))
 URL = environ.get("URL", "https://isaimini-filter-bot-2023-6336c9727a70.herokuapp.com/")
 
 # MongoDB information
-DATABASE_URI = environ.get('DATABASE_URI', "mongodb+srv://advfilter:advfilter@cluster0.5dksd.mongodb.net/?retryWrites=true&w=majority")
-DATABASE_NAME = environ.get('DATABASE_NAME', "AdvFilterbot")
-COLLECTION_NAME = environ.get('COLLECTION_NAME', 'Telegram_files')
+DATABASE_URI = environ.get('DATABASE_URI', "mongodb+srv://itsme:itsme@cluster0.b4hh3yz.mongodb.net/?retryWrites=true&w=majority")
+DATABASE_NAME = environ.get('DATABASE_NAME', "Evamaria")
+COLLECTION_NAME = environ.get('COLLECTION_NAME', 'FILES')
 
 # Others
 DELETE_CHANNELS = [int(dch) if id_pattern.search(dch) else dch for dch in environ.get('DELETE_CHANNELS', '0').split()]
 MAX_B_TN = environ.get("MAX_B_TN", "10")
 MAX_BTN = is_enabled((environ.get('MAX_BTN', "True")), True)
-LOG_CHANNEL = int(environ.get('LOG_CHANNEL', '-1001760665688'))
+LOG_CHANNEL = int(environ.get('LOG_CHANNEL', '-1001513581337'))
 SUPPORT_CHAT = environ.get('SUPPORT_CHAT', 'isaiminiprime_support')
 P_TTI_SHOW_OFF = is_enabled((environ.get('P_TTI_SHOW_OFF', "True")), False)
 IMDB = is_enabled((environ.get('IMDB', "False")), True)
