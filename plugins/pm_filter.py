@@ -1901,7 +1901,7 @@ async def advantage_spell_chok(client, message):
 
     key = f"{message.chat.id}-{message.id}"
     buttons = [
-        [InlineKeyboardButton(text=movie.get('title'), callback_data=f"spolling#{reqstr1}#{movie.movieID}#{key}")]
+        [InlineKeyboardButton(text=movie.get('title') movie.get('year'), callback_data=f"spolling#{reqstr1}#{movie.movieID}#{key}")]
         for movie in movies
     ]
     buttons.append(
