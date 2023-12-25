@@ -588,13 +588,15 @@ async def lang_next_page(bot, query):
 
 @Client.on_callback_query(filters.regex(r"^spolling"))
 async def advantage_spoll_choker(bot, query):
-    _, user, movie_, key = query.data.split('#')
+    _, user, movie_ = query.data.split('#')
     if int(user) != 0 and query.from_user.id != int(user):
-        return await query.answer(script.ALRT_TXT.format(query.from_user.first_name), show_alert=True)
+        return await query.answer("😁 𝗛𝗲𝘆 𝗙𝗿𝗶𝗲𝗻𝗱,𝗣𝗹𝗲𝗮𝘀𝗲 𝗦𝗲𝗮𝗿𝗰𝗵 𝗬𝗼𝘂𝗿𝘀𝗲𝗹𝗳.", show_alert=True)
     if movie_ == "close_spellcheck":
         return await query.message.delete()
-    search = await get_poster(movie_, id=True)
-    movie = search.get('title')
+    movies = SPELL_CHECK.get(query.message.reply_to_message.id)
+    if not movies:
+        return await query.answer("𝐋𝐢𝐧𝐤 𝐄𝐱𝐩𝐢𝐫𝐞𝐝 𝐊𝐢𝐧𝐝𝐥𝐲 𝐏𝐥𝐞𝐚𝐬𝐞 𝐒𝐞𝐚𝐫𝐜𝐡 𝐀𝐠𝐚𝐢𝐧 🙂.", show_alert=True)
+    movie = movies[(int(movie_))]
     await query.answer(script.TOP_ALRT_MSG)
     gl = await global_filters(bot, query.message, text=movie)
     if gl == False:
@@ -1842,89 +1844,58 @@ async def auto_filter(client, msg, spoll=False):
     if spoll:
         await msg.message.delete()
 
-async def advantage_spell_chok(client, message):
-    search = message.text
-    reqstr1 = message.from_user.id if message.from_user else 0
-    reqstr = await client.get_users(reqstr1)
-    settings = await get_settings(message.chat.id)
-    google_search = search.replace(" ", "+")
-    
+async def advantage_spell_chok(client, msg):
     query = re.sub(
-        r"\b("
-        r"pl(i|e)*?(s|z+|ease|se|ese|(e+)s(e)?)|"
-        r"((send|snd|in|giv(e)?|gib)(\sme)?)|"
-        r"movie(s)?|new|latest|"
-        r"br((o|u)h?)*|^h(e|a)?(l)*(o)*|"
-        r"mal(ayalam)?|t(h)?amil|hindi|"
-        r"an(n)upunga|ir(u)ka|file|that|find|und(o)*|"
-        r"kit(t(i|y)?)?o(w)?|thar(u)?(o)*w?|kittum(o)*|aya(k)*(um(o)*)?|"
-        r"full\smovie|any(one)|with\ssubtitle(s)?"
-        r")",
-        "", search, flags=re.IGNORECASE
-    )
-    query = query.strip()
-
-    try:
-        movies = await get_poster(query, bulk=True)
-    except Exception as e:
-        print(f"Error fetching movies: {e}")
-        button = [[
-            InlineKeyboardButton("🔎 𝖦𝗈𝗈𝗀𝗅𝖾", url=f"https://www.google.com/search?q={google_search}")
-        ]]
-        if NO_RESULTS_MSG:
-            await client.send_message(chat_id=LOG_CHANNEL, text=(script.NORSLTS.format(reqstr.id, reqstr.mention, search)))
-        
-        k = await message.reply_photo(
-            photo=SPELL_IMG,
-            caption=script.I_CUDNT.format(search),
-            reply_markup=InlineKeyboardMarkup(button)
-        )
-        await asyncio.sleep(45)
+        r"\b(pl(i|e)*?(s|z+|ease|se|ese|(e+)s(e)?)|((send|snd|giv(e)?|gib)(\sme)?)|movie(s)?|new|latest|br((o|u)h?)*|^h(e|a)?(l)*(o)*|mal(ayalam)?|t(h)?amil|file|that|find|und(o)*|kit(t(i|y)?)?o(w)?|thar(u)?(o)*w?|kittum(o)*|aya(k)*(um(o)*)?|full\smovie|any(one)|with\ssubtitle(s)?)",
+        "", msg.text, flags=re.IGNORECASE)  # plis contribute some common words
+    query = query.strip() + " movie"
+    g_s = await search_gagala(query)
+    g_s += await search_gagala(msg.text)
+    gs_parsed = []
+    if not g_s:
+        k = await msg.reply("I couldn't find any movie in that name.")
+        await asyncio.sleep(8)
         await k.delete()
         return
-
-    if not movies:
-        button = [[
-            InlineKeyboardButton("🔎 𝖦𝗈𝗈𝗀𝗅𝖾", url=f"https://www.google.com/search?q={google_search}")
-        ]]
-        if NO_RESULTS_MSG:
-            await client.send_message(chat_id=LOG_CHANNEL, text=(script.NORSLTS.format(reqstr.id, reqstr.mention, search)))
-        
-        k = await message.reply_photo(
-            photo=SPELL_IMG,
-            caption=script.I_CUDNT.format(search),
-            reply_markup=InlineKeyboardMarkup(button)
-        )
-        await asyncio.sleep(45)
+    regex = re.compile(r".*(imdb|wikipedia).*", re.IGNORECASE)  # look for imdb / wiki results
+    gs = list(filter(regex.match, g_s))
+    gs_parsed = [re.sub(
+        r'\b(\-([a-zA-Z-\s])\-\simdb|(\-\s)?imdb|(\-\s)?wikipedia|\(|\)|\-|reviews|full|all|episode(s)?|film|movie|series)',
+        '', i, flags=re.IGNORECASE) for i in gs]
+    if not gs_parsed:
+        reg = re.compile(r"watch(\s[a-zA-Z0-9_\s\-\(\)]*)*\|.*",
+                         re.IGNORECASE)  # match something like Watch Niram | Amazon Prime
+        for mv in g_s:
+            match = reg.match(mv)
+            if match:
+                gs_parsed.append(match.group(1))
+    user = msg.from_user.id if msg.from_user else 0
+    movielist = []
+    gs_parsed = list(dict.fromkeys(gs_parsed))  # removing duplicates https://stackoverflow.com/a/7961425
+    if len(gs_parsed) > 3:
+        gs_parsed = gs_parsed[:3]
+    if gs_parsed:
+        for mov in gs_parsed:
+            imdb_s = await get_poster(mov.strip(), bulk=True)  # searching each keyword in imdb
+            if imdb_s:
+                movielist += [movie.get('title') for movie in imdb_s]
+    movielist += [(re.sub(r'(\-|\(|\)|_)', '', i, flags=re.IGNORECASE)).strip() for i in gs_parsed]
+    movielist = list(dict.fromkeys(movielist))  # removing duplicates
+    if not movielist:
+        k = await msg.reply("I couldn't find anything related to that. Check your spelling")
+        await asyncio.sleep(8)
         await k.delete()
         return
-
-    key = f"{message.chat.id}-{message.id}"
-    buttons = [
-        [InlineKeyboardButton(text=f"{movie.get('title')} {movie.get('year')}", callback_data=f"spolling#{reqstr1}#{movie.movieID}#{key}")]
-        for movie in movies
-    ]
-    buttons.append(
-        [InlineKeyboardButton("🚫 ᴄʟᴏsᴇ 🚫", callback_data=f'spol#{reqstr1}#close_spellcheck#{key}')]
-    )
-    
-    spell_check_del = await message.reply_photo(
-        photo=(SPELL_IMG),
-        caption=(script.CUDNT_FND.format(search)),
-        reply_markup=InlineKeyboardMarkup(buttons)
-    )
-
-    try:
-        if settings['auto_delete']:
-            await asyncio.sleep(300)
-            await spell_check_del.delete()
-    except KeyError:
-        grpid = await active_connection(str(message.from_user.id))
-        await save_group_settings(grpid, 'auto_delete', True)
-        settings = await get_settings(message.chat.id)
-        if settings['auto_delete']:
-            await asyncio.sleep(300)
-            await spell_check_del.delete()
+    SPELL_CHECK[msg.id] = movielist
+    btn = [[
+        InlineKeyboardButton(
+            text=movie.strip(),
+            callback_data=f"spolling#{user}#{k}",
+        )
+    ] for k, movie in enumerate(movielist)]
+    btn.append([InlineKeyboardButton(text="Close", callback_data=f'spolling#{user}#close_spellcheck')])
+    await msg.reply("I couldn't find anything related to that\nDid you mean any one of these?",
+                    reply_markup=InlineKeyboardMarkup(btn))
             
 
 async def manual_filters(client, message, text=False):
