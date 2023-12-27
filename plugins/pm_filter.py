@@ -1846,7 +1846,7 @@ async def auto_filter(client, msg, spoll=False):
 
 async def advantage_spell_chok(client, msg):
     query = re.sub(
-        r"\b(pl(i|e)*?(s|z+|ease|se|ese|(e+)s(e)?)|((send|snd|giv(e)?|gib)(\sme)?)|movie(s)?|new|latest|br((o|u)h?)*|^h(e|a)?(l)*(o)*|mal(ayalam)?|t(h)?amil|file|that|find|und(o)*|kit(t(i|y)?)?o(w)?|thar(u)?(o)*w?|kittum(o)*|aya(k)*(um(o)*)?|full\smovie|any(one)|with\ssubtitle(s)?)",
+        r"\b(pl(i|e)*?(s|z+|ease|se|ese|(e+)s(e)?)|((send|snd|giv(e)?|gib)(\sme)?)|movie(s)?|new|latest|br((o|u)h?)*|^h(e|a)?(l)*(o)*|mal(ayalam)?|t(h)?amil|dub(b)ed|file|that|find|und(o)*|kit(t(i|y)?)?o(w)?|thar(u)?(o)*w?|kittum(o)*|aya(k)*(um(o)*)?|full\smovie|any(one)|with\ssubtitle(s)?)",
         "", msg.text, flags=re.IGNORECASE)  # plis contribute some common words
     query = query.strip() + " movie"
     g_s = await search_gagala(query)
@@ -1860,8 +1860,8 @@ async def advantage_spell_chok(client, msg):
     regex = re.compile(r".*(imdb|wikipedia).*", re.IGNORECASE)  # look for imdb / wiki results
     gs = list(filter(regex.match, g_s))
     gs_parsed = [re.sub(
-        r'\b(\-([a-zA-Z-\s])\-\simdb|(\-\s)?imdb|(\-\s)?wikipedia|\(|\)|\-|reviews|full|all|episode(s)?|film|movie|series)',
-        '', i, flags=re.IGNORECASE) for i in gs]
+        r'\b(\-([a-zA-Z-\s])\-\simdb|(\-\s)?imdb|(\-\s)?wikipedia|youtube|\(|\)|\-|review(s)?|preview(s)?|tv|full|credits(s)?|cast & crew|release info|production(s)?|list|technical|awards|news|rating(s)?|plot|trailer|all|episode(s)?|film(ing|s)?|movie|series)',
+        '', i, flags=re.IGNORECASE).strip() for i in gs]
     if not gs_parsed:
         reg = re.compile(r"watch(\s[a-zA-Z0-9_\s\-\(\)]*)*\|.*",
                          re.IGNORECASE)  # match something like Watch Niram | Amazon Prime
@@ -1878,9 +1878,12 @@ async def advantage_spell_chok(client, msg):
         for mov in gs_parsed:
             imdb_s = await get_poster(mov.strip(), bulk=True)  # searching each keyword in imdb
             if imdb_s:
-                movielist += [movie.get('title') for movie in imdb_s]
+                for movie in imdb_s:
+                    steve=movie.get('title')
+                    if len(steve)<10:
+                        movielist += [(re.sub(r'(\-|\(|\)|_|&|\")', '', steve, flags=re.IGNORECASE)).strip() ]
     for i in gs_parsed:
-        if len(i) < 5:
+        if len(i) < 10:
             movielist += [(re.sub(r'(\-|\(|\)|_)', '', i, flags=re.IGNORECASE)).strip() ]
     movielist = list(dict.fromkeys(movielist))  # removing duplicates
     if not movielist:
