@@ -1850,7 +1850,7 @@ async def advantage_spell_chok(client, message):
     try:
         movies = await get_poster(query, bulk=True)
     except:
-        n = await msg.reply_photo(
+        n = await message.reply_photo(
             photo=SPELL_IMG, 
             caption=script.I_CUDNT.format(search),
             reply_markup=InlineKeyboardMarkup(button)
@@ -1864,7 +1864,7 @@ async def advantage_spell_chok(client, message):
         return
 
     if not movies:
-        n = await msg.reply_photo(
+        n = await message.reply_photo(
             photo=SPELL_IMG, 
             caption=script.I_CUDNT.format(search),
             reply_markup=InlineKeyboardMarkup(button)
@@ -1892,7 +1892,7 @@ async def advantage_spell_chok(client, message):
     buttons.append(
         [InlineKeyboardButton("🚫 ᴄʟᴏsᴇ 🚫", callback_data="close_data")]
     )
-    s = await msg.reply_photo(
+    s = await message.reply_photo(
         photo=(SPELL_IMG),
         caption=(script.CUDNT_FND.format(search)),
         reply_markup=InlineKeyboardMarkup(buttons)
