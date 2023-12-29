@@ -594,6 +594,7 @@ async def advantage_spoll_choker(bot, query):
     if movie_ == "close_spellcheck":
         return await query.message.delete()
     await query.answer(script.TOP_ALRT_MSG)
+    movie_ = movie_.strip()
     gl = await global_filters(bot, query.message, text=movie_)
     if gl == False:
         k = await manual_filters(bot, query.message, text=movie_)
@@ -1844,7 +1845,7 @@ async def advantage_spell_chok(client, message):
         InlineKeyboardButton("🔎 Search Google 🔍", url=f"https://www.google.com/search?q={google_search}")
     ]]
     query = re.sub(
-        r"\b(pl(i|e)*?(s|z+|ease|se|ese|(e+)s(e)?)|((send|snd|giv(e)?|gib)(\sme)?)|movie(s)?|new|latest|br((o|u)h?)*|^h(e|a)?(l)*(o)*|mal(ayalam)?|t(h)?amil|dub(b)?ed|file|that|find|und(o)*|kit(t(i|y)?)?o(w)?|thar(u)?(o)*w?|kittum(o)*|aya(k)*(um(o)*)?|full\smovie|any(one)|with\ssubtitle(s)?)",
+        r"\b(pl(i|e)*?(s|z+|ease|se|ese|(e+)s(e)?)|((send|snd|giv(e)?|gib)(\sme)?)|season|episode|movie(s)?|new|latest|br((o|u)h?)*|^h(e|a)?(l)*(o)*|mal(ayalam)?|t(h)?amil|dub(b)?ed|file|that|find|und(o)*|kit(t(i|y)?)?o(w)?|thar(u)?(o)*w?|kittum(o)*|aya(k)*(um(o)*)?|full\smovie|any(one)|with\ssubtitle(s)?)",
         "", search, flags=re.IGNORECASE)  # plis contribute some common words
     query = query.strip()
     try:
@@ -1885,7 +1886,7 @@ async def advantage_spell_chok(client, message):
             movielist += [f"{mov.get('title')}"]
     movielist = list(dict.fromkeys(movielist))        
     buttons = [[
-        InlineKeyboardButton(text=movie.strip(), callback_data=f"spolling#{user}#{k}")
+        InlineKeyboardButton(text=movie.strip(), callback_data=f"spolling#{user}#{movie}")
     ]
         for k, movie in enumerate(movielist)
     ]
