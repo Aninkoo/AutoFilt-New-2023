@@ -7,8 +7,8 @@ from pyrogram.errors import UserIsBlocked, PeerIdInvalid
 async def accept_request(client, r):
 
     rm = InlineKeyboardMarkup([[
-        InlineKeyboardButton('⭕️ CHΛИИΞL ⭕️', url="https://t.me/isaimini_updates"),
-        InlineKeyboardButton('💠 SUᎮᎮԾᏒϮ GᏒԾUᎮ 💠', url=f"https://t.me/isaiminiprime_support")
+        InlineKeyboardButton('★⭕ ᴄʜᴀɴɴᴇʟ ⭕★', url="https://t.me/isaimini_updates"),
+        InlineKeyboardButton('★⭕ sᴜᴘᴘᴏʀᴛ ɢʀᴏᴜᴘ ⭕★', url=f"https://t.me/isaiminiprime_support")
     ]])
     
     try:
