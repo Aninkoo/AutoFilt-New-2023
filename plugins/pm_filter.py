@@ -1882,13 +1882,26 @@ async def advantage_spell_chok(client, message):
     movielist = []
     if len(movies)>5:
         movies=movies[:5]
-        for mov in movies:
-            movielist += [f"{mov.get('title')}"]
-    movielist = list(dict.fromkeys(movielist))        
+    for mov in movies:
+        movielist += [f"{mov.get('title')}"]
+    movielist = list(dict.fromkeys(movielist))    
+    if not movielist:
+        n = await message.reply_photo(
+            photo=SPELL_IMG, 
+            caption=script.I_CUDNT.format(search),
+            reply_markup=InlineKeyboardMarkup(button)
+        )
+        await asyncio.sleep(60)
+        await n.delete()
+        try:
+            await message.delete()
+        except:
+            pass
+        return
     buttons = [[
         InlineKeyboardButton(text=movie.strip(), callback_data=f"spolling#{user}#{movie}")
     ]
-        for k, movie in enumerate(movielist)
+        for movie in movielist
     ]
     buttons.append(
         [InlineKeyboardButton("🚫 ᴄʟᴏsᴇ 🚫", callback_data="close_data")]
