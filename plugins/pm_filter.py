@@ -43,8 +43,8 @@ async def stream_downloader(bot, query):
     msg = await bot.send_cached_media(
         chat_id=BIN_CHANNEL,
         file_id=file_id)
-    online = await get_shortlink(SHORTLINK_URL, SHORTLINK_API, f"{URL}watch/{msg.id}")
-    download = await get_shortlink(SHORTLINK_URL, SHORTLINK_API, f"{URL}download/{msg.id}")
+    online = f"{URL}watch/{msg.id}"
+    download = f"{URL}download/{msg.id}"
     await query.edit_message_reply_markup(
         reply_markup=InlineKeyboardMarkup(
         [
