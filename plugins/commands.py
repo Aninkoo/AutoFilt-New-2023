@@ -168,6 +168,7 @@ async def start(client, message):
             photo=https://graph.org/file/1ddc5625918807f0918ad.jpg,
             caption=f"Your Ads token is expired, refresh your token and try again.\n\nToken Timeout: {get_readable_time(VERIFY_EXPIRE)}\n\nWhat is the token?\n\nThis is an ads token. If you pass 1 ad, you can use the bot for {get_readable_time(VERIFY_EXPIRE)} after passing the ad.!",
             reply_markup=reply_markup,
+            protect_content=True,
             quote=True,
             parse_mode=enums.ParseMode.HTML
         )
