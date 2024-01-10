@@ -25,12 +25,8 @@ BATCH_FILES = {}
 async def start(client, message):
     if message.chat.type in [enums.ChatType.GROUP, enums.ChatType.SUPERGROUP]:
         buttons = [[
-                    InlineKeyboardButton('◦•●◉✿ ➕ ᴀᴅᴅ ᴍᴇ ᴛᴏ ɢʀᴏᴜᴘ ➕ ✿◉●•◦', url=f"http://t.me/{temp.U_NAME}?startgroup=true")
-                ],[
                     InlineKeyboardButton('★⭕ ᴄʜᴀɴɴᴇʟ ⭕★', url="https://t.me/isaimini_updates"),
                     InlineKeyboardButton('★⭕ sᴜᴘᴘᴏʀᴛ ɢʀᴏᴜᴘ ⭕★', url=f"https://t.me/isaiminiprime_support")
-                ],[
-                    InlineKeyboardButton(']|I{•---» ᴍᴏᴠɪᴇ sᴇᴀʀᴄʜɪɴɢ ɢʀᴏᴜᴘ ʟɪɴᴋs «---•}I|[', url="https://t.me/isaimini_updates/110")
                 ],[
                     InlineKeyboardButton('★♻️ ʜᴇʟᴘ ♻️★', callback_data='help'),
                     InlineKeyboardButton('★♻️ ᴀʙᴏᴜᴛ ♻️★', callback_data='about'),
@@ -151,10 +147,10 @@ async def start(client, message):
             reply_markup = None
         else:
             btn = [[
-                InlineKeyboardButton("📌 Get File 📌", url=f'https://t.me/{temp.U_NAME}?start={verify_status["link"]}')
+                InlineKeyboardButton("◦•●◉✿📁 ʜᴇʀᴇ ɪs ʏᴏᴜʀ ғɪʟᴇ 📁✿◉●•◦", url=f'https://t.me/{temp.U_NAME}?start={verify_status["link"]}')
             ]]
             reply_markup = InlineKeyboardMarkup(btn)
-        await message.reply(f"✅ Your token successfully verified and valid for: {next_verify_str}\nThank You For Using Our Service!", reply_markup=reply_markup, quote=True, protect_content=True)
+        await message.reply(f"✅ Your token successfully verified and valid for: {next_verify_str}\nThank You For Using Our Service!\n\n", reply_markup=reply_markup, quote=True, protect_content=True)
         return
     
     verify_status = await get_verify_status(message.from_user.id)
