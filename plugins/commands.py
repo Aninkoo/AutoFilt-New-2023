@@ -154,7 +154,8 @@ async def start(client, message):
         return
     
     verify_status = await get_verify_status(message.from_user.id)
-    if IS_VERIFY and not verify_status['is_verified']:
+    user_id = message.from_user.id
+    if IS_VERIFY and not verify_status['is_verified'] and user_id not in ADMIN:
         token = ''.join(random.choices(string.ascii_letters + string.digits, k=10))
         await update_verify_status(message.from_user.id, verify_token=token, link="" if data == 'inline_verify' else data)
         link = await get_shortlink(SHORTLINK_URL, SHORTLINK_API, f'https://telegram.me/{temp.U_NAME}?start=verify_{token}')
