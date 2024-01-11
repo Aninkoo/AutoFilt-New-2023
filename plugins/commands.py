@@ -150,7 +150,7 @@ async def start(client, message):
                 InlineKeyboardButton("◦•●◉✿📁 ʜᴇʀᴇ ɪs ʏᴏᴜʀ ғɪʟᴇ 📁✿◉●•◦", url=f'https://t.me/{temp.U_NAME}?start={verify_status["link"]}')
             ]]
             reply_markup = InlineKeyboardMarkup(btn)
-        await message.reply(f"✅ Your token successfully verified and valid for: {next_verify_str}\nThank You For Using Our Service!\n\n", reply_markup=reply_markup, quote=True, protect_content=True)
+        await message.reply(f"✅ Your token successfully verified and valid for: {next_verify_str}\nThank You For Using Our Service!\n\n", reply_markup=reply_markup, quote=True, protect_content=False)
         return
     
     verify_status = await get_verify_status(message.from_user.id)
@@ -163,7 +163,7 @@ async def start(client, message):
         ],[
             InlineKeyboardButton(']|I{•------» 𝚃𝚞𝚝𝚘𝚛𝚒𝚊𝚕 «------•}I|[', url="https://t.me/how_to_download_isaimini")
         ]]
-        await message.reply(f"Your Ads token is expired, refresh your token and try again.\n\nToken Timeout: {get_readable_time(VERIFY_EXPIRE)}\n\nWhat is the token?\n\nThis is an ads token. If you pass 1 ad, you can use the bot for {get_readable_time(VERIFY_EXPIRE)} after passing the ad.!", reply_markup=InlineKeyboardMarkup(btn), quote=True, protect_content=False)
+        await message.reply(f"Your Ads token is expired, refresh your token and try again.\n\nToken Timeout: {get_readable_time(VERIFY_EXPIRE)}\n\nWhat is the token?\n\nThis is an ads token. If you pass 1 ad, you can use the bot for {get_readable_time(VERIFY_EXPIRE)} after passing the ad.!", reply_markup=InlineKeyboardMarkup(btn), quote=True, protect_content=True)
         return
 
     try:
