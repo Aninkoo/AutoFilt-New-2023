@@ -86,7 +86,14 @@ async def give_filter(client, message):
         btn = [[
                 InlineKeyboardButton("]|I{•------» 𝙲𝚕𝚒𝚌𝚔 𝚑𝚎𝚛𝚎 «------•}I|[", url=f'https://t.me/{temp.U_NAME}?start=inline_verify')
             ]]
-        k = await message.reply(f"Your Ads token is expired, refresh your token and try again.\n\nToken Timeout: {get_readable_time(VERIFY_EXPIRE)}\n\nWhat is the token?\n\nThis is an ads token. If you pass 1 ad, you can use the bot for {get_readable_time(VERIFY_EXPIRE)} after passing the ad.!", reply_markup=InlineKeyboardMarkup(btn), quote=True, protect_content=True)
+        reply_markup = InlineKeyboardMarkup(btn)
+        k = await message.reply_photo(
+            photo="https://graph.org/file/1ddc5625918807f0918ad.jpg",
+            caption=f"Your Ads token is expired, refresh your token and try again.\n\nToken Timeout: {get_readable_time(VERIFY_EXPIRE)}\n\nWhat is the token?\n\nThis is an ads token. If you pass 1 ad, you can use the bot for {get_readable_time(VERIFY_EXPIRE)} after passing the ad.!",
+            reply_markup=reply_markup,
+            quote=True,
+            parse_mode=enums.ParseMode.HTML
+        )
         await asyncio.sleep(300)
         await k.delete()
         try:
