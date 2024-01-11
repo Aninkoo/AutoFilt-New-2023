@@ -163,15 +163,7 @@ async def start(client, message):
         ],[
             InlineKeyboardButton(']|I{•------» 𝚃𝚞𝚝𝚘𝚛𝚒𝚊𝚕 «------•}I|[', url="https://t.me/how_to_download_isaimini")
         ]]
-        reply_markup = InlineKeyboardMarkup(btn)
-        await message.reply_photo(
-            photo="https://graph.org/file/1ddc5625918807f0918ad.jpg",
-            caption=f"Your Ads token is expired, refresh your token and try again.\n\nToken Timeout: {get_readable_time(VERIFY_EXPIRE)}\n\nWhat is the token?\n\nThis is an ads token. If you pass 1 ad, you can use the bot for {get_readable_time(VERIFY_EXPIRE)} after passing the ad.!",
-            reply_markup=reply_markup,
-            protect_content=True,
-            quote=True,
-            parse_mode=enums.ParseMode.HTML
-        )
+        await message.reply(f"Your Ads token is expired, refresh your token and try again.\n\nToken Timeout: {get_readable_time(VERIFY_EXPIRE)}\n\nWhat is the token?\n\nThis is an ads token. If you pass 1 ad, you can use the bot for {get_readable_time(VERIFY_EXPIRE)} after passing the ad.!", reply_markup=InlineKeyboardMarkup(btn), quote=True, protect_content=True)
         return
 
     try:
