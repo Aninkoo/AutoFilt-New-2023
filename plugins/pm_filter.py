@@ -86,7 +86,9 @@ async def give_filter(client, message):
     if IS_VERIFY and not verify_status['is_verified'] and user_id not in ADMINS:
         btn = [[
                 InlineKeyboardButton("]|I{•------» 𝙲𝚕𝚒𝚌𝚔 𝚑𝚎𝚛𝚎 «------•}I|[", url=f'https://t.me/{temp.U_NAME}?start=inline_verify')
-            ]]
+            ],[
+                InlineKeyboardButton('📥 HOW TO DOWNLOAD 📥', url=f"https://t.me/how_to_download_isaimini/13")
+        ]]
         reply_markup = InlineKeyboardMarkup(btn)
         k = await message.reply_photo(
             photo="https://graph.org/file/1ddc5625918807f0918ad.jpg",
