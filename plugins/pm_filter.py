@@ -1954,10 +1954,9 @@ async def manual_filters(client, message, text=False):
                             )
                             try:
                                 if settings['auto_ffilter']:
-                                    #await auto_filter(client, message)
+                                    await auto_filter(client, message)
                                     try:
                                         if settings['auto_delete']:
-                                            await asyncio.sleep(300)
                                             await piroxrk.delete()
                                     except KeyError:
                                         grpid = await active_connection(str(message.from_user.id))
@@ -1981,6 +1980,8 @@ async def manual_filters(client, message, text=False):
                                 grpid = await active_connection(str(message.from_user.id))
                                 await save_group_settings(grpid, 'auto_ffilter', True)
                                 settings = await get_settings(message.chat.id)
+                                if settings['auto_ffilter']:
+                                    await auto_filter(client, message)
 
                         else:
                             button = eval(btn)
@@ -1994,10 +1995,9 @@ async def manual_filters(client, message, text=False):
                             )
                             try:
                                 if settings['auto_ffilter']:
-                                    #await auto_filter(client, message)
+                                    await auto_filter(client, message)
                                     try:
                                         if settings['auto_delete']:
-                                            await asyncio.sleep(300)
                                             await piroxrk.delete()
                                     except KeyError:
                                         grpid = await active_connection(str(message.from_user.id))
@@ -2021,7 +2021,9 @@ async def manual_filters(client, message, text=False):
                                 grpid = await active_connection(str(message.from_user.id))
                                 await save_group_settings(grpid, 'auto_ffilter', True)
                                 settings = await get_settings(message.chat.id)
-                                
+                                if settings['auto_ffilter']:
+                                    await auto_filter(client, message)
+
                     elif btn == "[]":
                         piroxrk = await client.send_cached_media(
                             group_id,
@@ -2032,10 +2034,9 @@ async def manual_filters(client, message, text=False):
                         )
                         try:
                             if settings['auto_ffilter']:
-                                #await auto_filter(client, message)
+                                await auto_filter(client, message)
                                 try:
                                     if settings['auto_delete']:
-                                        await asyncio.sleep(300)
                                         await piroxrk.delete()
                                 except KeyError:
                                     grpid = await active_connection(str(message.from_user.id))
@@ -2059,6 +2060,8 @@ async def manual_filters(client, message, text=False):
                             grpid = await active_connection(str(message.from_user.id))
                             await save_group_settings(grpid, 'auto_ffilter', True)
                             settings = await get_settings(message.chat.id)
+                            if settings['auto_ffilter']:
+                                await auto_filter(client, message)
 
                     else:
                         button = eval(btn)
@@ -2070,10 +2073,9 @@ async def manual_filters(client, message, text=False):
                         )
                         try:
                             if settings['auto_ffilter']:
-                                #await auto_filter(client, message)
+                                await auto_filter(client, message)
                                 try:
                                     if settings['auto_delete']:
-                                        await asyncio.sleep(300)
                                         await piroxrk.delete()
                                 except KeyError:
                                     grpid = await active_connection(str(message.from_user.id))
@@ -2097,7 +2099,9 @@ async def manual_filters(client, message, text=False):
                             grpid = await active_connection(str(message.from_user.id))
                             await save_group_settings(grpid, 'auto_ffilter', True)
                             settings = await get_settings(message.chat.id)
-                            
+                            if settings['auto_ffilter']:
+                                await auto_filter(client, message)
+
                 except Exception as e:
                     logger.exception(e)
                 break
@@ -2133,10 +2137,9 @@ async def global_filters(client, message, text=False):
                                 settings = await get_settings(message.chat.id)
                                 try:
                                     if settings['auto_ffilter']:
-                                        #await auto_filter(client, message)
+                                        await auto_filter(client, message)
                                         try:
                                             if settings['auto_delete']:
-                                                await asyncio.sleep(300)
                                                 await piroxrk.delete()
                                         except KeyError:
                                             grpid = await active_connection(str(message.from_user.id))
@@ -2160,7 +2163,8 @@ async def global_filters(client, message, text=False):
                                     grpid = await active_connection(str(message.from_user.id))
                                     await save_group_settings(grpid, 'auto_ffilter', True)
                                     settings = await get_settings(message.chat.id)
-                                    
+                                    if settings['auto_ffilter']:
+                                        await auto_filter(client, message) 
                             else:
                                 try:
                                     if settings['auto_delete']:
@@ -2186,10 +2190,9 @@ async def global_filters(client, message, text=False):
                                 settings = await get_settings(message.chat.id)
                                 try:
                                     if settings['auto_ffilter']:
-                                        #await auto_filter(client, message)
+                                        await auto_filter(client, message)
                                         try:
                                             if settings['auto_delete']:
-                                                await asyncio.sleep(300)
                                                 await piroxrk.delete()
                                         except KeyError:
                                             grpid = await active_connection(str(message.from_user.id))
@@ -2238,10 +2241,9 @@ async def global_filters(client, message, text=False):
                             settings = await get_settings(message.chat.id)
                             try:
                                 if settings['auto_ffilter']:
-                                    #await auto_filter(client, message)
+                                    await auto_filter(client, message)
                                     try:
                                         if settings['auto_delete']:
-                                            await asyncio.sleep(300)
                                             await piroxrk.delete()
                                     except KeyError:
                                         grpid = await active_connection(str(message.from_user.id))
@@ -2291,10 +2293,9 @@ async def global_filters(client, message, text=False):
                             settings = await get_settings(message.chat.id)
                             try:
                                 if settings['auto_ffilter']:
-                                    #await auto_filter(client, message)
+                                    await auto_filter(client, message)
                                     try:
                                         if settings['auto_delete']:
-                                            await asyncio.sleep(300)
                                             await piroxrk.delete()
                                     except KeyError:
                                         grpid = await active_connection(str(message.from_user.id))
@@ -2318,7 +2319,8 @@ async def global_filters(client, message, text=False):
                                 grpid = await active_connection(str(message.from_user.id))
                                 await save_group_settings(grpid, 'auto_ffilter', True)
                                 settings = await get_settings(message.chat.id)
-                                
+                                if settings['auto_ffilter']:
+                                    await auto_filter(client, message) 
                         else:
                             try:
                                 if settings['auto_delete']:
