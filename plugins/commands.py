@@ -154,7 +154,19 @@ async def start(client, message):
         return
     
     verify_status = await get_verify_status(message.from_user.id)
-    
+    user_id = message.from_user.id
+    if IS_VERIFY and not verify_status['is_verified'] and user_id not in ADMINS:
+        token = ''.join(random.choices(string.ascii_letters + string.digits, k=10))
+        await update_verify_status(message.from_user.id, verify_token=token, link="" if data == 'inline_verify' else data)
+        link = await get_shortlink(SHORTLINK_URL, SHORTLINK_API, f'https://telegram.me/{temp.U_NAME}?start=verify_{token}')
+        btn = [[
+            InlineKeyboardButton("]|I{•------» 𝙲𝚕𝚒𝚌𝚔 𝚑𝚎𝚛𝚎 «------•}I|[", url=link)
+        ],[
+            InlineKeyboardButton(']|I{•------» 𝚃𝚞𝚝𝚘𝚛𝚒𝚊𝚕 «------•}I|[', url="https://t.me/how_to_download_isaimini/13")
+        ]]
+        await message.reply(f"Your Ads token is expired, refresh your token and try again.\n\nToken Timeout: {get_readable_time(VERIFY_EXPIRE)}\n\nWhat is the token?\n\nThis is an ads token. If you pass 1 ad, you can use the bot for {get_readable_time(VERIFY_EXPIRE)} after passing the ad.!", reply_markup=InlineKeyboardMarkup(btn), quote=True, protect_content=True)
+        return
+
     try:
         pre, file_id = data.split('_', 1)
     except:
@@ -212,18 +224,6 @@ async def start(client, message):
         
     files_ = await get_file_details(file_id)           
     if not files_:
-        user_id = message.from_user.id
-        if IS_VERIFY and not verify_status['is_verified'] and user_id not in ADMINS:
-            token = ''.join(random.choices(string.ascii_letters + string.digits, k=10))
-            await update_verify_status(message.from_user.id, verify_token=token, link="" if data == 'inline_verify' else data)
-            link = await get_shortlink(SHORTLINK_URL, SHORTLINK_API, f'https://telegram.me/{temp.U_NAME}?start=verify_{token}')
-            btn = [[
-                InlineKeyboardButton("]|I{•------» 𝙲𝚕𝚒𝚌𝚔 𝚑𝚎𝚛𝚎 «------•}I|[", url=link)
-            ],[
-                InlineKeyboardButton(']|I{•------» 𝚃𝚞𝚝𝚘𝚛𝚒𝚊𝚕 «------•}I|[', url="https://t.me/how_to_download_isaimini/13")
-            ]]
-            await message.reply(f"Your Ads token is expired, refresh your token and try again.\n\nToken Timeout: {get_readable_time(VERIFY_EXPIRE)}\n\nWhat is the token?\n\nThis is an ads token. If you pass 1 ad, you can use the bot for {get_readable_time(VERIFY_EXPIRE)} after passing the ad.!", reply_markup=InlineKeyboardMarkup(btn), quote=True, protect_content=True)
-            return
         pre, file_id = ((base64.urlsafe_b64decode(data + "=" * (-len(data) % 4))).decode("ascii")).split("_", 1)
         try:
             msg = await client.send_cached_media(
@@ -250,18 +250,6 @@ async def start(client, message):
     files = files_[0]
     title = files.file_name
     size=get_size(files.file_size)
-    user_id = message.from_user.id
-    if IS_VERIFY and not verify_status['is_verified'] and user_id not in ADMINS:
-        token = ''.join(random.choices(string.ascii_letters + string.digits, k=10))
-        await update_verify_status(message.from_user.id, verify_token=token, link="" if data == 'inline_verify' else data)
-        link = await get_shortlink(SHORTLINK_URL, SHORTLINK_API, f'https://telegram.me/{temp.U_NAME}?start=verify_{token}')
-        btn = [[
-            InlineKeyboardButton("]|I{•------» 𝙲𝚕𝚒𝚌𝚔 𝚑𝚎𝚛𝚎 «------•}I|[", url=link)
-        ],[
-            InlineKeyboardButton(']|I{•------» 𝚃𝚞𝚝𝚘𝚛𝚒𝚊𝚕 «------•}I|[', url="https://t.me/how_to_download_isaimini/13")
-        ]]
-        await message.reply(f"Your Ads token is expired, refresh your token and try again.\n\nToken Timeout: {get_readable_time(VERIFY_EXPIRE)}\n\nWhat is the token?\n\nThis is an ads token. If you pass 1 ad, you can use the bot for {get_readable_time(VERIFY_EXPIRE)} after passing the ad.!", reply_markup=InlineKeyboardMarkup(btn), quote=True, protect_content=True)
-        return
     f_caption=files.caption
     if CUSTOM_FILE_CAPTION:
         try:
