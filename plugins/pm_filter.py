@@ -52,8 +52,6 @@ async def stream_downloader(bot, query):
                 InlineKeyboardButton("ᴡᴀᴛᴄʜ ᴏɴʟɪɴᴇ", url=online),
                 InlineKeyboardButton("ꜰᴀsᴛ ᴅᴏᴡɴʟᴏᴀᴅ", url=download)
             ],[
-                InlineKeyboardButton("Tutorial", url=f"https://t.me/how_to_download_isaimini")
-            ],[
                 InlineKeyboardButton('⁉️ ᴄʟᴏsᴇ ⁉️', callback_data='close_data')
             ]
         ]
@@ -76,29 +74,6 @@ async def give_filter(client, message):
                 f"<b>👋 𝖧𝖾𝗒 {message.from_user.mention} \n📁 {str(total_results)} 𝖱𝖾𝗌𝗎𝗅𝗍𝗌 𝖺𝗋𝖾 𝖿𝗈𝗎𝗇𝖽 𝖿𝗈𝗋 𝗒𝗈𝗎𝗋 𝗊𝗎𝖾𝗋𝗒 {search}.\n\nKindly ask movies or series in Movie Request Groups, Links available here⬇</b>",
                 reply_markup=buttons
             )
-
-    verify_status = await get_verify_status(message.from_user.id)
-    if verify_status['is_verified'] and VERIFY_EXPIRE < (time.time() - verify_status['verified_time']):
-        await update_verify_status(message.from_user.id, is_verified=False)
-            
-    verify_status = await get_verify_status(message.from_user.id)
-    user_id = message.from_user.id
-    if IS_VERIFY and not verify_status['is_verified'] and user_id not in ADMINS:
-        btn = [[
-                InlineKeyboardButton("]|I{•------» 𝙲𝚕𝚒𝚌𝚔 𝚑𝚎𝚛𝚎 «------•}I|[", url=f'https://t.me/{temp.U_NAME}?start=inline_verify')
-            ],[
-                InlineKeyboardButton('📥 HOW TO DOWNLOAD 📥', url=f"https://t.me/how_to_download_isaimini/13")
-        ]]
-        reply_markup = InlineKeyboardMarkup(btn)
-        k = await message.reply_photo(
-            photo="https://graph.org/file/1ddc5625918807f0918ad.jpg",
-            caption=f"Your Ads token is expired, refresh your token and try again.\n\nToken Timeout: {get_readable_time(VERIFY_EXPIRE)}\n\nWhat is the token?\n\nThis is an ads token. If you pass 1 ad, you can use the bot for {get_readable_time(VERIFY_EXPIRE)} after passing the ad.!",
-            reply_markup=reply_markup,
-            quote=True,
-            parse_mode=enums.ParseMode.HTML
-        )
-        await asyncio.sleep(300)
-        await k.delete()
         try:
             await message.delete()
         except:
