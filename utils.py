@@ -1,6 +1,6 @@
 import logging
 from pyrogram.errors import InputUserDeactivated, UserNotParticipant, FloodWait, UserIsBlocked, PeerIdInvalid
-from info import AUTH_CHANNEL, LONG_IMDB_DESCRIPTION, MAX_LIST_ELM, CUSTOM_FILE_CAPTION
+from info import AUTH_CHANNEL, LONG_IMDB_DESCRIPTION, MAX_LIST_ELM, CUSTOM_FILE_CAPTION, UPDATES_CHNL
 from imdb import Cinemagoer 
 import asyncio
 from pyrogram.types import Message, InlineKeyboardButton, InlineKeyboardMarkup
@@ -31,6 +31,7 @@ BANNED = {}
 SMART_OPEN = '“'
 SMART_CLOSE = '”'
 START_CHAR = ('\'', '"', SMART_OPEN)
+update_list = []
 
 # temp db for banned 
 class temp(object):
@@ -466,6 +467,20 @@ def get_readable_time(seconds):
             period_value, seconds = divmod(seconds, period_seconds)
             result += f'{int(period_value)}{period_name}'
     return result
+
+async def add_chnl_message(item):
+    keywords = ["bluray", "true", "hq", "hdrip", "br-rip", "bdrip", "720p", "1080p", "e0", "e1", "e2", "e3"]
+    mov_name = item.lower()
+    index = len(mov_name)
+    for key in keywords:
+        substring_index = mov_name.find(key)
+        if substring_index != -1 and substring_index < index:
+            index = substring_index
+    final = item[:index].strip()
+    if final not in update_list:
+        update_list.append(final)
+        return final
+    return None
 
 def humanbytes(size):
     if not size:
