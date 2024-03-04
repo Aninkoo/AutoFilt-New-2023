@@ -469,7 +469,7 @@ def get_readable_time(seconds):
     return result
 
 async def add_chnl_message(item):
-    keywords = ["bluray", "true", "hq", "hdrip", "br-rip", "bdrip", "720p", "1080p", "e0", "e1", "e2", "e3"]
+    keywords = ["bluray", "true", "hq", "hdrip", "br-rip", "bdrip", "720p", "1080p", "480p", "e0", "e1", "e2", "e3", "ep0", "ep1", "ep2", "web-dl", "web"]
     mov_name = item.lower()
     index = len(mov_name)
     for key in keywords:
