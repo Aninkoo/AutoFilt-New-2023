@@ -31,7 +31,7 @@ BANNED = {}
 SMART_OPEN = '“'
 SMART_CLOSE = '”'
 START_CHAR = ('\'', '"', SMART_OPEN)
-update_list = []
+update_list = set()
 
 # temp db for banned 
 class temp(object):
@@ -468,19 +468,38 @@ def get_readable_time(seconds):
             result += f'{int(period_value)}{period_name}'
     return result
 
-async def add_chnl_message(item):
-    keywords = ["bluray", "true", "hq", "hdrip", "br-rip", "bdrip", "720p", "1080p", "480p", "e0", "e1", "e2", "e3", "ep0", "ep1", "ep2", "web-dl", "web"]
-    mov_name = item.lower()
-    index = len(mov_name)
-    for key in keywords:
-        substring_index = mov_name.find(key)
-        if substring_index != -1 and substring_index < index:
-            index = substring_index
-    final = item[:index].strip()
-    if final not in update_list:
-        update_list.append(final)
-        return final
-    return None
+async def add_chnl_message(file_name):
+    pattern = [
+        (r'^([\w\s-]+)\sS\d{2}\s?(E(P|p)|E)\d{2}\s'),
+        (r'^(.*?)\s(\d{4})\s.*?(\.mkv)$')]
+    
+    for pat in pattern:
+        match = re.match(pat, file_name)
+        if match:
+            movie_name = match.group(1)
+            year = match.group(2) if len(match.groups()) > 1 and match.group(2).isdigit() else None
+            mov_name = file_name.lower()
+            list1 = []
+            language_keywords = ["tamil", "telugu", "malayalam", "kannada", "english", "hindi"]
+            for lang in language_keywords:
+                substring_index = mov_name.find(lang)
+                if substring_index != -1:
+                    capitalized_lang = lang.capitalize()
+                    list1.append(capitalized_lang.strip())
+            if len(list1) >= 1:
+                if (movie_name, list1[0]) in update_list:
+                    return None, None, None
+            else:
+                if (movie_name, 'No Lang') in update_list:
+                    return None, None, None
+            if len(list1) >= 1:
+                update_list.add((movie_name, list1[0]))
+                return movie_name, year, list1
+            else:
+                update_list.add((movie_name, 'No Lang'))
+                return movie_name, year, None
+    else:
+        return None, None, None
 
 def humanbytes(size):
     if not size:
