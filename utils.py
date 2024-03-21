@@ -470,14 +470,17 @@ def get_readable_time(seconds):
 
 async def add_chnl_message(file_name):
     pattern = [
-        (r'^([\w\s-]+)\sS\d{2}\s?(E(P|p)|E)\d{2}\s'),
-        (r'^(.*?)\s(\d{4})\s.*?(\.mkv)$')]
+        (r'^([\w\s-]+)\s(S\d{2})\s?(E(P|p)|E)\d{2}\s'),
+        (r'^([\w\.-]+)\.(S\d{2})(E(P|p)|E|e)\d{2}\.'),
+        (r'^(.*?)\.(\d{4})\..*?(mkv)$'),
+        (r'^(.*?)\s(\d{4})\s.*?(mkv)$')
+    ]
     
     for pat in pattern:
         match = re.match(pat, file_name)
         if match:
             movie_name = match.group(1)
-            year = match.group(2) if len(match.groups()) > 1 and match.group(2).isdigit() else None
+            year = match.group(2) if len(match.groups()) > 1  else None
             mov_name = file_name.lower()
             list1 = []
             language_keywords = ["tamil", "telugu", "malayalam", "kannada", "english", "hindi"]
@@ -486,6 +489,9 @@ async def add_chnl_message(file_name):
                 if substring_index != -1:
                     capitalized_lang = lang.capitalize()
                     list1.append(capitalized_lang.strip())
+            logger.info(
+                f'{movie_name} {year} - STEP 1'
+            )
             if len(list1) >= 1:
                 if (movie_name, list1[0]) in update_list:
                     return None, None, None
