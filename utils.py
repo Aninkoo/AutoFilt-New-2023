@@ -489,9 +489,6 @@ async def add_chnl_message(file_name):
                 if substring_index != -1:
                     capitalized_lang = lang.capitalize()
                     list1.append(capitalized_lang.strip())
-            logger.info(
-                f'{movie_name} {year} - STEP 1'
-            )
             if len(list1) >= 1:
                 if (movie_name, list1[0]) in update_list:
                     return None, None, None
