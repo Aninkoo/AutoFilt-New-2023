@@ -1,7 +1,14 @@
+import asyncio
+import logging
 from pyrogram import Client, filters, enums
+from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
+from pyrogram.errors import BadRequest
 from info import CHANNELS, UPDATES_CHNL
 from database.ia_filterdb import save_file
-from utils import add_chnl_message
+from utils import add_chnl_message, get_poster, temp
+
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
 
 media_filter = filters.document | filters.video
 
@@ -19,7 +26,47 @@ async def media(bot, message):
     media.caption = message.caption
     text = await save_file(media)
     if text is not None:
-        final = await add_chnl_message(text)
-        if final is not None:
-            cap = "#MovieUpdate:\n\n"
-            await bot.send_message(chat_id=UPDATES_CHNL, text=f"<b>{cap}<code>{final}</code>\n\nCopy & Paste In Group To Search\n---»<a href=https://t.me/isaimini_updates/110> ᴍᴏᴠɪᴇ sᴇᴀʀᴄʜɪɴɢ ɢʀᴏᴜᴘ ʟɪɴᴋs </a>«---</b>", disable_web_page_preview=True, parse_mode=enums.ParseMode.HTML)
+        mv_naam, year, languages = await add_chnl_message(text)
+        if mv_naam is not None:
+            languages_str = " ".join(languages) if languages else None
+            mv_naam = mv_naam.replace(".", " ")
+            if year.isdigit():
+                caption = f"<b>#MovieUpdate:\n🧿 <u>𝚃𝙸𝚃𝙻𝙴</u> : <code>{mv_naam}</code>\n📆 <u>YEAR</u> : {year}\n"
+            else:
+                caption = f"<b>#SeriesUpdate:\n🧿 <u>𝚃𝙸𝚃𝙻𝙴</u> : <code>{mv_naam}</code>\n📆 <u>SEASON</u> : {year}\n"
+            if languages_str:
+                caption += f"🎙️<u>𝙻𝙰𝙽𝙶𝚄𝙰𝙶𝙴</u> : {languages_str}\n"
+            caption += "\nCopy & Paste In Group To Search\n---»<a href=https://t.me/isaimini_updates/110> ᴍᴏᴠɪᴇ sᴇᴀʀᴄʜɪɴɢ ɢʀᴏᴜᴘ ʟɪɴᴋs </a>«---</b>"
+            search = f"{mv_naam} {year}" if year is not None else mv_naam
+            movies = await get_poster(search)
+            search_with_underscore = search.replace(" ", "_")
+            btn = [[
+                InlineKeyboardButton('◦•●◉✿📥 ᴅᴏᴡɴʟᴏᴀᴅ ɴᴏᴡ 📥✿◉●•◦', url=f"http://t.me/{temp.U_NAME}?start=SEARCH-{search_with_underscore}")
+            ]]
+            markup = InlineKeyboardMarkup(btn)
+            if movies and movies.get('poster'):
+                try:
+                    await bot.send_photo(
+                        chat_id=UPDATES_CHNL,
+                        photo=movies.get('poster'),
+                        caption=caption,
+                        reply_markup=markup,
+                        parse_mode=enums.ParseMode.HTML
+                    )
+                except BadRequest as e:
+                    await bot.send_message(
+                        chat_id=UPDATES_CHNL,
+                        text=caption,
+                        reply_markup=markup,
+                        parse_mode=enums.ParseMode.HTML
+                    )
+            else:
+                await bot.send_message(
+                    chat_id=UPDATES_CHNL,
+                    text=caption,
+                    reply_markup=markup,
+                    parse_mode=enums.ParseMode.HTML
+                )
+            logger.info(f'{mv_naam} {year} - Update Sent to Channel!')
+            await asyncio.sleep(5)
+            return
