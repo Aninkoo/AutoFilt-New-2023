@@ -96,6 +96,7 @@ async def give_filter(client, message):
 
 @Client.on_message(filters.private & filters.text & filters.incoming)
 async def pv_filter(client, message):
+    stick = await message.reply_sticker(sticker="CAACAgUAAx0CZjyOqQACMCpl_EX_Ak6ilEi7sdys1ec9ozSwvQAC3AIAAq9qOVVmHNMuomHDLB4E")
     kd = await global_filters(client, message)
     if kd == False:
         search = message.text
@@ -105,6 +106,7 @@ async def pv_filter(client, message):
             InlineKeyboardButton(']|I{•------» 𝐌𝐨𝐯𝐢𝐞 𝐒𝐞𝐚𝐫𝐜𝐡𝐢𝐧𝐠 𝐆𝐫𝐨𝐮𝐩 𝐋𝐢𝐧𝐤𝐬 «------•}I|[', url="https://t.me/isaimini_updates/110")
         ]]
                 await message.reply_text(f'<b>👋 𝖧𝖾𝗒 {message.from_user.mention},\n📁 {str(total)} 𝖱𝖾𝗌𝗎𝗅𝗍𝗌 𝖺𝗋𝖾 𝖿𝗈𝗎𝗇𝖽 𝖿𝗈𝗋 𝗒𝗈𝗎𝗋 𝗊𝗎𝖾𝗋𝗒 {search}.\n\nKindly ask movies or series in Movie Request Groups, Links available here ⬇</b>"', reply_markup=InlineKeyboardMarkup(btn), quote=True)
+    await stick.delete()
 
 @Client.on_callback_query(filters.regex(r"^next"))
 async def next_page(bot, query):
@@ -1580,25 +1582,30 @@ async def cb_handler(client: Client, query: CallbackQuery):
 
     
 async def auto_filter(client, msg, spoll=False):
+    stick = await msg.reply_sticker(sticker="CAACAgUAAx0CZjyOqQACMCpl_EX_Ak6ilEi7sdys1ec9ozSwvQAC3AIAAq9qOVVmHNMuomHDLB4E")
     reqstr1 = msg.from_user.id if msg.from_user else 0
     reqstr = await client.get_users(reqstr1)
     if not spoll:
         message = msg
         settings = await get_settings(message.chat.id)
-        if message.text.startswith("/"): return  # ignore commands
+        if message.text.startswith("/"): return await stick.delete() # ignore commands
         if re.findall("((^\/|^,|^!|^\.|^[\U0001F600-\U000E007F]).*)", message.text):
+            await stick.delete()
             return
         if len(message.text) < 100:
             search = message.text
             files, offset, total_results = await get_search_results(message.chat.id ,search.lower(), offset=0, filter=True)
             if not files:
                 if settings["spell_check"]:
+                    await stick.delete()
                     return await advantage_spell_chok(client, msg)
                 else:
                     if NO_RESULTS_MSG:
                         await client.send_message(chat_id=LOG_CHANNEL, text=(script.NORSLTS.format(reqstr.id, reqstr.mention, search)))
+                    await stick.delete()
                     return
         else:
+            await stick.delete()
             return
     else:
         message = msg.message.reply_to_message  # msg will be callback query
@@ -1758,6 +1765,7 @@ async def auto_filter(client, msg, spoll=False):
     CAP[key] = cap
     if imdb and imdb.get('poster'):
         try:
+            await stick.delete()
             hehe = await message.reply_photo(photo=imdb.get('poster'), caption=cap[:1024] + files_link, reply_markup=InlineKeyboardMarkup(btn))
             try:
                 if settings['auto_delete']:
@@ -1773,6 +1781,7 @@ async def auto_filter(client, msg, spoll=False):
                     await hehe.delete()
                     await message.delete()
         except (MediaEmpty, PhotoInvalidDimensions, WebpageMediaEmpty):
+            await stick.delete()
             pic = imdb.get('poster')
             poster = pic.replace('.jpg', "._V1_UX360.jpg")
             hmm = await message.reply_photo(photo=poster, caption=cap[:1024] + files_link, reply_markup=InlineKeyboardMarkup(btn))
@@ -1790,6 +1799,7 @@ async def auto_filter(client, msg, spoll=False):
                     await hmm.delete()
                     await message.delete()
         except Exception as e:
+            await stick.delete()
             logger.exception(e)
             fek = await message.reply_photo(photo=NOR_IMG, caption=cap + files_link, reply_markup=InlineKeyboardMarkup(btn))
             try:
@@ -1806,6 +1816,7 @@ async def auto_filter(client, msg, spoll=False):
                     await fek.delete()
                     await message.delete()
     else:
+        await stick.delete()
         fuk = await message.reply_photo(photo=NOR_IMG, caption=cap + files_link, reply_markup=InlineKeyboardMarkup(btn))
         try:
             if settings['auto_delete']:
@@ -1821,6 +1832,7 @@ async def auto_filter(client, msg, spoll=False):
                 await fuk.delete()
                 await message.delete()
     if spoll:
+        await stick.delete()
         await msg.message.delete()
 
 async def advantage_spell_chok(client, message):
