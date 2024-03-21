@@ -1,4 +1,5 @@
 import os
+import math
 import logging
 import random, string
 import asyncio
@@ -14,6 +15,7 @@ from utils import get_settings, get_size, get_shortlink, get_verify_status, upda
 from database.connections_mdb import active_connection
 import re
 from datetime import datetime, timedelta, timezone
+from plugins.pm_filter import BUTTONS, CAP
 import json
 import pytz
 import base64
@@ -165,6 +167,66 @@ async def start(client, message):
             InlineKeyboardButton(']|I{•------» 𝚃𝚞𝚝𝚘𝚛𝚒𝚊𝚕 «------•}I|[', url="https://t.me/how_to_download_isaimini/13")
         ]]
         await message.reply(f"Your Ads token is expired, refresh your token and try again.\n\nToken Timeout: {get_readable_time(VERIFY_EXPIRE)}\n\nWhat is the token?\n\nThis is an ads token. If you pass 1 ad, you can use the bot for {get_readable_time(VERIFY_EXPIRE)} after passing the ad.!", reply_markup=InlineKeyboardMarkup(btn), quote=True, protect_content=True)
+        return
+
+    if data.split("-", 1)[0] == "SEARCH":
+        title = data.split("-", 1)[1]
+        mov_name = title.replace("_", " ")
+        req = message.from_user.id if message.from_user else 0
+        key = f"{message.from_user.id}"
+        BUTTONS[key] = mov_name
+        cap = f"<b>😻 𝖧𝖾𝗅𝗅𝗈 {message.from_user.mention}\n📂 𝖸𝗈𝗎𝗋 𝖥𝗂𝗅𝖾𝗌 𝖠𝗋𝖾 𝖱𝖾𝖺𝖽𝗒\n\n</b>♨️ 𝐁𝐫𝐨𝐮𝐠𝐡𝐭 𝐓𝐨 𝐘𝐨𝐮 𝐁𝐲:- <a href=https://t.me/isaimini_updates>❤️ 𝗜𝘀𝗮𝗶𝗺𝗶𝗻𝗶 𝗣𝗿𝗶𝗺𝗲 ❤️</a></b>"
+        CAP[key] = cap
+        pre = 'file'
+        files, offset, total_results = await get_search_results(message.chat.id , mov_name.lower(), offset=0, filter=True)
+        stick = await message.reply_sticker(sticker="CAACAgUAAx0CZjyOqQACMCpl_EX_Ak6ilEi7sdys1ec9ozSwvQAC3AIAAq9qOVVmHNMuomHDLB4E")
+        await asyncio.sleep(1)
+        await stick.delete()
+        if not files:
+            return
+        btn = []
+        for file in files:
+            files_link += f"""<b>\n\n🎬 𝐅𝐢𝐥𝐞: <a href=https://t.me/{temp.U_NAME}?start={pre}_{file.file_id}>{file.file_name}</a>\n📁 𝐒𝐢𝐳𝐞: {get_size(file.file_size)}</b>"""
+        
+        btn.insert(0, 
+            [
+                InlineKeyboardButton(f'📟 𝖥𝗂𝗅𝖾𝗌: {len(files)}', 'dupe'),
+                InlineKeyboardButton(f'📮 Info', 'tips'),
+                InlineKeyboardButton(f'🎁 𝖳𝗂𝗉𝗌', 'info')
+            ]
+            )
+        btn.insert(0, [
+            InlineKeyboardButton(f'🎬 {mov_name} 🎬', 'rkbtn')
+        ])
+        if offset != "":
+            try:
+                btn.append(
+                    [
+                InlineKeyboardButton('✅ 🅓🅞🅝🅐🅣🅔 🅤🅢 ✅', url='https://t.me/isaimini_donation/5')
+            ])
+                btn.append(
+                    [InlineKeyboardButton("📃", callback_data="pages"), InlineKeyboardButton(text=f"1/{math.ceil(int(total_results)/10)}",callback_data="pages"), InlineKeyboardButton(text="𝖭𝖤𝖷𝖳 ▶️",callback_data=f"next_{req}_{key}_{offset}")]
+                )
+            except KeyError:
+                btn.append(
+                    [
+                InlineKeyboardButton('✅ 🅓🅞🅝🅐🅣🅔 🅤🅢 ✅', url='https://t.me/isaimini_donation/5')
+            ])
+                btn.append(
+                    [InlineKeyboardButton("📃", callback_data="pages"), InlineKeyboardButton(text=f"1/{math.ceil(int(total_results)/10)}",callback_data="pages"), InlineKeyboardButton(text="𝖭𝖤𝖷𝖳 ▶️",callback_data=f"next_{req}_{key}_{offset}")]
+                )
+        else:
+            btn.append(
+                [
+                InlineKeyboardButton('✅ 🅓🅞🅝🅐🅣🅔 🅤🅢 ✅', url='https://t.me/isaimini_donation/5')
+                ])
+            btn.append(
+                [InlineKeyboardButton(text="❌ 𝖭𝗈 𝖬𝗈𝗋𝖾 𝖯𝖺𝗀𝖾𝗌 𝖠𝗏𝖺𝗂𝗅𝖺𝖻𝗅𝖾 ! ❌",callback_data="pages")]
+            )
+        fuk = await message.reply_photo(photo=NOR_IMG, caption=cap + files_link, reply_markup=InlineKeyboardMarkup(btn))
+        await asyncio.sleep(300)
+        await fuk.delete()
+        await message.delete()
         return
 
     try:
