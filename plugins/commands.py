@@ -182,6 +182,7 @@ async def start(client, message):
         stick = await message.reply_sticker(sticker="CAACAgUAAx0CZjyOqQACMCpl_EX_Ak6ilEi7sdys1ec9ozSwvQAC3AIAAq9qOVVmHNMuomHDLB4E")
         await asyncio.sleep(1)
         await stick.delete()
+        files_link = ""
         if not files:
             return
         btn = []
