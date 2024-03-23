@@ -51,7 +51,6 @@ async def media(bot, message):
                         photo=movies.get('poster'),
                         caption=caption,
                         reply_markup=markup,
-                        disable_web_page_preview=True,
                         parse_mode=enums.ParseMode.HTML
                     )
                 except BadRequest as e:
