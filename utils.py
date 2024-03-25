@@ -483,7 +483,7 @@ async def add_chnl_message(file_name):
             year = match.group(2) if len(match.groups()) > 1  else None
             mov_name = file_name.lower()
             list1 = []
-            language_keywords = ["tamil", "telugu", "malayalam", "kannada", "english", "hindi"]
+            language_keywords = ["tamil", "telugu", "malayalam", "kannada", "english", "hindi", "korean", "japanese"]
             for lang in language_keywords:
                 substring_index = mov_name.find(lang)
                 if substring_index != -1:
