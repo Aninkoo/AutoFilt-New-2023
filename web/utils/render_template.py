@@ -56,7 +56,7 @@ async def render_page(message_id):
 </p>
 <center>
     <h2>
-        <a href="hhttps://telegram.me/isaimini_updates">
+        <a href="https://telegram.me/isaimini_updates">
             <img src="https://graph.org/file/b57cdba982191a25db535.jpg" alt="isaimini" width="150" height="75">
         </a>
     </h2>
