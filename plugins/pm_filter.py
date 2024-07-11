@@ -147,7 +147,7 @@ async def next_page(bot, query):
     else:
         btn = []
         for file in files:
-            files_link += f"""<b>\n\n🎬 𝐅𝐢𝐥𝐞: <a href=https://t.me/{temp.U_NAME}?start={pre}_{file.file_id}>{file.file_name}</a>\n📁 𝐒𝐢𝐳𝐞: {get_size(file.file_size)}</b>"""
+            files_link += f"""<blockquote><b>\n\n🎬 𝐅𝐢𝐥𝐞: <a href=https://t.me/{temp.U_NAME}?start={pre}_{file.file_id}>{file.file_name}</a></b></blockquote>\n<>b📁 𝐒𝐢𝐳𝐞: {get_size(file.file_size)}</b>"""
     try:
         if settings['auto_delete']:
             btn.insert(0, 
@@ -390,7 +390,7 @@ async def filter_languages_cb_handler(client: Client, query: CallbackQuery):
     else:
         btn = []
         for file in files:
-            files_link += f"""<b>\n\n🎬 𝐅𝐢𝐥𝐞: <a href=https://t.me/{temp.U_NAME}?start={pre}_{file.file_id}>{file.file_name}</a>\n📁 𝐒𝐢𝐳𝐞: {get_size(file.file_size)}</b>"""
+            files_link += f"""<blockquote><b>\n\n🎬 𝐅𝐢𝐥𝐞: <a href=https://t.me/{temp.U_NAME}?start={pre}_{file.file_id}>{file.file_name}</a></b></blockquote>\n<>b📁 𝐒𝐢𝐳𝐞: {get_size(file.file_size)}</b>"""
     try:
         if settings['auto_delete']:
             btn.insert(0, 
@@ -492,7 +492,7 @@ async def lang_next_page(bot, query):
     else:
         btn = []
         for file in files:
-            files_link += f"""<b>\n\n🎬 𝐅𝐢𝐥𝐞: <a href=https://t.me/{temp.U_NAME}?start={pre}_{file.file_id}>{file.file_name}</a>\n📁 𝐒𝐢𝐳𝐞: {get_size(file.file_size)}</b>"""
+            files_link += f"""<blockquote><b>\n\n🎬 𝐅𝐢𝐥𝐞: <a href=https://t.me/{temp.U_NAME}?start={pre}_{file.file_id}>{file.file_name}</a></b></blockquote>\n<>b📁 𝐒𝐢𝐳𝐞: {get_size(file.file_size)}</b>"""
 
     try:
         if settings['auto_delete']:
@@ -1761,7 +1761,7 @@ async def auto_filter(client, msg, spoll=False):
             **locals()
         )
     else:
-        cap = f"<b>😻 𝖧𝖾𝗅𝗅𝗈 {message.from_user.mention}\n📂 𝖸𝗈𝗎𝗋 𝖥𝗂𝗅𝖾𝗌 𝖠𝗋𝖾 𝖱𝖾𝖺𝖽𝗒\n\n</b>♨️ 𝐁𝐫𝐨𝐮𝐠𝐡𝐭 𝐓𝐨 𝐘𝐨𝐮 𝐁𝐲:- <a href=https://t.me/isaimini_updates>❤️ 𝗜𝘀𝗮𝗶𝗺𝗶𝗻𝗶 𝗣𝗿𝗶𝗺𝗲 ❤️</a></b>"
+        cap = f"<blockquote><b>😻 𝖧𝖾𝗅𝗅𝗈 {message.from_user.mention}\n📂 𝖸𝗈𝗎𝗋 𝖥𝗂𝗅𝖾𝗌 𝖠𝗋𝖾 𝖱𝖾𝖺𝖽𝗒\n\n</b>♨️ 𝐁𝐫𝐨𝐮𝐠𝐡𝐭 𝐓𝐨 𝐘𝐨𝐮 𝐁𝐲:- <a href=https://t.me/isaimini_updates>❤️ 𝗜𝘀𝗮𝗶𝗺𝗶𝗻𝗶 𝗣𝗿𝗶𝗺𝗲 ❤️</a></b></blockquote>"
     CAP[key] = cap
     if imdb and imdb.get('poster'):
         try:
