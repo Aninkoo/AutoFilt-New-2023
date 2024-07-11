@@ -39,10 +39,10 @@ home_template = """
 </head>
 <body>
     <!-- Image above the chatbot title -->
-    <img src="https://graph.org/file/a27f4c86131d3278b3dc8.jpg" alt="Chatbot Image" class="chatbot-image">
+    <img src="https://graph.org/file/a27f4c86131d3278b3dc8.jpg" alt="Thumb Image" class="chatbot-image">
 
     <!-- Chatbot title -->
-    <h1 class="chatbot-title">Isaimini Prime</h1>
+    <h1 class="chatbot-title"><a href=https://telegram.me/isaimini_updates>❤️ 𝗜𝘀𝗮𝗶𝗺𝗶𝗻𝗶 𝗣𝗿𝗶𝗺𝗲 ❤️</a></h1>
 </body>
 </html>
 """
