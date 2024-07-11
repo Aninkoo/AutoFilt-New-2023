@@ -43,21 +43,21 @@ async def render_page(message_id):
     current_url = f'{URL}{str(message_id)}'
     html_code = f'''
    <p>
-    <center><h5>Click on 👇 button to watch/download in your favorite player</h5></center>
+    <center><h3>Click on 👇 button to watch in your favorite player or to Download</h3></center>
     <center>
         <button style="font-size: 20px; background-color: skyblue; border-radius: 10px;" onclick="window.location.href = 'intent:{current_url}#Intent;package=com.mxtech.videoplayer.ad;S.title={file_name};end'">MX player</button> &nbsp
         <button style="font-size: 20px; background-color: orange; border-radius: 10px;" onclick="window.location.href = 'vlc://{current_url}'">VLC player</button> &nbsp <br>
         <p>&nbsp</p>
         <button style="font-size: 20px; background-color: red; border-radius: 10px;" onclick="window.location.href = 'playit://playerv2/video?url={current_url}&amp;title={file_name}'">Playit player</button> &nbsp <br>
         <p>&nbsp</p>
-        <button style="font-size: 20px; background-color: yellow; border-radius: 10px;" onclick="window.location.href = '{current_url}'">Save in your gallery</button> &nbsp
+        <button style="font-size: 20px; background-color: yellow; border-radius: 10px;" onclick="window.location.href = '{current_url}'">Download and Watch</button> &nbsp
     </center>
 </p>
 </p>
 <center>
     <h2>
-        <a href="https://telegram.dog/+kc6bYRCsWdlhOTI1">
-            <img src="https://graph.org/file/b57cdba982191a25db535.jpg" alt="Rkbotz" width="150" height="75">
+        <a href="hhttps://telegram.me/isaimini_updates">
+            <img src="https://graph.org/file/b57cdba982191a25db535.jpg" alt="isaimini" width="150" height="75">
         </a>
     </h2>
 </center>
