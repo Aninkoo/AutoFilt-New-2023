@@ -13,7 +13,7 @@ async def check_alive(_, message):
 
 @Client.on_message(filters.command("help", CMD))
 async def help(_, message):
-    await message.reply_text("<b>Need Help? Check These For Searching Movies or Series 👇</b>\n\n</blockquote>🎥 For Movie Search Formats.</blockquote>Click ➠ /movie \n<blockquote>📂 For Series Search Formats.</blockquote>Click ➠ /series \n\n<b>Kindly Use Google For Spelling Before Searching Here.❣️</b>")
+    await message.reply_text("<b>Need Help? Check These For Searching Movies or Series 👇</b>\n\n<blockquote>🎥 For Movie Search Formats.</blockquote>\nClick ➠ /movie \n<blockquote>📂 For Series Search Formats.</blockquote>Click ➠ /series \n\n<b>Kindly Use Google For Spelling Before Searching Here.❣️</b>")
 
 
 @Client.on_message(filters.command("movie", CMD))
