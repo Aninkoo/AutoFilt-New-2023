@@ -40,7 +40,7 @@ async def render_page(message_id):
                 async with s.get(src) as u:
                     file_size = get_size(u.headers.get('Content-Length'))
                     html = (await r.read()) % (heading, file_name, src, file_size)
-    current_url = f'{URL}/{str(message_id)}'
+    current_url = f'{URL}{str(message_id)}'
     html_code = f'''
    <p>
     <center><h5>Click on 👇 button to watch/download in your favorite player</h5></center>
