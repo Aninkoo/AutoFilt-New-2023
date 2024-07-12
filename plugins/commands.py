@@ -303,6 +303,7 @@ async def start(client, message):
             f_msg_id, l_msg_id, f_chat_id = decoded.split("_", 2)
             protect = "/pbatch" if PROTECT_CONTENT else "batch"
         diff = int(l_msg_id) - int(f_msg_id)
+        snt_msgs = []
         await sts.delete()
         async for msg in client.iter_messages(int(f_chat_id), int(l_msg_id), int(f_msg_id)):
             if msg.media:
@@ -318,10 +319,14 @@ async def start(client, message):
                     file_name = getattr(media, 'file_name', '')
                     f_caption = getattr(msg, 'caption', file_name)
                 try:
-                    await msg.copy(message.chat.id, caption=f_caption, protect_content=True if protect == "/pbatch" else False)
+                    snt_msg = await msg.copy(message.chat.id, caption=f_caption, protect_content=True if protect == "/pbatch" else False)
+                    await asyncio.sleep(0.5)
+                    snt_msgs.append(snt_msg)
                 except FloodWait as e:
                     await asyncio.sleep(e.x)
-                    await msg.copy(message.chat.id, caption=f_caption, protect_content=True if protect == "/pbatch" else False)
+                    snt_msg = await msg.copy(message.chat.id, caption=f_caption, protect_content=True if protect == "/pbatch" else False)
+                    await asyncio.sleep(0.5)
+                    snt_msgs.append(snt_msg)
                 except Exception as e:
                     logger.exception(e)
                     continue
@@ -329,14 +334,24 @@ async def start(client, message):
                 continue
             else:
                 try:
-                    await msg.copy(message.chat.id, protect_content=True if protect == "/pbatch" else False)
+                    snt_msg = await msg.copy(message.chat.id, protect_content=True if protect == "/pbatch" else False)
+                    await asyncio.sleep(0.5)
+                    snt_msgs.append(snt_msg)
                 except FloodWait as e:
                     await asyncio.sleep(e.x)
-                    await msg.copy(message.chat.id, protect_content=True if protect == "/pbatch" else False)
+                    snt_msg = await msg.copy(message.chat.id, protect_content=True if protect == "/pbatch" else False)
+                    await asyncio.sleep(0.5)
+                    snt_msgs.append(snt_msg)
                 except Exception as e:
                     logger.exception(e)
                     continue
-            await asyncio.sleep(1) 
+            await asyncio.sleep(1)
+        await asyncio.sleep(30)
+        for snt_msg in snt_msgs:
+            try:
+                await snt_msg.delete()
+            except:
+                pass
         return
         
     files_ = await get_file_details(file_id)           
