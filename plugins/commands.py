@@ -143,7 +143,7 @@ async def start(client, message):
         _, token = data.split("_", 1)
         verify_status = await get_verify_status(message.from_user.id)
         if verify_status['verify_token'] != token:
-            return await message.reply("Your verify token is invalid.")
+            return await message.reply("Your Verification Token is Invalid. Try with Latest Token Link or Contact Admin")
         await update_verify_status(message.from_user.id, is_verified=True, verified_time=time.time())
         if verify_status["link"] == "":
             reply_markup = None
@@ -152,7 +152,7 @@ async def start(client, message):
                 InlineKeyboardButton("◦•●◉✿📁 ʜᴇʀᴇ ɪs ʏᴏᴜʀ ғɪʟᴇ 📁✿◉●•◦", url=f'https://t.me/{temp.U_NAME}?start={verify_status["link"]}')
             ]]
             reply_markup = InlineKeyboardMarkup(btn)
-        await message.reply(f"✅ Your token successfully verified and valid for: {next_verify_str}\nThank You For Using Our Service!\n\n", reply_markup=reply_markup, quote=True, protect_content=False)
+        await message.reply(f"✅ Your token successfully verified and valid for: {next_verify_str}\n<blockquote>Thank You For Using Our Service!\n</blockquote>", reply_markup=reply_markup, quote=True, protect_content=False)
         return
     
     verify_status = await get_verify_status(message.from_user.id)
@@ -166,7 +166,7 @@ async def start(client, message):
         ],[
             InlineKeyboardButton(']|I{•------» 𝚃𝚞𝚝𝚘𝚛𝚒𝚊𝚕 «------•}I|[', url="https://t.me/how_to_download_isaimini/13")
         ]]
-        await message.reply(f"Your Ads token is expired, refresh your token and try again.\n\nToken Timeout: {get_readable_time(VERIFY_EXPIRE)}\n\nWhat is the token?\n\nThis is an ads token. If you pass 1 ad, you can use the bot for {get_readable_time(VERIFY_EXPIRE)} after passing the ad.!", reply_markup=InlineKeyboardMarkup(btn), quote=True, protect_content=True)
+        await message.reply(f"Your Token is expired, Refresh your token and try again.\n\nToken Timeout: {get_readable_time(VERIFY_EXPIRE)}\n<blockquote expandable>What is the token?\n\nToken is the Key to use the bot. If you pass 1 ad, you can use the bot for {get_readable_time(VERIFY_EXPIRE)} with all Benifits. This helps Bot Owner for the Bot Hosting!</blockquote>", reply_markup=InlineKeyboardMarkup(btn), quote=True, protect_content=True)
         return
 
     if data.split("-", 1)[0] == "SEARCH":
