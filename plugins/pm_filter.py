@@ -135,6 +135,7 @@ async def next_page(bot, query):
     pre = 'filep' if settings['file_secure'] else 'file'
     temp.FILES_IDS[key] = files
     files_link = ''
+    end_cap = ''
     if settings['button']:
         btn = [
             [
@@ -146,8 +147,9 @@ async def next_page(bot, query):
         ]
     else:
         btn = []
+        end_cap = f"""↤↤↤↤↤❌End Of Page❌↦↦↦↦↦"""
         for file in files:
-            files_link += f"""<blockquote><b>\n\n🎬 𝐅𝐢𝐥𝐞: <a href=https://t.me/{temp.U_NAME}?start={pre}_{file.file_id}>{file.file_name}</a></b></blockquote>\n<>b📁 𝐒𝐢𝐳𝐞: {get_size(file.file_size)}</b>"""
+            files_link += f"""<blockquote><b>\n🎬 𝐅𝐢𝐥𝐞: <a href=https://t.me/{temp.U_NAME}?start={pre}_{file.file_id}>{file.file_name}</a></b></blockquote>\n<>b📁 𝐒𝐢𝐳𝐞: {get_size(file.file_size)}</b>\n"""
     try:
         if settings['auto_delete']:
             btn.insert(0, 
@@ -333,7 +335,7 @@ async def next_page(bot, query):
         InlineKeyboardButton(f'🎬 {search} 🎬', 'rkbtn')
     ])
     try:
-        await query.message.edit_text(cap + files_link, reply_markup=InlineKeyboardMarkup(btn), disable_web_page_preview=True)
+        await query.message.edit_text(cap + files_link + end_cap, reply_markup=InlineKeyboardMarkup(btn), disable_web_page_preview=True)
     except MessageNotModified:
         pass
     await query.answer()
@@ -389,8 +391,9 @@ async def filter_languages_cb_handler(client: Client, query: CallbackQuery):
         ]
     else:
         btn = []
+        end_cap = f"""↤↤↤↤↤❌End Of Page❌↦↦↦↦↦"""
         for file in files:
-            files_link += f"""<blockquote><b>\n\n🎬 𝐅𝐢𝐥𝐞: <a href=https://t.me/{temp.U_NAME}?start={pre}_{file.file_id}>{file.file_name}</a></b></blockquote>\n<>b📁 𝐒𝐢𝐳𝐞: {get_size(file.file_size)}</b>"""
+            files_link += f"""<blockquote><b>\n🎬 𝐅𝐢𝐥𝐞: <a href=https://t.me/{temp.U_NAME}?start={pre}_{file.file_id}>{file.file_name}</a></b></blockquote>\n<>b📁 𝐒𝐢𝐳𝐞: {get_size(file.file_size)}</b>\n"""
     try:
         if settings['auto_delete']:
             btn.insert(0, 
@@ -449,7 +452,7 @@ async def filter_languages_cb_handler(client: Client, query: CallbackQuery):
             [InlineKeyboardButton(text="🚸 ɴᴏ ᴍᴏʀᴇ ᴘᴀɢᴇs 🚸", callback_data="pages")]
         )
     btn.append([InlineKeyboardButton(text="⪻ ʙᴀᴄᴋ ᴛᴏ ᴍᴀɪɴ ᴘᴀɢᴇ", callback_data=f"next_{req}_{key}_{offset}")])
-    await query.message.edit_text(cap + files_link, disable_web_page_preview=True, reply_markup=InlineKeyboardMarkup(btn))
+    await query.message.edit_text(cap + files_link + end_cap, disable_web_page_preview=True, reply_markup=InlineKeyboardMarkup(btn))
 
 
 @Client.on_callback_query(filters.regex(r"^lang_next"))
@@ -491,8 +494,9 @@ async def lang_next_page(bot, query):
         ]
     else:
         btn = []
+        end_cap = f"""↤↤↤↤↤❌End Of Page❌↦↦↦↦↦"""
         for file in files:
-            files_link += f"""<blockquote><b>\n\n🎬 𝐅𝐢𝐥𝐞: <a href=https://t.me/{temp.U_NAME}?start={pre}_{file.file_id}>{file.file_name}</a></b></blockquote>\n<>b📁 𝐒𝐢𝐳𝐞: {get_size(file.file_size)}</b>"""
+            files_link += f"""<blockquote><b>\n🎬 𝐅𝐢𝐥𝐞: <a href=https://t.me/{temp.U_NAME}?start={pre}_{file.file_id}>{file.file_name}</a></b></blockquote>\n<>b📁 𝐒𝐢𝐳𝐞: {get_size(file.file_size)}</b>\n"""
 
     try:
         if settings['auto_delete']:
@@ -570,7 +574,7 @@ async def lang_next_page(bot, query):
              InlineKeyboardButton("𝖭𝖤𝖷𝖳 ▶️", callback_data=f"lang_next#{req}#{key}#{lang}#{n_offset}#{offset}")]
         )
     btn.append([InlineKeyboardButton(text="⪻ ʙᴀᴄᴋ ᴛᴏ ᴍᴀɪɴ ᴘᴀɢᴇ", callback_data=f"next_{req}_{key}_{offset}")])
-    await query.message.edit_text(cap + files_link, disable_web_page_preview=True, reply_markup=InlineKeyboardMarkup(btn))
+    await query.message.edit_text(cap + files_link + end_cap, disable_web_page_preview=True, reply_markup=InlineKeyboardMarkup(btn))
 
 
 @Client.on_callback_query(filters.regex(r"^spolling"))
@@ -1630,8 +1634,9 @@ async def auto_filter(client, msg, spoll=False):
         ]
     else:
         btn = []
+        end_cap = f"""↤↤↤↤↤❌End Of Page❌↦↦↦↦↦"""
         for file in files:
-            files_link += f"""<b>\n\n🎬 𝐅𝐢𝐥𝐞: <a href=https://t.me/{temp.U_NAME}?start={pre}_{file.file_id}>{file.file_name}</a>\n📁 𝐒𝐢𝐳𝐞: {get_size(file.file_size)}</b>"""
+            files_link += f"""<blockquote><b>\n🎬 𝐅𝐢𝐥𝐞: <a href=https://t.me/{temp.U_NAME}?start={pre}_{file.file_id}>{file.file_name}</a></b></blockquote>\n<>b📁 𝐒𝐢𝐳𝐞: {get_size(file.file_size)}</b>\n"""
     try:
         if settings['auto_delete']:
             btn.insert(0, 
@@ -1767,7 +1772,7 @@ async def auto_filter(client, msg, spoll=False):
         try:
             if not spoll:
                 await stick.delete()
-            hehe = await message.reply_photo(photo=imdb.get('poster'), caption=cap[:1024] + files_link, reply_markup=InlineKeyboardMarkup(btn))
+            hehe = await message.reply_photo(photo=imdb.get('poster'), caption=cap[:1024] + files_link + end_cap, reply_markup=InlineKeyboardMarkup(btn))
             try:
                 if settings['auto_delete']:
                     await asyncio.sleep(300)
@@ -1786,7 +1791,7 @@ async def auto_filter(client, msg, spoll=False):
             poster = pic.replace('.jpg', "._V1_UX360.jpg")
             if not spoll:
                 await stick.delete()
-            hmm = await message.reply_photo(photo=poster, caption=cap[:1024] + files_link, reply_markup=InlineKeyboardMarkup(btn))
+            hmm = await message.reply_photo(photo=poster, caption=cap[:1024] + files_link + end_cap, reply_markup=InlineKeyboardMarkup(btn))
             try:
                 if settings['auto_delete']:
                     await asyncio.sleep(300)
@@ -1804,7 +1809,7 @@ async def auto_filter(client, msg, spoll=False):
             logger.exception(e)
             if not spoll:
                 await stick.delete()
-            fek = await message.reply_photo(photo=NOR_IMG, caption=cap + files_link, reply_markup=InlineKeyboardMarkup(btn))
+            fek = await message.reply_photo(photo=NOR_IMG, caption=cap + files_link + end_cap, reply_markup=InlineKeyboardMarkup(btn))
             try:
                 if settings['auto_delete']:
                     await asyncio.sleep(300)
@@ -1821,7 +1826,7 @@ async def auto_filter(client, msg, spoll=False):
     else:
         if not spoll:
                 await stick.delete()
-        fuk = await message.reply_photo(photo=NOR_IMG, caption=cap + files_link, reply_markup=InlineKeyboardMarkup(btn))
+        fuk = await message.reply_photo(photo=NOR_IMG, caption=cap + files_link + end_cap, reply_markup=InlineKeyboardMarkup(btn))
         try:
             if settings['auto_delete']:
                 await asyncio.sleep(300)
