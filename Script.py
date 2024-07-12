@@ -160,23 +160,18 @@ Request Again"""
     TOP_ALRT_MSG = """𝖢𝗁𝖾𝖼𝗄𝗂𝗇𝗀 𝖿𝗈𝗋 𝗊𝗎𝖾𝗋𝗒 𝗂𝗇 𝖣𝖺𝗍𝖺𝖻𝖺𝗌𝖾..."""
 
     MELCOW_ENG = """<b>Hey {}, We Are Happy You Made it to {} But First Things First 👇</b> 
-
 <blockquote>• 𝖭𝗈 𝖯𝗋𝗈𝗆𝗈, 𝖭𝗈 𝖯𝗈𝗋𝗇, 𝖭𝗈 𝖮𝗍𝗁𝖾𝗋 𝖠𝖻𝗎𝗌𝖾𝗌
 • 𝖠𝗌𝗄 𝖸𝗈𝗎𝗋 𝖬𝗈𝗏𝗂𝖾𝗌 𝖶𝗂𝗍𝗁 𝖢𝗈𝗋𝗋𝖾𝖼𝗍 𝖲𝗉𝖾𝗅𝗅𝗂𝗇𝗀
 • 𝖲𝗉𝖺𝗆𝗆𝖾𝗋𝗌 𝖲𝗍𝖺𝗒 𝖠𝗐𝖺𝗒
 • 𝖥𝖾𝖾𝗅 𝖥𝗋𝖾𝖾 𝖳𝗈 𝖱𝖾𝗉𝗈𝗋𝗍 𝖠𝗇𝗒 Issues 𝖳𝗈 𝖠𝖽𝗆𝗂𝗇𝗌 𝗎𝗌𝗂𝗇𝗀 @admin</blockquote>
-
 𝗡𝗼𝘁𝗲:- ⚠️ 𝐖𝐞 𝐃𝐨𝐧'𝐭 𝐎𝐰𝐧 𝐀𝐧𝐲 𝐂𝐨𝐧𝐭𝐞𝐧𝐭, 𝐖𝐞 𝐎𝐧𝐥𝐲 𝐒𝐡𝐚𝐫𝐞 𝐓𝐡𝐞 𝐂𝐨𝐧𝐭𝐞𝐧𝐭𝐬 𝐀𝐥𝐫𝐞𝐚𝐝𝐲 𝐀𝐯𝐚𝐢𝐥𝐚𝐛𝐥𝐞 𝐎𝐧 𝐈𝐧𝐭𝐞𝐫𝐧𝐞𝐭 ⚠️
 
 <u>𝗥𝗲𝗾𝘂𝗲𝘀𝘁𝘀 𝗙𝗼𝗿𝗺𝗮𝘁𝘀</u>
-
 <blockquote>➠ For Movie Request Formats, </blockquote>
      Click ➠ /movie
-
 <blockquote>➠ For Series Request Formats, </blockquote>
      Click ➠ /series 
-
-✅<b> If You Like Our Service, Please Consider Donation to Continue this Service. For Donation, 
+<blockquote>✅<b> If You Like Our Service, Please Consider Donation to Continue this Service. For Donation, </blockquote>
      Click</b> ➠ /donate
 
 <b>Share if you care : @Isaimini_updates or @Isaimini_Filter_bot</b>"""
