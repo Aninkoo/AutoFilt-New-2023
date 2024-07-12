@@ -38,7 +38,7 @@ class script(object):
 ║╰━━━━━━━〔<a href=https://t.me/isaimini_updates/110>𝗠𝗼𝘃𝗶𝗲𝘀 𝗖𝗹𝘂𝗯</a>〕</b>"""
 
     SOURCE_TXT = """<b>DISCLAIMER NOTE‼️:</b>
-- 𝗜𝘀𝗮𝗶𝗺𝗶𝗻𝗶 𝗣𝗿𝗶𝗺𝗲 😻  𝚒𝚜 𝚊𝚗 𝙾𝚙𝚎𝚗 𝚂𝚘𝚞𝚛𝚌𝚎 𝙿𝚛𝚘𝚓𝚎𝚌𝚝. All the files in this bot are freely available on the internet or posted by somebody else. This bot is indexing files which are already uploaded on Telegram for easy of searching, We respect all the copyright laws and works in compliance with DMCA and EUCD. If anything is against law please contact us so that it can be removed asap. It is forbidden to download, stream, reproduce, or by any means, share, or consume, content without explicit permission from the content creator or legal copyright holder. If you believe this bot is violating your intellectual property, contact the respective channels for removal. The Bot does not own any of these contents, it only index the files from telegram.. 
+<blockquote expandable>𝗜𝘀𝗮𝗶𝗺𝗶𝗻𝗶 𝗣𝗿𝗶𝗺𝗲 😻  𝚒𝚜 𝚊𝚗 𝙾𝚙𝚎𝚗 𝚂𝚘𝚞𝚛𝚌𝚎 𝙿𝚛𝚘𝚓𝚎𝚌𝚝. All the files in this bot are freely available on the internet or posted by somebody else. This bot is indexing files which are already uploaded on Telegram for easy of searching, We respect all the copyright laws and works in compliance with DMCA and EUCD. If anything is against law please contact us so that it can be removed asap. It is forbidden to download, stream, reproduce, or by any means, share, or consume, content without explicit permission from the content creator or legal copyright holder. If you believe this bot is violating your intellectual property, contact the respective channels for removal. The Bot does not own any of these contents, it only index the files from telegram.. </blockquote>
 - Source - <a href=https://t.me/isaimini_updates>𝗜𝘀𝗮𝗶𝗺𝗶𝗻𝗶 𝗣𝗿𝗶𝗺𝗲</a>  
 
 <b>DEVS:</b>
@@ -123,11 +123,10 @@ Cᴏᴍᴍᴀɴᴅs Aɴᴅ Usᴀɢᴇ:
 • /delallg - <code>Tᴏ ᴅᴇʟᴇᴛᴇ ᴀʟʟ Gғɪʟᴛᴇʀs ғʀᴏᴍ ᴛʜᴇ ʙᴏᴛ's ᴅᴀᴛᴀʙᴀsᴇ.</code>
 • /deletefiles - <code>Tᴏ ᴅᴇʟᴇᴛᴇ CᴀᴍRɪᴘ ᴀɴᴅ PʀᴇDVD Fɪʟᴇs ғʀᴏᴍ ᴛʜᴇ ʙᴏᴛ's ᴅᴀᴛᴀʙᴀsᴇ.</code>"""
 
-    STATUS_TXT = """𝖳𝗈𝗍𝖺𝗅 𝖥𝗂𝗅𝖾𝗌: <code>{}</code>
+    STATUS_TXT = """<blockquote>𝖳𝗈𝗍𝖺𝗅 𝖥𝗂𝗅𝖾𝗌: <code>{}</code>
 𝖳𝗈𝗍𝖺𝗅 𝖬𝖾𝗆𝖻𝖾𝗋𝗌: <code>{}</code>
 𝖳𝗈𝗍𝖺𝗅 𝖢𝗁𝖺𝗍𝗌: <code>{}</code>
-𝖴𝗌𝖾𝖽 𝖲𝗍𝗈𝗋𝖺𝗀𝖾: <code>{}</code>
-
+𝖴𝗌𝖾𝖽 𝖲𝗍𝗈𝗋𝖺𝗀𝖾: <code>{}</code></blockquote>
 <b>😎 𝖯𝗈𝗐𝖾𝗋𝖾𝖽 𝖻𝗒 @Isaimini_updates</b>"""
 
     LOG_TEXT_G = """#NewGroup
@@ -162,19 +161,19 @@ Request Again"""
 
     MELCOW_ENG = """<b>Hey {}, We Are Happy You Made it to {} But First Things First 👇</b> 
 
-• 𝖭𝗈 𝖯𝗋𝗈𝗆𝗈, 𝖭𝗈 𝖯𝗈𝗋𝗇, 𝖭𝗈 𝖮𝗍𝗁𝖾𝗋 𝖠𝖻𝗎𝗌𝖾𝗌
+<blockquote>• 𝖭𝗈 𝖯𝗋𝗈𝗆𝗈, 𝖭𝗈 𝖯𝗈𝗋𝗇, 𝖭𝗈 𝖮𝗍𝗁𝖾𝗋 𝖠𝖻𝗎𝗌𝖾𝗌
 • 𝖠𝗌𝗄 𝖸𝗈𝗎𝗋 𝖬𝗈𝗏𝗂𝖾𝗌 𝖶𝗂𝗍𝗁 𝖢𝗈𝗋𝗋𝖾𝖼𝗍 𝖲𝗉𝖾𝗅𝗅𝗂𝗇𝗀
 • 𝖲𝗉𝖺𝗆𝗆𝖾𝗋𝗌 𝖲𝗍𝖺𝗒 𝖠𝗐𝖺𝗒
-• 𝖥𝖾𝖾𝗅 𝖥𝗋𝖾𝖾 𝖳𝗈 𝖱𝖾𝗉𝗈𝗋𝗍 𝖠𝗇𝗒 Issues 𝖳𝗈 𝖠𝖽𝗆𝗂𝗇𝗌 𝗎𝗌𝗂𝗇𝗀 @admin
+• 𝖥𝖾𝖾𝗅 𝖥𝗋𝖾𝖾 𝖳𝗈 𝖱𝖾𝗉𝗈𝗋𝗍 𝖠𝗇𝗒 Issues 𝖳𝗈 𝖠𝖽𝗆𝗂𝗇𝗌 𝗎𝗌𝗂𝗇𝗀 @admin</blockquote>
 
 𝗡𝗼𝘁𝗲:- ⚠️ 𝐖𝐞 𝐃𝐨𝐧'𝐭 𝐎𝐰𝐧 𝐀𝐧𝐲 𝐂𝐨𝐧𝐭𝐞𝐧𝐭, 𝐖𝐞 𝐎𝐧𝐥𝐲 𝐒𝐡𝐚𝐫𝐞 𝐓𝐡𝐞 𝐂𝐨𝐧𝐭𝐞𝐧𝐭𝐬 𝐀𝐥𝐫𝐞𝐚𝐝𝐲 𝐀𝐯𝐚𝐢𝐥𝐚𝐛𝐥𝐞 𝐎𝐧 𝐈𝐧𝐭𝐞𝐫𝐧𝐞𝐭 ⚠️
 
 <u>𝗥𝗲𝗾𝘂𝗲𝘀𝘁𝘀 𝗙𝗼𝗿𝗺𝗮𝘁𝘀</u>
 
-➠ For Movie Request Formats, 
+<blockquote>➠ For Movie Request Formats, </blockquote>
      Click ➠ /movie
 
-➠ For Series Request Formats, 
+<blockquote>➠ For Series Request Formats, </blockquote>
      Click ➠ /series 
 
 ✅<b> If You Like Our Service, Please Consider Donation to Continue this Service. For Donation, 
@@ -184,7 +183,7 @@ Request Again"""
 
     OWNER_INFO = """You Can Use this Contact Admin for Paid Promotion, Any Errors or Issues....!!
 
-    <b>❌ Don't Ask Me To Send Movies In PM 😵‍💫 </b>
+<blockquote><b>❌ Don't Ask Me To Send Movies In PM 😵‍💫 </b></blockquote>
     
 ○ 𝖢𝗋𝖾𝖺𝗍𝗈𝗋 : <a href='https://t.me/isaiminiprime_admin'>𝖳𝗁𝗂𝗌 𝖯𝖾𝗋𝗌𝗈𝗇</a>
 
@@ -204,9 +203,9 @@ Message <b>: {}</b>
     <b>©️ Main Channel:-  \n<a href=https://t.me/isaimini_updates>❤️ 𝗜𝘀𝗮𝗶𝗺𝗶𝗻𝗶 𝗣𝗿𝗶𝗺𝗲 ❤️</a></b> \n\n<b>FILE : <code>{file_name}</code> \n\nSize : {file_size}</b>"""
 
     IMDB_TEMPLATE_TXT = """
-🏷 𝖳𝗂𝗍𝗅𝖾: <a href={url}>{title}</a> 
+<blockquote>🏷 𝖳𝗂𝗍𝗅𝖾: <a href={url}>{title}</a> 
 🔮 𝖸𝖾𝖺𝗋: {year} \n⭐️ 𝖱𝖺𝗍𝗂𝗇𝗀𝗌: {rating}/ 10  
-🎭 𝖦𝖾𝗇𝖾𝗋𝗌: {genres} 
+🎭 𝖦𝖾𝗇𝖾𝗋𝗌: {genres} </blockquote>
 
 🎊 𝖯𝗈𝗐𝖾𝗋𝖾𝖽 𝖡𝗒 [❤️ 𝗜𝘀𝗮𝗶𝗺𝗶𝗻𝗶 𝗣𝗿𝗶𝗺𝗲 ❤️](t.me/Isaimini_updates)"""
     
@@ -240,8 +239,7 @@ Aᴠᴀɪʟᴀʙʟᴇ ᴄᴏᴍᴍᴀɴᴅs:
 🛠️ 𝖡𝗎𝗂𝗅𝖽 𝖲𝗍𝖺𝗍𝗎𝗌 : <code>𝗏2.7.3 [ 𝖲𝗍𝖺𝖻𝗅𝖾 ]</code></b>"""
 
     RESTART_GC_TXT = """
-<b>😎 நான் வீழ்வேன் என்று நினைத்தாயோ? 😏
-
+<blockquote><b>😎 நான் வீழ்வேன் என்று நினைத்தாயோ? 😏</blockquote>
 <u>𝖡𝗈𝗍 𝖱𝖾𝗌𝗍𝖺𝗋𝗍𝖾𝖽 ✅</u></b>"""
 
     LOGO = """
