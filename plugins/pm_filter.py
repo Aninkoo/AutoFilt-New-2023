@@ -149,7 +149,7 @@ async def next_page(bot, query):
         btn = []
         end_cap = f"""<b>↤↤↤↤↤❌End Of Page❌↦↦↦↦↦</b>"""
         for file in files:
-            files_link += f"""/n<blockquote><b>🎬 𝐅𝐢𝐥𝐞: <a href=https://t.me/{temp.U_NAME}?start={pre}_{file.file_id}>{file.file_name}</a></b></blockquote>\n<b>📁 𝐒𝐢𝐳𝐞: {get_size(file.file_size)}</b>\n"""
+            files_link += f"""\n<blockquote><b>🎬 𝐅𝐢𝐥𝐞: <a href=https://t.me/{temp.U_NAME}?start={pre}_{file.file_id}>{file.file_name}</a></b></blockquote>\n<b>📁 𝐒𝐢𝐳𝐞: {get_size(file.file_size)}</b>\n"""
     try:
         if settings['auto_delete']:
             btn.insert(0, 
@@ -393,7 +393,7 @@ async def filter_languages_cb_handler(client: Client, query: CallbackQuery):
         btn = []
         end_cap = f"""↤↤↤↤↤❌End Of Page❌↦↦↦↦↦"""
         for file in files:
-            files_link += f"""/n<blockquote><b>🎬 𝐅𝐢𝐥𝐞: <a href=https://t.me/{temp.U_NAME}?start={pre}_{file.file_id}>{file.file_name}</a></b></blockquote>\n<b>📁 𝐒𝐢𝐳𝐞: {get_size(file.file_size)}</b>\n"""
+            files_link += f"""\n<blockquote><b>🎬 𝐅𝐢𝐥𝐞: <a href=https://t.me/{temp.U_NAME}?start={pre}_{file.file_id}>{file.file_name}</a></b></blockquote>\n<b>📁 𝐒𝐢𝐳𝐞: {get_size(file.file_size)}</b>\n"""
     try:
         if settings['auto_delete']:
             btn.insert(0, 
@@ -496,7 +496,7 @@ async def lang_next_page(bot, query):
         btn = []
         end_cap = f"""↤↤↤↤↤❌End Of Page❌↦↦↦↦↦"""
         for file in files:
-            files_link += f"""/n<blockquote><b>🎬 𝐅𝐢𝐥𝐞: <a href=https://t.me/{temp.U_NAME}?start={pre}_{file.file_id}>{file.file_name}</a></b></blockquote>\n<b>📁 𝐒𝐢𝐳𝐞: {get_size(file.file_size)}</b>\n"""
+            files_link += f"""\n<blockquote><b>🎬 𝐅𝐢𝐥𝐞: <a href=https://t.me/{temp.U_NAME}?start={pre}_{file.file_id}>{file.file_name}</a></b></blockquote>\n<b>📁 𝐒𝐢𝐳𝐞: {get_size(file.file_size)}</b>\n"""
 
     try:
         if settings['auto_delete']:
@@ -1636,7 +1636,7 @@ async def auto_filter(client, msg, spoll=False):
         btn = []
         end_cap = f"""↤↤↤↤↤❌End Of Page❌↦↦↦↦↦"""
         for file in files:
-            files_link += f"""/n<blockquote><b>🎬 𝐅𝐢𝐥𝐞: <a href=https://t.me/{temp.U_NAME}?start={pre}_{file.file_id}>{file.file_name}</a></b></blockquote>\n<b>📁 𝐒𝐢𝐳𝐞: {get_size(file.file_size)}</b>\n"""
+            files_link += f"""\n<blockquote><b>🎬 𝐅𝐢𝐥𝐞: <a href=https://t.me/{temp.U_NAME}?start={pre}_{file.file_id}>{file.file_name}</a></b></blockquote>\n<b>📁 𝐒𝐢𝐳𝐞: {get_size(file.file_size)}</b>\n"""
     try:
         if settings['auto_delete']:
             btn.insert(0, 
