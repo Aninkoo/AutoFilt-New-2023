@@ -84,6 +84,7 @@ SHORTLINK_URL = environ.get("SHORTLINK_URL", "instantearn.in")
 SHORTLINK_API = environ.get("SHORTLINK_API", "85738b1e5dc3dc11333d57b84db5200978d82ec7")
 VERIFY_EXPIRE = int(environ.get('VERIFY_EXPIRE', 86400)) # Add time in seconds
 IS_VERIFY = is_enabled(environ.get("IS_VERIFY", "False"), False)
+DAILY_UPDATE_LINK = environ.get("DAILY_UPDATE_LINK", "")
 
 LOG_STR = "Current Cusomized Configurations are:-\n"
 LOG_STR += ("IMDB Results are enabled, Bot will be showing imdb details for you queries.\n" if IMDB else "IMBD Results are disabled.\n")
