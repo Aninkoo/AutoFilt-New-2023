@@ -1616,6 +1616,7 @@ async def auto_filter(client, msg, spoll=False):
     req = message.from_user.id if message.from_user else 0
     BUTTONS[key] = search
     files_link = ""
+    end_cap = ""
     
     if settings["button"]:
         btn = [
@@ -1759,7 +1760,7 @@ async def auto_filter(client, msg, spoll=False):
             **locals()
         )
     else:
-        cap = f"<b>😻 𝖧𝖾𝗅𝗅𝗈 {message.from_user.mention}\n📂 𝖸𝗈𝗎𝗋 𝖥𝗂𝗅𝖾𝗌 𝖠𝗋𝖾 𝖱𝖾𝖺𝖽𝗒 Below\n<u>𝐁𝐫𝐨𝐮𝐠𝐡𝐭 𝐓𝐨 𝐘𝐨𝐮 𝐁𝐲</u>:- <a href=https://t.me/isaimini_updates>𝗜𝘀𝗮𝗶𝗺𝗶𝗻𝗶 𝗣𝗿𝗶𝗺𝗲</a>\n\n↤↤↤↤↤✅ ʏᴏᴜʀ ғɪʟᴇs ✅↦↦↦↦↦</b>"
+        cap = f"<b>😻<a href=https://graph.org/file/dda3297f0b2396eea3f32.jpg> </a>𝖧𝖾𝗅𝗅𝗈 {message.from_user.mention}\n📂 𝖸𝗈𝗎𝗋 𝖥𝗂𝗅𝖾𝗌 𝖠𝗋𝖾 𝖱𝖾𝖺𝖽𝗒 Below\n<u>𝐁𝐫𝐨𝐮𝐠𝐡𝐭 𝐓𝐨 𝐘𝐨𝐮 𝐁𝐲</u>:- <a href=https://t.me/isaimini_daily_update>𝗜𝘀𝗮𝗶𝗺𝗶𝗻𝗶 𝗣𝗿𝗶𝗺𝗲</a>\n\n↤↤↤↤↤✅ ʏᴏᴜʀ ғɪʟᴇs ✅↦↦↦↦↦</b>"
     CAP[key] = cap
     if imdb and imdb.get('poster'):
         try:
