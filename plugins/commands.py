@@ -10,7 +10,7 @@ from pyrogram.errors import ChatAdminRequired, FloodWait
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from database.ia_filterdb import Media, get_file_details, unpack_new_file_id, get_bad_files, get_search_results
 from database.users_chats_db import db
-from info import CHANNELS, ADMINS, AUTH_CHANNEL, IS_VERIFY, VERIFY_EXPIRE, SHORTLINK_API, SHORTLINK_URL, LOG_CHANNEL, PICS, BATCH_FILE_CAPTION, CUSTOM_FILE_CAPTION, SUPPORT_CHAT, PROTECT_CONTENT, REQST_CHANNEL, SUPPORT_CHAT_ID, MAX_B_TN, NOR_IMG
+from info import CHANNELS, ADMINS, AUTH_CHANNEL, IS_VERIFY, VERIFY_EXPIRE, SHORTLINK_API, SHORTLINK_URL, LOG_CHANNEL, PICS, BATCH_FILE_CAPTION, CUSTOM_FILE_CAPTION, DAILY_UPDATE_LINK, SUPPORT_CHAT, PROTECT_CONTENT, REQST_CHANNEL, SUPPORT_CHAT_ID, MAX_B_TN, NOR_IMG
 from utils import get_settings, get_size, get_shortlink, get_verify_status, update_verify_status, is_subscribed, get_readable_time, save_group_settings, temp
 from database.connections_mdb import active_connection
 import re
@@ -28,7 +28,7 @@ async def start(client, message):
     if message.chat.type in [enums.ChatType.GROUP, enums.ChatType.SUPERGROUP]:
         buttons = [[
                     InlineKeyboardButton('★⭕ ᴄʜᴀɴɴᴇʟ ⭕★', url="https://t.me/isaimini_updates"),
-                    InlineKeyboardButton('★⭕ ᴅᴀɪʟʏ ᴜᴘᴅᴀᴛᴇs ⭕★', url=f"https://t.me/isaimini_daily_update")
+                    InlineKeyboardButton('★⭕ ᴅᴀɪʟʏ ᴜᴘᴅᴀᴛᴇs ⭕★', url=DAILY_UPDATE_LINK)
                 ],[
                     InlineKeyboardButton('★♻️ ʜᴇʟᴘ ♻️★', callback_data='help'),
                     InlineKeyboardButton('★♻️ ᴀʙᴏᴜᴛ ♻️★', callback_data='about'),
@@ -67,7 +67,7 @@ async def start(client, message):
                     InlineKeyboardButton('◦•●◉✿ ➕ ᴀᴅᴅ ᴍᴇ ᴛᴏ ɢʀᴏᴜᴘ ➕ ✿◉●•◦', url=f"http://t.me/{temp.U_NAME}?startgroup=true")
                 ],[
                     InlineKeyboardButton('★⭕ ᴄʜᴀɴɴᴇʟ ⭕★', url="https://t.me/isaimini_updates"),
-                    InlineKeyboardButton('★⭕ ᴅᴀɪʟʏ ᴜᴘᴅᴀᴛᴇs ⭕★', url=f"https://t.me/isaimini_daily_update")
+                    InlineKeyboardButton('★⭕ ᴅᴀɪʟʏ ᴜᴘᴅᴀᴛᴇs ⭕★', url=DAILY_UPDATE_LINK)
                 ],[
                     InlineKeyboardButton(']|I{•---» ᴍᴏᴠɪᴇ sᴇᴀʀᴄʜɪɴɢ ɢʀᴏᴜᴘ ʟɪɴᴋs «---•}I|[', url="https://t.me/isaimini_updates/110")
                 ],[
@@ -361,8 +361,8 @@ async def start(client, message):
             msg = await client.send_cached_media(
                 chat_id=message.from_user.id,
                 file_id=file_id,
-                protect_content=True if pre == 'filep' else False,
-                reply_markup=InlineKeyboardMarkup( [ [ InlineKeyboardButton('⭕ 𝗝𝗼𝗶𝗻 𝗠𝗮𝗶𝗻 𝗖𝗵𝗮𝗻𝗻𝗲𝗹 ⭕', url='https://t.me/isaimini_updates') ],[InlineKeyboardButton("✛ ᴡᴀᴛᴄʜ & ᴅᴏᴡɴʟᴏᴀᴅ ✛", callback_data=f"stream#{file_id}")]] ),
+                protect_content=True,
+                reply_markup=InlineKeyboardMarkup( [ [ InlineKeyboardButton('⭕ 𝗝𝗼𝗶𝗻 𝗠𝗮𝗶𝗻 𝗖𝗵𝗮𝗻𝗻𝗲𝗹 ⭕', url=DAILY_UPDATE_LINK) ],[InlineKeyboardButton("✛ ᴡᴀᴛᴄʜ & ᴅᴏᴡɴʟᴏᴀᴅ ✛", callback_data=f"stream#{file_id}")]] ),
             )
             filetype = msg.media
             file = getattr(msg, filetype.value)
@@ -395,8 +395,8 @@ async def start(client, message):
         chat_id=message.from_user.id,
         file_id=file_id,
         caption=f_caption,
-        protect_content=True if pre == 'filep' else False,
-        reply_markup=InlineKeyboardMarkup( [ [ InlineKeyboardButton('⭕ 𝗝𝗼𝗶𝗻 𝗠𝗮𝗶𝗻 𝗖𝗵𝗮𝗻𝗻𝗲𝗹 ⭕', url='https://t.me/isaimini_updates') ],[InlineKeyboardButton("✛ ᴡᴀᴛᴄʜ & ᴅᴏᴡɴʟᴏᴀᴅ ✛", callback_data=f"stream#{file_id}")]] ),
+        protect_content=True,
+        reply_markup=InlineKeyboardMarkup( [ [ InlineKeyboardButton('⭕ 𝗝𝗼𝗶𝗻 𝗠𝗮𝗶𝗻 𝗖𝗵𝗮𝗻𝗻𝗲𝗹 ⭕', url=DAILY_UPDATE_LINK) ],[InlineKeyboardButton("✛ ᴡᴀᴛᴄʜ & ᴅᴏᴡɴʟᴏᴀᴅ ✛", callback_data=f"stream#{file_id}")]] ),
     )
                     
 
