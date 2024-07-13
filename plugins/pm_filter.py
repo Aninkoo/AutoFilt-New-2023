@@ -147,11 +147,11 @@ async def next_page(bot, query):
         ]
     else:
         btn = []
-        end_cap = f"""<b>↤↤↤↤↤❌ᴇɴᴅ ᴏғ ᴛʜɪs ᴘᴀɢᴇ❌↦↦↦↦↦</b>"""
+        end_cap = f"""<b>↤↤↤↤❌ᴇɴᴅ ᴏғ ᴛʜɪs ᴘᴀɢᴇ❌↦↦↦↦</b>"""
         for file in files:
             files_link += f"""\n<blockquote><b>🎬 𝐅𝐢𝐥𝐞: <a href=https://t.me/{temp.U_NAME}?start={pre}_{file.file_id}>{file.file_name}</a></b></blockquote>\n<b>📁 𝐒𝐢𝐳𝐞: {get_size(file.file_size)}</b>\n"""
     try:
-        if settings['auto_delete']:
+        if settings['button']:
             btn.insert(0, 
             [
                 InlineKeyboardButton(f'📟 𝖥𝗂𝗅𝖾𝗌: {len(files)}', 'dupe'),
@@ -163,7 +163,6 @@ async def next_page(bot, query):
         else:
             btn.insert(0, 
             [
-                InlineKeyboardButton(f'📟 𝖥𝗂𝗅𝖾𝗌: {len(files)}', 'dupe'),
                 InlineKeyboardButton(f'📮 Info', 'tips'),
                 InlineKeyboardButton(f'🎁 𝖳𝗂𝗉𝗌', 'info')
             ]
@@ -173,7 +172,7 @@ async def next_page(bot, query):
         grpid = await active_connection(str(query.message.from_user.id))
         await save_group_settings(grpid, 'auto_delete', True)
         settings = await get_settings(query.message.chat.id)
-        if settings['auto_delete']:
+        if settings['button']:
             btn.insert(0, 
             [
                 InlineKeyboardButton(f'📟 𝖥𝗂𝗅𝖾𝗌: {len(files)}', 'dupe'),
@@ -185,7 +184,6 @@ async def next_page(bot, query):
         else:
             btn.insert(0, 
             [
-                InlineKeyboardButton(f'📟 𝖥𝗂𝗅𝖾𝗌: {len(files)}', 'dupe'),
                 InlineKeyboardButton(f'📮 Info', 'tips'),
                 InlineKeyboardButton(f'🎁 𝖳𝗂𝗉𝗌', 'info')
             ]
@@ -391,11 +389,11 @@ async def filter_languages_cb_handler(client: Client, query: CallbackQuery):
         ]
     else:
         btn = []
-        end_cap = f"""<b>↤↤↤↤↤❌ᴇɴᴅ ᴏғ ᴛʜɪs ᴘᴀɢᴇ❌↦↦↦↦↦</b>"""
+        end_cap = f"""<b>↤↤↤↤❌ᴇɴᴅ ᴏғ ᴛʜɪs ᴘᴀɢᴇ❌↦↦↦↦</b>"""
         for file in files:
             files_link += f"""\n<blockquote><b>🎬 𝐅𝐢𝐥𝐞: <a href=https://t.me/{temp.U_NAME}?start={pre}_{file.file_id}>{file.file_name}</a></b></blockquote>\n<b>📁 𝐒𝐢𝐳𝐞: {get_size(file.file_size)}</b>\n"""
     try:
-        if settings['auto_delete']:
+        if settings['button']:
             btn.insert(0, 
             [
                 InlineKeyboardButton(f'📟 𝖥𝗂𝗅𝖾𝗌: {len(files)}', 'dupe'),
@@ -407,7 +405,6 @@ async def filter_languages_cb_handler(client: Client, query: CallbackQuery):
         else:
             btn.insert(0, 
             [
-                InlineKeyboardButton(f'📟 𝖥𝗂𝗅𝖾𝗌: {len(files)}', 'dupe'),
                 InlineKeyboardButton(f'📮 Info', 'tips'),
                 InlineKeyboardButton(f'🎁 𝖳𝗂𝗉𝗌', 'info')
             ]
@@ -417,7 +414,7 @@ async def filter_languages_cb_handler(client: Client, query: CallbackQuery):
         grpid = await active_connection(str(query.message.from_user.id))
         await save_group_settings(grpid, 'auto_delete', True)
         settings = await get_settings(query.message.chat.id)
-        if settings['auto_delete']:
+        if settings['button']:
             btn.insert(0, 
             [
                 InlineKeyboardButton(f'📟 𝖥𝗂𝗅𝖾𝗌: {len(files)}', 'dupe'),
@@ -429,7 +426,6 @@ async def filter_languages_cb_handler(client: Client, query: CallbackQuery):
         else:
             btn.insert(0, 
             [
-                InlineKeyboardButton(f'📟 𝖥𝗂𝗅𝖾𝗌: {len(files)}', 'dupe'),
                 InlineKeyboardButton(f'📮 Info', 'tips'),
                 InlineKeyboardButton(f'🎁 𝖳𝗂𝗉𝗌', 'info')
             ]
@@ -494,12 +490,12 @@ async def lang_next_page(bot, query):
         ]
     else:
         btn = []
-        end_cap = f"""<b>↤↤↤↤↤❌ᴇɴᴅ ᴏғ ᴛʜɪs ᴘᴀɢᴇ❌↦↦↦↦↦</b>"""
+        end_cap = f"""<b>↤↤↤↤❌ᴇɴᴅ ᴏғ ᴛʜɪs ᴘᴀɢᴇ❌↦↦↦↦</b>"""
         for file in files:
             files_link += f"""\n<blockquote><b>🎬 𝐅𝐢𝐥𝐞: <a href=https://t.me/{temp.U_NAME}?start={pre}_{file.file_id}>{file.file_name}</a></b></blockquote>\n<b>📁 𝐒𝐢𝐳𝐞: {get_size(file.file_size)}</b>\n"""
 
     try:
-        if settings['auto_delete']:
+        if settings['button']:
             btn.insert(0, 
             [
                 InlineKeyboardButton(f'📟 𝖥𝗂𝗅𝖾𝗌: {len(files)}', 'dupe'),
@@ -511,7 +507,6 @@ async def lang_next_page(bot, query):
         else:
             btn.insert(0, 
             [
-                InlineKeyboardButton(f'📟 𝖥𝗂𝗅𝖾𝗌: {len(files)}', 'dupe'),
                 InlineKeyboardButton(f'📮 Info', 'tips'),
                 InlineKeyboardButton(f'🎁 𝖳𝗂𝗉𝗌', 'info')
             ]
@@ -521,7 +516,7 @@ async def lang_next_page(bot, query):
         grpid = await active_connection(str(query.message.from_user.id))
         await save_group_settings(grpid, 'auto_delete', True)
         settings = await get_settings(query.message.chat.id)
-        if settings['auto_delete']:
+        if settings['button']:
             btn.insert(0, 
             [
                 InlineKeyboardButton(f'📟 𝖥𝗂𝗅𝖾𝗌: {len(files)}', 'dupe'),
@@ -533,7 +528,6 @@ async def lang_next_page(bot, query):
         else:
             btn.insert(0, 
             [
-                InlineKeyboardButton(f'📟 𝖥𝗂𝗅𝖾𝗌: {len(files)}', 'dupe'),
                 InlineKeyboardButton(f'📮 Info', 'tips'),
                 InlineKeyboardButton(f'🎁 𝖳𝗂𝗉𝗌', 'info')
             ]
@@ -1634,11 +1628,11 @@ async def auto_filter(client, msg, spoll=False):
         ]
     else:
         btn = []
-        end_cap = f"""<b>↤↤↤↤↤❌ᴇɴᴅ ᴏғ ᴛʜɪs ᴘᴀɢᴇ❌↦↦↦↦↦</b>"""
+        end_cap = f"""<b>↤↤↤↤❌ᴇɴᴅ ᴏғ ᴛʜɪs ᴘᴀɢᴇ❌↦↦↦↦</b>"""
         for file in files:
             files_link += f"""\n<blockquote><b>🎬 𝐅𝐢𝐥𝐞: <a href=https://t.me/{temp.U_NAME}?start={pre}_{file.file_id}>{file.file_name}</a></b></blockquote>\n<b>📁 𝐒𝐢𝐳𝐞: {get_size(file.file_size)}</b>\n"""
     try:
-        if settings['auto_delete']:
+        if settings['button']:
             btn.insert(0, 
             [
                 InlineKeyboardButton(f'📟 𝖥𝗂𝗅𝖾𝗌: {len(files)}', 'dupe'),
@@ -1650,7 +1644,6 @@ async def auto_filter(client, msg, spoll=False):
         else:
             btn.insert(0, 
             [
-                InlineKeyboardButton(f'📟 𝖥𝗂𝗅𝖾𝗌: {len(files)}', 'dupe'),
                 InlineKeyboardButton(f'📮 Info', 'tips'),
                 InlineKeyboardButton(f'🎁 𝖳𝗂𝗉𝗌', 'info')
             ]
@@ -1660,7 +1653,7 @@ async def auto_filter(client, msg, spoll=False):
         grpid = await active_connection(str(message.from_user.id))
         await save_group_settings(grpid, 'auto_delete', True)
         settings = await get_settings(message.chat.id)
-        if settings['auto_delete']:
+        if settings['button']:
             btn.insert(0, 
             [
                 InlineKeyboardButton(f'📟 𝖥𝗂𝗅𝖾𝗌: {len(files)}', 'dupe'),
@@ -1672,17 +1665,17 @@ async def auto_filter(client, msg, spoll=False):
         else:
             btn.insert(0, 
             [
-                InlineKeyboardButton(f'📟 𝖥𝗂𝗅𝖾𝗌: {len(files)}', 'dupe'),
                 InlineKeyboardButton(f'📮 Info', 'tips'),
                 InlineKeyboardButton(f'🎁 𝖳𝗂𝗉𝗌', 'info')
             ])
             
     btn.insert(0,
                [InlineKeyboardButton("◦•●◉✿ 📰 𝚂𝚎𝚕𝚎𝚌𝚝 𝙻𝚊𝚗𝚐𝚞𝚊𝚐𝚎 📰 ✿◉●•◦", callback_data=f"languages#{key}#{req}#{offset}")]
-              )                 
-    btn.insert(0, [
-        InlineKeyboardButton(f'🎬 {search} 🎬', 'rkbtn')
-    ])
+              )
+    if settings['button']:
+        btn.insert(0, [
+            InlineKeyboardButton(f'🎬 {search} 🎬', 'rkbtn')
+        ])
     
     
     if offset != "":
@@ -1766,7 +1759,7 @@ async def auto_filter(client, msg, spoll=False):
             **locals()
         )
     else:
-        cap = f"<b>😻 𝖧𝖾𝗅𝗅𝗈 {message.from_user.mention}\n📂 𝖸𝗈𝗎𝗋 𝖥𝗂𝗅𝖾𝗌 𝖠𝗋𝖾 𝖱𝖾𝖺𝖽𝗒\n<u>𝐁𝐫𝐨𝐮𝐠𝐡𝐭 𝐓𝐨 𝐘𝐨𝐮 𝐁𝐲</u>:- <a href=https://t.me/isaimini_updates>❤️ 𝗜𝘀𝗮𝗶𝗺𝗶𝗻𝗶 𝗣𝗿𝗶𝗺𝗲 ❤️</a>\n\n↤↤↤↤↤✅ ʏᴏᴜʀ ғɪʟᴇs ✅↦↦↦↦↦</b>\n"
+        cap = f"<b>😻 𝖧𝖾𝗅𝗅𝗈 {message.from_user.mention}\n📂 𝖸𝗈𝗎𝗋 𝖥𝗂𝗅𝖾𝗌 𝖠𝗋𝖾 𝖱𝖾𝖺𝖽𝗒 Below\n<u>𝐁𝐫𝐨𝐮𝐠𝐡𝐭 𝐓𝐨 𝐘𝐨𝐮 𝐁𝐲</u>:- <a href=https://t.me/isaimini_updates>𝗜𝘀𝗮𝗶𝗺𝗶𝗻𝗶 𝗣𝗿𝗶𝗺𝗲</a>\n\n↤↤↤↤↤✅ ʏᴏᴜʀ ғɪʟᴇs ✅↦↦↦↦↦</b>"
     CAP[key] = cap
     if imdb and imdb.get('poster'):
         try:
@@ -1826,7 +1819,7 @@ async def auto_filter(client, msg, spoll=False):
     else:
         if not spoll:
                 await stick.delete()
-        fuk = await message.reply_photo(photo=NOR_IMG, caption=cap + files_link + end_cap, reply_markup=InlineKeyboardMarkup(btn))
+        fuk = await message.reply_text(text=cap + files_link + end_cap, reply_markup=InlineKeyboardMarkup(btn))
         try:
             if settings['auto_delete']:
                 await asyncio.sleep(300)
