@@ -1772,7 +1772,7 @@ async def auto_filter(client, msg, spoll=False):
         try:
             if not spoll:
                 await stick.delete()
-            hehe = await message.reply_photo(photo=imdb.get('poster'), caption=cap[:1024] + files_link + end_cap, reply_markup=InlineKeyboardMarkup(btn), protect_content=True)
+            hehe = await message.reply_photo(photo=imdb.get('poster'), caption=cap[:1024] + files_link + end_cap, reply_markup=InlineKeyboardMarkup(btn))
             try:
                 if settings['auto_delete']:
                     await asyncio.sleep(300)
@@ -1791,7 +1791,7 @@ async def auto_filter(client, msg, spoll=False):
             poster = pic.replace('.jpg', "._V1_UX360.jpg")
             if not spoll:
                 await stick.delete()
-            hmm = await message.reply_photo(photo=poster, caption=cap[:1024] + files_link + end_cap, reply_markup=InlineKeyboardMarkup(btn), protect_content=True)
+            hmm = await message.reply_photo(photo=poster, caption=cap[:1024] + files_link + end_cap, reply_markup=InlineKeyboardMarkup(btn))
             try:
                 if settings['auto_delete']:
                     await asyncio.sleep(300)
@@ -1809,7 +1809,7 @@ async def auto_filter(client, msg, spoll=False):
             logger.exception(e)
             if not spoll:
                 await stick.delete()
-            fek = await message.reply_photo(photo=NOR_IMG, caption=cap + files_link + end_cap, reply_markup=InlineKeyboardMarkup(btn), protect_content=True)
+            fek = await message.reply_photo(photo=NOR_IMG, caption=cap + files_link + end_cap, reply_markup=InlineKeyboardMarkup(btn))
             try:
                 if settings['auto_delete']:
                     await asyncio.sleep(300)
@@ -1826,7 +1826,7 @@ async def auto_filter(client, msg, spoll=False):
     else:
         if not spoll:
                 await stick.delete()
-        fuk = await message.reply_photo(photo=NOR_IMG, caption=cap + files_link + end_cap, reply_markup=InlineKeyboardMarkup(btn), protect_content=True)
+        fuk = await message.reply_photo(photo=NOR_IMG, caption=cap + files_link + end_cap, reply_markup=InlineKeyboardMarkup(btn))
         try:
             if settings['auto_delete']:
                 await asyncio.sleep(300)
