@@ -149,7 +149,7 @@ async def next_page(bot, query):
         btn = []
         end_cap = f"""<b>↤↤↤↤❌ᴇɴᴅ ᴏғ ᴛʜɪs ᴘᴀɢᴇ❌↦↦↦↦</b>"""
         for file in files:
-            isai_file = "{pre}_{file.file_id}"
+            isai_file = f"{pre}_{file.file_id}"
             files_link += f"""\n<blockquote><b>🎬 𝐅𝐢𝐥𝐞: <a href=https://t.me/{temp.U_NAME}?start={isai_file}>{file.file_name}</a></b></blockquote>\n<b>📁 𝐒𝐢𝐳𝐞: {get_size(file.file_size)}</b>\n"""
     try:
         if settings['button']:
@@ -393,7 +393,7 @@ async def filter_languages_cb_handler(client: Client, query: CallbackQuery):
         btn = []
         end_cap = f"""<b>↤↤↤↤❌ᴇɴᴅ ᴏғ ᴛʜɪs ᴘᴀɢᴇ❌↦↦↦↦</b>"""
         for file in files:
-            isai_file = "{pre}_{file.file_id}"
+            isai_file = f"{pre}_{file.file_id}"
             files_link += f"""\n<blockquote><b>🎬 𝐅𝐢𝐥𝐞: <a href=https://t.me/{temp.U_NAME}?start={isai_file}>{file.file_name}</a></b></blockquote>\n<b>📁 𝐒𝐢𝐳𝐞: {get_size(file.file_size)}</b>\n"""
     try:
         if settings['button']:
@@ -496,7 +496,7 @@ async def lang_next_page(bot, query):
         btn = []
         end_cap = f"""<b>↤↤↤↤❌ᴇɴᴅ ᴏғ ᴛʜɪs ᴘᴀɢᴇ❌↦↦↦↦</b>"""
         for file in files:
-            isai_file = "{pre}_{file.file_id}"
+            isai_file = f"{pre}_{file.file_id}"
             files_link += f"""\n<blockquote><b>🎬 𝐅𝐢𝐥𝐞: <a href=https://t.me/{temp.U_NAME}?start={isai_file}>{file.file_name}</a></b></blockquote>\n<b>📁 𝐒𝐢𝐳𝐞: {get_size(file.file_size)}</b>\n"""
             
     try:
@@ -1636,7 +1636,7 @@ async def auto_filter(client, msg, spoll=False):
         btn = []
         end_cap = f"""<b>↤↤↤↤❌ᴇɴᴅ ᴏғ ᴛʜɪs ᴘᴀɢᴇ❌↦↦↦↦</b>"""
         for file in files:
-            isai_file = "{pre}_{file.file_id}"
+            isai_file = f"{pre}_{file.file_id}"
             files_link += f"""\n<blockquote><b>🎬 𝐅𝐢𝐥𝐞: <a href=https://t.me/{temp.U_NAME}?start={isai_file}>{file.file_name}</a></b></blockquote>\n<b>📁 𝐒𝐢𝐳𝐞: {get_size(file.file_size)}</b>\n"""
 
     try:
@@ -1767,7 +1767,7 @@ async def auto_filter(client, msg, spoll=False):
             **locals()
         )
     else:
-        cap = f"<b>😻<a href=https://graph.org/file/dda3297f0b2396eea3f32.jpg> </a>𝖧𝖾𝗅𝗅𝗈 {message.from_user.mention}\n📂 𝖸𝗈𝗎𝗋 𝖥𝗂𝗅𝖾𝗌 𝖠𝗋𝖾 𝖱𝖾𝖺𝖽𝗒 Below\n<u>𝐁𝐫𝐨𝐮𝐠𝐡𝐭 𝐓𝐨 𝐘𝐨𝐮 𝐁𝐲</u>:- <a href=https://t.me/isaimini_daily_update>𝗜𝘀𝗮𝗶𝗺𝗶𝗻𝗶 𝗣𝗿𝗶𝗺𝗲</a>\n\n↤↤↤↤↤✅ ʏᴏᴜʀ ғɪʟᴇs ✅↦↦↦↦↦</b>"
+        cap = f"<b>😻<a href=https://graph.org/file/dda3297f0b2396eea3f32.jpg> </a>𝖧𝖾𝗅𝗅𝗈 {message.from_user.mention}\n📂 𝖸𝗈𝗎𝗋 𝖥𝗂𝗅𝖾𝗌 𝖠𝗋𝖾 𝖱𝖾𝖺𝖽𝗒 Below\n<u>𝐁𝐫𝐨𝐮𝐠𝐡𝐭 𝐓𝐨 𝐘𝐨𝐮 𝐁𝐲</u>:- ❤️<a href=https://t.me/isaimini_daily_update>𝗜𝘀𝗮𝗶𝗺𝗶𝗻𝗶 𝗣𝗿𝗶𝗺𝗲</a>❤️\n\n↤↤↤↤↤✅ ʏᴏᴜʀ ғɪʟᴇs ✅↦↦↦↦↦</b>"
     CAP[key] = cap
     if imdb and imdb.get('poster'):
         try:
