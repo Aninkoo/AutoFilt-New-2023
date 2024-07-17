@@ -366,8 +366,12 @@ async def start(client, message):
             )
             filetype = msg.media
             file = getattr(msg, filetype.value)
-            title = file.file_name
+            file_cap = file.caption
             size=get_size(file.file_size)
+            if(file_cap):
+                title = file_cap
+            else:
+                title = file.file_name
             f_caption = f"<code>{title}</code>"
             if CUSTOM_FILE_CAPTION:
                 try:
@@ -380,9 +384,13 @@ async def start(client, message):
             pass
         return await message.reply('<b><i>No such file exist.</b></i>')
     files = files_[0]
-    title = files.file_name
+    files_cap=files.caption
     size=get_size(files.file_size)
-    f_caption=files.caption
+    if(files_cap):
+        title = files_cap
+    else:
+        title = files.file_name
+    f_caption = f"<code>{title}</code>"
     if CUSTOM_FILE_CAPTION:
         try:
             f_caption=CUSTOM_FILE_CAPTION.format(file_name= '' if title is None else title, file_size='' if size is None else size, file_caption='' if f_caption is None else f_caption)
