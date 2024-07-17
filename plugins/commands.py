@@ -346,7 +346,7 @@ async def start(client, message):
                     logger.exception(e)
                     continue
             await asyncio.sleep(1)
-        await asyncio.sleep(30)
+        await asyncio.sleep(21600)
         for snt_msg in snt_msgs:
             try:
                 await snt_msg.delete()
@@ -356,8 +356,8 @@ async def start(client, message):
         
     files_ = await get_file_details(file_id)           
     if not files_:
-        pre, file_id = ((base64.urlsafe_b64decode(data + "=" * (-len(data) % 4))).decode("utf-8")).split("_", 1)
         try:
+            pre, file_id = ((base64.urlsafe_b64decode(data + "=" * (-len(data) % 4))).decode("utf-8")).split("_", 1)
             msg = await client.send_cached_media(
                 chat_id=message.from_user.id,
                 file_id=file_id,
