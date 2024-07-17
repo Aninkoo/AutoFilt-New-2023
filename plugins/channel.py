@@ -19,9 +19,9 @@ async def media(bot, message):
         media = getattr(message, file_type, None)
         if media is not None:
             break
-    else:
+    if media is None:
         return
-
+        
     media.file_type = file_type
     media.caption = message.caption
     text = await save_file(media)
