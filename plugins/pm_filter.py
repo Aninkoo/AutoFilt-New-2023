@@ -1637,7 +1637,7 @@ async def auto_filter(client, msg, spoll=False):
         end_cap = f"""<b>↤↤↤↤❌ᴇɴᴅ ᴏғ ᴛʜɪs ᴘᴀɢᴇ❌↦↦↦↦</b>"""
         for file in files:
             isai_file = f"{pre}_{file.file_id}"
-            files_link += f"""\n<blockquote><b>🎬 𝐅𝐢𝐥𝐞: <a href=https://t.me/{temp.U_NAME}?start={isai_file}>{file.file_name}</a></b></blockquote>\n<b>📁 𝐒𝐢𝐳𝐞: {get_size(file.file_size)}</b>\n"""
+            files_link += f"""\n<blockquote><b>🎬 𝐅𝐢𝐥𝐞: https://t.me/{temp.U_NAME}?start={isai_file}</b></blockquote>\n<b>📁 𝐒𝐢𝐳𝐞: {get_size(file.file_size)}</b>\n"""
 
     try:
         if settings['button']:
