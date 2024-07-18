@@ -149,8 +149,8 @@ async def next_page(bot, query):
         btn = []
         end_cap = f"""<b>↤↤↤↤❌ᴇɴᴅ ᴏғ ᴛʜɪs ᴘᴀɢᴇ❌↦↦↦↦</b>"""
         for file in files:
-            isai_file = f"{pre}_{file.file_id}"
-            files_link += f"""\n<blockquote><b>🎬 𝐅𝐢𝐥𝐞: <a href=https://t.me/{temp.U_NAME}?start={isai_file}>{file.file_name}</a></b></blockquote>\n<b>📁 𝐒𝐢𝐳𝐞: {get_size(file.file_size)}</b>\n"""
+            isai_file = f"https://t.me/{temp.U_NAME}?start={pre}_{file.file_id}"
+            files_link += f"""\n<blockquote><b>🎬 𝐅𝐢𝐥𝐞: <a href={isai_file}>{file.file_name}</a></blockquote>\n📁 𝐒𝐢𝐳𝐞: {get_size(file.file_size)}</b>\n"""
     try:
         if settings['button']:
             btn.insert(0, 
@@ -393,8 +393,8 @@ async def filter_languages_cb_handler(client: Client, query: CallbackQuery):
         btn = []
         end_cap = f"""<b>↤↤↤↤❌ᴇɴᴅ ᴏғ ᴛʜɪs ᴘᴀɢᴇ❌↦↦↦↦</b>"""
         for file in files:
-            isai_file = f"{pre}_{file.file_id}"
-            files_link += f"""\n<blockquote><b>🎬 𝐅𝐢𝐥𝐞: <a href=https://t.me/{temp.U_NAME}?start={isai_file}>{file.file_name}</a></b></blockquote>\n<b>📁 𝐒𝐢𝐳𝐞: {get_size(file.file_size)}</b>\n"""
+            isai_file = f"https://t.me/{temp.U_NAME}?start={pre}_{file.file_id}"
+            files_link += f"""\n<blockquote><b>🎬 𝐅𝐢𝐥𝐞: <a href={isai_file}>{file.file_name}</a></blockquote>\n📁 𝐒𝐢𝐳𝐞: {get_size(file.file_size)}</b>\n"""
     try:
         if settings['button']:
             btn.insert(0, 
@@ -496,8 +496,8 @@ async def lang_next_page(bot, query):
         btn = []
         end_cap = f"""<b>↤↤↤↤❌ᴇɴᴅ ᴏғ ᴛʜɪs ᴘᴀɢᴇ❌↦↦↦↦</b>"""
         for file in files:
-            isai_file = f"{pre}_{file.file_id}"
-            files_link += f"""\n<blockquote><b>🎬 𝐅𝐢𝐥𝐞: <a href=https://t.me/{temp.U_NAME}?start={isai_file}>{file.file_name}</a></b></blockquote>\n<b>📁 𝐒𝐢𝐳𝐞: {get_size(file.file_size)}</b>\n"""
+            isai_file = f"https://t.me/{temp.U_NAME}?start={pre}_{file.file_id}"
+            files_link += f"""\n<blockquote><b>🎬 𝐅𝐢𝐥𝐞: <a href={isai_file}>{file.file_name}</a></blockquote>\n📁 𝐒𝐢𝐳𝐞: {get_size(file.file_size)}</b>\n"""
             
     try:
         if settings['button']:
