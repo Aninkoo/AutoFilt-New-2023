@@ -179,7 +179,7 @@ async def start(client, message):
         req = message.from_user.id if message.from_user else 0
         key = f"{message.from_user.id}"
         BUTTONS[key] = mov_name
-        cap = f"<b>😻 𝖧𝖾𝗅𝗅𝗈 {message.from_user.mention}\n📂 𝖸𝗈𝗎𝗋 𝖥𝗂𝗅𝖾𝗌 𝖠𝗋𝖾 𝖱𝖾𝖺𝖽𝗒\n\n</b>♨️ 𝐁𝐫𝐨𝐮𝐠𝐡𝐭 𝐓𝐨 𝐘𝐨𝐮 𝐁𝐲:- <a href=https://t.me/isaimini_updates>❤️ 𝗜𝘀𝗮𝗶𝗺𝗶𝗻𝗶 𝗣𝗿𝗶𝗺𝗲 ❤️</a></b>"
+        cap = f"<b>😻<a href=https://graph.org/file/dda3297f0b2396eea3f32.jpg> </a>𝖧𝖾𝗅𝗅𝗈 {message.from_user.mention}\n📂 𝖸𝗈𝗎𝗋 𝖥𝗂𝗅𝖾𝗌 𝖠𝗋𝖾 𝖱𝖾𝖺𝖽𝗒 Below\n<u>𝐁𝐫𝐨𝐮𝐠𝐡𝐭 𝐓𝐨 𝐘𝐨𝐮 𝐁𝐲</u>:- ❤️<a href=https://t.me/isaimini_daily_update>𝗜𝘀𝗮𝗶𝗺𝗶𝗻𝗶 𝗣𝗿𝗶𝗺𝗲</a>❤️\n\n↤↤↤↤↤👇 ʏᴏᴜʀ ғɪʟᴇs 👇↦↦↦↦↦</b>"
         CAP[key] = cap
         pre = 'file'
         files, offset, total_results = await get_search_results(message.chat.id , mov_name.lower(), offset=0, filter=True)
@@ -187,17 +187,13 @@ async def start(client, message):
         await stick.delete()
         if not files:
             return
-        btn = [
-            [
-                InlineKeyboardButton(
-                   text=f"📂{get_size(file.file_size)} 🎥{file.file_name}", callback_data=f'{pre}#{file.file_id}'
-                ),
-            ]
-            for file in files
-        ]
+        btn = []
+        end_cap = f"""<b>↤↤↤↤❌ᴇɴᴅ ᴏғ ᴛʜɪs ᴘᴀɢᴇ❌↦↦↦↦</b>"""
+        for file in files:
+            files_link += f"""\n<blockquote><b>🎬 𝐅𝐢𝐥𝐞: <a href=https://t.me/{temp.U_NAME}?start={pre}_{file.file_id}>{file.file_name}</a></blockquote>\n📁 𝐒𝐢𝐳𝐞: {get_size(file.file_size)}</b>\n"""
+            
         btn.insert(0, 
             [
-                InlineKeyboardButton(f'📟 𝖥𝗂𝗅𝖾𝗌: {len(files)}', 'dupe'),
                 InlineKeyboardButton(f'📮 Info', 'tips'),
                 InlineKeyboardButton(f'🎁 𝖳𝗂𝗉𝗌', 'info')
             ]
@@ -233,7 +229,7 @@ async def start(client, message):
             btn.append(
                 [InlineKeyboardButton(text="❌ 𝖭𝗈 𝖬𝗈𝗋𝖾 𝖯𝖺𝗀𝖾𝗌 𝖠𝗏𝖺𝗂𝗅𝖺𝖻𝗅𝖾 ! ❌",callback_data="pages")]
             )
-        fuk = await message.reply_photo(photo=NOR_IMG, caption=cap, quote=True, reply_markup=InlineKeyboardMarkup(btn))
+        fuk = await message.reply_text(text=cap + files_link + end_cap, reply_markup=InlineKeyboardMarkup(btn), protect_content=True, parse_mode=enums.ParseMode.HTML)
         await asyncio.sleep(300)
         await fuk.delete()
         await message.delete()
