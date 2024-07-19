@@ -94,6 +94,10 @@ async def give_filter(client, message):
 
 @Client.on_message(filters.private & filters.text & filters.incoming)
 async def pv_filter(client, message):
+    if message.text.startswith("/"):
+        return
+    if message.text.startswith("http"):
+        return
     stick = await message.reply_sticker(sticker="CAACAgUAAx0CZjyOqQACMCpl_EX_Ak6ilEi7sdys1ec9ozSwvQAC3AIAAq9qOVVmHNMuomHDLB4E")
     kd = await global_filters(client, message)
     if kd == False:
@@ -1582,11 +1586,12 @@ async def cb_handler(client: Client, query: CallbackQuery):
 async def auto_filter(client, msg, spoll=False):
     reqstr1 = msg.from_user.id if msg.from_user else 0
     reqstr = await client.get_users(reqstr1)
+    if msg.text.startswith("/"):
+        return
     if not spoll:
         stick = await msg.reply_sticker(sticker="CAACAgUAAx0CZjyOqQACMCpl_EX_Ak6ilEi7sdys1ec9ozSwvQAC3AIAAq9qOVVmHNMuomHDLB4E")
         message = msg
         settings = await get_settings(message.chat.id)
-        if message.text.startswith("/"): return await stick.delete() # ignore commands
         if re.findall("((^\/|^,|^!|^\.|^[\U0001F600-\U000E007F]).*)", message.text):
             await stick.delete()
             return
