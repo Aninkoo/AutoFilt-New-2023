@@ -3,8 +3,6 @@ import re, time
 import ast
 import math
 import random
-
-
 from pyrogram.errors.exceptions.bad_request_400 import MediaEmpty, PhotoInvalidDimensions, WebpageMediaEmpty
 from Script import script
 import pyrogram
@@ -334,7 +332,7 @@ async def next_page(bot, query):
         InlineKeyboardButton(f'🎬 {search} 🎬', 'rkbtn')
     ])
     try:
-        await query.message.edit_text(cap + files_link + end_cap, reply_markup=InlineKeyboardMarkup(btn))
+        await query.message.edit_text(cap + files_link + end_cap, reply_markup=InlineKeyboardMarkup(btn), parse_mode=enums.ParseMode.HTML)
     except MessageNotModified:
         pass
     await query.answer()
@@ -573,7 +571,7 @@ async def lang_next_page(bot, query):
              InlineKeyboardButton("𝖭𝖤𝖷𝖳 ▶️", callback_data=f"lang_next#{req}#{key}#{lang}#{n_offset}#{offset}")]
         )
     btn.append([InlineKeyboardButton(text="⪻ ʙᴀᴄᴋ ᴛᴏ ᴍᴀɪɴ ᴘᴀɢᴇ", callback_data=f"next_{req}_{key}_{offset}")])
-    await query.message.edit_text(cap + files_link + end_cap, reply_markup=InlineKeyboardMarkup(btn))
+    await query.message.edit_text(cap + files_link + end_cap, reply_markup=InlineKeyboardMarkup(btn), parse_mode=enums.ParseMode.HTML)
 
 
 @Client.on_callback_query(filters.regex(r"^spolling"))
@@ -1773,7 +1771,7 @@ async def auto_filter(client, msg, spoll=False):
         try:
             if not spoll:
                 await stick.delete()
-            hehe = await message.reply_photo(photo=imdb.get('poster'), caption=cap[:1024] + files_link + end_cap, reply_markup=InlineKeyboardMarkup(btn))
+            hehe = await message.reply_photo(photo=imdb.get('poster'), caption=cap[:1024] + files_link + end_cap, reply_markup=InlineKeyboardMarkup(btn), parse_mode=enums.ParseMode.HTML)
             try:
                 if settings['auto_delete']:
                     await asyncio.sleep(300)
@@ -1792,7 +1790,7 @@ async def auto_filter(client, msg, spoll=False):
             poster = pic.replace('.jpg', "._V1_UX360.jpg")
             if not spoll:
                 await stick.delete()
-            hmm = await message.reply_photo(photo=poster, caption=cap[:1024] + files_link + end_cap, reply_markup=InlineKeyboardMarkup(btn))
+            hmm = await message.reply_photo(photo=poster, caption=cap[:1024] + files_link + end_cap, reply_markup=InlineKeyboardMarkup(btn), parse_mode=enums.ParseMode.HTML)
             try:
                 if settings['auto_delete']:
                     await asyncio.sleep(300)
@@ -1810,7 +1808,7 @@ async def auto_filter(client, msg, spoll=False):
             logger.exception(e)
             if not spoll:
                 await stick.delete()
-            fek = await message.reply_photo(photo=NOR_IMG, caption=cap + files_link + end_cap, reply_markup=InlineKeyboardMarkup(btn))
+            fek = await message.reply_photo(photo=NOR_IMG, caption=cap + files_link + end_cap, reply_markup=InlineKeyboardMarkup(btn), parse_mode=enums.ParseMode.HTML)
             try:
                 if settings['auto_delete']:
                     await asyncio.sleep(300)
@@ -1827,7 +1825,7 @@ async def auto_filter(client, msg, spoll=False):
     else:
         if not spoll:
                 await stick.delete()
-        fuk = await message.reply_text(text=cap + files_link + end_cap, reply_markup=InlineKeyboardMarkup(btn), protect_content=True)
+        fuk = await message.reply_text(text=cap + files_link + end_cap, reply_markup=InlineKeyboardMarkup(btn), protect_content=True, parse_mode=enums.ParseMode.HTML)
         try:
             if settings['auto_delete']:
                 await asyncio.sleep(300)
