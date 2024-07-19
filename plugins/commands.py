@@ -185,6 +185,7 @@ async def start(client, message):
         files, offset, total_results = await get_search_results(message.chat.id , mov_name.lower(), offset=0, filter=True)
         await asyncio.sleep(1)
         await stick.delete()
+        files_link = ""
         if not files:
             return
         btn = []
