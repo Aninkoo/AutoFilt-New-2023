@@ -19,6 +19,8 @@ from plugins.pm_filter import BUTTONS, CAP
 import json
 import pytz
 import base64
+from telegraph import upload_file
+
 logger = logging.getLogger(__name__)
 
 BATCH_FILES = {}
@@ -406,7 +408,31 @@ async def start(client, message):
         protect_content=True,
         reply_markup=InlineKeyboardMarkup( [ [ InlineKeyboardButton('⭕ 𝗝𝗼𝗶𝗻 𝗠𝗮𝗶𝗻 𝗖𝗵𝗮𝗻𝗻𝗲𝗹 ⭕', url=DAILY_UPDATE_LINK) ],[InlineKeyboardButton("✛ ᴡᴀᴛᴄʜ & ᴅᴏᴡɴʟᴏᴀᴅ ✛", callback_data=f"stream#{file_id}")]] ),
     )
-                    
+
+
+@Client.on_message(filters.command('telegraph'))
+async def telegraph(bot, message):
+    reply_to_message = message.reply_to_message
+    if not reply_to_message:
+        return await message.reply('Reply to any photo or video.')
+    file = reply_to_message.photo or reply_to_message.video or None
+    if file is None:
+        return await message.reply('Invalid media.')
+    if file.file_size >= 5242880:
+        await message.reply_text(text="Send less than 5MB")   
+        return
+    text = await message.reply_text(text="ᴘʀᴏᴄᴇssɪɴɢ....")   
+    media = await reply_to_message.download()  
+    try:
+        response = upload_file(media)
+    except Exception as e:
+        await text.edit_text(text=f"Error - {e}")
+        return    
+    try:
+        os.remove(media)
+    except:
+        pass
+    await text.edit_text(f"<b>❤️ ʏᴏᴜʀ ᴛᴇʟᴇɢʀᴀᴘʜ ʟɪɴᴋ ᴄᴏᴍᴘʟᴇᴛᴇᴅ 👇</b>\n\n<code>https://telegra.ph/{response[0]}</code></b>")
 
 @Client.on_message(filters.command('channel') & filters.user(ADMINS))
 async def channel_info(bot, message):
