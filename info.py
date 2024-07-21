@@ -51,7 +51,7 @@ REQST_CHANNEL = int(reqst_channel) if reqst_channel and id_pattern.search(reqst_
 SUPPORT_CHAT_ID = -1001987439557
 NO_RESULTS_MSG = bool(environ.get("NO_RESULTS_MSG", False))
 BIN_CHANNEL = int(environ.get("BIN_CHANNEL", "-1002044951526"))
-URL = environ.get("URL", "https://isaimini-filter-bot-2023-6336c9727a70.herokuapp.com/")
+URL = environ.get("URL", "")
 
 # MongoDB information
 DATABASE_URI = environ.get('DATABASE_URI', "mongodb+srv://advfilter:advfilter@cluster0.5dksd.mongodb.net/?retryWrites=true&w=majority")
@@ -68,7 +68,7 @@ P_TTI_SHOW_OFF = is_enabled((environ.get('P_TTI_SHOW_OFF', "True")), False)
 IMDB = is_enabled((environ.get('IMDB', "False")), True)
 AUTO_FFILTER = is_enabled((environ.get('AUTO_FFILTER', "True")), True)
 AUTO_DELETE = is_enabled((environ.get('AUTO_DELETE', "True")), True)
-SINGLE_BUTTON = is_enabled((environ.get('SINGLE_BUTTON', "True")), True)
+SINGLE_BUTTON = is_enabled((environ.get('SINGLE_BUTTON', "False")), True)
 CUSTOM_FILE_CAPTION = environ.get("CUSTOM_FILE_CAPTION", '<blockquote>\n<b>FILE : <code>{file_name}</code> \n\nSize : {file_size}</b></blockquote>\n<b>©️ Main Channel:-  \n<a href=https://t.me/isaimini_updates>❤️ 𝗜𝘀𝗮𝗶𝗺𝗶𝗻𝗶 𝗣𝗿𝗶𝗺𝗲 ❤️</a></b> ')
 BATCH_FILE_CAPTION = environ.get("BATCH_FILE_CAPTION", '<blockquote><b>{file_caption}</b></blockquote>\n<b>♨️ 𝐁𝐫𝐨𝐮𝐠𝐡𝐭 𝐓𝐨 𝐘𝐨𝐮 𝐁𝐲:- <a href=https://t.me/isaimini_updates>❤️ 𝗜𝘀𝗮𝗶𝗺𝗶𝗻𝗶 𝗣𝗿𝗶𝗺𝗲 ❤️</a></b> ')
 IMDB_TEMPLATE = environ.get("IMDB_TEMPLATE", '<b>🧿 <u>𝚃𝙸𝚃𝙻𝙴</u> :  {title} \n🌟 <u>𝚁𝙰𝚃𝙸𝙽𝙶</u> : {rating} \n🎭 <u>𝙶𝙴𝙽𝚁𝙴</u> : {genres} \n📆 <u>𝚁𝙴𝙻𝙴𝙰𝚂𝙴</u> : {year} \n⏰ <u>𝙳𝚄𝚁𝙰𝚃𝙸𝙾𝙽</u> : {runtime} \n🎙️<u>𝙻𝙰𝙽𝙶𝚄𝙰𝙶𝙴</u> : {languages} \n🔖 <u>𝚂𝙷𝙾𝚁𝚃</u> : {plot}</b>')
@@ -83,8 +83,8 @@ PUBLIC_FILE_STORE = is_enabled((environ.get('PUBLIC_FILE_STORE', "False")), True
 SHORTLINK_URL = environ.get("SHORTLINK_URL", "instantearn.in")
 SHORTLINK_API = environ.get("SHORTLINK_API", "85738b1e5dc3dc11333d57b84db5200978d82ec7")
 VERIFY_EXPIRE = int(environ.get('VERIFY_EXPIRE', 86400)) # Add time in seconds
-IS_VERIFY = is_enabled(environ.get("IS_VERIFY", "False"), False)
-DAILY_UPDATE_LINK = environ.get("DAILY_UPDATE_LINK", "")
+IS_VERIFY = is_enabled(environ.get("IS_VERIFY", "True"), False)
+DAILY_UPDATE_LINK = environ.get("DAILY_UPDATE_LINK", "https://t.me/isaimini_daily_update")
 
 LOG_STR = "Current Cusomized Configurations are:-\n"
 LOG_STR += ("IMDB Results are enabled, Bot will be showing imdb details for you queries.\n" if IMDB else "IMBD Results are disabled.\n")
