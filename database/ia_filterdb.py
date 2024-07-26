@@ -112,7 +112,7 @@ async def get_search_results(chat_id, query, file_type=None, max_results=10, off
     cursor.sort('$natural', -1)
 
     if lang:
-        lang_files = [file async for file in cursor if lang in file.file_name.lower()]
+        lang_files = [file async for file in cursor if lang in file.caption.lower()]
         files = lang_files[offset:][:max_results]
         total_results = len(lang_files)
         next_offset = offset + max_results
