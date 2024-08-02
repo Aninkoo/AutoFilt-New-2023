@@ -1851,7 +1851,7 @@ async def advantage_spell_chok(client, message):
     ]]
     query = re.sub(
         r"\b(pl(i|e)*?(s|z+|ease|se|ese|(e+)s(e)?)|((send|snd|giv(e)?|gib)(\sme)?)|season|episode|movie(s)?|new|latest|br((o|u)h?)*|^h(e|a)?(l)*(o)*|mal(ayalam)?|t(h)?amil|dub(b)?ed|file|that|find|und(o)*|kit(t(i|y)?)?o(w)?|thar(u)?(o)*w?|kittum(o)*|aya(k)*(um(o)*)?|full\smovie|any(one)|with\ssubtitle(s)?)",
-        "", search, flags=re.IGNORECASE)  # plis contribute some common words
+        "", search, flags=re.IGNORECASE)  # pls contribute some common words
     query = query.strip()
     try:
         movies = await get_poster(query, bulk=True)
@@ -1885,11 +1885,11 @@ async def advantage_spell_chok(client, message):
 
     user = message.from_user.id if message.from_user else 0
     movielist = []
-    if len(movies)>5:
-        movies=movies[:5]
+    if len(movies) > 5:
+        movies = movies[:5]
     for mov in movies:
-        movielist += [f"{mov.get('title')}"]
-    movielist = list(dict.fromkeys(movielist))    
+        movielist.append(mov.get('title'))
+    movielist = list(dict.fromkeys(movielist))
     if not movielist:
         n = await message.reply_photo(
             photo=SPELL_IMG, 
@@ -1903,17 +1903,18 @@ async def advantage_spell_chok(client, message):
         except:
             pass
         return
-    buttons = [[
-        InlineKeyboardButton(text=movie.strip(), callback_data=f"spolling#{user}#{movie}")
-    ]
-        for movie in movielist
-    ]
-    buttons.append(
-        [InlineKeyboardButton("🚫 ᴄʟᴏsᴇ 🚫", callback_data="close_data")]
-    )
+
+    buttons = []
+    for movie in movielist:
+        callback_data = f"spolling#{user}#{movie}"
+        if len(callback_data) < 64:
+            buttons.append([InlineKeyboardButton(text=movie.strip(), callback_data=callback_data)])
+
+    buttons.append([InlineKeyboardButton("🚫 ᴄʟᴏsᴇ 🚫", callback_data="close_data")])
+
     s = await message.reply_photo(
-        photo=(SPELL_IMG),
-        caption=(script.CUDNT_FND.format(search)),
+        photo=SPELL_IMG,
+        caption=script.CUDNT_FND.format(search),
         reply_markup=InlineKeyboardMarkup(buttons)
     )
     await asyncio.sleep(300)
@@ -1921,8 +1922,7 @@ async def advantage_spell_chok(client, message):
     try:
         await message.delete()
     except:
-        pass
-            
+        pass      
 
 async def manual_filters(client, message, text=False):
     settings = await get_settings(message.chat.id)
