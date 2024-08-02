@@ -177,11 +177,9 @@ Request Again"""
 <b>Share if you care : @Isaimini_updates or @Isaimini_Filter_bot</b>"""
 
     OWNER_INFO = """You Can Use this Contact Admin for Paid Promotion, Any Errors or Issues....!!
-
 <blockquote><b>❌ Don't Ask Me To Send Movies In PM 😵‍💫 </b></blockquote>
-    
-○ 𝖢𝗋𝖾𝖺𝗍𝗈𝗋 : <a href='https://t.me/isaiminiprime_admin'>𝖳𝗁𝗂𝗌 𝖯𝖾𝗋𝗌𝗈𝗇</a>
 
+○ 𝖢𝗋𝖾𝖺𝗍𝗈𝗋 : <a href='https://t.me/isaiminiprime_admin'>𝖳𝗁𝗂𝗌 𝖯𝖾𝗋𝗌𝗈𝗇</a>
 ○ 𝖲𝗎𝗉𝗉𝗈𝗋𝗍 𝖦𝗋𝗈𝗎𝗉 : <a href='https://t.me/isaiminiprime_support'>𝖳𝖺𝗉 𝖧𝖾𝗋𝖾</a>
 """
 
