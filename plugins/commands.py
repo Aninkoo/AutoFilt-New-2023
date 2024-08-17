@@ -435,7 +435,7 @@ async def telegraph(bot, message):
 async def reset_token(bot, message):
     if IS_VERIFY:
         modified_count = await db.reset_all_token()
-        return await message.reply_text("{modified_count} users tokens reseted!!", quote=True)
+        return await message.reply_text(f"{modified_count} users tokens reseted!!", quote=True)
     else:
         return await message.reply_text("Token system is disabled!!", quote=True)
 
