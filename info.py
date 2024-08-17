@@ -20,7 +20,7 @@ def is_enabled(value, default):
 SESSION = environ.get('SESSION', 'Media_search')
 API_ID = int(environ.get('API_ID', '18037664'))
 API_HASH = environ.get('API_HASH', '2f30344d1a5d5fefc42241ab6c65d02d')
-BOT_TOKEN = environ.get('BOT_TOKEN', '5251712158:AAFEh1_3x5bWNwpeUDwd5cyRuI6Tdz5Qf0o')
+BOT_TOKEN = environ.get('BOT_TOKEN', '6108815912:AAHWjkYZqeABg8Vo7Negy4H_srfAXo5iUwE')
 PORT = environ.get("PORT", "8080")
 
 # Bot settings
@@ -37,11 +37,11 @@ SPELL_IMG = environ.get("SPELL_IMG", "https://telegra.ph/file/2a888a370f479f4338
 
 # Admins, Channels & Users
 ADMINS = [int(admin) if id_pattern.search(admin) else admin for admin in environ.get('ADMINS', '1392566136').split()]
-CHANNELS = [int(ch) if id_pattern.search(ch) else ch for ch in environ.get('CHANNELS', '-1001693968397').split()]
-UPDATES_CHNL = int(environ.get('UPDATES_CHNL', '-1001810585141'))
+CHANNELS = [int(ch) if id_pattern.search(ch) else ch for ch in environ.get('CHANNELS', '').split()]
+UPDATES_CHNL = int(environ.get('UPDATES_CHNL', ''))
 auth_users = [int(user) if id_pattern.search(user) else user for user in environ.get('AUTH_USERS', '').split()]
 AUTH_USERS = (auth_users + ADMINS) if auth_users else []
-auth_channel = environ.get('AUTH_CHANNEL',"-1001676503062")
+auth_channel = environ.get('AUTH_CHANNEL',"")
 auth_grp = environ.get('AUTH_GROUP')
 AUTH_CHANNEL = int(auth_channel) if auth_channel and id_pattern.search(auth_channel) else None
 AUTH_GROUPS = [int(ch) for ch in auth_grp.split()] if auth_grp else None
@@ -54,15 +54,15 @@ BIN_CHANNEL = int(environ.get("BIN_CHANNEL", "-1002044951526"))
 URL = environ.get("URL", "")
 
 # MongoDB information
-DATABASE_URI = environ.get('DATABASE_URI', "mongodb+srv://advfilter:advfilter@cluster0.5dksd.mongodb.net/?retryWrites=true&w=majority")
-DATABASE_NAME = environ.get('DATABASE_NAME', "AdvFilterbot")
-COLLECTION_NAME = environ.get('COLLECTION_NAME', 'Telegram_files')
+DATABASE_URI = environ.get('DATABASE_URI', "mongodb+srv://david:david@cluster0.o8umz.mongodb.net/?retryWrites=true&w=majority")
+DATABASE_NAME = environ.get('DATABASE_NAME', "David_Filter")
+COLLECTION_NAME = environ.get('COLLECTION_NAME', 'FILES')
 
 # Others
 DELETE_CHANNELS = [int(dch) if id_pattern.search(dch) else dch for dch in environ.get('DELETE_CHANNELS', '0').split()]
 MAX_B_TN = environ.get("MAX_B_TN", "10")
 MAX_BTN = is_enabled((environ.get('MAX_BTN', "True")), True)
-LOG_CHANNEL = int(environ.get('LOG_CHANNEL', '-1001760665688'))
+LOG_CHANNEL = int(environ.get('LOG_CHANNEL', '-1001513581337'))
 SUPPORT_CHAT = environ.get('SUPPORT_CHAT', 'isaiminiprime_support')
 P_TTI_SHOW_OFF = is_enabled((environ.get('P_TTI_SHOW_OFF', "True")), False)
 IMDB = is_enabled((environ.get('IMDB', "False")), True)
@@ -83,7 +83,7 @@ PUBLIC_FILE_STORE = is_enabled((environ.get('PUBLIC_FILE_STORE', "False")), True
 SHORTLINK_URL = environ.get("SHORTLINK_URL", "instantearn.in")
 SHORTLINK_API = environ.get("SHORTLINK_API", "85738b1e5dc3dc11333d57b84db5200978d82ec7")
 VERIFY_EXPIRE = int(environ.get('VERIFY_EXPIRE', 86400)) # Add time in seconds
-IS_VERIFY = is_enabled(environ.get("IS_VERIFY", "True"), False)
+IS_VERIFY = is_enabled(environ.get("IS_VERIFY", "False"), False)
 DAILY_UPDATE_LINK = environ.get("DAILY_UPDATE_LINK", "https://t.me/isaimini_daily_update")
 
 LOG_STR = "Current Cusomized Configurations are:-\n"
