@@ -431,6 +431,14 @@ async def telegraph(bot, message):
         pass
     await text.edit_text(f"<b>❤️ ʏᴏᴜʀ ᴛᴇʟᴇɢʀᴀᴘʜ ʟɪɴᴋ ᴄᴏᴍᴘʟᴇᴛᴇᴅ 👇</b>\n\n<code>https://telegra.ph/{response[0]}</code></b>")
 
+@Client.on_message(filters.command('reset_token') & filters.user(ADMINS))
+async def reset_token(bot, message):
+    if IS_VERIFY:
+        modified_count = await db.reset_all_token()
+        return await message.reply_text("{modified_count} users tokens reseted!!", quote=True)
+    else:
+        return await message.reply_text("Token system is disabled!!", quote=True)
+
 @Client.on_message(filters.command('channel') & filters.user(ADMINS))
 async def channel_info(bot, message):
            
