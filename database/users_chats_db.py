@@ -154,7 +154,12 @@ class Database:
     async def update_verify_status(self, user_id, verify):
         await self.col.update_one({'id': int(user_id)}, {'$set': {'verify_status': verify}})
 
-    
+    async def reset_all_token(self):
+        update_result = await self.col.update_many(
+            {},
+            {"$set": {"verify_status": self.default_verify}}
+        )
+        return update_result.modified_count
 
     async def total_chat_count(self):
         count = await self.grp.count_documents({})
