@@ -472,8 +472,8 @@ async def add_chnl_message(file_name):
     pattern = [
         (r'^([\w\s-]+)\s(S\d{2})\s?(E(P|p)|E)\d{2}\s'),
         (r'^([\w\.-]+)\.(S\d{2})(E(P|p)|E|e)\d{2}\.'),
-        (r'^(.*?)\.(\d{4})\..*?(mkv)$'),
-        (r'^(.*?)\s(\d{4})\s.*?(mkv)$')
+        (r'^([\w\s]+)\s(\d{4})\s(.*?)\s'),
+        (r'^([\w\.]+)\.(\d{4})\.(.*?)\.')
     ]
     
     for pat in pattern:
