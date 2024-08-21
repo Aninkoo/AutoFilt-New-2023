@@ -1917,11 +1917,26 @@ async def advantage_spell_chok(client, message):
             pass
         return
 
+    valid_movies = [movie for movie in movielist if len(f"spolling#{user}#{movie}") <= 64]
+    
+    if not valid_movies:
+        n = await message.reply_photo(
+            photo=SPELL_IMG, 
+            caption=script.I_CUDNT.format(search),
+            reply_markup=InlineKeyboardMarkup(button)
+        )
+        await asyncio.sleep(60)
+        await n.delete()
+        try:
+            await message.delete()
+        except:
+            pass
+        return
+
     buttons = []
-    for movie in movielist:
+    for movie in valid_movies:
         callback_data = f"spolling#{user}#{movie}"
-        if len(callback_data) < 64:
-            buttons.append([InlineKeyboardButton(text=movie.strip(), callback_data=callback_data)])
+        buttons.append([InlineKeyboardButton(text=movie.strip(), callback_data=callback_data)])
 
     buttons.append([InlineKeyboardButton("🚫 ᴄʟᴏsᴇ 🚫", callback_data="close_data")])
 
@@ -1935,7 +1950,7 @@ async def advantage_spell_chok(client, message):
     try:
         await message.delete()
     except:
-        pass      
+        pass
 
 async def manual_filters(client, message, text=False):
     settings = await get_settings(message.chat.id)
