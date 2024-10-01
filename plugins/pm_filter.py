@@ -2159,7 +2159,7 @@ async def global_filters(client, message, text=False):
                 try:
                     if fileid == "None":
                         if btn == "[]":
-                            piroxrk = await client.send_message(
+                            joelkb = await client.send_message(
                                 group_id, 
                                 reply_text, 
                                 disable_web_page_preview=True,
@@ -2172,24 +2172,26 @@ async def global_filters(client, message, text=False):
                                     if settings['auto_ffilter']:
                                         await auto_filter(client, message)
                                         try:
-                                            await asyncio.sleep(3)
-                                            await piroxrk.delete()
+                                            if settings['spell_check']:
+                                                await joelkb.delete()
                                         except KeyError:
                                             grpid = await active_connection(str(message.from_user.id))
                                             await save_group_settings(grpid, 'auto_delete', True)
                                             settings = await get_settings(message.chat.id)
-                                            await asyncio.sleep(3)
-                                            await piroxrk.delete()
+                                            if settings['spell_check']:
+                                                await joelkb.delete()
                                     else:
                                         try:
-                                            await asyncio.sleep(3)
-                                            await piroxrk.delete()
+                                            if settings['spell_check']:
+                                                await asyncio.sleep(10)
+                                                await joelkb.delete()
                                         except KeyError:
                                             grpid = await active_connection(str(message.from_user.id))
                                             await save_group_settings(grpid, 'auto_delete', True)
                                             settings = await get_settings(message.chat.id)
-                                            await asyncio.sleep(3)
-                                            await piroxrk.delete()
+                                            if settings['spell_check']:
+                                                await asyncio.sleep(10)
+                                                await joelkb.delete()
                                 except KeyError:
                                     grpid = await active_connection(str(message.from_user.id))
                                     await save_group_settings(grpid, 'auto_ffilter', True)
@@ -2198,18 +2200,18 @@ async def global_filters(client, message, text=False):
                                         await auto_filter(client, message) 
                             else:
                                 try:
-                                    await asyncio.sleep(3)
-                                    await piroxrk.delete()
+                                    if settings['spell_check']:
+                                        await joelkb.delete()
                                 except KeyError:
                                     grpid = await active_connection(str(message.from_user.id))
                                     await save_group_settings(grpid, 'auto_delete', True)
                                     settings = await get_settings(message.chat.id)
-                                    await asyncio.sleep(3)
-                                    await piroxrk.delete()
+                                    if settings['spell_check']:
+                                        await joelkb.delete()
                             
                         else:
                             button = eval(btn)
-                            piroxrk = await client.send_message(
+                            joelkb = await client.send_message(
                                 group_id,
                                 reply_text,
                                 disable_web_page_preview=True,
@@ -2223,24 +2225,26 @@ async def global_filters(client, message, text=False):
                                     if settings['auto_ffilter']:
                                         await auto_filter(client, message)
                                         try:
-                                            await asyncio.sleep(3)
-                                            await piroxrk.delete()
+                                            if settings['spell_check']:
+                                                await joelkb.delete()
                                         except KeyError:
                                             grpid = await active_connection(str(message.from_user.id))
                                             await save_group_settings(grpid, 'auto_delete', True)
                                             settings = await get_settings(message.chat.id)
-                                            await asyncio.sleep(3)
-                                            await piroxrk.delete()
+                                            if settings['spell_check']:
+                                                await joelkb.delete()
                                     else:
                                         try:
-                                            await asyncio.sleep(3)
-                                            await piroxrk.delete()
+                                            if settings['spell_check']:
+                                                await asyncio.sleep(10)
+                                                await joelkb.delete()
                                         except KeyError:
                                             grpid = await active_connection(str(message.from_user.id))
                                             await save_group_settings(grpid, 'auto_delete', True)
                                             settings = await get_settings(message.chat.id)
-                                            await asyncio.sleep(3)
-                                            await piroxrk.delete()
+                                            if settings['spell_check']:
+                                                await asyncio.sleep(10)
+                                                await joelkb.delete()
                                 except KeyError:
                                     grpid = await active_connection(str(message.from_user.id))
                                     await save_group_settings(grpid, 'auto_ffilter', True)
@@ -2249,17 +2253,17 @@ async def global_filters(client, message, text=False):
                                         await auto_filter(client, message) 
                             else:
                                 try:
-                                    await asyncio.sleep(3)
-                                    await piroxrk.delete()
+                                    if settings['spell_check']:
+                                        await joelkb.delete()
                                 except KeyError:
                                     grpid = await active_connection(str(message.from_user.id))
                                     await save_group_settings(grpid, 'auto_delete', True)
                                     settings = await get_settings(message.chat.id)
-                                    await asyncio.sleep(3)
-                                    await piroxrk.delete()
+                                    if settings['spell_check']:
+                                        await joelkb.delete()
 
                     elif btn == "[]":
-                        piroxrk = await client.send_cached_media(
+                        joelkb = await client.send_cached_media(
                             group_id,
                             fileid,
                             caption=reply_text or "",
@@ -2272,24 +2276,26 @@ async def global_filters(client, message, text=False):
                                 if settings['auto_ffilter']:
                                     await auto_filter(client, message)
                                     try:
-                                        await asyncio.sleep(3)
-                                        await piroxrk.delete()
+                                        if settings['spell_check']:
+                                            await joelkb.delete()
                                     except KeyError:
                                         grpid = await active_connection(str(message.from_user.id))
                                         await save_group_settings(grpid, 'auto_delete', True)
                                         settings = await get_settings(message.chat.id)
-                                        await asyncio.sleep(3)
-                                        await piroxrk.delete()
+                                        if settings['spell_check']:
+                                            await joelkb.delete()
                                 else:
                                     try:
-                                        await asyncio.sleep(300)
-                                        await piroxrk.delete()
+                                        if settings['spell_check']:
+                                            await asyncio.sleep(10)
+                                            await joelkb.delete()
                                     except KeyError:
                                         grpid = await active_connection(str(message.from_user.id))
                                         await save_group_settings(grpid, 'auto_delete', True)
                                         settings = await get_settings(message.chat.id)
-                                        await asyncio.sleep(3)
-                                        await piroxrk.delete()
+                                        if settings['spell_check']:
+                                            await asyncio.sleep(10)
+                                            await joelkb.delete()
                             except KeyError:
                                 grpid = await active_connection(str(message.from_user.id))
                                 await save_group_settings(grpid, 'auto_ffilter', True)
@@ -2298,18 +2304,18 @@ async def global_filters(client, message, text=False):
                                     await auto_filter(client, message) 
                         else:
                             try:
-                                await asyncio.sleep(3)
-                                await piroxrk.delete()
+                                if settings['spell_check']:
+                                    await joelkb.delete()
                             except KeyError:
                                 grpid = await active_connection(str(message.from_user.id))
                                 await save_group_settings(grpid, 'auto_delete', True)
                                 settings = await get_settings(message.chat.id)
-                                await asyncio.sleep(3)
-                                await piroxrk.delete()
+                                if settings['spell_check']:
+                                    await joelkb.delete()
 
                     else:
                         button = eval(btn)
-                        piroxrk = await message.reply_cached_media(
+                        joelkb = await message.reply_cached_media(
                             fileid,
                             caption=reply_text or "",
                             reply_markup=InlineKeyboardMarkup(button),
@@ -2322,24 +2328,26 @@ async def global_filters(client, message, text=False):
                                 if settings['auto_ffilter']:
                                     await auto_filter(client, message)
                                     try:
-                                        await asyncio.sleep(3)
-                                        await piroxrk.delete()
+                                        if settings['spell_check']:
+                                            await joelkb.delete()
                                     except KeyError:
                                         grpid = await active_connection(str(message.from_user.id))
                                         await save_group_settings(grpid, 'auto_delete', True)
                                         settings = await get_settings(message.chat.id)
-                                        await asyncio.sleep(3)
-                                        await piroxrk.delete()
+                                        if settings['spell_check']:
+                                            await joelkb.delete()
                                 else:
                                     try:
-                                        await asyncio.sleep(300)
-                                        await piroxrk.delete()
+                                        if settings['spell_check']:
+                                            await asyncio.sleep(10)
+                                            await joelkb.delete()
                                     except KeyError:
                                         grpid = await active_connection(str(message.from_user.id))
                                         await save_group_settings(grpid, 'auto_delete', True)
                                         settings = await get_settings(message.chat.id)
-                                        await asyncio.sleep(3)
-                                        await piroxrk.delete()
+                                        if settings['spell_check']:
+                                            await asyncio.sleep(10)
+                                            await joelkb.delete()
                             except KeyError:
                                 grpid = await active_connection(str(message.from_user.id))
                                 await save_group_settings(grpid, 'auto_ffilter', True)
@@ -2348,15 +2356,16 @@ async def global_filters(client, message, text=False):
                                     await auto_filter(client, message) 
                         else:
                             try:
-                                await asyncio.sleep(300)
-                                await piroxrk.delete()
+                                if settings['spell_check']:
+                                    await joelkb.delete()
                             except KeyError:
                                 grpid = await active_connection(str(message.from_user.id))
                                 await save_group_settings(grpid, 'auto_delete', True)
                                 settings = await get_settings(message.chat.id)
-                                await asyncio.sleep(3)
-                                await piroxrk.delete()
+                                if settings['spell_check']:
+                                    await joelkb.delete()
 
+                                
                 except Exception as e:
                     logger.exception(e)
                 break
