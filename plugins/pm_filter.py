@@ -113,7 +113,21 @@ async def pv_filter(client, message):
                 await stick.delete()
                 await asyncio.sleep(120)
                 await pvt_msg.delete()
-    await message.delete()
+                await message.delete()
+        else:
+            await stick.delete()
+            google_search = search.replace(" ", "+")
+            button = [[
+                InlineKeyboardButton("🔎 Search Google 🔍", url=f"https://www.google.com/search?q={google_search}")
+            ]]
+            n = await message.reply_photo(
+                photo=SPELL_IMG, 
+                caption=script.I_CUDNT.format(search),
+                reply_markup=InlineKeyboardMarkup(button)
+            )
+            await asyncio.sleep(60)
+            await n.delete()
+            await message.delete()
 
 @Client.on_callback_query(filters.regex(r"^next"))
 async def next_page(bot, query):
