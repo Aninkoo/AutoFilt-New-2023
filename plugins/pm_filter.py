@@ -101,33 +101,33 @@ async def pv_filter(client, message):
     if message.text.startswith("http"):
         return
     stick = await message.reply_sticker(sticker="CAACAgUAAx0CZjyOqQACMCpl_EX_Ak6ilEi7sdys1ec9ozSwvQAC3AIAAq9qOVVmHNMuomHDLB4E")
-    kd = await global_filters(client, message)
-    if kd == False:
-        search = message.text
-        files, n_offset, total = await get_search_results(0, query=search.lower(), offset=0, filter=True)
-        if int(total) != 0:
-                btn = [[
+    search = message.text
+    files, n_offset, total = await get_search_results(0, query=search.lower(), offset=0, filter=True)
+    if int(total) != 0:
+        btn = [[
             InlineKeyboardButton(']|I{•------» 𝐌𝐨𝐯𝐢𝐞 𝐒𝐞𝐚𝐫𝐜𝐡𝐢𝐧𝐠 𝐆𝐫𝐨𝐮𝐩 𝐋𝐢𝐧𝐤𝐬 «------•}I|[', url="https://t.me/isaimini_updates/110")
         ]]
-                pvt_msg = await message.reply_text(f'<b>👋 𝖧𝖾𝗒 {message.from_user.mention},\n📁 {str(total)} 𝖱𝖾𝗌𝗎𝗅𝗍𝗌 𝖺𝗋𝖾 𝖿𝗈𝗎𝗇𝖽 𝖿𝗈𝗋 𝗒𝗈𝗎𝗋 𝗊𝗎𝖾𝗋𝗒 {search}.\n\nKindly ask movies or series in Movie Request Groups, Links available here ⬇</b>"', reply_markup=InlineKeyboardMarkup(btn), quote=True)
-                await stick.delete()
-                await asyncio.sleep(120)
-                await pvt_msg.delete()
-                await message.delete()
-        else:
-            await stick.delete()
-            google_search = search.replace(" ", "+")
-            button = [[
-                InlineKeyboardButton("🔎 Search Google 🔍", url=f"https://www.google.com/search?q={google_search}")
-            ]]
-            n = await message.reply_photo(
-                photo=SPELL_IMG, 
-                caption=script.I_CUDNT.format(search),
-                reply_markup=InlineKeyboardMarkup(button)
-            )
-            await asyncio.sleep(60)
-            await n.delete()
-            await message.delete()
+        pvt_msg = await message.reply_text(f'<b>👋 𝖧𝖾𝗒 {message.from_user.mention},\n📁 {str(total)} 𝖱𝖾𝗌𝗎𝗅𝗍𝗌 𝖺𝗋𝖾 𝖿𝗈𝗎𝗇𝖽 𝖿𝗈𝗋 𝗒𝗈𝗎𝗋 𝗊𝗎𝖾𝗋𝗒 {search}.\n\nKindly ask movies or series in Movie Request Groups, Links available here ⬇</b>"', reply_markup=InlineKeyboardMarkup(btn), quote=True)
+        await stick.delete()
+        await asyncio.sleep(120)
+        await pvt_msg.delete()
+        await message.delete()
+    else:
+        await stick.delete()
+        google_search = search.replace(" ", "+")
+        button = [[
+            InlineKeyboardButton("🔎 Search Google 🔍", url=f"https://www.google.com/search?q={google_search}")
+        ],[
+            InlineKeyboardButton(']|I{•------» 𝐌𝐨𝐯𝐢𝐞 𝐒𝐞𝐚𝐫𝐜𝐡𝐢𝐧𝐠 𝐆𝐫𝐨𝐮𝐩 𝐋𝐢𝐧𝐤𝐬 «------•}I|[', url="https://t.me/movie_request_group_links")
+        ]]
+        n = await message.reply_photo(
+            photo=SPELL_IMG, 
+            caption="❌ <b>𝖨 𝖼𝗈𝗎𝗅𝖽𝗇'𝗍 𝖿𝗂𝗇𝖽 𝖺𝗇𝗒𝗍𝗁𝗂𝗇𝗀 𝗋𝖾𝗅𝖺𝗍𝖾𝖽 𝗍𝗈 𝗍𝗁𝖺𝗍!\n\n🧐 Use Correct Spelling From Google and search in Movie searching Groups. Links Available below 👇</b>",
+            reply_markup=InlineKeyboardMarkup(button)
+        )
+        await asyncio.sleep(60)
+        await n.delete()
+        await message.delete()
 
 @Client.on_callback_query(filters.regex(r"^next"))
 async def next_page(bot, query):
