@@ -6,7 +6,7 @@ import asyncio
 from pyrogram.types import Message, InlineKeyboardButton, InlineKeyboardMarkup
 from pyrogram import enums
 #from typing import Union
-import random 
+from random import choice 
 import re
 import os
 import time
