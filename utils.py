@@ -441,6 +441,30 @@ def remove_escapes(text: str) -> str:
             res += text[counter]
     return res
 
+async def send_react(chat_info, message):
+    available_reactions = chat_info.available_reactions
+    
+    full_emoji_set = {
+        "👌",
+        "🔥",
+        "🥰",
+        "❤️",
+        "❤️‍🔥",
+        "💯",
+        "⚡",
+        "💋",
+        "😘",
+        "🤩",
+        "😍",
+    }
+    if available_reactions:
+        if getattr(available_reactions, "all_are_enabled", False):
+            emojis = full_emoji_set
+        else:
+            emojis = {
+                reaction.emoji for reaction in available_reactions.reactions
+            }
+        await message.react(choice(list(emojis)), big=True)
 
 async def get_verify_status(user_id):
     verify = await db.get_verify_status(user_id)
