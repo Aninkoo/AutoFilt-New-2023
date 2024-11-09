@@ -13,7 +13,7 @@ from info import ADMINS, AUTH_CHANNEL, BIN_CHANNEL, URL, IS_VERIFY, VERIFY_EXPIR
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery, InputMediaPhoto
 from pyrogram import Client, filters, enums
 from pyrogram.errors import FloodWait, UserIsBlocked, MessageNotModified, PeerIdInvalid
-from utils import get_size, is_subscribed, get_poster, get_shortlink, get_verify_status, update_verify_status, get_readable_time, search_gagala, temp, get_settings, save_group_settings, send_all
+from utils import get_size, is_subscribed, get_poster, get_shortlink, get_verify_status, update_verify_status, get_readable_time, search_gagala, temp, get_settings, save_group_settings, send_all, send_react
 from database.users_chats_db import db
 from database.ia_filterdb import Media, get_file_details, get_search_results, get_bad_files
 from database.filters_mdb import (
@@ -1583,6 +1583,9 @@ async def cb_handler(client: Client, query: CallbackQuery):
 async def auto_filter(client, msg, spoll=False):
     reqstr1 = msg.from_user.id if msg.from_user else 0
     reqstr = await client.get_users(reqstr1)
+    gchat_id = int(message.chat.id)
+    chat_info = await client.get_chat(gchat_id)
+    await send_react(chat_info, message)
     if not spoll:
         if msg.text.startswith("/"):
             return
