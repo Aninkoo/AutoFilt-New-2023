@@ -1584,12 +1584,15 @@ async def cb_handler(client: Client, query: CallbackQuery):
 async def auto_filter(client, msg, spoll=False):
     reqstr1 = msg.from_user.id if msg.from_user else 0
     reqstr = await client.get_users(reqstr1)
-    gchat_id = int(msg.chat.id)
-    chat_info = await client.get_chat(gchat_id)
-    await send_react(chat_info, msg)
     if not spoll:
         if msg.text.startswith("/"):
             return
+        try:
+            gchat_id = int(msg.chat.id)
+            chat_info = await client.get_chat(gchat_id)
+            await send_react(chat_info, msg)
+        except:
+            pass
         stick = await msg.reply_sticker(sticker="CAACAgUAAx0CZjyOqQACMCpl_EX_Ak6ilEi7sdys1ec9ozSwvQAC3AIAAq9qOVVmHNMuomHDLB4E")
         message = msg
         settings = await get_settings(message.chat.id)
