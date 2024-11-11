@@ -445,14 +445,19 @@ async def send_react(chat_info, message):
     available_reactions = chat_info.available_reactions
     
     full_emoji_set = {
-        "👌",
+        "🙏",
         "🔥",
         "🥰",
-        "❤️",
+        "🗿",
         "❤️‍🔥",
+        "🍾",
+        "🎃",
+        "👻",
+        "🏆",
+        "☃️",
         "💯",
         "⚡",
-        "💋",
+        "🙈",
         "😘",
         "🤩",
         "😍",
