@@ -615,7 +615,8 @@ async def advantage_spoll_choker(bot, query):
             else:
                 reqstr1 = query.from_user.id if query.from_user else 0
                 reqstr = await bot.get_users(reqstr1)
-                encoded_search = quote(movie_)
+                encoding_search = quote(movie_)
+                encoded_search = Hi+%F0%9F%91%A4Admin%2C+I+Couldn%27t+Find+This+👉+{encoding_search}+👈+in+Your+Bots.+For+Your+Kind+Attention
                 k = await query.message.edit(script.MVE_NT_FND.format(encoded_search))
                 await asyncio.sleep(30)
                 await k.delete()
