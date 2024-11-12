@@ -615,9 +615,14 @@ async def advantage_spoll_choker(bot, query):
             else:
                 reqstr1 = query.from_user.id if query.from_user else 0
                 reqstr = await bot.get_users(reqstr1)
-                encoding_search = quote(movie_)
-                encoded_search = Hi+%F0%9F%91%A4Admin%2C+I+Couldn%27t+Find+This+👉+{encoding_search}+👈+in+Your+Bots.+For+Your+Kind+Attention
-                k = await query.message.edit(script.MVE_NT_FND.format(encoded_search))
+                google_search = movie_.replace(" ", "+")
+                encoded_search = quote(movie_)
+                button = [[
+                    InlineKeyboardButton("🔎 Search in Google 🔍", url=f"https://www.google.com/search?q={google_search}")
+                ],[
+                    InlineKeyboardButton("‼️ 𝖱𝖾𝗉𝗈𝗋𝗍 𝗍𝗈 𝖺𝖽𝗆𝗂𝗇 ‼️", url=f"https://t.me/Isaiminiprime_admin_bot?text=Hi+%F0%9F%91%A4Admin%2C+I+Couldn%27t+Find+This+👉+{encoded_search}+👈+in+Your+Bots.+For+Your+Kind+Attention")
+                ]]
+                k = await query.message.edit(script.MVE_NT_FND.format, reply_markup=InlineKeyboardMarkup(button))
                 await asyncio.sleep(30)
                 await k.delete()
 
