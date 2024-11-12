@@ -622,7 +622,7 @@ async def advantage_spoll_choker(bot, query):
                 ],[
                     InlineKeyboardButton("‼️ 𝖱𝖾𝗉𝗈𝗋𝗍 𝗍𝗈 𝖺𝖽𝗆𝗂𝗇 ‼️", url=f"https://t.me/Isaiminiprime_admin_bot?text=Hi+%F0%9F%91%A4Admin%2C+I+Couldn%27t+Find+This+👉+{encoded_search}+👈+in+Your+Bots.+For+Your+Kind+Attention")
                 ]]
-                k = await query.message.edit(script.MVE_NT_FND.format, reply_markup=InlineKeyboardMarkup(button))
+                k = await query.message.edit(caption=script.MVE_NT_FND, reply_markup=InlineKeyboardMarkup(button))
                 await asyncio.sleep(30)
                 await k.delete()
 
