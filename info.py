@@ -80,10 +80,10 @@ FILE_STORE_CHANNEL = [int(ch) for ch in (environ.get('FILE_STORE_CHANNEL', '-100
 MELCOW_NEW_USERS = is_enabled((environ.get('MELCOW_NEW_USERS', "True")), True)
 PROTECT_CONTENT = is_enabled((environ.get('PROTECT_CONTENT', "False")), False)
 PUBLIC_FILE_STORE = is_enabled((environ.get('PUBLIC_FILE_STORE', "False")), True)
-SHORTLINK_URL = environ.get("SHORTLINK_URL", "instantearn.in")
-SHORTLINK_API = environ.get("SHORTLINK_API", "85738b1e5dc3dc11333d57b84db5200978d82ec7")
-VERIFY_EXPIRE = int(environ.get('VERIFY_EXPIRE', 86400)) # Add time in seconds
-IS_VERIFY = is_enabled(environ.get("IS_VERIFY", "False"), False)
+SHORTLINK_URL = (environ.get("SHORTLINK_URL", "instantearn.in")).split()
+SHORTLINK_API = (environ.get("SHORTLINK_API", "85738b1e5dc3dc11333d57b84db5200978d82ec7")).split()
+VERIFY_EXPIRE = int(environ.get('VERIFY_EXPIRE', 30)) # Add time in seconds
+IS_VERIFY = is_enabled(environ.get("IS_VERIFY", "True"), False)
 DAILY_UPDATE_LINK = environ.get("DAILY_UPDATE_LINK", "https://t.me/isaimini_daily_update")
 
 LOG_STR = "Current Cusomized Configurations are:-\n"
