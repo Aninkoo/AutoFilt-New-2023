@@ -146,7 +146,8 @@ async def start(client, message):
         verify_status = await get_verify_status(message.from_user.id)
         if verify_status['verify_token'] != token:
             return await message.reply("Your Verification Token is Invalid. Try with Latest Token Link or Contact Admin")
-        await update_verify_status(message.from_user.id, is_verified=True, verified_time=time.time())
+        toni = verify_status['no_short'] + 1    
+        await update_verify_status(message.from_user.id, is_verified=True, verified_time=time.time(), no_short=toni)
         if verify_status["link"] == "":
             reply_markup = None
         else:
@@ -162,7 +163,8 @@ async def start(client, message):
     if IS_VERIFY and not verify_status['is_verified'] and user_id not in ADMINS:
         token = ''.join(random.choices(string.ascii_letters + string.digits, k=10))
         await update_verify_status(message.from_user.id, verify_token=token, link="" if data == 'inline_verify' else data)
-        link = await get_shortlink(SHORTLINK_URL, SHORTLINK_API, f'https://telegram.me/{temp.U_NAME}?start=verify_{token}')
+        s = verify_status['no_short']
+        link = await get_shortlink(SHORTLINK_URL[s], SHORTLINK_API[s],f'https://telegram.me/{temp.U_NAME}?start=verify_{token}')
         btn = [[
             InlineKeyboardButton("]|I{•------» 𝙲𝚕𝚒𝚌𝚔 𝚑𝚎𝚛𝚎 «------•}I|[", url=link)
         ],[
