@@ -1,6 +1,6 @@
 import logging
 from pyrogram.errors import InputUserDeactivated, UserNotParticipant, FloodWait, UserIsBlocked, PeerIdInvalid
-from info import AUTH_CHANNEL, LONG_IMDB_DESCRIPTION, MAX_LIST_ELM, CUSTOM_FILE_CAPTION, UPDATES_CHNL
+from info import AUTH_CHANNEL, LONG_IMDB_DESCRIPTION, MAX_LIST_ELM, CUSTOM_FILE_CAPTION, UPDATES_CHNL, SHORTLINK_URL
 from imdb import Cinemagoer 
 import asyncio
 from pyrogram.types import Message, InlineKeyboardButton, InlineKeyboardMarkup
@@ -20,6 +20,9 @@ from shortzy import Shortzy
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
+
+TOT_SHORT = len(SHORTLINK_URL)
+tot_short = TOT_SHORT- 1
 
 BTN_URL_REGEX = re.compile(
     r"(\[([^\[]+?)\]\((buttonurl|buttonalert):(?:/{0,2})(.+?)(:same)?\))"
@@ -485,12 +488,16 @@ async def get_verify_status(user_id):
     verify = await db.get_verify_status(user_id)
     return verify
 
-async def update_verify_status(user_id, verify_token="", is_verified=False, verified_time=0, link=""):
+async def update_verify_status(user_id, verify_token="", is_verified=False, verified_time=0, link="", no_short=None):
     current = await get_verify_status(user_id)
     current['verify_token'] = verify_token
     current['is_verified'] = is_verified
     current['verified_time'] = verified_time
     current['link'] = link
+    if no_short is not None:
+        if no_short > tot_short:
+            no_short = 0
+        current['no_short'] = no_short
     await db.update_verify_status(user_id, current)
     
 
