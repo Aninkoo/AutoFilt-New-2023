@@ -14,7 +14,8 @@ class Database:
         'is_verified': False,
         'verified_time': 0,
         'verify_token': "",
-        'link': ""
+        'link': "",
+        'no_short': 0
     }
 
     def new_user(self, id, name):
@@ -29,7 +30,8 @@ class Database:
                 is_verified=False,
                 verified_time="",
                 verify_token="",
-                link=""
+                link="",
+                no_short=0
         ))
 
 
