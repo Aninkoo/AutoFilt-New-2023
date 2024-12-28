@@ -35,35 +35,38 @@ class Media(Document):
 
 async def save_file(media):
     """Save file in database"""
+
     # TODO: Find better way to get same file_id for same media to avoid duplicates
     file_id, file_ref = unpack_new_file_id(media.file_id)
     file_name = re.sub(r"(_|\-|\.|\+)", " ", str(media.file_name))
-    if file_name.lower().endswith(tuple(INDEX_EXTENSIONS)):
+    if not file_name.lower().endswith(tuple(INDEX_EXTENSIONS)):
+        logger.warning(f"File extension not supported: {file_name}")
+        return False, 0
+    try:
+        file = Media(
+            file_id=file_id,
+            file_ref=file_ref,
+            file_name=file_name,
+            file_size=media.file_size,
+            file_type=media.file_type,
+            mime_type=media.mime_type,
+            caption=media.caption.html if media.caption else None,
+        )
+    except ValidationError:
+        logger.exception('Error occurred while saving file in database')
+        return False, 2
+    else:
         try:
-            file = Media(
-                file_id=file_id,
-                file_ref=file_ref,
-                file_name=file_name,
-                file_size=media.file_size,
-                file_type=media.file_type,
-                mime_type=media.mime_type,
-                caption=media.caption if media.caption else file_name,
+            await file.commit()
+        except DuplicateKeyError:      
+            logger.warning(
+                f'{getattr(media, "file_size", "NO_FILE")} is already saved in database'
             )
-        except ValidationError:
-            logger.exception('Error occurred while saving file in database')
-            return False, 2
-        else:
-            try:
-                await file.commit()
-            except DuplicateKeyError:      
-                logger.warning(
-                    f'{getattr(media, "file_size", "NO_FILE")} is already saved in database'
-                )
 
-                return False, 0
-            else:
-                logger.info(f'{getattr(media, "file_size", "NO_FILE")} is saved to database')
-                return True, 1
+            return False, 0
+        else:
+            logger.info(f'{getattr(media, "file_size", "NO_FILE")} is saved to database')
+            return True, 1
 
 async def get_search_results(chat_id, query, file_type=None, max_results=10, offset=0, filter=False, lang=None):
     """For given query return (results, next_offset)"""
