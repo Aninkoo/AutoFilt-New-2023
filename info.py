@@ -86,6 +86,7 @@ SHORTLINK_API = (environ.get("SHORTLINK_API", "85738b1e5dc3dc11333d57b84db520097
 VERIFY_EXPIRE = int(environ.get('VERIFY_EXPIRE', 30)) # Add time in seconds
 IS_VERIFY = is_enabled(environ.get("IS_VERIFY", "True"), False)
 DAILY_UPDATE_LINK = environ.get("DAILY_UPDATE_LINK", "https://t.me/isaimini_daily_update")
+IS_STREAM = is_enabled((environ.get('IS_STREAM', "True")), True)
 
 LOG_STR = "Current Cusomized Configurations are:-\n"
 LOG_STR += ("IMDB Results are enabled, Bot will be showing imdb details for you queries.\n" if IMDB else "IMBD Results are disabled.\n")
