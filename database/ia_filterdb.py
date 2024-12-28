@@ -7,7 +7,7 @@ from pymongo.errors import DuplicateKeyError
 from umongo import Instance, Document, fields
 from motor.motor_asyncio import AsyncIOMotorClient
 from marshmallow.exceptions import ValidationError
-from info import DATABASE_URI, DATABASE_NAME, COLLECTION_NAME, USE_CAPTION_FILTER, MAX_B_TN
+from info import DATABASE_URI, DATABASE_NAME, COLLECTION_NAME, USE_CAPTION_FILTER, MAX_B_TN, INDEX_EXTENSIONS
 from utils import get_settings, save_group_settings
 
 logger = logging.getLogger(__name__)
@@ -35,35 +35,35 @@ class Media(Document):
 
 async def save_file(media):
     """Save file in database"""
-
     # TODO: Find better way to get same file_id for same media to avoid duplicates
     file_id, file_ref = unpack_new_file_id(media.file_id)
     file_name = re.sub(r"(_|\-|\.|\+)", " ", str(media.file_name))
-    try:
-        file = Media(
-            file_id=file_id,
-            file_ref=file_ref,
-            file_name=file_name,
-            file_size=media.file_size,
-            file_type=media.file_type,
-            mime_type=media.mime_type,
-            caption=media.caption if media.caption else file_name,
-        )
-    except ValidationError:
-        logger.exception('Error occurred while saving file in database')
-        return False, 2
-    else:
+    if file_name.lower().endswith(tuple(INDEX_EXTENSIONS)):
         try:
-            await file.commit()
-        except DuplicateKeyError:      
-            logger.warning(
-                f'{getattr(media, "file_size", "NO_FILE")} is already saved in database'
+            file = Media(
+                file_id=file_id,
+                file_ref=file_ref,
+                file_name=file_name,
+                file_size=media.file_size,
+                file_type=media.file_type,
+                mime_type=media.mime_type,
+                caption=media.caption if media.caption else file_name,
             )
-
-            return False, 0
+        except ValidationError:
+            logger.exception('Error occurred while saving file in database')
+            return False, 2
         else:
-            logger.info(f'{getattr(media, "file_size", "NO_FILE")} is saved to database')
-            return True, 1
+            try:
+                await file.commit()
+            except DuplicateKeyError:      
+                logger.warning(
+                    f'{getattr(media, "file_size", "NO_FILE")} is already saved in database'
+                )
+
+                return False, 0
+            else:
+                logger.info(f'{getattr(media, "file_size", "NO_FILE")} is saved to database')
+                return True, 1
 
 async def get_search_results(chat_id, query, file_type=None, max_results=10, offset=0, filter=False, lang=None):
     """For given query return (results, next_offset)"""
