@@ -51,7 +51,7 @@ async def save_file(media):
         )
     except ValidationError:
         logger.exception('Error occurred while saving file in database')
-        return None
+        return False, 2
     else:
         try:
             await file.commit()
@@ -60,11 +60,10 @@ async def save_file(media):
                 f'{getattr(media, "file_size", "NO_FILE")} is already saved in database'
             )
 
-            return None
+            return False, 0
         else:
             logger.info(f'{getattr(media, "file_size", "NO_FILE")} is saved to database')
-            caption_text = media.caption if media.caption else file_name
-            return caption_text
+            return True, 1
 
 async def get_search_results(chat_id, query, file_type=None, max_results=10, offset=0, filter=False, lang=None):
     """For given query return (results, next_offset)"""
