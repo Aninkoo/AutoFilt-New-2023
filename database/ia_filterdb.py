@@ -39,9 +39,6 @@ async def save_file(media):
     # TODO: Find better way to get same file_id for same media to avoid duplicates
     file_id, file_ref = unpack_new_file_id(media.file_id)
     file_name = re.sub(r"(_|\-|\.|\+)", " ", str(media.file_name))
-    if not file_name.lower().endswith(tuple(INDEX_EXTENSIONS)):
-        logger.warning(f"File extension not supported: {file_name}")
-        return False, 0
     try:
         file = Media(
             file_id=file_id,
@@ -50,7 +47,7 @@ async def save_file(media):
             file_size=media.file_size,
             file_type=media.file_type,
             mime_type=media.mime_type,
-            caption=media.caption.html if media.caption else None,
+            caption=media.caption if media.caption else file_name,
         )
     except ValidationError:
         logger.exception('Error occurred while saving file in database')
