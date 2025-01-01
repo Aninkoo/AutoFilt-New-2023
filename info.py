@@ -84,7 +84,7 @@ PUBLIC_FILE_STORE = is_enabled((environ.get('PUBLIC_FILE_STORE', "False")), True
 SHORTLINK_URL = (environ.get("SHORTLINK_URL", "instantearn.in")).split()
 SHORTLINK_API = (environ.get("SHORTLINK_API", "85738b1e5dc3dc11333d57b84db5200978d82ec7")).split()
 VERIFY_EXPIRE = int(environ.get('VERIFY_EXPIRE', 86400)) # Add time in seconds
-IS_VERIFY = is_enabled(environ.get("IS_VERIFY", "True"), False)
+IS_VERIFY = is_enabled(environ.get("IS_VERIFY", "False"), False)
 DAILY_UPDATE_LINK = environ.get("DAILY_UPDATE_LINK", "https://t.me/isaimini_daily_update")
 IS_STREAM = is_enabled((environ.get('IS_STREAM', "True")), True)
 
