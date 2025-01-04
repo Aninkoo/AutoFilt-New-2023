@@ -20,9 +20,10 @@ import json
 import pytz
 import base64
 from telegraph import upload_file
+from asyncio import Event
 
 logger = logging.getLogger(__name__)
-
+STOP_EVENT = Event()
 BATCH_FILES = {}
 
 @Client.on_message(filters.command("start") & filters.incoming)
@@ -980,14 +981,16 @@ async def sendallfilesindb(client, message):
     args = message.text.split()
     if len(args) != 2:
         return await message.reply_text("Usage: /sendfile Channel_Id")
-    
     target_id = args[1] 
     tot_files = await get_all_files()
-
+    global STOP_EVENT
+    STOP_EVENT.clear()
     if not tot_files:
         return await message.reply_text("No files found in the database.")
-
+    await message.reply_text("Process Started...")
     async for file_id in tot_files:
+        if STOP_EVENT.is_set():
+            return await message.reply_text("File sending process stopped.")
         files_ = await get_file_details(file_id)
         if not files_:
             continue
@@ -1004,3 +1007,11 @@ async def sendallfilesindb(client, message):
             )
         except Exception as e:
             logger.error(f"Error sending file {files.file_id}: {e}")
+        await asyncio.sleep(1)
+
+@Client.on_message(filters.command("stop") & filters.user(ADMINS))
+async def stop_sending_files(client, message):
+    """Command to stop the file-sending process."""
+    global STOP_EVENT
+    STOP_EVENT.set()  # Set the stop flag
+    await message.reply_text("File sending process will stop shortly.")
