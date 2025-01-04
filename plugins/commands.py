@@ -8,7 +8,7 @@ from Script import script
 from pyrogram import Client, filters, enums
 from pyrogram.errors import ChatAdminRequired, FloodWait
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
-from database.ia_filterdb import Media, get_file_details, unpack_new_file_id, get_bad_files, get_search_results
+from database.ia_filterdb import Media, get_file_details, unpack_new_file_id, get_bad_files, get_search_results, get_all_files
 from database.users_chats_db import db
 from info import CHANNELS, ADMINS, AUTH_CHANNEL, IS_VERIFY, VERIFY_EXPIRE, SHORTLINK_API, SHORTLINK_URL, LOG_CHANNEL, PICS, BATCH_FILE_CAPTION, CUSTOM_FILE_CAPTION, DAILY_UPDATE_LINK, SUPPORT_CHAT, PROTECT_CONTENT, REQST_CHANNEL, SUPPORT_CHAT_ID, MAX_B_TN, NOR_IMG
 from utils import get_settings, get_size, get_shortlink, get_verify_status, update_verify_status, is_subscribed, get_readable_time, save_group_settings, temp
@@ -979,57 +979,28 @@ async def deletemultiplefiles(bot, message):
 async def sendallfilesindb(client, message):
     args = message.text.split()
     if len(args) != 2:
-        return await message.reply_text("Usage: /send <document_id>")
-    doc_id = args[1]
-    data = f"file_{doc_id}"
-    files_ = await get_file_details(doc_id)  
-    file_id = None
-    if not files_:
+        return await message.reply_text("Usage: /sendfile Channel_Id")
+    
+    target_id = args[1] 
+    tot_files = await get_all_files()
+
+    if not tot_files:
+        return await message.reply_text("No files found in the database.")
+
+    async for file_id in tot_files:
+        files_ = await get_file_details(file_id)
+        if not files_:
+            continue
+        files = files_[0]
+        file_caption = files.caption
+        file_size = get_size(files.file_size)
+        title = file_caption if file_caption else files.file_name
         try:
-            pre, file_id = ((base64.urlsafe_b64decode(data + "=" * (-len(data) % 4))).decode("utf-8")).split("_", 1)
-            msg = await client.send_cached_media(
-                chat_id=message.from_user.id,
-                file_id=file_id,
+            await client.send_cached_media(
+                chat_id=target_id,
+                file_id=files.file_id,
+                caption=title,
                 protect_content=False,
             )
-            filetype = msg.media
-            file = getattr(msg, filetype.value)
-            file_cap = file.caption
-            size=get_size(file.file_size)
-            if(file_cap):
-                title = file_cap
-            else:
-                title = file.file_name
-            f_caption = f"<code>{title}</code>"
-            if CUSTOM_FILE_CAPTION:
-                try:
-                    f_caption=CUSTOM_FILE_CAPTION.format(file_name= '' if title is None else title, file_size='' if size is None else size, file_caption='')
-                except:
-                    return
-            await msg.edit_caption(f_caption)
-            return
-        except:
-            pass
-        return await message.reply('<b><i>No such file exist.</b></i>')
-    files = files_[0]
-    files_cap=files.caption
-    size=get_size(files.file_size)
-    if(files_cap):
-        title = files_cap
-    else:
-        title = files.file_name
-    f_caption = f"<code>{title}</code>"
-    if CUSTOM_FILE_CAPTION:
-        try:
-            f_caption=CUSTOM_FILE_CAPTION.format(file_name= '' if title is None else title, file_size='' if size is None else size, file_caption='' if f_caption is None else f_caption)
         except Exception as e:
-            logger.exception(e)
-            f_caption=f_caption
-    if f_caption is None:
-        f_caption = f"{files.file_name}"
-    await client.send_cached_media(
-        chat_id=message.from_user.id,
-        file_id=files.file_id,
-        caption=f_caption,
-        protect_content=False,
-    )
+            logger.error(f"Error sending file {files.file_id}: {e}")
