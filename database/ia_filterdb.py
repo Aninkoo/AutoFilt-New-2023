@@ -35,7 +35,7 @@ class Media(Document):
 async def get_all_files():
     files = []
     logger.info(f'Fetching Files...')
-    async for file in collection.find({}):
+    async for file in Media.find({}):
         files.append(file)
     logger.info(f'Fetched all Files...')
     return files
