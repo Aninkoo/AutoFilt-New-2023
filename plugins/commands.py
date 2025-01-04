@@ -976,7 +976,7 @@ async def deletemultiplefiles(bot, message):
     await k.edit_text(text=f"<b>Process Completed for file deletion !\n\nSuccessfully deleted {str(deleted)} files from database for your query {keyword}.</b>")
 
 @Client.on_message(filters.command("sendfile") & filters.user(ADMINS))
-async def sendallfilesindb(bot, message):
+async def sendallfilesindb(client, message):
     args = message.text.split()
     if len(args) != 2:
         return await message.reply_text("Usage: /send <document_id>")
