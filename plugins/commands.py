@@ -1029,7 +1029,7 @@ async def sendallfilesindb(client, message):
         f_caption = f"{files.file_name}"
     await client.send_cached_media(
         chat_id=message.from_user.id,
-        file_id=file_id,
+        file_id=files.file_id,
         caption=f_caption,
         protect_content=False,
     )
