@@ -32,6 +32,9 @@ class Media(Document):
         indexes = ('$file_name', )
         collection_name = COLLECTION_NAME
 
+async def get_all_files():
+    """Fetch all file IDs stored in the database as a list."""
+    return [file["file_id"] async for file in Media.find({}, {"file_id": 1, "_id": 0})]
 
 async def save_file(media):
     """Save file in database"""
