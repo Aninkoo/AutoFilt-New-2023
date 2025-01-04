@@ -988,16 +988,13 @@ async def sendallfilesindb(client, message):
     if not tot_files:
         return await message.reply_text("No files found in the database.")
     await message.reply_text("Process Started...")
-    async for file_id in tot_files:
+    for file_id in tot_files:
         if STOP_EVENT.is_set():
             return await message.reply_text("File sending process stopped.")
-        files_ = await get_file_details(file_id)
-        if not files_:
-            continue
-        files = files_[0]
-        file_caption = files.caption
-        file_size = get_size(files.file_size)
-        title = file_caption if file_caption else files.file_name
+        file_id = file["file_id"]
+        file_caption = file["caption"]
+        f_name = file["file_name"]
+        title = file_caption if file_caption else f_name
         try:
             await client.send_cached_media(
                 chat_id=target_id,
