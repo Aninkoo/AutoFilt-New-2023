@@ -982,7 +982,8 @@ async def sendallfilesindb(client, message):
         return await message.reply_text("Usage: /send <document_id>")
     doc_id = args[1]
     data = f"file_{doc_id}"
-    files_ = await get_file_details(doc_id)           
+    files_ = await get_file_details(doc_id)  
+    file_id = None
     if not files_:
         try:
             pre, file_id = ((base64.urlsafe_b64decode(data + "=" * (-len(data) % 4))).decode("utf-8")).split("_", 1)
