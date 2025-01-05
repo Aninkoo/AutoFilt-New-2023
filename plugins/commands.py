@@ -981,7 +981,7 @@ async def sendallfilesindb(client, message):
     args = message.text.split()
     if len(args) != 2:
         return await message.reply_text("Usage: /sendfile Channel_Id")
-    target_id = args[1] 
+    target_id = int(args[1]) 
     tot_files = await get_all_files()
     global STOP_EVENT
     STOP_EVENT.clear()
