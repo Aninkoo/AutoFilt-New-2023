@@ -998,12 +998,12 @@ async def sendallfilesindb(client, message):
         try:
             await client.send_cached_media(
                 chat_id=target_id,
-                file_id=files.file_id,
+                file_id=file_id,
                 caption=title,
                 protect_content=False,
             )
         except Exception as e:
-            logger.error(f"Error sending file {files.file_id}: {e}")
+            logger.error(f"Error sending file {file.file_id}: {e}")
         await asyncio.sleep(1)
 
 @Client.on_message(filters.command("stop") & filters.user(ADMINS))
