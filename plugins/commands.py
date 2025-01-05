@@ -988,7 +988,7 @@ async def sendallfilesindb(client, message):
     if not tot_files:
         return await message.reply_text("No files found in the database.")
     await message.reply_text("Process Started...")
-    for file_id in tot_files:
+    for file in tot_files:
         if STOP_EVENT.is_set():
             return await message.reply_text("File sending process stopped.")
         file_id = file["file_id"]
