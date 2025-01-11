@@ -8,7 +8,7 @@ from Script import script
 from pyrogram import Client, filters, enums
 from pyrogram.errors import ChatAdminRequired, FloodWait
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
-from database.ia_filterdb import Media, get_file_details, unpack_new_file_id, get_bad_files, get_search_results, get_all_files
+from database.ia_filterdb import Media, get_file_details, unpack_new_file_id, get_bad_files, get_search_results
 from database.users_chats_db import db
 from info import CHANNELS, ADMINS, AUTH_CHANNEL, IS_VERIFY, VERIFY_EXPIRE, SHORTLINK_API, SHORTLINK_URL, LOG_CHANNEL, PICS, BATCH_FILE_CAPTION, CUSTOM_FILE_CAPTION, DAILY_UPDATE_LINK, SUPPORT_CHAT, PROTECT_CONTENT, REQST_CHANNEL, SUPPORT_CHAT_ID, MAX_B_TN, NOR_IMG
 from utils import get_settings, get_size, get_shortlink, get_verify_status, update_verify_status, is_subscribed, get_readable_time, save_group_settings, temp
@@ -20,10 +20,8 @@ import json
 import pytz
 import base64
 from telegraph import upload_file
-from asyncio import Event
 
 logger = logging.getLogger(__name__)
-STOP_EVENT = Event()
 BATCH_FILES = {}
 
 @Client.on_message(filters.command("start") & filters.incoming)
@@ -975,40 +973,3 @@ async def deletemultiplefiles(bot, message):
             logger.info(f'File Found for your query {keyword}! Successfully deleted {file_name} from database.')
         deleted += 1
     await k.edit_text(text=f"<b>Process Completed for file deletion !\n\nSuccessfully deleted {str(deleted)} files from database for your query {keyword}.</b>")
-
-@Client.on_message(filters.command("sendfile") & filters.user(ADMINS))
-async def sendallfilesindb(client, message):
-    args = message.text.split()
-    if len(args) != 2:
-        return await message.reply_text("Usage: /sendfile Channel_Id")
-    target_id = int(args[1]) 
-    tot_files = await get_all_files()
-    global STOP_EVENT
-    STOP_EVENT.clear()
-    if not tot_files:
-        return await message.reply_text("No files found in the database.")
-    await message.reply_text("Process Started...")
-    for file in tot_files:
-        if STOP_EVENT.is_set():
-            return await message.reply_text("File sending process stopped.")
-        file_id = file["file_id"]
-        file_caption = file["caption"]
-        f_name = file["file_name"]
-        title = file_caption if file_caption else f_name
-        try:
-            await client.send_cached_media(
-                chat_id=target_id,
-                file_id=file_id,
-                caption=title,
-                protect_content=False,
-            )
-        except Exception as e:
-            logger.error(f"Error sending file {file.file_id}: {e}")
-        await asyncio.sleep(1)
-
-@Client.on_message(filters.command("stop") & filters.user(ADMINS))
-async def stop_sending_files(client, message):
-    """Command to stop the file-sending process."""
-    global STOP_EVENT
-    STOP_EVENT.set()  # Set the stop flag
-    await message.reply_text("File sending process will stop shortly.")
