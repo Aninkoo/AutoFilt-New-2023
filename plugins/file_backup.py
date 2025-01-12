@@ -3,8 +3,9 @@ from struct import pack
 import re, asyncio
 import base64
 from pyrogram import Client, filters, enums
+from pyrogram.errors import FloodWait
 from pyrogram.file_id import FileId
-from pymongo.errors import DuplicateKeyError, FloodWait
+from pymongo.errors import DuplicateKeyError
 from umongo import Instance, Document, fields
 from motor.motor_asyncio import AsyncIOMotorClient
 from marshmallow.exceptions import ValidationError
