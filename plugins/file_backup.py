@@ -56,10 +56,10 @@ async def sendallfilesindb(client, message):
                 protect_content=False,
             )
             file_count += 1            
-            if file_count % 20 == 0:
-                logger.info(f"Sent {file_count} files. Pausing for 60 seconds to avoid floodwait.")
+            if file_count % 30 == 0:
+                logger.info(f"Sent {file_count} files. Pausing for 50 seconds to avoid floodwait.")
                 await progress.edit_text(f"Sent {file_count} files.")
-                await asyncio.sleep(60)
+                await asyncio.sleep(50)
 
         except FloodWait as e:
             logger.warning(f"FloodWait: Pausing for {e.value} seconds.")
