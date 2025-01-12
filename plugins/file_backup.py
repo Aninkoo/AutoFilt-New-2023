@@ -35,9 +35,9 @@ async def sendallfilesindb(client, message):
     
     global STOP_EVENT
     STOP_EVENT.clear()
-    await message.reply_text("Process Started...")
+    progress = await message.reply_text("Process Started...")
     logger.info(f'Fetching Files...')
-    
+    file_count = 0 
     async for file in Media.find({}):
         if STOP_EVENT.is_set():
             return await message.reply_text("File sending process stopped.")
@@ -54,9 +54,17 @@ async def sendallfilesindb(client, message):
                 caption=title,
                 protect_content=False,
             )
+            file_count += 1            
+            if file_count % 100 == 0:
+                logger.info(f"Sent {file_count} files. Pausing for 60 seconds to avoid floodwait.")
+                await progress.edit_text(f"Sent {file_count} files.")
+                await asyncio.sleep(60)
+
         except Exception as e:
             logger.error(f"Error sending file {file_id}: {e}")
-        await asyncio.sleep(1)
+        await asyncio.sleep(2)
+    await progress.edit_text(f"Process completed. Total files sent: {file_count}")
+
 
 @Client.on_message(filters.command("stop") & filters.user(ADMINS))
 async def stop_sending_files(client, message):
