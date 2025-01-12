@@ -2,7 +2,7 @@ import logging
 from struct import pack
 import re, asyncio
 import base64
-from pyrogram import Client, filters, enums
+from pyrogram.errors import FloodWait
 from pyrogram.file_id import FileId
 from pymongo.errors import DuplicateKeyError
 from umongo import Instance, Document, fields
@@ -60,6 +60,9 @@ async def sendallfilesindb(client, message):
                 await progress.edit_text(f"Sent {file_count} files.")
                 await asyncio.sleep(60)
 
+        except FloodWait as e:
+            logger.warning(f"FloodWait: Pausing for {e.value} seconds.")
+            await asyncio.sleep(e.value)
         except Exception as e:
             logger.error(f"Error sending file {file_id}: {e}")
         await asyncio.sleep(2)
