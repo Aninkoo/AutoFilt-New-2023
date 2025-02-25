@@ -174,7 +174,7 @@ async def start(client, message):
         req = message.from_user.id if message.from_user else 0
         key = f"{message.from_user.id}"
         BUTTONS[key] = mov_name
-        cap = f"<b>🧿 ᴛɪᴛʟᴇ : <code>{mov_name}</code>\n📂 ᴛᴏᴛᴀʟ ꜰɪʟᴇꜱ : <code>{total_results}</code>\n📝 ʀᴇǫᴜᴇsᴛᴇᴅ ʙʏ : {message.from_user.mention}\n⚜️ ᴘᴏᴡᴇʀᴇᴅ ʙʏ : 👇\n⚡ {message.chat.title} \n\n</b>"
+        cap = f"<b>🧿 ᴛɪᴛʟᴇ : <code>{mov_name}</code>\n📝 ʀᴇǫᴜᴇsᴛᴇᴅ ʙʏ : {message.from_user.mention}\n⚜️ ᴘᴏᴡᴇʀᴇᴅ ʙʏ : 👇\n⚡ {message.chat.title} \n\n</b>"
         CAP[key] = cap
         pre = 'file'
         files, offset, total_results = await get_search_results(message.chat.id , mov_name.lower(), offset=0, filter=True)
