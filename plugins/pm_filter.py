@@ -1649,17 +1649,9 @@ async def auto_filter(client, msg, spoll=False):
             settings = await get_settings(message.chat.id)
             if settings['max_btn']:
                 btn.append(
-            [
-            InlineKeyboardButton('◦•●◉✿ ✅ ᴅᴏɴᴀᴛᴇ ᴍᴇ ✅ ✿◉●•◦', url='https://t.me/isaimini_donation/5')
-            ])
-                btn.append(
                     [InlineKeyboardButton("📃", callback_data="pages"), InlineKeyboardButton(text=f"1/{math.ceil(int(total_results)/10)}",callback_data="pages"), InlineKeyboardButton(text="𝖭𝖤𝖷𝖳 ▶️",callback_data=f"next_{req}_{key}_{offset}")]
                 )
             else:
-                btn.append(
-            [
-            InlineKeyboardButton('◦•●◉✿  ᴅᴏɴᴀᴛᴇ ᴍᴇ ✅ ✿◉●•◦', url='https://t.me/isaimini_donation/5')
-            ])
                 btn.append(
                     [InlineKeyboardButton("📃", callback_data="pages"), InlineKeyboardButton(text=f"1/{math.ceil(int(total_results)/int(MAX_B_TN))}",callback_data="pages"), InlineKeyboardButton(text="𝖭𝖤𝖷𝖳 ▶️",callback_data=f"next_{req}_{key}_{offset}")]
                 )
@@ -1668,25 +1660,13 @@ async def auto_filter(client, msg, spoll=False):
             settings = await get_settings(message.chat.id)
             if settings['max_btn']:
                 btn.append(
-            [
-            InlineKeyboardButton('◦•●◉✿ ✅ ᴅᴏɴᴀᴛᴇ ᴍᴇ ✅ ✿◉●•◦', url='https://t.me/isaimini_donation/5')
-            ])
-                btn.append(
                     [InlineKeyboardButton("📃", callback_data="pages"), InlineKeyboardButton(text=f"1/{math.ceil(int(total_results)/10)}",callback_data="pages"), InlineKeyboardButton(text="𝖭𝖤𝖷𝖳 ▶️",callback_data=f"next_{req}_{key}_{offset}")]
                 )
             else:
                 btn.append(
-            [
-            InlineKeyboardButton('◦•●◉✿ ✅ ᴅᴏɴᴀᴛᴇ ᴍᴇ ✅ ✿◉●•◦', url='https://t.me/isaimini_donation/5')
-            ])
-                btn.append(
                     [InlineKeyboardButton("📃", callback_data="pages"), InlineKeyboardButton(text=f"1/{math.ceil(int(total_results)/int(MAX_B_TN))}",callback_data="pages"), InlineKeyboardButton(text="𝖭𝖤𝖷𝖳 ▶️",callback_data=f"next_{req}_{key}_{offset}")]
                 )
     else:
-        btn.append(
-            [
-            InlineKeyboardButton('◦•●◉✿ ✅ ᴅᴏɴᴀᴛᴇ ᴍᴇ ✅ ✿◉●•◦', url='https://t.me/isaimini_donation/5')
-            ])
         btn.append(
             [InlineKeyboardButton(text="❌ 𝖭𝗈 𝖬𝗈𝗋𝖾 𝖯𝖺𝗀𝖾𝗌 𝖠𝗏𝖺𝗂𝗅𝖺𝖻𝗅𝖾 ! ❌",callback_data="pages")]
         )
@@ -1806,11 +1786,9 @@ async def advantage_spell_chok(client, message):
     search = message.text
     google_search = search.replace(" ", "+")
     encoded_search = quote(search)
-    button = [[
+    button = [
         InlineKeyboardButton("🔎 Search in Google 🔍", url=f"https://www.google.com/search?q={google_search}")
-    ],[
-        InlineKeyboardButton("‼️ 𝖱𝖾𝗉𝗈𝗋𝗍 𝗍𝗈 𝖺𝖽𝗆𝗂𝗇 ‼️", url=f"https://t.me/Isaiminiprime_admin_bot?text=Hi+%F0%9F%91%A4Admin%2C+I+Couldn%27t+Find+This+👉+{encoded_search}+👈+in+Your+Bots.+For+Your+Kind+Attention")
-    ]]
+    ]
     query = re.sub(
         r"\b(pl(i|e)*?(s|z+|ease|se|ese|(e+)s(e)?)|((send|snd|giv(e)?|gib)(\sme)?)|season|episode|movie(s)?|new|latest|br((o|u)h?)*|^h(e|a)?(l)*(o)*|mal(ayalam)?|t(h)?amil|dub(b)?ed|file|that|find|und(o)*|kit(t(i|y)?)?o(w)?|thar(u)?(o)*w?|kittum(o)*|aya(k)*(um(o)*)?|full\smovie|any(one)|with\ssubtitle(s)?)",
         "", search, flags=re.IGNORECASE)  # pls contribute some common words
