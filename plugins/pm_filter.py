@@ -1665,8 +1665,9 @@ async def auto_filter(client, msg, spoll=False):
         end_cap = f"""© @paxtv"""
         for file in files:
             # files_link += f"""\n<blockquote><b>🎬 𝐅𝐢𝐥𝐞: <a href=https://t.me/{temp.U_NAME}?start={pre}_{file.file_id}>{file.file_name}</a></blockquote>\n📁 𝐒𝐢𝐳𝐞: {get_size(file.file_size)}</b>\n"""
-            files_link += f"<b>📁 {get_size(file.file_size)} ▷ <a href=https://t.me/{temp.U_NAME}?start={pre}_{file.file_id}>{file.file_name}\n\n</a></b>"
-            # files_link += f"<b><a href='https://telegram.me/{temp.U_NAME}?start=files_{file.file_id}'> 📁 {get_size(file.file_size)} ▷ {' '.join(filter(lambda x: not x.startswith('[') and not x.startswith('@') and not x.startswith('www.'), file.file_name.split()))}\n\n</a></b>"
+            # files_link += f"<b>📁 {get_size(file.file_size)} ▷ <a href=https://t.me/{temp.U_NAME}?start={pre}_{file.file_id}>{file.file_name}\n\n</a></b>"
+            files_link += f"<b><a href='https://t.me/{temp.U_NAME}?start={pre}_{file.file_id}'> 📁 {get_size(file.file_size)} ▷ {' '.join(filter(lambda x: not x.startswith('[') and not x.startswith('@') and not x.startswith('www.'), file.file_name.split()))}\n\n</a></b>"
+
             
 
     try:
