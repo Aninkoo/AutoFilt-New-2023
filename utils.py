@@ -77,6 +77,18 @@ async def getEpisode(filename):
     if match:
             return match.group(1)
 
+async def getSeason(filename):
+    match = re.search(
+        r'''(?ix)                 # Ignore case (i), and use verbose regex (x)
+        (?:                       # non-grouping pattern
+          s|season|^           # e or x or episode or start of a line
+          )                       # end non-grouping pattern 
+        \s*                       # 0-or-more whitespaces
+        (\d{2})                   # exactly 2 digits
+        ''', filename)
+    if match:
+            return match.group(1)
+
 async def get_poster(query, bulk=False, id=False, file=None):
     if not id:
         query = (query.strip()).lower()
