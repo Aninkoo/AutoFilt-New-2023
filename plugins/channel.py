@@ -5,7 +5,7 @@ import logging
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from pyrogram.errors import BadRequest
 from database.ia_filterdb import save_file
-from utils import add_chnl_message, get_poster, temp
+from utils import add_chnl_message, get_poster, temp, getEpisode
 
 media_filter = filters.document | filters.video
 
@@ -49,15 +49,16 @@ async def media(bot, message):
                     season = 12
                 else:
                     season = 200
-                if year.isdigit():
+                episode = getEpisode(mv_naam)
+                if year.isdigit() and season == 200:
                     caption = f"<b>#MovieUpdate:\n<blockquote>🧿 <u>𝐍𝐚𝐦𝐞</u> : <code>{mv_naam}</code>\n📆 <u>𝐘𝐞𝐚𝐫</u> : {year}\n"
                 else:
-                    caption = f"<b>#SeriesUpdate:\n<blockquote>🧿 <u>𝐍𝐚𝐦𝐞</u> : <code>{mv_naam}</code>\n📆 <u>𝐒𝐞𝐚𝐬𝐨𝐧</u> : {season}"
+                    caption = f"<b>#SeriesUpdate:\n<blockquote>🧿 <u>𝐍𝐚𝐦𝐞</u> : <code>{mv_naam}</code>\n📆 <u>𝐒𝐞𝐚𝐬𝐨𝐧</u> : {season}/n⏳ <u>𝐄𝐩𝐢𝐬𝐨𝐝𝐞</u> : {episode}"
                 if languages_str:
                     caption += f"🎙️<u>𝐋𝐚𝐧𝐠𝐮𝐚𝐠𝐞</u> : {languages_str}</blockquote>\n"
                 else:
                     caption += f"</blockquote>\n"
-                caption += "Copy only Movie Name & Paste In👇\n---»<a href=https://t.me/paxmovies> ᴍᴏᴠɪᴇ sᴇᴀʀᴄʜɪɴɢ ɢʀᴏᴜᴘ ʟɪɴᴋs </a>«---</b>"
+                caption += "Click the above name to Copy and Paste In PaxMOVIES' Group to Download👇\n<a href=https://t.me/paxmovies> 𝐏𝐚𝐱𝐌𝐎𝐕𝐈𝐄𝐒' 𝐆𝐫𝐨𝐮𝐩</a></b>"
                 search = f"{mv_naam} {year}" if year is not None else mv_naam
                 movies = await get_poster(search)
                 search_with_underscore = search.replace(" ", "_")
