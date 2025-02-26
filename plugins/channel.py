@@ -5,7 +5,7 @@ import logging
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from pyrogram.errors import BadRequest
 from database.ia_filterdb import save_file
-from utils import add_chnl_message, get_poster, temp, getEpisode
+from utils import add_chnl_message, get_poster, temp, getEpisode, getSeason
 
 media_filter = filters.document | filters.video
 
