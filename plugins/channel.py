@@ -49,11 +49,11 @@ async def media(bot, message):
                     season = 12
                 else:
                     season = 200
-                episode = getEpisode(mv_naam)
+                episode = await getEpisode(mv_naam)
                 if year.isdigit() and season == 200:
                     caption = f"<b>#MovieUpdate:\n<blockquote>🧿 <u>𝐍𝐚𝐦𝐞</u> : <code>{mv_naam}</code>\n📆 <u>𝐘𝐞𝐚𝐫</u> : {year}\n"
                 else:
-                    caption = f"<b>#SeriesUpdate:\n<blockquote>🧿 <u>𝐍𝐚𝐦𝐞</u> : <code>{mv_naam}</code>\n📆 <u>𝐒𝐞𝐚𝐬𝐨𝐧</u> : {season}/n⏳ <u>𝐄𝐩𝐢𝐬𝐨𝐝𝐞</u> : {episode}"
+                    caption = f"<b>#SeriesUpdate:\n<blockquote>🧿 <u>𝐍𝐚𝐦𝐞</u> : <code>{mv_naam}</code>\n📆 <u>𝐒𝐞𝐚𝐬𝐨𝐧</u> : {season}\n⏳ <u>𝐄𝐩𝐢𝐬𝐨𝐝𝐞</u> : {episode}"
                 if languages_str:
                     caption += f"🎙️<u>𝐋𝐚𝐧𝐠𝐮𝐚𝐠𝐞</u> : {languages_str}</blockquote>\n"
                 else:
