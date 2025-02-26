@@ -27,6 +27,8 @@ async def media(bot, message):
                     season = 2
                 elif 'S03' in mv_naam:
                     season = 3
+                elif 'S04' in mv_naam:
+                    season = 4
                 else:
                     season = 1
                 if year.isdigit():
