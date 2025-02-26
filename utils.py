@@ -65,6 +65,11 @@ async def is_subscribed(bot, query):
 
     return False
 
+async def getEpisode(filename):
+    match = re.search(r"\b(?:e(?:p(?:isode)?)?|x)?\s*(\d{2,3})\b", filename, re.IGNORECASE)
+    if match:
+            return match.group(1)
+
 async def get_poster(query, bulk=False, id=False, file=None):
     if not id:
         query = (query.strip()).lower()
