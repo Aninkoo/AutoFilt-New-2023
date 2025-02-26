@@ -66,7 +66,7 @@ async def is_subscribed(bot, query):
     return False
 
 async def getEpisode(filename):
-    match = re.search(r"\b(?:e(?:p(?:isode)?)?)?\s*(\d{2,3})\b", filename, re.IGNORECASE)
+    match = re.search(r"\b(?:e(?:p(?:isode)?)?|z)?\s*(\d{2,3})\b", filename, re.IGNORECASE)
     if match:
             return match.group(1)
 
