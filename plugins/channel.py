@@ -63,7 +63,7 @@ async def media(bot, message):
                         disable_web_page_preview=True,
                         parse_mode=enums.ParseMode.HTML
                     )
-                logger.info(f'{mv_naam} {year} - Update Sent to Channel!')
+                # logger.info(f'{mv_naam} {year} - Update Sent to Channel!')
                 await asyncio.sleep(5)
         else:
             return
