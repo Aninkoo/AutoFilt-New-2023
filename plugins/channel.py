@@ -22,11 +22,13 @@ async def media(bot, message):
             if mv_naam is not None:
                 languages_str = " ".join(languages) if languages else None
                 mv_naam = mv_naam.replace(".", " ")
-                season = 1
-                if 'S01' in mv_name:
-                    season = 1
-                elif 'S02' in mv_name:
+                season = 10
+                if 'S02' in mv_naam:
                     season = 2
+                elif 'S03' in mv_naam:
+                    season = 3
+                else:
+                    season = 1
                 if year.isdigit():
                     caption = f"<b>#MovieUpdate:\n<blockquote>🧿 <u>𝐍𝐚𝐦𝐞</u> : <code>{mv_naam}</code>\n📆 <u>𝐘𝐞𝐚𝐫</u> : {year}\n"
                 else:
