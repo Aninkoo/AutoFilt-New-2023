@@ -22,34 +22,37 @@ async def media(bot, message):
             if mv_naam is not None:
                 languages_str = " ".join(languages) if languages else None
                 mv_naam = mv_naam.replace(".", " ")
+                mv_naamf = media.file_name
+                mv_naamf = mv_naamf.replace("."," ")
+                mv_naamf = mv_naamf.replace("_"," ")
                 season = 100
-                if 'S01' in mv_naam:
+                if 'S01' in mv_naamf:
                     season = 1
-                elif 'S02' in mv_naam:
+                elif 'S02' in mv_naamf:
                     season = 2
-                elif 'S03' in mv_naam:
+                elif 'S03' in mv_naamf:
                     season = 3
-                elif 'S04' in mv_naam:
+                elif 'S04' in mv_naamf:
                     season = 4
-                elif 'S05' in mv_naam:
+                elif 'S05' in mv_naamf:
                     season = 5
-                elif 'S06' in mv_naam:
+                elif 'S06' in mv_naamf:
                     season = 6
-                elif 'S07' in mv_naam:
+                elif 'S07' in mv_naamf:
                     season = 7
-                elif 'S08' in mv_naam:
+                elif 'S08' in mv_naamf:
                     season = 8
-                elif 'S09' in mv_naam:
+                elif 'S09' in mv_naamf:
                     season = 9
-                elif 'S10' in mv_naam:
+                elif 'S10' in mv_naamf:
                     season = 10
-                elif 'S11' in mv_naam:
+                elif 'S11' in mv_naamf:
                     season = 11
-                elif 'S12' in mv_naam:
+                elif 'S12' in mv_naamf:
                     season = 12
                 else:
                     season = 200
-                episode = await getEpisode(mv_naam)
+                episode = await getEpisode(mv_naamf)
                 if year.isdigit() and season == 200:
                     caption = f"<b>#MovieUpdate:\n<blockquote>🧿 <u>𝐍𝐚𝐦𝐞</u> : <code>{mv_naam}</code>\n📆 <u>𝐘𝐞𝐚𝐫</u> : {year}\n"
                 else:
