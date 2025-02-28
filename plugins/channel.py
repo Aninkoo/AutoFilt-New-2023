@@ -106,7 +106,7 @@ async def media(bot, message):
                     )
 
                 # Pause between updates to avoid flooding the channel
-                await asyncio.sleep(2)
+                # await asyncio.sleep(2)
 
         else:
             logging.info(f"Duplicate file detected: {media.file_name}")
