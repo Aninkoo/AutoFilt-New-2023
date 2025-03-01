@@ -71,11 +71,11 @@ async def give_filter(client, message):
         else:
             buttons = InlineKeyboardMarkup(
                 [
-                    [InlineKeyboardButton(']|I{•------» 𝐌𝐨𝐯𝐢𝐞 𝐒𝐞𝐚𝐫𝐜𝐡𝐢𝐧𝐠 𝐆𝐫𝐨𝐮𝐩 𝐋𝐢𝐧𝐤𝐬 «------•}I|[', url="https://t.me/movie_request_group_links")]
+                    [InlineKeyboardButton('PaxMOVIES Group', url="https://t.me/paxmovies")]
                 ]
             )
             await message.reply_text(
-                f"<b>👋 𝖧𝖾𝗒 {message.from_user.mention} \n📁 {str(total_results)} 𝖱𝖾𝗌𝗎𝗅𝗍𝗌 𝖺𝗋𝖾 𝖿𝗈𝗎𝗇𝖽 𝖿𝗈𝗋 𝗒𝗈𝗎𝗋 𝗊𝗎𝖾𝗋𝗒 {search}.\n\nKindly ask movies or series in Movie Request Groups, Links available here⬇</b>",
+                f"👋 𝖧𝖾𝗒 <b>{message.from_user.mention}</b> \n📁 <b>{str(total_results)}</b> 𝖱𝖾𝗌𝗎𝗅𝗍𝗌 𝖺𝗋𝖾 𝖿𝗈𝗎𝗇𝖽 𝖿𝗈𝗋 𝗒𝗈𝗎𝗋 𝗊𝗎𝖾𝗋𝗒: <b>{search}</b>.\n\nBut you can't get it here! \n <b>👇 Search here 👇</b>",
                 reply_markup=buttons
             )
         try:
@@ -109,9 +109,9 @@ async def pv_filter(client, message):
     files, n_offset, total = await get_search_results(0, query=search.lower(), offset=0, filter=True)
     if int(total) != 0:
         btn = [[
-            InlineKeyboardButton(']|I{•------» 𝐌𝐨𝐯𝐢𝐞 𝐒𝐞𝐚𝐫𝐜𝐡𝐢𝐧𝐠 𝐆𝐫𝐨𝐮𝐩 𝐋𝐢𝐧𝐤𝐬 «------•}I|[', url="https://t.me/isaimini_updates/110")
+            InlineKeyboardButton('PaxMOVIES Group', url="https://t.me/paxmovies")
         ]]
-        pvt_msg = await message.reply_text(f'<b>👋 𝖧𝖾𝗒 {message.from_user.mention},\n📁 {str(total)} 𝖱𝖾𝗌𝗎𝗅𝗍𝗌 𝖺𝗋𝖾 𝖿𝗈𝗎𝗇𝖽 𝖿𝗈𝗋 𝗒𝗈𝗎𝗋 𝗊𝗎𝖾𝗋𝗒 {search}.\n\nKindly ask movies or series in Movie Request Groups, Links available here ⬇</b>"', reply_markup=InlineKeyboardMarkup(btn), quote=True)
+        pvt_msg = await message.reply_text(f'👋 𝖧𝖾𝗒 <b>{message.from_user.mention}</b> \n📁 <b>{str(total_results)}</b> 𝖱𝖾𝗌𝗎𝗅𝗍𝗌 𝖺𝗋𝖾 𝖿𝗈𝗎𝗇𝖽 𝖿𝗈𝗋 𝗒𝗈𝗎𝗋 𝗊𝗎𝖾𝗋𝗒: <b>{search}</b>.\n\nBut you can't get it here! \n <b>👇 Search here 👇</b>', reply_markup=InlineKeyboardMarkup(btn), quote=True)
         await stick.delete()
         await asyncio.sleep(120)
         await pvt_msg.delete()
