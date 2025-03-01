@@ -19,12 +19,12 @@ async def media(bot, message):
     text, dup = await save_file(media)
     if dup != 1:
         logging.info(f"Duplicate file detected: {media.file_name}")
-        return
+        #return
 
     cap_txt = media.caption if media.caption else media.file_name
     mv_naam, year, languages = await add_chnl_message(cap_txt)
-    if not mv_naam:
-        return
+    #if not mv_naam:
+        #return
 
     languages_str = " ".join(languages) if languages else None
     mv_naamf = media.file_name.replace(".", " ").replace("_", " ")
