@@ -104,6 +104,7 @@ async def pv_filter(client, message):
         return
     if message.text.startswith("http"):
         return
+    user_id = message.from_user.id
     if user_id in ADMINS:
         return # ignore admins
     stick = await message.reply_sticker(sticker="CAACAgUAAyEFAASPEsRdAAMDZyoXgs_EG_JVNPlDspojKwgkXo4AAiQTAAJM0EhUV_t4MXghJ8MeBA")
