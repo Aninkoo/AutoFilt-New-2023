@@ -104,6 +104,8 @@ async def pv_filter(client, message):
         return
     if message.text.startswith("http"):
         return
+    if user_id in ADMINS:
+        return # ignore admins
     stick = await message.reply_sticker(sticker="CAACAgUAAyEFAASPEsRdAAMDZyoXgs_EG_JVNPlDspojKwgkXo4AAiQTAAJM0EhUV_t4MXghJ8MeBA")
     search = message.text
     files, n_offset, total = await get_search_results(0, query=search.lower(), offset=0, filter=True)
