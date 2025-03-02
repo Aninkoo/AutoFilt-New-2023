@@ -75,7 +75,7 @@ async def give_filter(client, message):
                 ]
             )
             await message.reply_text(
-                f"👋 𝖧𝖾𝗒 <b>{message.from_user.mention}</b> \n📁 <b>{str(total_results)}</b> 𝖱𝖾𝗌𝗎𝗅𝗍𝗌 𝖺𝗋𝖾 𝖿𝗈𝗎𝗇𝖽 𝖿𝗈𝗋 𝗒𝗈𝗎𝗋 𝗊𝗎𝖾𝗋𝗒: <b>{search}</b>.\n\nBut you can't get it here! \n <b>👇 Search here 👇</b>",
+                f"👋 𝖧𝖾𝗒 <b>{message.from_user.mention}</b> \n📁 <b>{str(total_results)}</b> 𝖱𝖾𝗌𝗎𝗅𝗍𝗌 𝖺𝗋𝖾 𝖿𝗈𝗎𝗇𝖽 𝖿𝗈𝗋 𝗒𝗈𝗎𝗋 𝗊𝗎𝖾𝗋𝗒: <b>{search}</b>.\n\nBut you can not get it here! \n <b>👇 Search here 👇</b>",
                 reply_markup=buttons
             )
         try:
@@ -111,7 +111,7 @@ async def pv_filter(client, message):
         btn = [[
             InlineKeyboardButton('PaxMOVIES Group', url="https://t.me/paxmovies")
         ]]
-        pvt_msg = await message.reply_text(f'👋 𝖧𝖾𝗒 <b>{message.from_user.mention}</b> \n📁 <b>{str(total_results)}</b> 𝖱𝖾𝗌𝗎𝗅𝗍𝗌 𝖺𝗋𝖾 𝖿𝗈𝗎𝗇𝖽 𝖿𝗈𝗋 𝗒𝗈𝗎𝗋 𝗊𝗎𝖾𝗋𝗒: <b>{search}</b>.\n\nBut you can't get it here! \n <b>👇 Search here 👇</b>"', reply_markup=InlineKeyboardMarkup(btn), quote=True)
+        pvt_msg = await message.reply_text(f'👋 𝖧𝖾𝗒 <b>{message.from_user.mention}</b> \n📁 <b>{str(total_results)}</b> 𝖱𝖾𝗌𝗎𝗅𝗍𝗌 𝖺𝗋𝖾 𝖿𝗈𝗎𝗇𝖽 𝖿𝗈𝗋 𝗒𝗈𝗎𝗋 𝗊𝗎𝖾𝗋𝗒: <b>{search}</b>.\n\nBut you can not get it here! \n <b>👇 Search here 👇</b>"', reply_markup=InlineKeyboardMarkup(btn), quote=True)
         await stick.delete()
         await asyncio.sleep(120)
         await pvt_msg.delete()
