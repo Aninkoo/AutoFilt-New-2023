@@ -586,7 +586,7 @@ async def qualities_cb_handler(client: Client, query: CallbackQuery):
     # else:
     #     search = BUTTONS.get(key)
     #     BUTTONS[key+"1"] = search
-    search = FRESH.get(key)
+    search = BUTTONS.get(key)
     search = search.replace(' ', '_')
     btn = []
     for i in range(0, len(QUALITIES)-1, 2):
@@ -619,7 +619,7 @@ async def qualities_cb_handler(client: Client, query: CallbackQuery):
 async def filter_qualities_cb_handler(client: Client, query: CallbackQuery):
     _, qual, key = query.data.split("#")
     curr_time = datetime.now(pytz.timezone('Asia/Kolkata')).time()
-    search = FRESH.get(key)
+    search = BUTTONS.get(key)
     search = search.replace("_", " ")
     baal = qual in search
     if baal:
