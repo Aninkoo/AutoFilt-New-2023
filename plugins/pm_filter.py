@@ -568,7 +568,7 @@ async def filter_qualities_cb_handler(client: Client, query: CallbackQuery):
         await query.answer(script.OLD_ALRT_TXT.format(query.from_user.first_name),show_alert=True)
         return 
 
-    files, q_offset, total_results = await get_search_results(query.message.chat.id, search, filter=True, quali=quali)
+    files, q_offset, total_results = await get_search_results(query.message.chat.id, search, filter=True, lang=quali)
     if not files:
         await query.answer(f"😢 Sorry, '{quali.title()}' Quality is Not Found \n\n ✅ Check other Qualities", show_alert=1)
         return
@@ -663,7 +663,7 @@ async def quali_next_page(bot, query):
         await query.answer(script.OLD_ALRT_TXT.format(query.from_user.first_name),show_alert=True)
         return 
 
-    files, n_offset, total = await get_search_results(query.message.chat.id, search, filter=True, offset=q_offset, quali=quali)
+    files, n_offset, total = await get_search_results(query.message.chat.id, search, filter=True, offset=q_offset, lang=quali)
     if not files:
         return
     temp.FILES[key] = files
