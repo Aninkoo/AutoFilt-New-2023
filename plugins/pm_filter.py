@@ -188,13 +188,6 @@ async def next_page(bot, query):
             ]
             )
 
-        else:
-            btn.insert(0, 
-            [
-                InlineKeyboardButton(f'📮 Info', 'tips'),
-                InlineKeyboardButton(f'🎁 𝖳𝗂𝗉𝗌', 'info')
-            ]
-            )
                 
     except KeyError:
         grpid = await active_connection(str(query.message.from_user.id))
@@ -209,13 +202,6 @@ async def next_page(bot, query):
             ]
             )
 
-        else:
-            btn.insert(0, 
-            [
-                InlineKeyboardButton(f'📮 Info', 'tips'),
-                InlineKeyboardButton(f'🎁 𝖳𝗂𝗉𝗌', 'info')
-            ]
-            )
     try:
         settings = await get_settings(query.message.chat.id)
         if settings['max_btn']:
@@ -308,8 +294,9 @@ async def next_page(bot, query):
 
     btn.insert(0,
                [
-                   InlineKeyboardButton("𝚂𝚎𝚕𝚎𝚌𝚝 𝙻𝚊𝚗𝚐𝚞𝚊𝚐𝚎", callback_data=f"languages#{key}#{req}#{offset}"),
-                   InlineKeyboardButton("𝚂𝚎𝚕𝚎𝚌𝚝 quality", callback_data=f"qualities#{key}#{req}#{offset}")
+                   InlineKeyboardButton("Lᴀɴɢᴜᴀɢᴇ", callback_data=f"languages#{key}#{req}#{offset}"),
+                   InlineKeyboardButton("Sᴇᴀsᴏɴ", callback_data=f"seasons#{key}#{req}#{offset}"),
+                   InlineKeyboardButton("Qᴜᴀʟɪᴛʏ", callback_data=f"qualities#{key}#{req}#{offset}")
                ]
               )
     btn.insert(0, [
@@ -386,13 +373,6 @@ async def filter_languages_cb_handler(client: Client, query: CallbackQuery):
             ]
             )
 
-        else:
-            btn.insert(0, 
-            [
-                InlineKeyboardButton(f'📮 Info', 'tips'),
-                InlineKeyboardButton(f'🎁 𝖳𝗂𝗉𝗌', 'info')
-            ]
-            )
                 
     except KeyError:
         grpid = await active_connection(str(query.message.from_user.id))
@@ -407,13 +387,6 @@ async def filter_languages_cb_handler(client: Client, query: CallbackQuery):
             ]
             )
 
-        else:
-            btn.insert(0, 
-            [
-                InlineKeyboardButton(f'📮 Info', 'tips'),
-                InlineKeyboardButton(f'🎁 𝖳𝗂𝗉𝗌', 'info')
-            ]
-            )
     if l_offset != "":
         btn.append(
             [InlineKeyboardButton(text=f"ᴘᴀɢᴇs 1 / {math.ceil(int(total_results) / 10)}", callback_data="pages"),
@@ -481,13 +454,6 @@ async def lang_next_page(bot, query):
             ]
             )
 
-        else:
-            btn.insert(0, 
-            [
-                InlineKeyboardButton(f'📮 Info', 'tips'),
-                InlineKeyboardButton(f'🎁 𝖳𝗂𝗉𝗌', 'info')
-            ]
-            )
                 
     except KeyError:
         grpid = await active_connection(str(query.message.from_user.id))
@@ -502,13 +468,6 @@ async def lang_next_page(bot, query):
             ]
             )
 
-        else:
-            btn.insert(0, 
-            [
-                InlineKeyboardButton(f'📮 Info', 'tips'),
-                InlineKeyboardButton(f'🎁 𝖳𝗂𝗉𝗌', 'info')
-            ]
-            )
     if 0 < l_offset <= 10:
         b_offset = 0
     elif l_offset == 0:
@@ -570,7 +529,7 @@ async def filter_qualities_cb_handler(client: Client, query: CallbackQuery):
 
     files, q_offset, total_results = await get_search_results(query.message.chat.id, search, filter=True, lang=quali)
     if not files:
-        await query.answer(f"😢 Sorry, '{quali.title()}' Quality is Not Found \n\n ✅ Check other Qualities", show_alert=1)
+        await query.answer(f"😢 Sorry, <b>{quali.title()}</b> Quality is Not Found \n\n ✅ Check other Qualities", show_alert=1)
         return
     settings = await get_settings(query.message.chat.id)
     pre = 'filep' if settings['file_secure'] else 'file'
@@ -601,13 +560,6 @@ async def filter_qualities_cb_handler(client: Client, query: CallbackQuery):
             ]
             )
 
-        else:
-            btn.insert(0, 
-            [
-                InlineKeyboardButton(f'📮 Info', 'tips'),
-                InlineKeyboardButton(f'🎁 𝖳𝗂𝗉𝗌', 'info')
-            ]
-            )
                 
     except KeyError:
         grpid = await active_connection(str(query.message.from_user.id))
@@ -622,13 +574,6 @@ async def filter_qualities_cb_handler(client: Client, query: CallbackQuery):
             ]
             )
 
-        else:
-            btn.insert(0, 
-            [
-                InlineKeyboardButton(f'📮 Info', 'tips'),
-                InlineKeyboardButton(f'🎁 𝖳𝗂𝗉𝗌', 'info')
-            ]
-            )
     if q_offset != "":
         btn.append(
             [InlineKeyboardButton(text=f"ᴘᴀɢᴇs 1 / {math.ceil(int(total_results) / 10)}", callback_data="pages"),
@@ -696,13 +641,6 @@ async def quali_next_page(bot, query):
             ]
             )
 
-        else:
-            btn.insert(0, 
-            [
-                InlineKeyboardButton(f'📮 Info', 'tips'),
-                InlineKeyboardButton(f'🎁 𝖳𝗂𝗉𝗌', 'info')
-            ]
-            )
                 
     except KeyError:
         grpid = await active_connection(str(query.message.from_user.id))
@@ -717,13 +655,6 @@ async def quali_next_page(bot, query):
             ]
             )
 
-        else:
-            btn.insert(0, 
-            [
-                InlineKeyboardButton(f'📮 Info', 'tips'),
-                InlineKeyboardButton(f'🎁 𝖳𝗂𝗉𝗌', 'info')
-            ]
-            )
     if 0 < q_offset <= 10:
         b_offset = 0
     elif q_offset == 0:
@@ -1360,10 +1291,10 @@ async def cb_handler(client: Client, query: CallbackQuery):
             await query.answer("𝖸𝗈𝗎 𝖽𝗈𝗇'𝗍 𝗁𝖺𝗏𝖾 𝗌𝗎𝖿𝖿𝗂𝖼𝗂𝖾𝗇𝗍 𝗋𝗂𝗀𝗁𝗍𝗌 𝗍𝗈 𝖽𝗈 𝗍𝗁𝗂𝗌 !", show_alert=True)
 
     elif query.data == 'rkbtn':
-        await query.answer("𝖧𝖾𝗒 𝖡𝗋𝗈 😍\n\n🎯 𝖢𝗅𝗂𝖼𝗄 𝖮𝗇 𝖳𝗁𝖾 𝖡𝗎𝗍𝗍𝗈𝗇 𝖻𝖾𝗅𝗈𝗐 𝖳𝗁𝖾 𝖥𝗂𝗅𝖾𝗌 𝖸𝗈𝗎 𝖶𝖺𝗇𝗍 𝖠𝗇𝖽 𝖲𝗍𝖺𝗋𝗍 𝖳𝗁𝖾 𝖡𝗈𝗍 ⬇️", True)
+        await query.answer("𝖧𝖾𝗒 𝖡𝗋𝗈 😍\n\n🎯 𝖢𝗅𝗂𝖼𝗄 Any Of 𝖳𝗁𝖾 Above 𝖥𝗂𝗅𝖾 That 𝖸𝗈𝗎 𝖶𝖺𝗇𝗍 𝖠𝗇𝖽 𝖲𝗍𝖺𝗋𝗍 𝖳𝗁𝖾 𝖡𝗈𝗍", True)
 
     elif query.data == 'info':
-        await query.answer("𝗥𝗲𝗾𝘂𝗲𝘀𝘁𝘀 𝗙𝗼𝗿𝗺𝗮𝘁𝘀\n\n• Master 2021\n• 𝖣𝗁𝗈𝗈𝗆 3 𝖧𝗂𝗇𝖽𝗂\n• Vivegam Tam\n• 𝖣𝖺𝗋𝗄 𝗌01\n• 𝖲𝗁𝖾 𝖧𝗎𝗅𝗄 720𝗉\n• 𝖥𝗋𝗂𝖾𝗇𝖽𝗌 𝗌03 1080𝗉\n\n‼️𝗗𝗼𝗻𝘁 𝗮𝗱𝗱 𝘄𝗼𝗿𝗱𝘀 & 𝘀𝘆𝗺𝗯𝗼𝗹𝘀  , . - 𝗹𝗶𝗸𝗲 send link movie series 𝗲𝘁𝗰‼️", True)
+        await query.answer("𝗥𝗲𝗾𝘂𝗲𝘀𝘁𝘀 𝗙𝗼𝗿𝗺𝗮𝘁𝘀\n\nMaster: The Boss 2021 ❌ \nMaster The Boss 2021 ✔️ \nSamdal-ri ❌ \nSamdal ri ✔️ \n\nArrow season 1 ❌ \nArrow S01 ✔️ \n\nLove Scout episode 10 ❌ \nLove Scout S01E10 ✔️ \n\n Dᴏɴ'ᴛ ᴜsᴇ ᴀɴʏ Sʏᴍʙᴏʟs!!!", True)
     
     elif query.data == 'tips':
         await query.answer("𝖳𝗁𝗂𝗌 𝖬𝖾𝗌𝗌𝖺𝗀𝖾 𝖶𝗂𝗅𝗅 𝖡𝖾 𝖣𝖾𝗅𝖾𝗍𝖾𝖽 𝖠𝖿𝗍𝖾𝗋 5 𝖬𝗂𝗇𝗎𝗍𝖾𝗌 𝗍𝗈 𝖯𝗋𝖾𝗏𝖾𝗇𝗍 𝖢𝗈𝗉𝗒𝗋𝗂𝗀𝗁𝗍 !\n\n𝖳𝗁𝖺𝗇𝗄 𝖸𝗈𝗎 𝖥𝗈𝗋 𝖴𝗌𝗂𝗇𝗀 𝖬𝖾 😊\n\n\n𝐁𝐫𝐨𝐮𝐠𝐡𝐭 𝐓𝐨 𝐘𝐨𝐮 𝐁𝐲:-❤️ 𝗜𝘀𝗮𝗶𝗺𝗶𝗻𝗶 𝗣𝗿𝗶𝗺𝗲 ❤️", True)
@@ -1828,14 +1759,6 @@ async def auto_filter(client, msg, spoll=False):
                 InlineKeyboardButton(f'🎁 𝖳𝗂𝗉𝗌', 'info')
             ]
             )
-
-        else:
-            btn.insert(0, 
-            [
-                InlineKeyboardButton(f'📮 Info', 'tips'),
-                InlineKeyboardButton(f'🎁 𝖳𝗂𝗉𝗌', 'info')
-            ]
-            )
                 
     except KeyError:
         grpid = await active_connection(str(message.from_user.id))
@@ -1850,17 +1773,12 @@ async def auto_filter(client, msg, spoll=False):
             ]
             )
 
-        else:
-            btn.insert(0, 
-            [
-                InlineKeyboardButton(f'📮 Info', 'tips'),
-                InlineKeyboardButton(f'🎁 𝖳𝗂𝗉𝗌', 'info')
-            ])
             
     btn.insert(0,
                [
-                   InlineKeyboardButton("Select 𝙻𝚊𝚗𝚐𝚞𝚊𝚐𝚎", callback_data=f"languages#{key}#{req}#{offset}"),
-                   InlineKeyboardButton("𝚂𝚎𝚕𝚎𝚌𝚝 Quality", callback_data=f"qualities#{key}#{req}#{offset}")
+                   InlineKeyboardButton("Lᴀɴɢᴜᴀɢᴇ", callback_data=f"languages#{key}#{req}#{offset}"),
+                   InlineKeyboardButton("Sᴇᴀsᴏɴ", callback_data=f"seasons#{key}#{req}#{offset}"),
+                   InlineKeyboardButton("Qᴜᴀʟɪᴛʏ", callback_data=f"qualities#{key}#{req}#{offset}")
                ]
               )
     if settings['button']:
@@ -1893,7 +1811,7 @@ async def auto_filter(client, msg, spoll=False):
                 )
     else:
         btn.append(
-            [InlineKeyboardButton(text="❌ 𝖭𝗈 𝖬𝗈𝗋𝖾 𝖯𝖺𝗀𝖾𝗌 𝖠𝗏𝖺𝗂𝗅𝖺𝖻𝗅𝖾 ! ❌",callback_data="pages")]
+            [InlineKeyboardButton(text="🚸 Lᴀsᴛ Pᴀɢᴇ🚸",callback_data="pages")]
         )
     imdb = await get_poster(search, file=(files[0]).file_name) if settings["imdb"] else None
     TEMPLATE = settings['template']
