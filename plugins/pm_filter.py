@@ -611,7 +611,7 @@ async def qualities_cb_handler(client: Client, query: CallbackQuery):
     )
     req = query.from_user.id
     offset = 0
-    btn.append([InlineKeyboardButton(text="↭ ʙᴀᴄᴋ ᴛᴏ ꜰɪʟᴇs ↭", callback_data=f"fq#homepage#{key}")])
+    btn.append([InlineKeyboardButton(text="↭ ʙᴀᴄᴋ ᴛᴏ ꜰɪʟᴇs ↭", callback_data=f"next_{req}_{key}_{offset}")])
 
     await query.edit_message_reply_markup(InlineKeyboardMarkup(btn))
  
@@ -1783,6 +1783,7 @@ async def auto_filter(client, msg, spoll=False):
             btn.insert(0, 
             [
                 InlineKeyboardButton(f'📮 Info', 'tips'),
+                InlineKeyboardButton(f'ǫᴜᴀʟɪᴛʏ', callback_data=f"qualities#{key}"),
                 InlineKeyboardButton(f'🎁 𝖳𝗂𝗉𝗌', 'info')
             ]
             )
@@ -1804,11 +1805,12 @@ async def auto_filter(client, msg, spoll=False):
             btn.insert(0, 
             [
                 InlineKeyboardButton(f'📮 Info', 'tips'),
+                InlineKeyboardButton(f'ǫᴜᴀʟɪᴛʏ', callback_data=f"qualities#{key}"),
                 InlineKeyboardButton(f'🎁 𝖳𝗂𝗉𝗌', 'info')
             ])
             
     btn.insert(0,
-               [InlineKeyboardButton("◦•●◉✿ 📰 𝚂𝚎𝚕𝚎𝚌𝚝 𝙻𝚊𝚗𝚐𝚞𝚊𝚐𝚎 📰 ✿◉●•◦", callback_data=f"languages#{key}#{req}#{offset}")]
+               [InlineKeyboardButton("𝙻𝚊𝚗𝚐𝚞𝚊𝚐𝚎", callback_data=f"languages#{key}#{req}#{offset}")]
               )
     if settings['button']:
         btn.insert(0, [
