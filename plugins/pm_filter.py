@@ -11,6 +11,7 @@ import pyrogram
 from urllib.parse import quote
 from database.connections_mdb import active_connection, all_connections, delete_connection, if_active, make_active, \
     make_inactive
+from info import *
 from info import ADMINS, AUTH_CHANNEL, BIN_CHANNEL, URL, IS_VERIFY, VERIFY_EXPIRE, SHORTLINK_API, SHORTLINK_URL, AUTH_USERS, DAILY_UPDATE_LINK, IS_STREAM, SUPPORT_CHAT_ID, SUPPORT_CHAT, CUSTOM_FILE_CAPTION, PICS, AUTH_GROUPS, P_TTI_SHOW_OFF, NOR_IMG, LOG_CHANNEL, SPELL_IMG, MAX_B_TN, IMDB, \
     SINGLE_BUTTON, SPELL_CHECK_REPLY, IMDB_TEMPLATE, NO_RESULTS_MSG
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery, InputMediaPhoto
@@ -191,6 +192,7 @@ async def next_page(bot, query):
             btn.insert(0, 
             [
                 InlineKeyboardButton(f'📮 Info', 'tips'),
+                InlineKeyboardButton(f'ǫᴜᴀʟɪᴛʏ', callback_data=f"qualities#{key}"),
                 InlineKeyboardButton(f'🎁 𝖳𝗂𝗉𝗌', 'info')
             ]
             )
@@ -212,6 +214,7 @@ async def next_page(bot, query):
             btn.insert(0, 
             [
                 InlineKeyboardButton(f'📮 Info', 'tips'),
+                InlineKeyboardButton(f'ǫᴜᴀʟɪᴛʏ', callback_data=f"qualities#{key}"),
                 InlineKeyboardButton(f'🎁 𝖳𝗂𝗉𝗌', 'info')
             ]
             )
@@ -386,6 +389,7 @@ async def filter_languages_cb_handler(client: Client, query: CallbackQuery):
             btn.insert(0, 
             [
                 InlineKeyboardButton(f'📮 Info', 'tips'),
+                InlineKeyboardButton(f'ǫᴜᴀʟɪᴛʏ', callback_data=f"qualities#{key}"),
                 InlineKeyboardButton(f'🎁 𝖳𝗂𝗉𝗌', 'info')
             ]
             )
@@ -407,6 +411,7 @@ async def filter_languages_cb_handler(client: Client, query: CallbackQuery):
             btn.insert(0, 
             [
                 InlineKeyboardButton(f'📮 Info', 'tips'),
+                InlineKeyboardButton(f'ǫᴜᴀʟɪᴛʏ', callback_data=f"qualities#{key}"),
                 InlineKeyboardButton(f'🎁 𝖳𝗂𝗉𝗌', 'info')
             ]
             )
@@ -481,6 +486,7 @@ async def lang_next_page(bot, query):
             btn.insert(0, 
             [
                 InlineKeyboardButton(f'📮 Info', 'tips'),
+                InlineKeyboardButton(f'ǫᴜᴀʟɪᴛʏ', callback_data=f"qualities#{key}"),
                 InlineKeyboardButton(f'🎁 𝖳𝗂𝗉𝗌', 'info')
             ]
             )
@@ -502,6 +508,7 @@ async def lang_next_page(bot, query):
             btn.insert(0, 
             [
                 InlineKeyboardButton(f'📮 Info', 'tips'),
+                InlineKeyboardButton(f'ǫᴜᴀʟɪᴛʏ', callback_data=f"qualities#{key}"),
                 InlineKeyboardButton(f'🎁 𝖳𝗂𝗉𝗌', 'info')
             ]
             )
