@@ -714,7 +714,7 @@ async def filter_seasons_cb_handler(client: Client, query: CallbackQuery):
         await query.answer(script.OLD_ALRT_TXT.format(query.from_user.first_name),show_alert=True)
         return 
 
-    files, s_offset, total_results = await get_search_results(query.message.chat.id, search, filter=True, lang=sea)
+    files, s_offset, total_results = await get_search_results(query.message.chat.id, (search + sea), filter=True, lang=None)
     if not files:
         await query.answer(f"😢 Sᴏʀʀʏ, '{sea.title()}' Sᴇᴀsᴏɴ ɪs ɴᴏᴛ ғᴏᴜɴᴅ \n\n Yᴏᴜ ᴄᴀɴ Cʜᴇᴄᴋ ᴇᴀʟɪᴇʀ sᴇᴀsᴏɴs", show_alert=1)
         return
@@ -794,7 +794,7 @@ async def sea_next_page(bot, query):
         await query.answer(script.OLD_ALRT_TXT.format(query.from_user.first_name),show_alert=True)
         return 
 
-    files, n_offset, total = await get_search_results(query.message.chat.id, search, filter=True, offset=s_offset, lang=sea)
+    files, n_offset, total = await get_search_results(query.message.chat.id, (search + sea), filter=True, offset=s_offset, lang=None)
     if not files:
         return
     temp.FILES[key] = files
