@@ -129,7 +129,7 @@ async def pv_filter(client, message):
         
         n = await message.reply_photo(
             photo=SPELL_IMG, 
-            caption="❌ <b>Sᴏʀʀʏ, I ᴄᴏᴜʟᴅ ɴᴏᴛ ғɪɴᴅ ᴀɴʏᴛʜɪɴɢ ʀᴇʟᴀᴛᴛᴇᴅ ᴛᴏ ᴛʜᴀᴛ!\nI ʜᴀᴠᴇ ʀᴇᴘᴏʀᴛᴇᴅ ᴛᴏ ADMIN ᴀɴᴅ ɪᴛ ᴡɪʟʟ ʙᴇ ᴀᴅᴅᴇᴅ ᴛᴏ ᴍʏ Dᴀᴛᴀʙᴀsᴇ sᴏᴏɴ ɪғ ʀᴇʟᴇᴀsᴇᴅ.</b>",
+            caption="❌ <b>Sᴏʀʀʏ, I ᴄᴏᴜʟᴅ ɴᴏᴛ ғɪɴᴅ ᴀɴʏᴛʜɪɴɢ ʀᴇʟᴀᴛᴛᴇᴅ ᴛᴏ ᴛʜᴀᴛ!\nPʟᴇᴀsᴇ sᴇᴀʀᴄʜ ɪɴ ᴛʜᴇ Gʀᴏᴜᴘ sᴏ ᴛʜᴀᴛ I ᴄᴀɴ ʀᴇᴘᴏʀᴛᴇᴅ ɪᴛ ᴛᴏ ADMIN ᴀɴᴅ ɪᴛ ᴡɪʟʟ ʙᴇ ᴀᴅᴅᴇᴅ ᴛᴏ ᴍʏ Dᴀᴛᴀʙᴀsᴇ sᴏᴏɴ ɪғ ʀᴇʟᴇᴀsᴇᴅ.</b>",
             reply_markup=InlineKeyboardMarkup(button)
         )
         await asyncio.sleep(60)
@@ -213,16 +213,16 @@ async def next_page(bot, query):
                 off_set = offset - 10
             if n_offset == 0:
                 btn.append(
-                    [InlineKeyboardButton("◀️ 𝖡𝖠𝖢𝖪", callback_data=f"next_{req}_{key}_{off_set}"), InlineKeyboardButton(f"{math.ceil(int(offset)/10)+1} / {math.ceil(total/10)}", callback_data="pages")]
+                    [InlineKeyboardButton("◀️ 𝖡ᴀᴄᴋ", callback_data=f"next_{req}_{key}_{off_set}"), InlineKeyboardButton(f"{math.ceil(int(offset)/10)+1} / {math.ceil(total/10)}", callback_data="pages")]
                 )
             elif off_set is None:
                 btn.append([InlineKeyboardButton("📃", callback_data="pages"), InlineKeyboardButton(f"{math.ceil(int(offset)/10)+1} / {math.ceil(total/10)}", callback_data="pages"), InlineKeyboardButton("𝖭𝖤𝖷𝖳 ▶️", callback_data=f"next_{req}_{key}_{n_offset}")])
             else:
                 btn.append(
                     [
-                        InlineKeyboardButton("◀️ 𝖡𝖠𝖢𝖪", callback_data=f"next_{req}_{key}_{off_set}"),
+                        InlineKeyboardButton("◀️ Bᴀᴄᴋ", callback_data=f"next_{req}_{key}_{off_set}"),
                         InlineKeyboardButton(f"{math.ceil(int(offset)/10)+1} / {math.ceil(total/10)}", callback_data="pages"),
-                        InlineKeyboardButton("𝖭𝖤𝖷𝖳 ▶️", callback_data=f"next_{req}_{key}_{n_offset}")
+                        InlineKeyboardButton("𝖭ᴇxᴛ ▶️", callback_data=f"next_{req}_{key}_{n_offset}")
                     ],
                 )
         else:
@@ -234,16 +234,16 @@ async def next_page(bot, query):
                 off_set = offset - int(MAX_B_TN)
             if n_offset == 0:
                 btn.append(
-                    [InlineKeyboardButton("◀️ 𝖡𝖠𝖢𝖪", callback_data=f"next_{req}_{key}_{off_set}"), InlineKeyboardButton(f"{math.ceil(int(offset)/int(MAX_B_TN))+1} / {math.ceil(total/int(MAX_B_TN))}", callback_data="pages")]
+                    [InlineKeyboardButton("◀️ 𝖡ᴀᴄᴋ", callback_data=f"next_{req}_{key}_{off_set}"), InlineKeyboardButton(f"{math.ceil(int(offset)/int(MAX_B_TN))+1} / {math.ceil(total/int(MAX_B_TN))}", callback_data="pages")]
                 )
             elif off_set is None:
                 btn.append([InlineKeyboardButton("📃", callback_data="pages"), InlineKeyboardButton(f"{math.ceil(int(offset)/int(MAX_B_TN))+1} / {math.ceil(total/int(MAX_B_TN))}", callback_data="pages"), InlineKeyboardButton("𝖭𝖤𝖷𝖳 ▶️", callback_data=f"next_{req}_{key}_{n_offset}")])
             else:
                 btn.append(
                     [
-                        InlineKeyboardButton("◀️ 𝖡𝖠𝖢𝖪", callback_data=f"next_{req}_{key}_{off_set}"),
+                        InlineKeyboardButton("◀️ 𝖡ᴀᴄᴋ", callback_data=f"next_{req}_{key}_{off_set}"),
                         InlineKeyboardButton(f"{math.ceil(int(offset)/int(MAX_B_TN))+1} / {math.ceil(total/int(MAX_B_TN))}", callback_data="pages"),
-                        InlineKeyboardButton("𝖭𝖤𝖷𝖳 ▶️", callback_data=f"next_{req}_{key}_{n_offset}")
+                        InlineKeyboardButton("𝖭ᴇxᴛ ▶️", callback_data=f"next_{req}_{key}_{n_offset}")
                     ],
                 )
     except KeyError:
@@ -258,16 +258,16 @@ async def next_page(bot, query):
                 off_set = offset - 10
             if n_offset == 0:
                 btn.append(
-                    [InlineKeyboardButton("◀️ 𝖡𝖠𝖢𝖪", callback_data=f"next_{req}_{key}_{off_set}"), InlineKeyboardButton(f"{math.ceil(int(offset)/10)+1} / {math.ceil(total/10)}", callback_data="pages")]
+                    [InlineKeyboardButton("◀️ 𝖡ᴀᴄᴋ", callback_data=f"next_{req}_{key}_{off_set}"), InlineKeyboardButton(f"{math.ceil(int(offset)/10)+1} / {math.ceil(total/10)}", callback_data="pages")]
                 )
             elif off_set is None:
                 btn.append([InlineKeyboardButton("📃", callback_data="pages"), InlineKeyboardButton(f"{math.ceil(int(offset)/10)+1} / {math.ceil(total/10)}", callback_data="pages"), InlineKeyboardButton("𝖭𝖤𝖷𝖳 ▶️", callback_data=f"next_{req}_{key}_{n_offset}")])
             else:
                 btn.append(
                     [
-                        InlineKeyboardButton("◀️ 𝖡𝖠𝖢𝖪", callback_data=f"next_{req}_{key}_{off_set}"),
+                        InlineKeyboardButton("◀️ 𝖡ᴀᴄᴋ", callback_data=f"next_{req}_{key}_{off_set}"),
                         InlineKeyboardButton(f"{math.ceil(int(offset)/10)+1} / {math.ceil(total/10)}", callback_data="pages"),
-                        InlineKeyboardButton("𝖭𝖤𝖷𝖳 ▶️", callback_data=f"next_{req}_{key}_{n_offset}")
+                        InlineKeyboardButton("𝖭ᴇxᴛ ▶️", callback_data=f"next_{req}_{key}_{n_offset}")
                     ],
                 )
         else:
@@ -279,16 +279,16 @@ async def next_page(bot, query):
                 off_set = offset - int(MAX_B_TN)
             if n_offset == 0:
                 btn.append(
-                    [InlineKeyboardButton("◀️ 𝖡𝖠𝖢𝖪", callback_data=f"next_{req}_{key}_{off_set}"), InlineKeyboardButton(f"{math.ceil(int(offset)/int(MAX_B_TN))+1} / {math.ceil(total/int(MAX_B_TN))}", callback_data="pages")]
+                    [InlineKeyboardButton("◀️ 𝖡ᴀᴄᴋ", callback_data=f"next_{req}_{key}_{off_set}"), InlineKeyboardButton(f"{math.ceil(int(offset)/int(MAX_B_TN))+1} / {math.ceil(total/int(MAX_B_TN))}", callback_data="pages")]
                 )
             elif off_set is None:
                 btn.append([InlineKeyboardButton("📃", callback_data="pages"), InlineKeyboardButton(f"{math.ceil(int(offset)/int(MAX_B_TN))+1} / {math.ceil(total/int(MAX_B_TN))}", callback_data="pages"), InlineKeyboardButton("𝖭𝖤𝖷𝖳 ▶️", callback_data=f"next_{req}_{key}_{n_offset}")])
             else:
                 btn.append(
                     [
-                        InlineKeyboardButton("◀️ 𝖡𝖠𝖢𝖪", callback_data=f"next_{req}_{key}_{off_set}"),
+                        InlineKeyboardButton("◀️ 𝖡ᴀᴄᴋ", callback_data=f"next_{req}_{key}_{off_set}"),
                         InlineKeyboardButton(f"{math.ceil(int(offset)/int(MAX_B_TN))+1} / {math.ceil(total/int(MAX_B_TN))}", callback_data="pages"),
-                        InlineKeyboardButton("𝖭𝖤𝖷𝖳 ▶️", callback_data=f"next_{req}_{key}_{n_offset}")
+                        InlineKeyboardButton("𝖭ᴇxᴛ ▶️", callback_data=f"next_{req}_{key}_{n_offset}")
                     ],
                 )
 
@@ -342,7 +342,7 @@ async def filter_languages_cb_handler(client: Client, query: CallbackQuery):
 
     files, l_offset, total_results = await get_search_results(query.message.chat.id, search, filter=True, lang=lang)
     if not files:
-        await query.answer(f"😢 Sorry '{lang.title()}' Language Files Not Found \n\n ✅ Check Whether Movie Released in '{lang.title()}' Language in #Google \n\n 💯", show_alert=1)
+        await query.answer(f"😢 Sᴏʀʀʏ '{lang.title()}' Lᴀɴɢᴜᴀɢᴇ ғɪʟᴇs ɴᴏᴛ ғᴏᴜɴᴅ \n\n ✅ Cʜᴇᴄᴋ ᴡʜᴇᴛʜᴇʀ Mᴏᴠɪᴇ ɪs ʀᴇᴀʟᴇsᴇᴅ ɪɴ '{lang.title()}' ʟᴀɴɢᴜᴀɢᴇ ɪɴ #Google \n\n", show_alert=1)
         return
     settings = await get_settings(query.message.chat.id)
     pre = 'filep' if settings['file_secure'] else 'file'
@@ -389,8 +389,8 @@ async def filter_languages_cb_handler(client: Client, query: CallbackQuery):
 
     if l_offset != "":
         btn.append(
-            [InlineKeyboardButton(text=f"ᴘᴀɢᴇs 1 / {math.ceil(int(total_results) / 10)}", callback_data="pages"),
-             InlineKeyboardButton(text="𝖭𝖤𝖷𝖳 ▶️", callback_data=f"lang_next#{req}#{key}#{lang}#{l_offset}#{offset}")]
+            [InlineKeyboardButton(text=f"Pᴀɢᴇs 1 / {math.ceil(int(total_results) / 10)}", callback_data="pages"),
+             InlineKeyboardButton(text="𝖭ᴇxᴛ ▶️", callback_data=f"lang_next#{req}#{key}#{lang}#{l_offset}#{offset}")]
         )
     else:
         btn.append(
@@ -477,19 +477,19 @@ async def lang_next_page(bot, query):
 
     if n_offset == 0:
         btn.append(
-            [InlineKeyboardButton("◀️ 𝖡𝖠𝖢𝖪", callback_data=f"lang_next#{req}#{key}#{lang}#{b_offset}#{offset}"),
-             InlineKeyboardButton(f"ᴘᴀɢᴇs {math.ceil(int(l_offset) / 10) + 1} / {math.ceil(total / 10)}", callback_data="pages")]
+            [InlineKeyboardButton("◀️ 𝖡ᴀᴄᴋ", callback_data=f"lang_next#{req}#{key}#{lang}#{b_offset}#{offset}"),
+             InlineKeyboardButton(f"Pᴀɢᴇs {math.ceil(int(l_offset) / 10) + 1} / {math.ceil(total / 10)}", callback_data="pages")]
         )
     elif b_offset is None:
         btn.append(
-            [InlineKeyboardButton(f"ᴘᴀɢᴇs {math.ceil(int(l_offset) / 10) + 1} / {math.ceil(total / 10)}", callback_data="pages"),
-             InlineKeyboardButton("𝖭𝖤𝖷𝖳 ▶️", callback_data=f"lang_next#{req}#{key}#{lang}#{n_offset}#{offset}")]
+            [InlineKeyboardButton(f"Pᴀɢᴇs {math.ceil(int(l_offset) / 10) + 1} / {math.ceil(total / 10)}", callback_data="pages"),
+             InlineKeyboardButton("𝖭ᴇxᴛ ▶️", callback_data=f"lang_next#{req}#{key}#{lang}#{n_offset}#{offset}")]
         )
     else:
         btn.append(
-            [InlineKeyboardButton("◀️ 𝖡𝖠𝖢𝖪", callback_data=f"lang_next#{req}#{key}#{lang}#{b_offset}#{offset}"),
+            [InlineKeyboardButton("◀️ 𝖡ᴀᴄᴋ", callback_data=f"lang_next#{req}#{key}#{lang}#{b_offset}#{offset}"),
              InlineKeyboardButton(f"{math.ceil(int(l_offset) / 10) + 1} / {math.ceil(total / 10)}", callback_data="pages"),
-             InlineKeyboardButton("𝖭𝖤𝖷𝖳 ▶️", callback_data=f"lang_next#{req}#{key}#{lang}#{n_offset}#{offset}")]
+             InlineKeyboardButton("𝖭ᴇxᴛ ▶️", callback_data=f"lang_next#{req}#{key}#{lang}#{n_offset}#{offset}")]
         )
     btn.append([InlineKeyboardButton(text="⪻ ʙᴀᴄᴋ ᴛᴏ ᴍᴀɪɴ ᴘᴀɢᴇ", callback_data=f"next_{req}_{key}_{offset}")])
     await query.message.edit_text(cap + files_link + end_cap, reply_markup=InlineKeyboardMarkup(btn), parse_mode=enums.ParseMode.HTML)
@@ -500,7 +500,7 @@ async def qualities_cb_handler(client: Client, query: CallbackQuery):
     if int(req) != query.from_user.id:
         return await query.answer(script.ALRT_TXT.format(query.from_user.first_name), show_alert=True)
 
-    qualis = ['360p', '480p', '520p', '720p', '1080p']
+    qualis = ['360ᴘ', '480ᴘ', '520ᴘ', '720ᴘ', '1080ᴘ']
     btn = [
         [
             InlineKeyboardButton(
@@ -512,7 +512,7 @@ async def qualities_cb_handler(client: Client, query: CallbackQuery):
     ]
 
     btn.append([InlineKeyboardButton(text="⪻ ʙᴀᴄᴋ ᴛᴏ ᴍᴀɪɴ ᴘᴀɢᴇ", callback_data=f"next_{req}_{key}_{offset}")])
-    await query.message.edit_text("<b>ɪɴ ᴡʜɪᴄʜ Quality ᴅᴏ ʏᴏᴜ ᴡᴀɴᴛ, sᴇʟᴇᴄᴛ ʜᴇʀᴇ</b>👇", disable_web_page_preview=True, reply_markup=InlineKeyboardMarkup(btn))
+    await query.message.edit_text("<b>ɪɴ ᴡʜɪᴄʜ Qᴜᴀʟɪᴛʏ ᴅᴏ ʏᴏᴜ ᴡᴀɴᴛ? \nsᴇʟᴇᴄᴛ ʜᴇʀᴇ</b>👇", disable_web_page_preview=True, reply_markup=InlineKeyboardMarkup(btn))
     
 
 @Client.on_callback_query(filters.regex(r"^quali_search"))
@@ -529,7 +529,7 @@ async def filter_qualities_cb_handler(client: Client, query: CallbackQuery):
 
     files, q_offset, total_results = await get_search_results(query.message.chat.id, search, filter=True, lang=quali)
     if not files:
-        await query.answer(f"😢 Sorry, '{quali.title()}' Quality is Not Found \n\n ✅ Check other Qualities", show_alert=1)
+        await query.answer(f"😢 Sᴏʀʀʏ, '{quali.title()}' Qᴜᴀʟɪᴛʏ ɪs ɴᴏᴛ ғᴏᴜɴᴅ \n\n ✅ Cʜᴇᴄᴋ ᴏᴛʜᴇʀ Qᴜᴀʟɪᴛɪᴇs", show_alert=1)
         return
     settings = await get_settings(query.message.chat.id)
     pre = 'filep' if settings['file_secure'] else 'file'
@@ -576,8 +576,8 @@ async def filter_qualities_cb_handler(client: Client, query: CallbackQuery):
 
     if q_offset != "":
         btn.append(
-            [InlineKeyboardButton(text=f"ᴘᴀɢᴇs 1 / {math.ceil(int(total_results) / 10)}", callback_data="pages"),
-             InlineKeyboardButton(text="𝖭𝖤𝖷𝖳 ▶️", callback_data=f"quali_next#{req}#{key}#{quali}#{q_offset}#{offset}")]
+            [InlineKeyboardButton(text=f"Pᴀɢᴇs 1 / {math.ceil(int(total_results) / 10)}", callback_data="pages"),
+             InlineKeyboardButton(text="𝖭ᴇxᴛ ▶️", callback_data=f"quali_next#{req}#{key}#{quali}#{q_offset}#{offset}")]
         )
     else:
         btn.append(
@@ -589,139 +589,7 @@ async def filter_qualities_cb_handler(client: Client, query: CallbackQuery):
 
 @Client.on_callback_query(filters.regex(r"^quali_next"))
 async def quali_next_page(bot, query):
-    ident, req, key, @Client.on_callback_query(filters.regex(r"^quali_search"))
-async def filter_qualities_cb_handler(client: Client, query: CallbackQuery):
-    _, quali, key, offset, req = query.data.split("#")
-    if int(req) != query.from_user.id:
-        return await query.answer(script.ALRT_TXT.format(query.from_user.first_name), show_alert=True)
-        
-    search = BUTTONS.get(key)
-    cap = CAP.get(key)
-    if not search:
-        await query.answer(script.OLD_ALRT_TXT.format(query.from_user.first_name),show_alert=True)
-        return 
-
-    files, q_offset, total_results = await get_search_results(query.message.chat.id, search, filter=True, lang=quali)
-    if not files:
-        await query.answer(f"😢 Sorry, '{quali.title()}' Quality is Not Found \n\n ✅ Check other Qualities", show_alert=1)
-        return
-    settings = await get_settings(query.message.chat.id)
-    pre = 'filep' if settings['file_secure'] else 'file'
-    files_link = ''
-    end_cap = ""
-    temp.FILES[key] = files
-    if settings['button']:
-        btn = [
-            [
-                InlineKeyboardButton(
-                   text=f"📂{get_size(file.file_size)} 🎥{file.file_name}", callback_data=f'{pre}#{file.file_id}'
-                ),
-            ]
-            for file in files
-        ]
-    else:
-        btn = []
-        end_cap = f"""© @paxtv"""
-        for file in files:
-            files_link += f"<b>📁 {get_size(file.file_size)} <a href=https://t.me/{temp.U_NAME}?start={pre}_{file.file_id}> ▷ {' '.join(filter(lambda x: not x.startswith('[') and not x.startswith('@') and not x.startswith('www.'), file.file_name.split()))}\n\n</a></b>"
-    try:
-        if settings['button']:
-            btn.insert(0, 
-            [
-                InlineKeyboardButton(f'📟 𝖥𝗂𝗅𝖾𝗌: {len(files)}', 'dupe'),
-                InlineKeyboardButton(f'📮 Info', 'tips'),
-                InlineKeyboardButton(f'🎁 𝖳𝗂𝗉𝗌', 'info')
-            ]
-            )
-
-                
-    except KeyError:
-        grpid = await active_connection(str(query.message.from_user.id))
-        await save_group_settings(grpid, 'auto_delete', True)
-        settings = await get_settings(query.message.chat.id)
-        if settings['button']:
-            btn.insert(0, 
-            [
-                InlineKeyboardButton(f'📟 𝖥𝗂𝗅𝖾𝗌: {len(files)}', 'dupe'),
-                InlineKeyboardButton(f'📮 Info', 'tips'),
-                InlineKeyboardButton(f'🎁 𝖳𝗂𝗉𝗌', 'info')
-            ]
-            )
-
-    if q_offset != "":
-        btn.append(InlineKeyboardButton(text=f"ᴘᴀɢᴇs 1 / {math.ceil(int(total_results) / 10)}", callback_data="pages"),
-             InlineKeyboardButton(text="𝖭𝖤𝖷𝖳 ▶️", callback_data=f"quali_next#{req}#{key}#{quali}#{q_offset}#{offset}")]
-        )
-    else:
-        btn.append(
-            [InlineKeyboardButton(text="🚸 ɴᴏ ᴍᴏʀᴇ ᴘᴀɢᴇs 🚸", callback_data="pages")]
-        )
-    btn.append([InlineKeyboardButton(text="⪻ ʙᴀᴄᴋ ᴛᴏ ᴍᴀɪɴ ᴘᴀɢᴇ", callback_data=f"next_{req}_{key}_{offset}")])
-    await query.message.edit_text(cap + files_link + end_cap, reply_markup=InlineKeyboardMarkup(btn), parse_mode=enums.ParseMode.HTML)
-                quali, q_offset, offset = query.data.split("#")
-    if int(req) != query.from_user.id:
-        return await query.answer(script.ALRT_TXT.format(query.from_user.first_name), show_alert=True)
-
-    try:
-        q_offset = int(q_offset)
-    except:
-        q_offset = 0
-
-    settings = await get_settings(query.message.chat.id)
-    search = BUTTONS.get(key)
-    cap = CAP.get(key)
-    pre = 'filep' if settings['file_secure'] else 'file'
-    files_link = ''
-    end_cap = ""
-    if not search:
-        await query.answer(script.OLD_ALRT_TXT.format(query.from_user.first_name),show_alert=True)
-        return 
-
-    files, n_offset, total = await get_search_results(query.message.chat.id, search, filter=True, offset=q_offset, lang=quali)
-    if not files:
-        return
-    temp.FILES[key] = files
-    try:
-        n_offset = int(n_offset)
-    except:
-        n_offset = 0
-    if settings['button']:
-        btn = [
-            [
-                InlineKeyboardButton(
-                   text=f"📂{get_size(file.file_size)} 🎥{file.file_name}", callback_data=f'{pre}#{file.file_id}'
-                ),
-            ]
-            for file in files
-        ]
-    else:
-        btn = []
-        end_cap = f"""© @paxtv"""
-        for file in files:
-            files_link += f"<b>📁 {get_size(file.file_size)} <a href=https://t.me/{temp.U_NAME}?start={pre}_{file.file_id}> ▷ {' '.join(filter(lambda x: not x.startswith('[') and not x.startswith('@') and not x.startswith('www.'), file.file_name.split()))}\n\n</a></b>"
-            
-    try:
-        if settings['button']:
-            btn.insert(0, 
-            [
-                InlineKeyboardButton(f'📟 𝖥𝗂𝗅𝖾𝗌: {len(files)}', 'dupe'),
-                InlineKeyboardButton(f'📮 Info', 'tips'),
-                InlineKeyboardButton(f'🎁 𝖳𝗂𝗉𝗌', 'info')
-            ]
-            )
-
-                
-    except 
-            [InlineKeyboardButton(text=f"ᴘᴀɢᴇs 1 / {math.ceil(int(total_results) / 10)}", callback_data="pages"),
-             InlineKeyboardButton(text="𝖭𝖤𝖷𝖳 ▶️", callback_data=f"quali_next#{req}#{key}#{quali}#{q_offset}#{offset}")]
-        )
-    else:
-        btn.append(
-            [InlineKeyboardButton(text="🚸 ɴᴏ ᴍᴏʀᴇ ᴘᴀɢᴇs 🚸", callback_data="pages")]
-        )
-    btn.append([InlineKeyboardButton(text="⪻ ʙᴀᴄᴋ ᴛᴏ ᴍᴀɪɴ ᴘᴀɢᴇ", callback_data=f"next_{req}_{key}_{offset}")])
-    await query.message.edit_text(cap + files_link + end_cap, reply_markup=InlineKeyboardMarkup(btn), parse_mode=enums.ParseMode.HTML)
-                quali, q_offset, offset = query.data.split("#")
+    ident, req, key, quali, q_offset, offset = query.data.split("#")
     if int(req) != query.from_user.id:
         return await query.answer(script.ALRT_TXT.format(query.from_user.first_name), show_alert=True)
 
@@ -796,19 +664,19 @@ async def filter_qualities_cb_handler(client: Client, query: CallbackQuery):
 
     if n_offset == 0:
         btn.append(
-            [InlineKeyboardButton("◀️ 𝖡𝖠𝖢𝖪", callback_data=f"quali_next#{req}#{key}#{quali}#{b_offset}#{offset}"),
-             InlineKeyboardButton(f"ᴘᴀɢᴇs {math.ceil(int(q_offset) / 10) + 1} / {math.ceil(total / 10)}", callback_data="pages")]
+            [InlineKeyboardButton("◀️ 𝖡ᴀᴄᴋ", callback_data=f"quali_next#{req}#{key}#{quali}#{b_offset}#{offset}"),
+             InlineKeyboardButton(f"Pᴀɢᴇs {math.ceil(int(q_offset) / 10) + 1} / {math.ceil(total / 10)}", callback_data="pages")]
         )
     elif b_offset is None:
         btn.append(
-            [InlineKeyboardButton(f"ᴘᴀɢᴇs {math.ceil(int(q_offset) / 10) + 1} / {math.ceil(total / 10)}", callback_data="pages"),
-             InlineKeyboardButton("𝖭𝖤𝖷𝖳 ▶️", callback_data=f"quali_next#{req}#{key}#{quali}#{n_offset}#{offset}")]
+            [InlineKeyboardButton(f"Pᴀɢᴇs {math.ceil(int(q_offset) / 10) + 1} / {math.ceil(total / 10)}", callback_data="pages"),
+             InlineKeyboardButton("𝖭ᴇxᴛ ▶️", callback_data=f"quali_next#{req}#{key}#{quali}#{n_offset}#{offset}")]
         )
     else:
         btn.append(
-            [InlineKeyboardButton("◀️ 𝖡𝖠𝖢𝖪", callback_data=f"quali_next#{req}#{key}#{quali}#{b_offset}#{offset}"),
+            [InlineKeyboardButton("◀️ 𝖡ᴀᴄᴋ", callback_data=f"quali_next#{req}#{key}#{quali}#{b_offset}#{offset}"),
              InlineKeyboardButton(f"{math.ceil(int(q_offset) / 10) + 1} / {math.ceil(total / 10)}", callback_data="pages"),
-             InlineKeyboardButton("𝖭𝖤𝖷𝖳 ▶️", callback_data=f"quali_next#{req}#{key}#{quali}#{n_offset}#{offset}")]
+             InlineKeyboardButton("𝖭ᴇxᴛ ▶️", callback_data=f"quali_next#{req}#{key}#{quali}#{n_offset}#{offset}")]
         )
     btn.append([InlineKeyboardButton(text="⪻ ʙᴀᴄᴋ ᴛᴏ ᴍᴀɪɴ ᴘᴀɢᴇ", callback_data=f"next_{req}_{key}_{offset}")])
     await query.message.edit_text(cap + files_link + end_cap, reply_markup=InlineKeyboardMarkup(btn), parse_mode=enums.ParseMode.HTML)
@@ -831,7 +699,7 @@ async def seasons_cb_handler(client: Client, query: CallbackQuery):
     ]
 
     btn.append([InlineKeyboardButton(text="⪻ ʙᴀᴄᴋ ᴛᴏ ᴍᴀɪɴ ᴘᴀɢᴇ", callback_data=f"next_{req}_{key}_{offset}")])
-    await query.message.edit_text("<b>ɪɴ ᴡʜɪᴄʜ Season ᴅᴏ ʏᴏᴜ ᴡᴀɴᴛ, sᴇʟᴇᴄᴛ ʜᴇʀᴇ</b>👇", disable_web_page_preview=True, reply_markup=InlineKeyboardMarkup(btn))
+    await query.message.edit_text("<b>ɪɴ ᴡʜɪᴄʜ Season ᴅᴏ ʏᴏᴜ ᴡᴀɴᴛ? \nsᴇʟᴇᴄᴛ ʜᴇʀᴇ</b>👇", disable_web_page_preview=True, reply_markup=InlineKeyboardMarkup(btn))
     
 
 @Client.on_callback_query(filters.regex(r"^sea_search"))
@@ -848,7 +716,7 @@ async def filter_seasons_cb_handler(client: Client, query: CallbackQuery):
 
     files, s_offset, total_results = await get_search_results(query.message.chat.id, search, filter=True, lang=sea)
     if not files:
-        await query.answer(f"😢 Sorry, '{sea.title()}' is Not Found", show_alert=1)
+        await query.answer(f"😢 Sᴏʀʀʏ, '{sea.title()}' Sᴇᴀsᴏɴ ɪs ɴᴏᴛ ғᴏᴜɴᴅ \n\n Yᴏᴜ ᴄᴀɴ Cʜᴇᴄᴋ ᴇᴀʟɪᴇʀ sᴇᴀsᴏɴs", show_alert=1)
         return
     settings = await get_settings(query.message.chat.id)
     pre = 'filep' if settings['file_secure'] else 'file'
@@ -895,8 +763,8 @@ async def filter_seasons_cb_handler(client: Client, query: CallbackQuery):
 
     if s_offset != "":
         btn.append(
-            [InlineKeyboardButton(text=f"ᴘᴀɢᴇs 1 / {math.ceil(int(total_results) / 10)}", callback_data="pages"),
-             InlineKeyboardButton(text="𝖭𝖤𝖷𝖳 ▶️", callback_data=f"sea_next#{req}#{key}#{sea}#{s_offset}#{offset}")]
+            [InlineKeyboardButton(text=f"Pᴀɢᴇs 1 / {math.ceil(int(total_results) / 10)}", callback_data="pages"),
+             InlineKeyboardButton(text="𝖭ᴇxᴛ ▶️", callback_data=f"sea_next#{req}#{key}#{sea}#{s_offset}#{offset}")]
         )
     else:
         btn.append(
@@ -904,31 +772,36 @@ async def filter_seasons_cb_handler(client: Client, query: CallbackQuery):
         )
     btn.append([InlineKeyboardButton(text="⪻ ʙᴀᴄᴋ ᴛᴏ ᴍᴀɪɴ ᴘᴀɢᴇ", callback_data=f"next_{req}_{key}_{offset}")])
     await query.message.edit_text(cap + files_link + end_cap, reply_markup=InlineKeyboardMarkup(btn), parse_mode=enums.ParseMode.HTML)
-    
 
-@Client.on_callback_query(filters.regex(r"^quali_next"))
-async def quali_next_page(bot, query):
-    ident, req, key, @Client.on_callback_query(filters.regex(r"^quali_search"))
-async def filter_qualities_cb_handler(client: Client, query: CallbackQuery):
-    _, quali, key, offset, req = query.data.split("#")
+@Client.on_callback_query(filters.regex(r"^sea_next"))
+async def sea_next_page(bot, query):
+    ident, req, key, sea, s_offset, offset = query.data.split("#")
     if int(req) != query.from_user.id:
         return await query.answer(script.ALRT_TXT.format(query.from_user.first_name), show_alert=True)
-        
+
+    try:
+        s_offset = int(s_offset)
+    except:
+        s_offset = 0
+
+    settings = await get_settings(query.message.chat.id)
     search = BUTTONS.get(key)
     cap = CAP.get(key)
+    pre = 'filep' if settings['file_secure'] else 'file'
+    files_link = ''
+    end_cap = ""
     if not search:
         await query.answer(script.OLD_ALRT_TXT.format(query.from_user.first_name),show_alert=True)
         return 
 
-    files, q_offset, total_results = await get_search_results(query.message.chat.id, search, filter=True, lang=quali)
+    files, n_offset, total = await get_search_results(query.message.chat.id, search, filter=True, offset=s_offset, lang=sea)
     if not files:
-        await query.answer(f"😢 Sorry, '{quali.title()}' Quality is Not Found \n\n ✅ Check other Qualities", show_alert=1)
         return
-    settings = await get_settings(query.message.chat.id)
-    pre = 'filep' if settings['file_secure'] else 'file'
-    files_link = ''
-    end_cap = ""
     temp.FILES[key] = files
+    try:
+        n_offset = int(n_offset)
+    except:
+        n_offset = 0
     if settings['button']:
         btn = [
             [
@@ -943,6 +816,7 @@ async def filter_qualities_cb_handler(client: Client, query: CallbackQuery):
         end_cap = f"""© @paxtv"""
         for file in files:
             files_link += f"<b>📁 {get_size(file.file_size)} <a href=https://t.me/{temp.U_NAME}?start={pre}_{file.file_id}> ▷ {' '.join(filter(lambda x: not x.startswith('[') and not x.startswith('@') and not x.startswith('www.'), file.file_name.split()))}\n\n</a></b>"
+            
     try:
         if settings['button']:
             btn.insert(0, 
@@ -967,26 +841,32 @@ async def filter_qualities_cb_handler(client: Client, query: CallbackQuery):
             ]
             )
 
-    if q_offset != "":
-        btn.append(InlineKeyboardButton(text=f"ᴘᴀɢᴇs 1 / {math.ceil(int(total_results) / 10)}", callback_data="pages"),
-             InlineKeyboardButton(text="𝖭𝖤𝖷𝖳 ▶️", callback_data=f"quali_next#{req}#{key}#{quali}#{q_offset}#{offset}")]
+    if 0 < s_offset <= 10:
+        b_offset = 0
+    elif s_offset == 0:
+        b_offset = None
+    else:
+        b_offset = s_offset - 10
+
+    if n_offset == 0:
+        btn.append(
+            [InlineKeyboardButton("◀️ 𝖡ᴀᴄᴋ", callback_data=f"sea_next#{req}#{key}#{sea}#{b_offset}#{offset}"),
+             InlineKeyboardButton(f"Pᴀɢᴇs {math.ceil(int(s_offset) / 10) + 1} / {math.ceil(total / 10)}", callback_data="pages")]
+        )
+    elif b_offset is None:
+        btn.append(
+            [InlineKeyboardButton(f"Pᴀɢᴇs {math.ceil(int(s_offset) / 10) + 1} / {math.ceil(total / 10)}", callback_data="pages"),
+             InlineKeyboardButton("𝖭ᴇxᴛ ▶️", callback_data=f"sea_next#{req}#{key}#{sea}#{n_offset}#{offset}")]
         )
     else:
         btn.append(
-            [InlineKeyboardButton(text="🚸 ɴᴏ ᴍᴏʀᴇ ᴘᴀɢᴇs 🚸", callback_data="pages")]
+            [InlineKeyboardButton("◀️ 𝖡ᴀᴄᴋ", callback_data=f"sea_next#{req}#{key}#{sea}#{b_offset}#{offset}"),
+             InlineKeyboardButton(f"{math.ceil(int(s_offset) / 10) + 1} / {math.ceil(total / 10)}", callback_data="pages"),
+             InlineKeyboardButton("𝖭ᴇxᴛ ▶️", callback_data=f"sea_next#{req}#{key}#{sea}#{n_offset}#{offset}")]
         )
     btn.append([InlineKeyboardButton(text="⪻ ʙᴀᴄᴋ ᴛᴏ ᴍᴀɪɴ ᴘᴀɢᴇ", callback_data=f"next_{req}_{key}_{offset}")])
     await query.message.edit_text(cap + files_link + end_cap, reply_markup=InlineKeyboardMarkup(btn), parse_mode=enums.ParseMode.HTML)
-                quali, q_offset, offset = query.data.split("#")
-    if int(req) != query.from_user.id:
-        return await query.answer(script.ALRT_TXT.format(query.from_user.first_name), show_alert=True)
 
-    try:
-        q_offset = int(q_offset)
-    except:
-        q_offset = 0
-
-    settings = await get_settings(query.message.chat.id)
 
 @Client.on_callback_query(filters.regex(r"^spolling"))
 async def advantage_spoll_choker(bot, query):
@@ -1493,7 +1373,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
                 InlineKeyboardButton("🔰 𝖠𝗅𝗋𝖾𝖺𝖽𝗒 𝖠𝗏𝖺𝗂𝗅𝖺𝖻𝗅𝖾 🔰", callback_data=f"already_available#{from_user}")
               ]]
         btn2 = [[
-                 InlineKeyboardButton("❕ 𝖵𝗂𝖾𝗐 𝖲𝗍𝖺𝗍𝗎𝗌 ❕", url=f"https://t.me/+yAhNuU610EhhMWJh")
+                 InlineKeyboardButton("❕ 𝖵𝗂𝖾𝗐 𝖲𝗍𝖺𝗍𝗎𝗌 ❕", url=f"https://t.me/+cXlkHDKryok0")
                ]]
         if query.from_user.id in ADMINS:
             user = await client.get_users(from_user)
@@ -1509,7 +1389,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
                 InlineKeyboardButton("⚠ 𝖴𝗇𝖺𝗏𝖺𝗂𝗅𝖺𝖻𝗅𝖾 ⚠", callback_data=f"unalert#{from_user}")
               ]]
         btn2 = [[
-                 InlineKeyboardButton("❕ 𝖵𝗂𝖾𝗐 𝖲𝗍𝖺𝗍𝗎𝗌 ❕", url=f"https://t.me/+yAhNuU610EhhMWJh")
+                 InlineKeyboardButton("❕ 𝖵𝗂𝖾𝗐 𝖲𝗍𝖺𝗍𝗎𝗌 ❕", url=f"https://t.me/+cXlkHDKryok0")
                ]]
         if query.from_user.id in ADMINS:
             user = await client.get_users(from_user)
@@ -1531,9 +1411,9 @@ async def cb_handler(client: Client, query: CallbackQuery):
                 InlineKeyboardButton("✅ 𝖴𝗉𝗅𝗈𝖺𝖽𝖾𝖽 ✅", callback_data=f"upalert#{from_user}")
               ]]
         btn2 = [[
-                 InlineKeyboardButton(']|I{•------» 𝐌𝐨𝐯𝐢𝐞 𝐒𝐞𝐚𝐫𝐜𝐡𝐢𝐧𝐠 𝐆𝐫𝐨𝐮𝐩 𝐋𝐢𝐧𝐤𝐬 «------•}I|[', url="https://t.me/isaimini_updates/110")
+                 InlineKeyboardButton('𝐌𝐨𝐯𝐢𝐞 𝐒𝐞𝐚𝐫𝐜𝐡𝐢𝐧𝐠 𝐆𝐫𝐨𝐮𝐩', url="https://t.me/paxmovies")
                ],[
-                 InlineKeyboardButton("❕ 𝖵𝗂𝖾𝗐 𝖲𝗍𝖺𝗍𝗎𝗌 ❕", url=f"https://t.me/+yAhNuU610EhhMWJh")
+                 InlineKeyboardButton("❕ 𝖵𝗂𝖾𝗐 𝖲𝗍𝖺𝗍𝗎𝗌 ❕", url=f"https://t.me/+cXlkHDKryok0")
         ]]
         if query.from_user.id in ADMINS:
             user = await client.get_users(from_user)
@@ -1555,9 +1435,9 @@ async def cb_handler(client: Client, query: CallbackQuery):
                 InlineKeyboardButton("🔰 𝖠𝗅𝗋𝖾𝖺𝖽𝗒 𝖠𝗏𝖺𝗂𝗅𝖺𝖻𝗅𝖾 🔰", callback_data=f"alalert#{from_user}")
               ]]
         btn2 = [[
-                 InlineKeyboardButton(']|I{•------» 𝐌𝐨𝐯𝐢𝐞 𝐒𝐞𝐚𝐫𝐜𝐡𝐢𝐧𝐠 𝐆𝐫𝐨𝐮𝐩 𝐋𝐢𝐧𝐤𝐬 «------•}I|[', url="https://t.me/isaimini_updates/110")
+                 InlineKeyboardButton('𝐌𝐨𝐯𝐢𝐞 𝐒𝐞𝐚𝐫𝐜𝐡𝐢𝐧𝐠 𝐆𝐫𝐨𝐮𝐩', url="https://t.me/paxmovies")
         ],[
-                 InlineKeyboardButton("❕ 𝖵𝗂𝖾𝗐 𝖲𝗍𝖺𝗍𝗎𝗌 ❕", url=f"https://t.me/+yAhNuU610EhhMWJh")
+                 InlineKeyboardButton("❕ 𝖵𝗂𝖾𝗐 𝖲𝗍𝖺𝗍𝗎𝗌 ❕", url=f"https://t.me/+cXlkHDKryok0")
                ]]
         if query.from_user.id in ADMINS:
             user = await client.get_users(from_user)
@@ -1598,10 +1478,10 @@ async def cb_handler(client: Client, query: CallbackQuery):
             await query.answer("𝖸𝗈𝗎 𝖽𝗈𝗇'𝗍 𝗁𝖺𝗏𝖾 𝗌𝗎𝖿𝖿𝗂𝖼𝗂𝖾𝗇𝗍 𝗋𝗂𝗀𝗁𝗍𝗌 𝗍𝗈 𝖽𝗈 𝗍𝗁𝗂𝗌 !", show_alert=True)
 
     elif query.data == 'rkbtn':
-        await query.answer("𝖧𝖾𝗒 𝖡𝗋𝗈 😍\n\n🎯 𝖢𝗅𝗂𝖼𝗄 Any Of 𝖳𝗁𝖾 Above 𝖥𝗂𝗅𝖾 That 𝖸𝗈𝗎 𝖶𝖺𝗇𝗍 𝖠𝗇𝖽 𝖲𝗍𝖺𝗋𝗍 𝖳𝗁𝖾 𝖡𝗈𝗍", True)
+        await query.answer("𝖧ᴇʏ 😍, \n\n🎯 Cʟɪᴄᴋ ᴀɴʏ ᴏғ ᴛʜᴇ ᴀʙᴏᴠᴇ Fɪʟᴇ ɴᴀᴍᴇs ᴛᴏ ɢᴇᴛ ɪᴛs Fɪʟᴇ ɪɴ ᴛʜᴇ BOT", True)
 
     elif query.data == 'info':
-        await query.answer("𝗥𝗲𝗾𝘂𝗲𝘀𝘁𝘀 𝗙𝗼𝗿𝗺𝗮𝘁𝘀\n\nMaster: The Boss 2021 ❌ \nMaster The Boss 2021 ✔️ \nSamdal-ri ❌ \nSamdal ri ✔️ \n\nArrow season 1 ❌ \nArrow S01 ✔️ \n\nLove Scout episode 10 ❌ \nLove Scout S01E10 ✔️ \n\n Dᴏɴ'ᴛ ᴜsᴇ ᴀɴʏ Sʏᴍʙᴏʟs!!!", True)
+        await query.answer("𝗥𝗲𝗾𝘂𝗲𝘀𝘁𝘀 𝗙𝗼𝗿𝗺𝗮𝘁𝘀\n\nMaster: The Boss 2021 ❌ \nMaster The Boss 2021 ✔️ \n\nSamdal-ri ❌ \nSamdal ri ✔️ \n\nArrow season 1 ❌ \nArrow S01 ✔️ \n\nLove Scout episode 10 ❌ \nLove Scout S01E10 ✔️ \n\n Dᴏɴ'ᴛ ᴜsᴇ ᴀɴʏ Sʏᴍʙᴏʟs!!!", True)
     
     elif query.data == 'tips':
         await query.answer("𝖳𝗁𝗂𝗌 𝖬𝖾𝗌𝗌𝖺𝗀𝖾 𝖶𝗂𝗅𝗅 𝖡𝖾 𝖣𝖾𝗅𝖾𝗍𝖾𝖽 𝖠𝖿𝗍𝖾𝗋 5 𝖬𝗂𝗇𝗎𝗍𝖾𝗌 𝗍𝗈 𝖯𝗋𝖾𝗏𝖾𝗇𝗍 𝖢𝗈𝗉𝗒𝗋𝗂𝗀𝗁𝗍 !\n\n𝖳𝗁𝖺𝗇𝗄 𝖸𝗈𝗎 𝖥𝗈𝗋 𝖴𝗌𝗂𝗇𝗀 𝖬𝖾 😊\n\n\n𝐁𝐫𝐨𝐮𝐠𝐡𝐭 𝐓𝐨 𝐘𝐨𝐮 𝐁𝐲:-❤️ 𝗜𝘀𝗮𝗶𝗺𝗶𝗻𝗶 𝗣𝗿𝗶𝗺𝗲 ❤️", True)
@@ -1613,10 +1493,10 @@ async def cb_handler(client: Client, query: CallbackQuery):
         buttons = [[
                     InlineKeyboardButton('◦•●◉✿ ➕ ᴀᴅᴅ ᴍᴇ ᴛᴏ ɢʀᴏᴜᴘ ➕ ✿◉●•◦', url=f"http://t.me/{temp.U_NAME}?startgroup=true")
                 ],[
-                    InlineKeyboardButton('★⭕ ᴄʜᴀɴɴᴇʟ ⭕★', url="https://t.me/isaimini_updates"),
+                    InlineKeyboardButton('★⭕ ᴄʜᴀɴɴᴇʟ ⭕★', url="https://t.me/+cXlkHDKryok0"),
                     InlineKeyboardButton('★⭕ ᴅᴀɪʟʏ ᴜᴘᴅᴀᴛᴇs ⭕★', url=DAILY_UPDATE_LINK)
                 ],[
-                    InlineKeyboardButton(']|I{•---» ᴍᴏᴠɪᴇ sᴇᴀʀᴄʜɪɴɢ ɢʀᴏᴜᴘ ʟɪɴᴋs «---•}I|[', url="https://t.me/movie_request_group_links")
+                    InlineKeyboardButton('ᴍᴏᴠɪᴇ sᴇᴀʀᴄʜɪɴɢ ɢʀᴏᴜᴘ', url="https://t.me/paxmovies")
                 ],[
                     InlineKeyboardButton('★♻️ ʜᴇʟᴘ ♻️★', callback_data='help'),
                     InlineKeyboardButton('★♻️ ᴀʙᴏᴜᴛ ♻️★', callback_data='about'),
@@ -1890,7 +1770,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
     elif query.data == "owner_info":
             btn = [[
                     InlineKeyboardButton("👩‍🦯 𝖡𝖺𝖼𝗄", callback_data="start"),
-                    InlineKeyboardButton("📞 𝖢𝗈𝗇𝗍𝖺𝖼𝗍", url=f"https://telegram.me/isaiminiprime_admin")
+                    InlineKeyboardButton("📞 𝖢𝗈𝗇𝗍𝖺𝖼𝗍", url=f"https://telegram.me/Mr_John_NigMore")
                   ]]
             await client.edit_message_media(
                 query.message.chat.id, 
@@ -2118,7 +1998,7 @@ async def auto_filter(client, msg, spoll=False):
                 )
     else:
         btn.append(
-            [InlineKeyboardButton(text="🚸 Lᴀsᴛ Pᴀɢᴇ🚸",callback_data="pages")]
+            [InlineKeyboardButton(text="🚸 Nᴏ ᴍᴏʀᴇ Pᴀɢᴇs 🚸",callback_data="pages")]
         )
     imdb = await get_poster(search, file=(files[0]).file_name) if settings["imdb"] else None
     TEMPLATE = settings['template']
@@ -2237,7 +2117,7 @@ async def advantage_spell_chok(client, message):
     google_search = search.replace(" ", "+")
     encoded_search = quote(search)
     button = [
-        InlineKeyboardButton("🔎 Search in Google 🔍", url=f"https://www.google.com/search?q={google_search}")
+        InlineKeyboardButton("🔎 Sᴇᴀʀᴄʜ ɪɴ Gᴏᴏɢʟᴇ 🔍", url=f"https://www.google.com/search?q={google_search}")
     ]
     query = re.sub(
         r"\b(pl(i|e)*?(s|z+|ease|se|ese|(e+)s(e)?)|((send|snd|giv(e)?|gib)(\sme)?)|season|episode|movie(s)?|new|latest|br((o|u)h?)*|^h(e|a)?(l)*(o)*|mal(ayalam)?|t(h)?amil|dub(b)?ed|file|that|find|und(o)*|kit(t(i|y)?)?o(w)?|thar(u)?(o)*w?|kittum(o)*|aya(k)*(um(o)*)?|full\smovie|any(one)|with\ssubtitle(s)?)",
