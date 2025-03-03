@@ -342,7 +342,7 @@ async def filter_languages_cb_handler(client: Client, query: CallbackQuery):
 
     files, l_offset, total_results = await get_search_results(query.message.chat.id, search, filter=True, lang=lang)
     if not files:
-        await query.answer(f"😢 Sᴏʀʀʏ '{lang.title()}' Lᴀɴɢᴜᴀɢᴇ ғɪʟᴇs ɴᴏᴛ ғᴏᴜɴᴅ \n\n ✅ Cʜᴇᴄᴋ ᴡʜᴇᴛʜᴇʀ Mᴏᴠɪᴇ ɪs ʀᴇᴀʟᴇsᴇᴅ ɪɴ '{lang.title()}' ʟᴀɴɢᴜᴀɢᴇ ɪɴ #Google \n\n", show_alert=1)
+        await query.answer(f"😢 Sᴏʀʀʏ, '{lang.title()}' Lᴀɴɢᴜᴀɢᴇ ғɪʟᴇs ɴᴏᴛ ғᴏᴜɴᴅ \n\n ✅ Cʜᴇᴄᴋ ᴡʜᴇᴛʜᴇʀ Mᴏᴠɪᴇ ɪs ʀᴇᴀʟᴇsᴇᴅ ɪɴ '{lang.title()}' ʟᴀɴɢᴜᴀɢᴇ ɪɴ #Google \n\n", show_alert=1)
         return
     settings = await get_settings(query.message.chat.id)
     pre = 'filep' if settings['file_secure'] else 'file'
@@ -500,7 +500,7 @@ async def qualities_cb_handler(client: Client, query: CallbackQuery):
     if int(req) != query.from_user.id:
         return await query.answer(script.ALRT_TXT.format(query.from_user.first_name), show_alert=True)
 
-    qualis = ['360ᴘ', '480ᴘ', '520ᴘ', '720ᴘ', '1080ᴘ']
+    qualis = ['360p', '480p', '520p', '720p', '1080p']
     btn = [
         [
             InlineKeyboardButton(
