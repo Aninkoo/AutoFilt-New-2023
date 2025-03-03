@@ -117,7 +117,7 @@ async def get_search_results(chat_id, query, file_type=None, max_results=10, off
     cursor.sort('$natural', -1)
 
     if lang:
-        pattern = rf"\b{re.escape(lang)}(?:\d{{2}})?\b"
+        pattern = rf"(?<!\w){re.escape(lang)}(?!\w)"
 
         lang_files = [
         file async for file in cursor 
