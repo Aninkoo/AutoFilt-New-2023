@@ -687,7 +687,7 @@ async def seasons_cb_handler(client: Client, query: CallbackQuery):
     if int(req) != query.from_user.id:
         return await query.answer(script.ALRT_TXT.format(query.from_user.first_name), show_alert=True)
 
-    seas = ['S01', 'S02', 'S03', 'S04', 'S05', 'S06', 'S07', 'S08', 'S09', 'S10']
+    seas = ['s01', 's02', 's03', 's04', 's05', 's06', 's07', 's08', 's09', 's10']
     btn = [
         [
             InlineKeyboardButton(
@@ -714,7 +714,7 @@ async def filter_seasons_cb_handler(client: Client, query: CallbackQuery):
         await query.answer(script.OLD_ALRT_TXT.format(query.from_user.first_name),show_alert=True)
         return 
 
-    files, s_offset, total_results = await get_search_results(query.message.chat.id, search, filter=False, lang=sea)
+    files, s_offset, total_results = await get_search_results(query.message.chat.id, search, filter=True, lang=sea)
     if not files:
         await query.answer(f"😢 Sᴏʀʀʏ, '{sea.title()}' Sᴇᴀsᴏɴ ɪs ɴᴏᴛ ғᴏᴜɴᴅ \n\n Yᴏᴜ ᴄᴀɴ Cʜᴇᴄᴋ ᴇᴀʟɪᴇʀ sᴇᴀsᴏɴs", show_alert=1)
         return
