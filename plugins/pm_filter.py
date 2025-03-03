@@ -500,7 +500,7 @@ async def qualities_cb_handler(client: Client, query: CallbackQuery):
     if int(req) != query.from_user.id:
         return await query.answer(script.ALRT_TXT.format(query.from_user.first_name), show_alert=True)
 
-    qualis = ['360p', '480p', '520p', '720p', '1080p']
+    qualis = ['360p', '480p', '520p', '720p', '1080p', 'S01']
     btn = [
         [
             InlineKeyboardButton(
