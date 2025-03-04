@@ -117,7 +117,7 @@ async def get_search_results(chat_id, query, file_type=None, max_results=10, off
     cursor.sort('$natural', -1)
 
     if lang:
-        print (filter)
+        logger.info(f'{filter}')
         lang_files = [
             file async for file in cursor 
             if (file.caption and lang in file.caption.lower()) or (file.file_name and lang in file.file_name.lower())
