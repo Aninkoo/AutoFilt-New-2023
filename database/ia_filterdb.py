@@ -117,23 +117,17 @@ async def get_search_results(chat_id, query, file_type=None, max_results=10, off
     cursor.sort('$natural', -1)
 
     if lang:
-        lang = lang.strip().lower()
-        logger.info(f'Applying language filter: {lang}')
-    
-        all_files = [file async for file in cursor]  # Collect all files first
-        logger.info(f"Total files before lang filter: {len(all_files)}")
-
         lang_files = [
-            file for file in all_files 
+            file async for file in cursor 
             if (file.caption and lang in file.caption.lower()) or (file.file_name and lang in file.file_name.lower())
         ]
-
-        files = lang_files[offset:offset + max_results]
+        files = lang_files[offset:][:max_results]
         total_results = len(lang_files)
-        next_offset = offset + max_results if next_offset < total_results else ''
-
+        next_offset = offset + max_results
+        if next_offset > total_results:
+            next_offset = ''
         return files, next_offset, total_results
-    
+
     total_results = await Media.count_documents(filter)
     next_offset = offset + max_results
 
