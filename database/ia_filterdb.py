@@ -95,8 +95,7 @@ async def get_search_results(chat_id, query, file_type=None, max_results=10, off
     if not query:
         raw_pattern = '.'
     elif ' ' not in query:
-        #raw_pattern = r'(\b|[.+-])' + query + r'(?=\b|[.+-\w])'
-        raw_pattern = r'(\b|[\.\+\-_])' + query + r'(?=\b|[\.\+\-_\w])'
+        raw_pattern = r'(\b|[\.\+\-_])' + query + r'(\b|[\.\+\-_])'
     else:
         raw_pattern = query.replace(' ', r'.*[\s\.\+\-_]')
     
@@ -118,12 +117,10 @@ async def get_search_results(chat_id, query, file_type=None, max_results=10, off
     cursor.sort('$natural', -1)
 
     if lang:
-        pattern = rf"(?<!\w){re.escape(lang)}(?!\w)"
-
+        print filter
         lang_files = [
-        file async for file in cursor 
-        if (file.caption and re.search(pattern, file.caption.lower()))
-        or (file.file_name and re.search(pattern, file.file_name.lower()))
+            file async for file in cursor 
+            if (file.caption and lang in file.caption.lower()) or (file.file_name and lang in file.file_name.lower())
         ]
         files = lang_files[offset:][:max_results]
         total_results = len(lang_files)
