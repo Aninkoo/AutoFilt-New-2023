@@ -344,7 +344,12 @@ async def start(client, message):
                 chat_id=message.from_user.id,
                 file_id=file_id,
                 protect_content=False,
-                reply_markup=InlineKeyboardMarkup( [ [ InlineKeyboardButton('⭕ 𝗝𝗼𝗶𝗻 𝗠𝗮𝗶𝗻 𝗖𝗵𝗮𝗻𝗻𝗲𝗹 ⭕', url=DAILY_UPDATE_LINK) ],[InlineKeyboardButton("✛ ᴡᴀᴛᴄʜ & ᴅᴏᴡɴʟᴏᴀᴅ ✛", callback_data=f"stream#{file_id}")]] ),
+                reply_markup=InlineKeyboardMarkup( 
+                    [ 
+                        [InlineKeyboardButton('🔍 New Search 🔎', url=f'https://t.me/paxmovies')],
+                        [InlineKeyboardButton('⚡💡Check New Updates💡⚡', url=f'https://t.me/+cXlkHDKryok0YmFk')]
+                    ]
+                ),
             )
             filetype = msg.media
             file = getattr(msg, filetype.value)
@@ -353,7 +358,7 @@ async def start(client, message):
             if file.file_name is None:
                 title = file_cap
             else:
-                title = file.file_name
+                title = ' '.join(filter(lambda x: not x.startswith('[') and not x.startswith('@'), file.file_name.split()))
             f_caption = script.CAPTION
             if CUSTOM_FILE_CAPTION:
                 try:
@@ -371,7 +376,7 @@ async def start(client, message):
     if files.file_name is None:
         title = files_cap
     else:
-        title = files.file_name
+        title = ' '.join(filter(lambda x: not x.startswith('[') and not x.startswith('@'), files.file_name.split()))
     f_caption = script.CAPTION
     if CUSTOM_FILE_CAPTION:
         try:
@@ -386,7 +391,12 @@ async def start(client, message):
         file_id=file_id,
         caption=f_caption,
         protect_content=False,
-        reply_markup=InlineKeyboardMarkup( [ [ InlineKeyboardButton('⭕ 𝗝𝗼𝗶𝗻 𝗠𝗮𝗶𝗻 𝗖𝗵𝗮𝗻𝗻𝗲𝗹 ⭕', url=DAILY_UPDATE_LINK) ],[InlineKeyboardButton("✛ ᴡᴀᴛᴄʜ & ᴅᴏᴡɴʟᴏᴀᴅ ✛", callback_data=f"stream#{file_id}")]] ),
+        reply_markup=InlineKeyboardMarkup( 
+            [ 
+                [InlineKeyboardButton('🔍 New Search 🔎', url=f'https://t.me/paxmovies')],
+                [InlineKeyboardButton('⚡💡Check New Updates💡⚡', url=f'https://t.me/+cXlkHDKryok0YmFk')]
+            ] 
+        ),
     )
 
 
