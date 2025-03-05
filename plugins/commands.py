@@ -368,7 +368,7 @@ async def start(client, message):
     files = files_[0]
     files_cap=files.caption
     size=get_size(files.file_size)
-    if file.file_name is None:
+    if files.file_name is None:
         title = files_cap
     else:
         title = files.file_name
