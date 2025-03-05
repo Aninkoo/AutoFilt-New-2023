@@ -20,26 +20,25 @@ class script(object):
 
 𝖣𝗈𝗇𝗍 𝖲𝗉𝖺𝗆 𝖬𝖾...🤒
 
-😎 𝖯𝗈𝗐𝖾𝗋𝖾𝖽 𝖻𝗒 @isaimini_updates"""
+😎 𝖯𝗈𝗐𝖾𝗋𝖾𝖽 𝖻𝗒 @paxtv"""
 
     ABOUT_TXT = """<b>𝚂𝙾𝙼𝙴𝚃𝙷𝙸𝙽𝙶 𝙰𝙱𝙾𝚄𝚃 𝙼𝙴</b>
     
 ╔════════❰ ꪖ᥇ꪮꪊ𝓽 ꪑ𝘴ᧁ ❱═❍⊱❁۪۪
 ║╭━━━━━━━━━━━━━━━➣</b>
 ║┣⪼ ✯ <b>𝙼𝚈 𝙽𝙰𝙼𝙴: {}</b>
-║┣⪼ ✯ <b>𝙲𝚁𝙴𝙰𝚃𝙾𝚁: <a href=https://t.me/Ilaya_Tholan>ME 😎</a></b>
+║┣⪼ ✯ <b>𝙲𝚁𝙴𝙰𝚃𝙾𝚁: <a href=https://t.me/Mr_John_NigMore>ME 😎</a></b>
 ║┣⪼ ✯ <b>𝙻𝙸𝙱𝚁𝙰𝚁𝚈: 𝙿𝚈𝚁𝙾𝙶𝚁𝙰𝙼</a></b>
 ║┣⪼ ✯ <b>𝙻𝙰𝙽𝙶𝚄𝙰𝙶𝙴: 𝙿𝚈𝚃𝙷𝙾𝙽 𝟹</a></b>
 ║┣⪼ ✯ <b>𝙳𝙰𝚃𝙰 𝙱𝙰𝚂𝙴: 𝙼𝙾𝙽𝙶𝙾-𝙳𝙱</a></b>
 ║┣⪼ ✯ <b>𝙱𝙾𝚃 𝚂𝙴𝚁𝚅𝙴𝚁: 𝙿𝙰𝙸𝙳 𝚂𝙴𝚁𝚅𝙴𝚁</a></b>
-║┣⪼ ✯ <b>𝚂𝙾𝚄𝚁𝙲𝙴: 👉 <a href=https://t.me/isaimini_updates>𝙲𝙻𝙸𝙲𝙺 𝙷𝙴𝚁𝙴</a></b>
+║┣⪼ ✯ <b>𝚂𝙾𝚄𝚁𝙲𝙴: 👉 <a href=https://t.me/paxtv>𝙲𝙻𝙸𝙲𝙺 𝙷𝙴𝚁𝙴</a></b>
 ║┣⪼ ✯ <b>𝙱𝚄𝙸𝙻𝙳 𝚂𝚃𝙰𝚃𝚄𝚂: 𝚅1.0.43</b>
-║┣⪼ ✯ <b>𝚄𝙿𝙳𝙰𝚃𝙴𝚂: <a href=https://t.me/isaimini_updates>𝐈𝐬𝐚𝐢𝐦𝐢𝐧𝐢 𝐔𝐩𝐝𝐚𝐭𝐞𝐬</a></b>
-║╰━━━━━━━〔<a href=https://t.me/isaimini_updates/110>𝗠𝗼𝘃𝗶𝗲𝘀 𝗖𝗹𝘂𝗯</a>〕</b>"""
+║╰━━━━━━━〔<a href=https://t.me/+cXlkHDKryok0>PaxMOVIES</a>〕</b>"""
 
     SOURCE_TXT = """<b>DISCLAIMER NOTE‼️:</b>
-<blockquote expandable>𝗜𝘀𝗮𝗶𝗺𝗶𝗻𝗶 𝗣𝗿𝗶𝗺𝗲 😻  𝚒𝚜 𝚊𝚗 𝙾𝚙𝚎𝚗 𝚂𝚘𝚞𝚛𝚌𝚎 𝙿𝚛𝚘𝚓𝚎𝚌𝚝. All the files in this bot are freely available on the internet or posted by somebody else. This bot is indexing files which are already uploaded on Telegram for easy of searching, We respect all the copyright laws and works in compliance with DMCA and EUCD. If anything is against law please contact us so that it can be removed asap. It is forbidden to download, stream, reproduce, or by any means, share, or consume, content without explicit permission from the content creator or legal copyright holder. If you believe this bot is violating your intellectual property, contact the respective channels for removal. The Bot does not own any of these contents, it only index the files from telegram.. </blockquote>
-- Source - <a href=https://t.me/isaimini_updates>𝗜𝘀𝗮𝗶𝗺𝗶𝗻𝗶 𝗣𝗿𝗶𝗺𝗲</a>  
+<blockquote expandable>Pax 🤖 A I   𝚒𝚜 𝚊𝚗 𝙾𝚙𝚎𝚗 𝚂𝚘𝚞𝚛𝚌𝚎 𝙿𝚛𝚘𝚓𝚎𝚌𝚝. All the files in this bot are freely available on the internet or posted by somebody else. This bot is indexing files which are already uploaded on Telegram for easy of searching, We respect all the copyright laws and works in compliance with DMCA and EUCD. If anything is against law please contact us so that it can be removed asap. It is forbidden to download, stream, reproduce, or by any means, share, or consume, content without explicit permission from the content creator or legal copyright holder. If you believe this bot is violating your intellectual property, contact the respective channels for removal. The Bot does not own any of these contents, it only index the files from telegram.. </blockquote>
+- Contact - <a href=https://t.me/Mr_John_NigMore>John Nigmore</a>  
 
 <b>DEVS:</b>
 - <a href=https://t.me/isaimini_updates>𝐈𝐬𝐚𝐢𝐦𝐢𝐧𝐢 𝐔𝐩𝐝𝐚𝐭𝐞𝐬</a>""" #please don't change repo link give credit :)
@@ -65,7 +64,7 @@ Cᴏᴍᴍᴀɴᴅs Aɴᴅ Usᴀɢᴇ:
 2. ᴛʜɪꜱ ʙᴏᴛ ꜱᴜᴘᴘᴏʀᴛꜱ ʙᴜᴛᴛᴏɴꜱ ᴡɪᴛʜ ᴀɴʏ ᴛᴇʟᴇɢʀᴀᴍ ᴍᴇᴅɪᴀ ᴛʏᴘᴇ.
 3. ʙᴜᴛᴛᴏɴꜱ ꜱʜᴏᴜʟᴅ ʙᴇ ᴘʀᴏᴘᴇʀʟʏ ᴘᴀʀꜱᴇᴅ ᴀꜱ ᴍᴀʀᴋᴅᴏᴡɴ ꜰᴏʀᴍᴀᴛ
 <b>ᴜʀʟ ʙᴜᴛᴛᴏɴꜱ:</b>
-<code>[Button Text](buttonurl:https://t.me/Isaimini_updates)</code>
+<code>[Button Text](buttonurl:https://t.me/paxtv)</code>
 <b>ᴀʟᴇʀᴛ ʙᴜᴛᴛᴏɴꜱ:</b>
 <code>[Button Text](buttonalert:ᴛʜɪꜱ ɪꜱ ᴀɴ ᴀʟᴇʀᴛ ᴍᴇꜱꜱᴀɢᴇ)</code>"""
 
@@ -127,7 +126,7 @@ Cᴏᴍᴍᴀɴᴅs Aɴᴅ Usᴀɢᴇ:
 𝖳𝗈𝗍𝖺𝗅 𝖬𝖾𝗆𝖻𝖾𝗋𝗌: <code>{}</code>
 𝖳𝗈𝗍𝖺𝗅 𝖢𝗁𝖺𝗍𝗌: <code>{}</code>
 𝖴𝗌𝖾𝖽 𝖲𝗍𝗈𝗋𝖺𝗀𝖾: <code>{}</code></blockquote>
-<b>😎 𝖯𝗈𝗐𝖾𝗋𝖾𝖽 𝖻𝗒 @Isaimini_updates</b>"""
+<b>😎 𝖯𝗈𝗐𝖾𝗋𝖾𝖽 𝖻𝗒 @paxtv</b>"""
 
     LOG_TEXT_G = """#NewGroup
 𝖦𝗋𝗈𝗎𝗉 = {}(<code>{}</code>)
@@ -144,19 +143,19 @@ Don't Be Lazy 🦥
 Request Yourself...!! 😉"""
 
     OLD_ALRT_TXT = """Hey {},
-You are using one of old message,
+You are using one of the old messages,
 Request Again"""
 
     CUDNT_FND = """<b><i>
 𝖨 𝖼𝗈𝗎𝗅𝖽𝗇'𝗍 𝖿𝗂𝗇𝖽 𝖺𝗇𝗒𝗍𝗁𝗂𝗇𝗀 𝗋𝖾𝗅𝖺𝗍𝖾𝖽 𝗍𝗈 𝗍𝗁𝖺𝗍
 𝖣𝗂𝖽 𝗒𝗈𝗎 𝗆𝖾𝖺𝗇 𝖺𝗇𝗒 𝗈𝗇𝖾 𝗈𝖿 𝗍𝗁𝖾𝗌𝖾?</i></b>"""
 
-    I_CUDNT = """❌ <b>𝖨 𝖼𝗈𝗎𝗅𝖽𝗇'𝗍 𝖿𝗂𝗇𝖽 𝖺𝗇𝗒𝗍𝗁𝗂𝗇𝗀 𝗋𝖾𝗅𝖺𝗍𝖾𝖽 𝗍𝗈 𝗍𝗁𝖺𝗍!\n\n🧐 Check Whether You Followed Correct Search Format 👇\n\n◽️Movie Format:-  /movie\n◽️Series Format:-  /series</b>"""
+    I_CUDNT = """❌ <b>𝖨 𝖼𝗈𝗎𝗅𝖽𝗇'𝗍 𝖿𝗂𝗇𝖽 𝖺𝗇𝗒𝗍𝗁𝗂𝗇𝗀 𝗋𝖾𝗅𝖺𝗍𝖾𝖽 𝗍𝗈 𝗍𝗁𝖺𝗍!\n\n🧐 Check Whether You Followed Correct Search Format 👇</b>"""
 
     TOP_ALRT_MSG = """𝖢𝗁𝖾𝖼𝗄𝗂𝗇𝗀 𝖿𝗈𝗋 𝗊𝗎𝖾𝗋𝗒 𝗂𝗇 𝖣𝖺𝗍𝖺𝖻𝖺𝗌𝖾..."""
 
     MELCOW_ENG = """<b>Hey {}, We Are Happy You Made it to {} But First Things First 👇</b> 
-<blockquote>• 𝖭𝗈 𝖯𝗋𝗈𝗆𝗈, 𝖭𝗈 𝖯𝗈𝗋𝗇, 𝖭𝗈 𝖮𝗍𝗁𝖾𝗋 𝖠𝖻𝗎𝗌𝖾𝗌
+<blockquote>• 𝖭𝗈 𝖯𝗋𝗈𝗆𝗈, 𝖭𝗈 Advert, 𝖭𝗈 𝖮𝗍𝗁𝖾𝗋 𝖠𝖻𝗎𝗌𝖾𝗌
 • 𝖠𝗌𝗄 𝖸𝗈𝗎𝗋 𝖬𝗈𝗏𝗂𝖾𝗌 𝖶𝗂𝗍𝗁 𝖢𝗈𝗋𝗋𝖾𝖼𝗍 𝖲𝗉𝖾𝗅𝗅𝗂𝗇𝗀
 • 𝖲𝗉𝖺𝗆𝗆𝖾𝗋𝗌 𝖲𝗍𝖺𝗒 𝖠𝗐𝖺𝗒
 • 𝖥𝖾𝖾𝗅 𝖥𝗋𝖾𝖾 𝖳𝗈 𝖱𝖾𝗉𝗈𝗋𝗍 𝖠𝗇𝗒 Issues 𝖳𝗈 𝖠𝖽𝗆𝗂𝗇𝗌 𝗎𝗌𝗂𝗇𝗀 @admin</blockquote>
@@ -167,16 +166,13 @@ Request Again"""
      Click ➠ /movie
 <blockquote>➠ For Series Request Formats, </blockquote>
      Click ➠ /series 
-<blockquote>✅<b> If You Like Our Service, Please Consider Donation to Continue this Service. For Donation, </blockquote>
-     Click</b> ➠ /donate
 
-<b>Share if you care : @Isaimini_updates or @Isaimini_Filter_bot</b>"""
+<b>Share if you care : @paxmovies or @PaxFilterBot</b>"""
 
     OWNER_INFO = """You Can Use this Contact Admin for Paid Promotion, Any Errors or Issues....!!
 <blockquote><b>❌ Don't Ask Me To Send Movies In PM 😵‍💫 </b></blockquote>
 
-○ 𝖢𝗋𝖾𝖺𝗍𝗈𝗋 : <a href='https://t.me/isaiminiprime_admin'>𝖳𝗁𝗂𝗌 𝖯𝖾𝗋𝗌𝗈𝗇</a>
-○ 𝖲𝗎𝗉𝗉𝗈𝗋𝗍 𝖦𝗋𝗈𝗎𝗉 : <a href='https://t.me/isaiminiprime_support'>𝖳𝖺𝗉 𝖧𝖾𝗋𝖾</a>
+○ 𝖢𝗋𝖾𝖺𝗍𝗈𝗋 : <a href='https://t.me/Mr_John_NigMore'>𝖳𝗁𝗂𝗌 𝖯𝖾𝗋𝗌𝗈𝗇</a>
 """
 
     NORSLTS = """#NoResults 
@@ -189,14 +185,21 @@ Message <b>: {}</b>
 """
 
     CAPTION = """
-    <b>©️ Main Channel:-  \n<a href=https://t.me/isaimini_updates>❤️ 𝗜𝘀𝗮𝗶𝗺𝗶𝗻𝗶 𝗣𝗿𝗶𝗺𝗲 ❤️</a></b> \n\n<b>FILE : <code>{file_name}</code> \n\nSize : {file_size}</b>"""
+📂 <b>File Name:</b> {file_name}
+
+<b>📀 File Size:</b> {file_size} 
+
+<b>Join 👉 <a href="https://t.me/+cXlkHDKryok0YmFk">PaxMOVIES</a> 👈 for more!</b>
+
+⚠️<b>Disclaimer</b>: This Video File is available on the internet. <b>PaxMOVIES</b> or its subsidiary channel doesn't own or produced this video.
+"""
 
     IMDB_TEMPLATE_TXT = """
 <blockquote>🏷 𝖳𝗂𝗍𝗅𝖾: <a href={url}>{title}</a> 
 🔮 𝖸𝖾𝖺𝗋: {year} \n⭐️ 𝖱𝖺𝗍𝗂𝗇𝗀𝗌: {rating}/ 10  
 🎭 𝖦𝖾𝗇𝖾𝗋𝗌: {genres} </blockquote>
 
-🎊 𝖯𝗈𝗐𝖾𝗋𝖾𝖽 𝖡𝗒 [❤️ 𝗜𝘀𝗮𝗶𝗺𝗶𝗻𝗶 𝗣𝗿𝗶𝗺𝗲 ❤️](t.me/Isaimini_updates)"""
+🎊 𝖯𝗈𝗐𝖾𝗋𝖾𝖽 𝖡𝗒 [❤️ PaxTV ❤️](t.me/paxtv)"""
     
     ALL_FILTERS = """
 <b>Hᴇʏ {}, Tʜᴇsᴇ ᴀʀᴇ ᴍʏ ᴛʜʀᴇᴇ ᴛʏᴘᴇs ᴏғ ғɪʟᴛᴇʀs.</b>"""
@@ -228,8 +231,7 @@ Aᴠᴀɪʟᴀʙʟᴇ ᴄᴏᴍᴍᴀɴᴅs:
 🛠️ 𝖡𝗎𝗂𝗅𝖽 𝖲𝗍𝖺𝗍𝗎𝗌 : <code>𝗏2.7.3 [ 𝖲𝗍𝖺𝖻𝗅𝖾 ]</code></b>"""
 
     RESTART_GC_TXT = """
-<blockquote><b>😎 நான் வீழ்வேன் என்று நினைத்தாயோ? 😏</blockquote>
-<u>𝖡𝗈𝗍 𝖱𝖾𝗌𝗍𝖺𝗋𝗍𝖾𝖽 ✅</u></b>"""
+<u>𝖡𝗈𝗍 𝖱𝖾𝗌𝗍𝖺𝗋𝗍𝖾𝖽 ✅</u>"""
 
     LOGO = """
-Isaimini Prime"""
+PaxTV"""
