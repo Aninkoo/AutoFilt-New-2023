@@ -343,21 +343,21 @@ async def start(client, message):
             msg = await client.send_cached_media(
                 chat_id=message.from_user.id,
                 file_id=file_id,
-                protect_content=True,
+                protect_content=False,
                 reply_markup=InlineKeyboardMarkup( [ [ InlineKeyboardButton('⭕ 𝗝𝗼𝗶𝗻 𝗠𝗮𝗶𝗻 𝗖𝗵𝗮𝗻𝗻𝗲𝗹 ⭕', url=DAILY_UPDATE_LINK) ],[InlineKeyboardButton("✛ ᴡᴀᴛᴄʜ & ᴅᴏᴡɴʟᴏᴀᴅ ✛", callback_data=f"stream#{file_id}")]] ),
             )
             filetype = msg.media
             file = getattr(msg, filetype.value)
             file_cap = file.caption
             size=get_size(file.file_size)
-            if(file_cap):
+            if file.file_name is None:
                 title = file_cap
             else:
                 title = file.file_name
-            f_caption = f"<code>{title}</code>"
+            f_caption = script.CAPTION
             if CUSTOM_FILE_CAPTION:
                 try:
-                    f_caption=CUSTOM_FILE_CAPTION.format(file_name= '' if title is None else title, file_size='' if size is None else size, file_caption='')
+                    f_caption=script.CAPTION.format(file_name= '' if title is None else title, file_size='' if size is None else size, file_caption='')
                 except:
                     return
             await msg.edit_caption(f_caption)
@@ -368,14 +368,14 @@ async def start(client, message):
     files = files_[0]
     files_cap=files.caption
     size=get_size(files.file_size)
-    if(files_cap):
+    if file.file_name is None:
         title = files_cap
     else:
         title = files.file_name
-    f_caption = f"<code>{title}</code>"
+    f_caption = script.CAPTION
     if CUSTOM_FILE_CAPTION:
         try:
-            f_caption=CUSTOM_FILE_CAPTION.format(file_name= '' if title is None else title, file_size='' if size is None else size, file_caption='' if f_caption is None else f_caption)
+            f_caption=script.CAPTION.format(file_name= '' if title is None else title, file_size='' if size is None else size, file_caption='' if f_caption is None else f_caption)
         except Exception as e:
             logger.exception(e)
             f_caption=f_caption
@@ -385,7 +385,7 @@ async def start(client, message):
         chat_id=message.from_user.id,
         file_id=file_id,
         caption=f_caption,
-        protect_content=True,
+        protect_content=False,
         reply_markup=InlineKeyboardMarkup( [ [ InlineKeyboardButton('⭕ 𝗝𝗼𝗶𝗻 𝗠𝗮𝗶𝗻 𝗖𝗵𝗮𝗻𝗻𝗲𝗹 ⭕', url=DAILY_UPDATE_LINK) ],[InlineKeyboardButton("✛ ᴡᴀᴛᴄʜ & ᴅᴏᴡɴʟᴏᴀᴅ ✛", callback_data=f"stream#{file_id}")]] ),
     )
 
