@@ -165,7 +165,8 @@ async def start(client, message):
         ],[
             InlineKeyboardButton("⁉️ ʜᴏᴡ ᴛᴏ ᴠᴇʀɪꜰʏ ⁉️", url=f'https://t.me/c/2065329199/2403')
         ]]
-        await message.reply(f"👋 ʜᴇʏ ᴛʜᴇʀᴇ,\n\n📌 ʏᴏᴜ'ʀᴇ ɴᴏᴛ ᴠᴇʀɪꜰɪᴇᴅ ᴏʀ ʏᴏᴜʀ ᴠᴇʀɪғɪᴄᴀᴛɪᴏɴ ʜᴀs ᴇxᴘɪʀᴇᴅ\n\n <b>Vᴇʀɪғɪᴄᴀᴛɪᴏɴ Tɪᴍᴇᴏᴜᴛ:</b> {get_readable_time(VERIFY_EXPIRE)}\n <u>ᴘʟᴇᴀꜱᴇ ᴠᴇʀɪꜰʏ ᴀɴᴅ ɢᴇᴛ ᴜɴʟɪᴍɪᴛᴇᴅ ᴀᴄᴄᴇꜱꜱ ᴛɪʟʟ ɴᴇxᴛ ᴠᴇʀɪꜰɪᴄᴀᴛɪᴏɴ</u>.", reply_markup=InlineKeyboardMarkup(btn), protect_content=True)        return
+        await message.reply(f"👋 ʜᴇʏ ᴛʜᴇʀᴇ,\n\n📌 ʏᴏᴜ'ʀᴇ ɴᴏᴛ ᴠᴇʀɪꜰɪᴇᴅ ᴏʀ ʏᴏᴜʀ ᴠᴇʀɪғɪᴄᴀᴛɪᴏɴ ʜᴀs ᴇxᴘɪʀᴇᴅ\n\n <b>Vᴇʀɪғɪᴄᴀᴛɪᴏɴ Tɪᴍᴇᴏᴜᴛ:</b> {get_readable_time(VERIFY_EXPIRE)}\n <u>ᴘʟᴇᴀꜱᴇ ᴠᴇʀɪꜰʏ ᴀɴᴅ ɢᴇᴛ ᴜɴʟɪᴍɪᴛᴇᴅ ᴀᴄᴄᴇꜱꜱ ᴛɪʟʟ ɴᴇxᴛ ᴠᴇʀɪꜰɪᴄᴀᴛɪᴏɴ</u>.", reply_markup=InlineKeyboardMarkup(btn), protect_content=True)        
+        return
 
     if data.split("-", 1)[0] == "SEARCH":
         stick = await message.reply_sticker(sticker="CAACAgUAAx0CZjyOqQACMCpl_EX_Ak6ilEi7sdys1ec9ozSwvQAC3AIAAq9qOVVmHNMuomHDLB4E")
