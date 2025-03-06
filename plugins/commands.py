@@ -139,17 +139,17 @@ async def start(client, message):
         _, token = data.split("_", 1)
         verify_status = await get_verify_status(message.from_user.id)
         if verify_status['verify_token'] != token:
-            return await message.reply("Your Verification Token is Invalid. Try with Latest Token Link")
+            return await message.reply("Your Verification link is Invalid. Try with Latest Verification Link above!")
         toni = verify_status['no_short'] + 1    
         await update_verify_status(message.from_user.id, is_verified=True, verified_time=time.time(), no_short=toni)
         if verify_status["link"] == "":
             reply_markup = None
         else:
             btn = [[
-                InlineKeyboardButton("◦•●◉✿📁 ʜᴇʀᴇ ɪs ʏᴏᴜʀ ғɪʟᴇ 📁✿◉●•◦", url=f'https://t.me/{temp.U_NAME}?start={verify_status["link"]}')
+                InlineKeyboardButton("📥 Download 📥", url=f'https://t.me/{temp.U_NAME}?start={verify_status["link"]}')
             ]]
             reply_markup = InlineKeyboardMarkup(btn)
-        await message.reply(f"✅ You successfully verified and valid for: {next_verify_str}\n<blockquote>Get back to the Group, search and download as you desire till your next verification!\n</blockquote>", reply_markup=reply_markup, quote=True, protect_content=False)
+        await message.reply(f"✅ Yᴏᴜ'ᴠᴇ sᴜᴄᴄᴇsғᴜʟʏ ᴠᴇʀɪғɪᴇᴅ ᴏɴ PaxMOVIES.\n\n <b>Vᴀʟɪᴅɪᴛʏ:</b> {get_readable_time(VERIFY_EXPIRE)}\n\n<blockquote>Get back to the Group, search and download as you desire till your next verification!\n</blockquote>\n\n ◦•●◉✿ Yᴏᴜʀ Fɪʟᴇ Hᴇᴀʀ ✿◉●•◦👇", reply_markup=reply_markup, quote=True, protect_content=False)
         return
     
     verify_status = await get_verify_status(message.from_user.id)
