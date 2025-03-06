@@ -157,14 +157,14 @@ async def start(client, message):
         token = ''.join(random.choices(string.ascii_letters + string.digits, k=10))
         await update_verify_status(message.from_user.id, verify_token=token, link="" if data == 'inline_verify' else data)
         s = verify_status['no_short']
-        link = await get_shortlink(SHORTLINK_URL[s], SHORTLINK_API[s],f'https://telegram.me/{temp.U_NAME}?start=verify_{token}')
+        pax = f"https://telegram.me/{temp.U_NAME}?start=verify_{token}"
+        link = f"https://paxmovies.site/#{pax}"
         btn = [[
-            InlineKeyboardButton("]|I{•------» 𝙲𝚕𝚒𝚌𝚔 𝚑𝚎𝚛𝚎 «------•}I|[", url=link)
+            InlineKeyboardButton(text="♻️ ᴄʟɪᴄᴋ ʜᴇʀᴇ ᴛᴏ ᴠᴇʀɪꜰʏ ♻️", web_app=WebAppInfo(url=link))
         ],[
-            InlineKeyboardButton(']|I{•------» 𝚃𝚞𝚝𝚘𝚛𝚒𝚊𝚕 «------•}I|[', url="https://t.me/how_to_download_isaimini/13")
+            InlineKeyboardButton("⁉️ ʜᴏᴡ ᴛᴏ ᴠᴇʀɪꜰʏ ⁉️", url=f'https://t.me/c/2065329199/2403')
         ]]
-        await message.reply(f"Your Token is expired, Refresh your token and try again.\n\nToken Timeout: {get_readable_time(VERIFY_EXPIRE)}\n<blockquote expandable>What is the token?\n\nToken is the Key to use the bot. If you pass 1 ad, you can use the bot for {get_readable_time(VERIFY_EXPIRE)} with all Benifits. This helps Bot Owner for the Bot Hosting!</blockquote>", reply_markup=InlineKeyboardMarkup(btn), quote=True, protect_content=True)
-        return
+        await message.reply(f"👋 ʜᴇʏ ᴛʜᴇʀᴇ,\n\n📌 ʏᴏᴜ'ʀᴇ ɴᴏᴛ ᴠᴇʀɪꜰɪᴇᴅ ᴏʀ ʏᴏᴜʀ ᴠᴇʀɪғɪᴄᴀᴛɪᴏɴ ʜᴀs ᴇxᴘɪʀᴇᴅ\n\n <b>Vᴇʀɪғɪᴄᴀᴛɪᴏɴ Tɪᴍᴇᴏᴜᴛ:</b> {get_readable_time(VERIFY_EXPIRE)}\n <u>ᴘʟᴇᴀꜱᴇ ᴠᴇʀɪꜰʏ ᴀɴᴅ ɢᴇᴛ ᴜɴʟɪᴍɪᴛᴇᴅ ᴀᴄᴄᴇꜱꜱ ᴛɪʟʟ ɴᴇxᴛ ᴠᴇʀɪꜰɪᴄᴀᴛɪᴏɴ</u>.", reply_markup=InlineKeyboardMarkup(btn), protect_content=True)        return
 
     if data.split("-", 1)[0] == "SEARCH":
         stick = await message.reply_sticker(sticker="CAACAgUAAx0CZjyOqQACMCpl_EX_Ak6ilEi7sdys1ec9ozSwvQAC3AIAAq9qOVVmHNMuomHDLB4E")
