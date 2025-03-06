@@ -146,10 +146,10 @@ async def start(client, message):
             reply_markup = None
         else:
             btn = [[
-                InlineKeyboardButton("📥 Download 📥", url=f'https://t.me/{temp.U_NAME}?start={verify_status["link"]}')
+                InlineKeyboardButton("📥   Dᴏᴡɴʟᴏᴀᴅ ʜᴇᴛᴇ   📥", url=f'https://t.me/{temp.U_NAME}?start={verify_status["link"]}')
             ]]
             reply_markup = InlineKeyboardMarkup(btn)
-        await message.reply(f"✅ Yᴏᴜ'ᴠᴇ sᴜᴄᴄᴇsғᴜʟʏ ᴠᴇʀɪғɪᴇᴅ ᴏɴ PaxMOVIES.\n\n <b>Vᴀʟɪᴅɪᴛʏ:</b> {get_readable_time(VERIFY_EXPIRE)}\n\n<blockquote>Get back to the Group, search and download as you desire till your next verification!\n</blockquote>\n\n ◦•●◉✿ Yᴏᴜʀ Fɪʟᴇ Hᴇᴀʀ ✿◉●•◦👇", reply_markup=reply_markup, quote=True, protect_content=False)
+        await message.reply(f"✅ Yᴏᴜ'ᴠᴇ sᴜᴄᴄᴇsғᴜʟʏ ᴠᴇʀɪғɪᴇᴅ ᴏɴ PaxMOVIES.\n\n <b>Vᴀʟɪᴅɪᴛʏ:</b> {get_readable_time(VERIFY_EXPIRE)}\n\n<blockquote>Get back to the Group, search and download as you desire till your next verification!</blockquote>\n\n ◦•●◉✿👇 <b>Yᴏᴜʀ Fɪʟᴇ Hᴇᴀʀ</b> 👇✿◉●•◦", reply_markup=reply_markup, quote=True, protect_content=False)
         return
     
     verify_status = await get_verify_status(message.from_user.id)
