@@ -315,14 +315,15 @@ async def languages_cb_handler(client: Client, query: CallbackQuery):
         return await query.answer(script.ALRT_TXT.format(query.from_user.first_name), show_alert=True)
 
     langs = ['english', 'tamil', 'hindi', 'malayalam', 'telugu', 'kannada']
+    
     btn = [
         [
             InlineKeyboardButton(
                 text=lang.title(),
                 callback_data=f"lang_search#{lang}#{key}#{offset}#{req}"
-                ),
+            ) for lang in langs[i:i+2]  # Taking 2 items per row
         ]
-        for lang in langs
+        for i in range(0, len(langs), 2)
     ]
 
     btn.append([InlineKeyboardButton(text="⪻ ʙᴀᴄᴋ ᴛᴏ ᴍᴀɪɴ ᴘᴀɢᴇ", callback_data=f"next_{req}_{key}_{offset}")])
@@ -688,15 +689,16 @@ async def seasons_cb_handler(client: Client, query: CallbackQuery):
     if int(req) != query.from_user.id:
         return await query.answer(script.ALRT_TXT.format(query.from_user.first_name), show_alert=True)
 
-    seas = ['s01', 's02', 's03', 's04', 's05', 's06', 's07', 's08', 's09', 's10']
+    seas = ['s01', 's02', 's03', 's04', 's05', 's06', 's07', 's08', 's09', 's10', 's11', 's12']
+    
     btn = [
         [
             InlineKeyboardButton(
                 text=sea.title(),
                 callback_data=f"sea_search#{sea}#{key}#{offset}#{req}"
-                ),
+            ) for sea in seas[i:i+4]  # Taking 4 items per row
         ]
-        for sea in seas
+        for i in range(0, len(seas), 4)
     ]
 
     btn.append([InlineKeyboardButton(text="⪻ ʙᴀᴄᴋ ᴛᴏ ᴍᴀɪɴ ᴘᴀɢᴇ", callback_data=f"next_{req}_{key}_{offset}")])
@@ -1485,7 +1487,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
         await query.answer("𝖧ᴇʏ 😍, \n\n🎯 Cʟɪᴄᴋ ᴀɴʏ ᴏғ ᴛʜᴇ ᴀʙᴏᴠᴇ Fɪʟᴇ ɴᴀᴍᴇs ᴛᴏ ɢᴇᴛ ɪᴛs Fɪʟᴇ ɪɴ ᴛʜᴇ BOT", True)
 
     elif query.data == 'tips':
-        await query.answer("𝗥𝗲𝗾𝘂𝗲𝘀𝘁𝘀 𝗙𝗼𝗿𝗺𝗮𝘁𝘀\nMaster: The Boss 2021 ❌ \nMaster The Boss 2021 ✔️ \nSamdal-ri ❌ \nSamdal ri ✔️ \nArrow season 1 ❌ \nArrow S01 ✔️ \nLove Scout episode 10 ❌ \nLove Scout S01E10 ✔️ \n <b>Dᴏɴ'ᴛ ᴜsᴇ ᴀɴʏ Sʏᴍʙᴏʟs ʟɪᴋᴇ ☞︎︎︎</b> &'()[]•/-@_", True)
+        await query.answer("𝗥𝗲𝗾𝘂𝗲𝘀𝘁𝘀 𝗙𝗼𝗿𝗺𝗮𝘁𝘀\nMaster: The Boss 2021 ❌ \nMaster The Boss 2021 ✔️ \nSamdal-ri ❌ \nSamdal ri ✔️ \nArrow season 1 ❌ \nArrow S01 ✔️ \nLove Scout episode 10 ❌ \nLove Scout S01E10 ✔️ \n <b>Dᴏɴ'ᴛ ᴜsᴇ ᴀɴʏ ᴏғ ᴛʜᴇsᴇ ☞︎︎︎</b> ',:/([._-, True)
     
     elif query.data == 'info':
         await query.answer("I have reported to Admins.\n\n The movie will be added if available.\n\nYou will get a reply to your search message if added within 24 hours.\n Don't delete your message!", True)
