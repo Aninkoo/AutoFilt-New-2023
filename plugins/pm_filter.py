@@ -108,7 +108,7 @@ async def pv_filter(client, message):
     user_id = message.from_user.id
     if user_id in ADMINS:
         return # ignore admins
-    stick = await message.reply_sticker(sticker="CAACAgUAAyEFAASPEsRdAAMDZyoXgs_EG_JVNPlDspojKwgkXo4AAiQTAAJM0EhUV_t4MXghJ8MeBA")
+    stick = await message.reply_sticker(sticker="CAACAgQAAxkBAdumNGfK4Rcgb3VPtirCHpiZTsf8fExbAAKmDwACdo5YU0nvPPPp_97lNgQ")
     search = message.text
     files, n_offset, total = await get_search_results(0, query=search.lower(), offset=0, filter=True)
     if int(total) != 0:
@@ -1484,7 +1484,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
         await query.answer("𝖧ᴇʏ 😍, \n\n🎯 Cʟɪᴄᴋ ᴀɴʏ ᴏғ ᴛʜᴇ ᴀʙᴏᴠᴇ Fɪʟᴇ ɴᴀᴍᴇs ᴛᴏ ɢᴇᴛ ɪᴛs Fɪʟᴇ ɪɴ ᴛʜᴇ BOT", True)
 
     elif query.data == 'tips':
-        await query.answer("𝗥𝗲𝗾𝘂𝗲𝘀𝘁𝘀 𝗙𝗼𝗿𝗺𝗮𝘁𝘀\n\nMaster: The Boss 2021 ❌ \nMaster The Boss 2021 ✔️ \nSamdal-ri ❌ \nSamdal ri ✔️ \nArrow season 1 ❌ \nArrow S01 ✔️ \nLove Scout episode 10 ❌ \nLove Scout S01E10 ✔️ \n\n <b>Dᴏɴ'ᴛ ᴜsᴇ ᴀɴʏ Sʏᴍʙᴏʟs ʟɪᴋᴇ ☞︎︎︎</b> &'()[]•/-@_ !!!", True)
+        await query.answer("𝗥𝗲𝗾𝘂𝗲𝘀𝘁𝘀 𝗙𝗼𝗿𝗺𝗮𝘁𝘀\nMaster: The Boss 2021 ❌ \nMaster The Boss 2021 ✔️ \nSamdal-ri ❌ \nSamdal ri ✔️ \nArrow season 1 ❌ \nArrow S01 ✔️ \nLove Scout episode 10 ❌ \nLove Scout S01E10 ✔️ \n\n <b>Dᴏɴ'ᴛ ᴜsᴇ ᴀɴʏ Sʏᴍʙᴏʟs ʟɪᴋᴇ ☞︎︎︎</b> &'()[]•/-@_ !!!", True)
     
     elif query.data == 'info':
         await query.answer("I have reported to Admins.\n\n The movie will be added if available.\n\nYou will get a reply to your search message if added within 24 hours.\n Don't delete your message!", True)
@@ -1873,7 +1873,7 @@ async def auto_filter(client, msg, spoll=False):
             await send_react(chat_info, msg)
         except:
             pass
-        stick = await msg.reply_sticker(sticker="CAACAgUAAyEFAASPEsRdAAMDZyoXgs_EG_JVNPlDspojKwgkXo4AAiQTAAJM0EhUV_t4MXghJ8MeBA")
+        stick = await msg.reply_sticker(sticker="CAACAgQAAxkBAdumNGfK4Rcgb3VPtirCHpiZTsf8fExbAAKmDwACdo5YU0nvPPPp_97lNgQ")
         message = msg
         settings = await get_settings(message.chat.id)
         if re.findall("((^\/|^,|^!|^\.|^[\U0001F600-\U000E007F]).*)", message.text):
@@ -2112,8 +2112,8 @@ async def auto_filter(client, msg, spoll=False):
                 await asyncio.sleep(300)
                 await fuk.delete()
                 await message.delete()
-    if spoll:
-        await msg.message.delete()
+    #if spoll:
+        #await msg.message.delete()
 
 async def advantage_spell_chok(client, message):
     search = message.text
