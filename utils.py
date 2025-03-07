@@ -76,8 +76,10 @@ async def getSeason(filename):
             return match.group(1) or match.group(2)
 
 async def get_poster(query, bulk=False, id=False, file=None):
-    if not id:
-        query = (query.strip()).lower()
+    if not id and query is not None:
+        query = (str(query).strip()).lower()
+        
+        #query = (query.strip()).lower()
         title = query
         year = re.findall(r'[1-2]\d{3}$', query, re.IGNORECASE)
         if year:
