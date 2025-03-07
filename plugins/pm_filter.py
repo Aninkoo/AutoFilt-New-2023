@@ -124,12 +124,12 @@ async def pv_filter(client, message):
         await stick.delete()
         google_search = search.replace(" ", "+")
         button = [[
-            InlineKeyboardButton("🔎 Search Google 🔍", url=f"https://www.google.com/search?q={google_search}")
+            InlineKeyboardButton("🔎 Our Group 🔍", url=f"https://t.me/paxmovies")
         ]]
         
         n = await message.reply_photo(
             photo=SPELL_IMG, 
-            caption="❌ <b>Sᴏʀʀʏ, I ᴄᴏᴜʟᴅ ɴᴏᴛ ғɪɴᴅ ᴀɴʏᴛʜɪɴɢ ʀᴇʟᴀᴛᴛᴇᴅ ᴛᴏ ᴛʜᴀᴛ!\nPʟᴇᴀsᴇ sᴇᴀʀᴄʜ ɪɴ ᴛʜᴇ Gʀᴏᴜᴘ sᴏ ᴛʜᴀᴛ I ᴄᴀɴ ʀᴇᴘᴏʀᴛᴇᴅ ɪᴛ ᴛᴏ ADMIN ᴀɴᴅ ɪᴛ ᴡɪʟʟ ʙᴇ ᴀᴅᴅᴇᴅ ᴛᴏ ᴍʏ Dᴀᴛᴀʙᴀsᴇ sᴏᴏɴ ɪғ ʀᴇʟᴇᴀsᴇᴅ.</b>",
+            caption="❌ <b>Sᴏʀʀʏ, I ᴄᴏᴜʟᴅ ɴᴏᴛ ғɪɴᴅ ᴀɴʏᴛʜɪɴɢ ʀᴇʟᴀᴛᴛᴇᴅ ᴛᴏ ᴛʜᴀᴛ!\n\nPʟᴇᴀsᴇ sᴇᴀʀᴄʜ ɪɴ ᴛʜᴇ Gʀᴏᴜᴘ sᴏ ᴛʜᴀᴛ I ᴄᴀɴ ʀᴇᴘᴏʀᴛᴇᴅ ɪᴛ ᴛᴏ ADMIN ᴀɴᴅ ɪᴛ ᴡɪʟʟ ʙᴇ ᴀᴅᴅᴇᴅ ᴛᴏ ᴍʏ Dᴀᴛᴀʙᴀsᴇ sᴏᴏɴ ɪғ ʀᴇʟᴇᴀsᴇᴅ.</b>",
             reply_markup=InlineKeyboardMarkup(button)
         )
         await asyncio.sleep(60)
@@ -893,7 +893,8 @@ async def advantage_spoll_choker(bot, query):
                 google_search = movie_.replace(" ", "+")
                 encoded_search = quote(movie_)
                 button = [[
-                    InlineKeyboardButton("🔎 Search in Google 🔍", url=f"https://www.google.com/search?q={google_search}")
+                    InlineKeyboardButton(f'🔎 Tɪᴘs', 'tips'),
+                    InlineKeyboardButton(f'📩 Rᴇᴘᴏʀᴛ', 'info')
                 ]]
                 k = await query.message.edit(script.I_CUDNT, reply_markup=InlineKeyboardMarkup(button))
                 await asyncio.sleep(60)
@@ -1482,11 +1483,11 @@ async def cb_handler(client: Client, query: CallbackQuery):
     elif query.data == 'rkbtn':
         await query.answer("𝖧ᴇʏ 😍, \n\n🎯 Cʟɪᴄᴋ ᴀɴʏ ᴏғ ᴛʜᴇ ᴀʙᴏᴠᴇ Fɪʟᴇ ɴᴀᴍᴇs ᴛᴏ ɢᴇᴛ ɪᴛs Fɪʟᴇ ɪɴ ᴛʜᴇ BOT", True)
 
-    elif query.data == 'info':
+    elif query.data == 'tips':
         await query.answer("𝗥𝗲𝗾𝘂𝗲𝘀𝘁𝘀 𝗙𝗼𝗿𝗺𝗮𝘁𝘀\n\nMaster: The Boss 2021 ❌ \nMaster The Boss 2021 ✔️ \n\nSamdal-ri ❌ \nSamdal ri ✔️ \n\nArrow season 1 ❌ \nArrow S01 ✔️ \n\nLove Scout episode 10 ❌ \nLove Scout S01E10 ✔️ \n\n Dᴏɴ'ᴛ ᴜsᴇ ᴀɴʏ Sʏᴍʙᴏʟs!!!", True)
     
-    elif query.data == 'tips':
-        await query.answer("𝖳𝗁𝗂𝗌 𝖬𝖾𝗌𝗌𝖺𝗀𝖾 𝖶𝗂𝗅𝗅 𝖡𝖾 𝖣𝖾𝗅𝖾𝗍𝖾𝖽 𝖠𝖿𝗍𝖾𝗋 5 𝖬𝗂𝗇𝗎𝗍𝖾𝗌 𝗍𝗈 𝖯𝗋𝖾𝗏𝖾𝗇𝗍 𝖢𝗈𝗉𝗒𝗋𝗂𝗀𝗁𝗍 !\n\n𝖳𝗁𝖺𝗇𝗄 𝖸𝗈𝗎 𝖥𝗈𝗋 𝖴𝗌𝗂𝗇𝗀 𝖬𝖾 😊\n\n\n𝐁𝐫𝐨𝐮𝐠𝐡𝐭 𝐓𝐨 𝐘𝐨𝐮 𝐁𝐲:-❤️ 𝗜𝘀𝗮𝗶𝗺𝗶𝗻𝗶 𝗣𝗿𝗶𝗺𝗲 ❤️", True)
+    elif query.data == 'info':
+        await query.answer("I have reported to Admins.\n\n The movie will be added if available.\n\nYou will get a reply to your search message if added within 24 hours.\n Don't delete your message!", True)
 
     elif query.data == 'dupe':
         await query.answer("𝖥𝗂𝗅𝖾𝗌 𝖺𝗋𝖾 𝗍𝗁𝖾𝗋𝖾 𝗂𝗇 𝖻𝖾𝗅𝗈𝗐 𝖿𝗂𝗅𝗍𝖾𝗋 𝖡𝗎𝗍𝗍𝗈𝗇𝗌", True)
