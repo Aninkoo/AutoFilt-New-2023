@@ -2139,8 +2139,8 @@ async def advantage_spell_chok(client, message):
         await n.delete()
         #try:
             #await message.delete()
-        except:
-            pass
+        #except:
+            #pass
         return
 
     if not movies:
@@ -2153,8 +2153,8 @@ async def advantage_spell_chok(client, message):
         await n.delete()
         #try:
             #await message.delete()
-        except:
-            pass
+        #except:
+            #pass
         return
 
     user = message.from_user.id if message.from_user else 0
@@ -2174,8 +2174,8 @@ async def advantage_spell_chok(client, message):
         await n.delete()
         #try:
             #await message.delete()
-        except:
-            pass
+        #except:
+            #pass
         return
 
     valid_movies = [movie for movie in movielist if len(f"spolling#{user}#{movie}") <= 64]
@@ -2190,8 +2190,8 @@ async def advantage_spell_chok(client, message):
         await n.delete()
         #try:
             #await message.delete()
-        except:
-            pass
+        #except:
+            #pass
         return
 
     buttons = []
@@ -2210,8 +2210,8 @@ async def advantage_spell_chok(client, message):
     await s.delete()
     #try:
         #await message.delete()
-    except:
-        pass    
+    #except:
+        #pass    
 
 async def manual_filters(client, message, text=False):
     settings = await get_settings(message.chat.id)
