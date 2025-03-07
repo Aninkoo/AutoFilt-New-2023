@@ -1487,7 +1487,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
         await query.answer("𝖧ᴇʏ 😍, \n\n🎯 Cʟɪᴄᴋ ᴀɴʏ ᴏғ ᴛʜᴇ ᴀʙᴏᴠᴇ Fɪʟᴇ ɴᴀᴍᴇs ᴛᴏ ɢᴇᴛ ɪᴛs Fɪʟᴇ ɪɴ ᴛʜᴇ BOT", True)
 
     elif query.data == 'tips':
-        await query.answer("𝗥𝗲𝗾𝘂𝗲𝘀𝘁𝘀 𝗙𝗼𝗿𝗺𝗮𝘁𝘀\nMaster: The Boss 2021 ❌ \nMaster The Boss 2021 ✔️ \nSamdal-ri ❌ \nSamdal ri ✔️ \nArrow season 1 ❌ \nArrow S01 ✔️ \nLove Scout episode 10 ❌ \nLove Scout S01E10 ✔️ \n <b>Dᴏɴ'ᴛ ᴜsᴇ ᴀɴʏ ᴏғ ᴛʜᴇsᴇ ☞︎︎︎</b> ',:/([._-, True)
+        await query.answer("𝗥𝗲𝗾𝘂𝗲𝘀𝘁𝘀 𝗙𝗼𝗿𝗺𝗮𝘁𝘀\nMaster: The Boss 2021 ❌ \nMaster The Boss 2021 ✔️ \nSamdal-ri ❌ \nSamdal ri ✔️ \nArrow season 1 ❌ \nArrow S01 ✔️ \nLove Scout episode 10 ❌ \nLove Scout S01E10 ✔️ \n <b>Dᴏɴ'ᴛ ᴜsᴇ ᴀɴʏ ᴏғ ᴛʜᴇsᴇ ☞︎︎︎</b> :/([._-", True)
     
     elif query.data == 'info':
         await query.answer("I have reported to Admins.\n\n The movie will be added if available.\n\nYou will get a reply to your search message if added within 24 hours.\n Don't delete your message!", True)
@@ -1893,7 +1893,7 @@ async def auto_filter(client, msg, spoll=False):
                     continue
                 else:
                     search = search + x + " "
-            search = re.sub(r"\b(pl(i|e)*?(s|z+|ease|se|ese|(e+)s(e)?)|((send|snd|giv(e)?|gib)(\sme)?)|movie(s)?|latest|any(one)|with\ssubtitle(s)?)", "", search, flags=re.IGNORECASE)
+            search = re.sub(r"\b(pl(i|e)*?(s|z+|ease|se|ese|(e+)s(e)?)|((send|snd|gib)(\sme)?)|movie(s)?|latest)", "", search, flags=re.IGNORECASE)
             search = re.sub(r"\s+", " ", search).strip()
             search = search.replace("-", " ")
             search = search.replace("_", " ")
@@ -2126,7 +2126,7 @@ async def advantage_spell_chok(client, message):
         InlineKeyboardButton("🔎 Sᴇᴀʀᴄʜ ɪɴ Gᴏᴏɢʟᴇ 🔍", url=f"https://www.google.com/search?q={google_search}")
     ]
     query = re.sub(
-        r"\b(pl(i|e)*?(s|z+|ease|se|ese|(e+)s(e)?)|((send|snd|giv(e)?|gib)(\sme)?)|season|episode|movie(s)?|new|latest|br((o|u)h?)*|^h(e|a)?(l)*(o)*|mal(ayalam)?|t(h)?amil|dub(b)?ed|file|that|find|und(o)*|kit(t(i|y)?)?o(w)?|thar(u)?(o)*w?|kittum(o)*|aya(k)*(um(o)*)?|full\smovie|any(one)|with\ssubtitle(s)?)",
+        r"\b(pl(i|e)*?(s|z+|ease|se|ese|(e+)s(e)?)|((send|snd|gib)(\sme)?)|season|episode|movie(s)?|latest|br((o|u)h?)*|^h(e|a)?(l)*(o)*|mal(ayalam)?|t(h)?amil|dub(b)?ed|file)",
         "", search, flags=re.IGNORECASE)  # pls contribute some common words
     query = query.strip()
     try:
