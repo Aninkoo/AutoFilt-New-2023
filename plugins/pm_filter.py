@@ -500,15 +500,16 @@ async def qualities_cb_handler(client: Client, query: CallbackQuery):
     if int(req) != query.from_user.id:
         return await query.answer(script.ALRT_TXT.format(query.from_user.first_name), show_alert=True)
 
-    qualis = ['360p', '480p', '520p', '720p', '1080p', 'S01']
+    qualis = ['360p', '480p', '520p', '720p', '1080p', '2400p']
+    
     btn = [
         [
             InlineKeyboardButton(
                 text=quali.title(),
                 callback_data=f"quali_search#{quali}#{key}#{offset}#{req}"
-                ),
+            ) for quali in qualis[i:i+3]  # Taking 3 items per row
         ]
-        for quali in qualis
+        for i in range(0, len(qualis), 3)
     ]
 
     btn.append([InlineKeyboardButton(text="⪻ ʙᴀᴄᴋ ᴛᴏ ᴍᴀɪɴ ᴘᴀɢᴇ", callback_data=f"next_{req}_{key}_{offset}")])
@@ -1484,7 +1485,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
         await query.answer("𝖧ᴇʏ 😍, \n\n🎯 Cʟɪᴄᴋ ᴀɴʏ ᴏғ ᴛʜᴇ ᴀʙᴏᴠᴇ Fɪʟᴇ ɴᴀᴍᴇs ᴛᴏ ɢᴇᴛ ɪᴛs Fɪʟᴇ ɪɴ ᴛʜᴇ BOT", True)
 
     elif query.data == 'tips':
-        await query.answer("𝗥𝗲𝗾𝘂𝗲𝘀𝘁𝘀 𝗙𝗼𝗿𝗺𝗮𝘁𝘀\nMaster: The Boss 2021 ❌ \nMaster The Boss 2021 ✔️ \nSamdal-ri ❌ \nSamdal ri ✔️ \nArrow season 1 ❌ \nArrow S01 ✔️ \nLove Scout episode 10 ❌ \nLove Scout S01E10 ✔️ \n\n <b>Dᴏɴ'ᴛ ᴜsᴇ ᴀɴʏ Sʏᴍʙᴏʟs ʟɪᴋᴇ ☞︎︎︎</b> &'()[]•/-@_", True)
+        await query.answer("𝗥𝗲𝗾𝘂𝗲𝘀𝘁𝘀 𝗙𝗼𝗿𝗺𝗮𝘁𝘀\nMaster: The Boss 2021 ❌ \nMaster The Boss 2021 ✔️ \nSamdal-ri ❌ \nSamdal ri ✔️ \nArrow season 1 ❌ \nArrow S01 ✔️ \nLove Scout episode 10 ❌ \nLove Scout S01E10 ✔️ \n <b>Dᴏɴ'ᴛ ᴜsᴇ ᴀɴʏ Sʏᴍʙᴏʟs ʟɪᴋᴇ ☞︎︎︎</b> &'()[]•/-@_", True)
     
     elif query.data == 'info':
         await query.answer("I have reported to Admins.\n\n The movie will be added if available.\n\nYou will get a reply to your search message if added within 24 hours.\n Don't delete your message!", True)
@@ -2112,8 +2113,8 @@ async def auto_filter(client, msg, spoll=False):
                 await asyncio.sleep(300)
                 await fuk.delete()
                 await message.delete()
-    #if spoll:
-        #await msg.message.delete()
+    if spoll:
+        await msg.message.delete()
 
 async def advantage_spell_chok(client, message):
     search = message.text
@@ -2136,8 +2137,8 @@ async def advantage_spell_chok(client, message):
         )
         await asyncio.sleep(60)
         await n.delete()
-        try:
-            await message.delete()
+        #try:
+            #await message.delete()
         except:
             pass
         return
@@ -2150,8 +2151,8 @@ async def advantage_spell_chok(client, message):
         )
         await asyncio.sleep(60)
         await n.delete()
-        try:
-            await message.delete()
+        #try:
+            #await message.delete()
         except:
             pass
         return
@@ -2171,8 +2172,8 @@ async def advantage_spell_chok(client, message):
         )
         await asyncio.sleep(60)
         await n.delete()
-        try:
-            await message.delete()
+        #try:
+            #await message.delete()
         except:
             pass
         return
@@ -2187,8 +2188,8 @@ async def advantage_spell_chok(client, message):
         )
         await asyncio.sleep(60)
         await n.delete()
-        try:
-            await message.delete()
+        #try:
+            #await message.delete()
         except:
             pass
         return
@@ -2207,8 +2208,8 @@ async def advantage_spell_chok(client, message):
     )
     await asyncio.sleep(300)
     await s.delete()
-    try:
-        await message.delete()
+    #try:
+        #await message.delete()
     except:
         pass    
 
