@@ -32,6 +32,23 @@ async def media(bot, message):
     search = f"{mv_naam} {year}" if year else mv_naam
     movies = await get_poster(search)
     season = await getSeason(mv_naamf)
+    # Fetch the last message from UPDATES_CHNL
+    last_messages = await bot.get_chat_history(UPDATES_CHNL, limit=1)
+    if last_messages:
+        last_msg = last_messages[0]
+        last_text = last_msg.text or ""
+
+        # Extract Name and Episode from the last message
+        last_name_match = re.search(r"🧿𝐍𝐚𝐦𝐞: (.+)", last_text)
+        last_episode_match = re.search(r"⏳𝐄𝐩𝐢𝐬𝐨𝐝𝐞: (\d+)", last_text)
+
+        if last_name_match and last_episode_match:
+            last_name = last_name_match.group(1).strip()
+            last_episode = int(last_episode_match.group(1))
+
+            # Delete last message if conditions match
+            if last_name == mv_naam and last_episode > (episode or 0):
+                await bot.delete_messages(UPDATES_CHNL, last_msg.message_id)
     if season == None:
         season = 1
     episode = await getEpisode(mv_naamf)
