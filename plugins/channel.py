@@ -29,7 +29,9 @@ async def media(bot, message):
     languages_str = " ".join(languages) if languages else None
     mv_naam = mv_naam.replace(".", " ").replace("_", " ").replace("-", " ")
     mv_naamf = media.file_name.replace(".", " ").replace("_", " ").replace("-", " ")
-    season = await getSeason(mv_naamf) or (1 if await getSeason(mv_naamf) is None)
+    season = await getSeason(mv_naamf)
+    if season == None:
+        season = 1
     episode = await getEpisode(mv_naamf)
 
     caption = f" "
