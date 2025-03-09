@@ -56,23 +56,30 @@ async def media(bot, message):
     search_with_underscore = search.replace(" ", "_")
     markup = InlineKeyboardMarkup([[InlineKeyboardButton('📥 ᴅᴏᴡɴʟᴏᴀᴅ ɴᴏᴡ 📥', url=f"http://t.me/{temp.U_NAME}?start=SEARCH-{search_with_underscore}")]])
 
-    async def send_message():
-        while True:
-            try:
-                if movies and movies.get('poster'):
-                    await bot.send_photo(UPDATES_CHNL, movies['poster'], caption=caption, reply_markup=markup, parse_mode=enums.ParseMode.HTML)
-                else:
-                    await bot.send_message(UPDATES_CHNL, caption, reply_markup=markup, disable_web_page_preview=True, parse_mode=enums.ParseMode.HTML)
-                break  # Exit loop on success
-            except FloodWait as e:
-                logging.warning(f"Flood wait triggered. Sleeping for {e.value} seconds.")
-                await asyncio.sleep(e.value)  # Wait for the required time
-            except BadRequest as e:
-                logging.error(f"BadRequest error: {e}")
-                break  # Stop retrying if it's a bad request error
-            except Exception as e:
-                logging.error(f"Error sending message: {e}")
-                await asyncio.sleep(5)  # Retry after 5 seconds
-
-    await send_message()
-    
+    if movies and movies.get('poster'):
+        try:
+            await bot.send_photo(
+                chat_id=UPDATES_CHNL,
+                photo=movies.get('poster'),
+                caption=caption,
+                reply_markup=markup,
+                parse_mode=enums.ParseMode.HTML
+            )
+        except BadRequest as e:
+            await bot.send_message(
+                chat_id=UPDATES_CHNL,
+                text=caption,
+                reply_markup=markup,
+                disable_web_page_preview=True,
+                parse_mode=enums.ParseMode.HTML
+            )
+    else:
+        await bot.send_message(
+            chat_id=UPDATES_CHNL,
+            text=caption,
+            reply_markup=markup,
+            disable_web_page_preview=True,
+            parse_mode=enums.ParseMode.HTML
+        )
+    # logger.info(f'{mv_naam} {year} - Update Sent to Channel!')
+    await asyncio.sleep(1)
