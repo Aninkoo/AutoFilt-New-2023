@@ -19,7 +19,7 @@ async def media(bot, message):
     text, dup = await save_file(media)
     if dup != 1:
         logging.info(f"Duplicate file detected: {media.file_name}")
-        #return
+        return
 
     cap_txt = media.file_name if media.file_name else media.caption
     mv_naam, year, languages = await add_chnl_message(cap_txt)
@@ -35,21 +35,21 @@ async def media(bot, message):
     episode = await getEpisode(mv_naamf)
     # Fetch the last message from UPDATES_CHNL
     last_messages = await bot.get_chat_history(UPDATES_CHNL, limit=1)
-    if last_messages:
-        last_msg = last_messages[0]
-        last_text = last_msg.text or ""
+    
+    last_msg = last_messages[0]
+    last_text = last_msg.text or ""
 
-        # Extract Name and Episode from the last message
-        last_name_match = re.search(r"🧿𝐍𝐚𝐦𝐞: (.+)", last_text)
-        last_episode_match = re.search(r"⏳𝐄𝐩𝐢𝐬𝐨𝐝𝐞: (\d+)", last_text)
+    # Extract Name and Episode from the last message
+    last_name_match = re.search(r"🧿𝐍𝐚𝐦𝐞: (.+)", last_text)
+    last_episode_match = re.search(r"⏳𝐄𝐩𝐢𝐬𝐨𝐝𝐞: (\d+)", last_text)
 
-        if last_name_match and last_episode_match:
-            last_name = last_name_match.group(1).strip()
-            last_episode = int(last_episode_match.group(1))
+    if last_name_match and last_episode_match:
+        last_name = last_name_match.group(1).strip()
+        last_episode = int(last_episode_match.group(1))
 
-            # Delete last message if conditions match
-            if last_name == mv_naam and last_episode > (episode or 0):
-                await bot.delete_messages(UPDATES_CHNL, last_msg.message_id)
+        # Delete last message if conditions match
+        if last_name == mv_naam and last_episode > (episode or 0):
+            await bot.delete_messages(UPDATES_CHNL, last_msg.message_id)
     if season == None:
         season = 1
 
