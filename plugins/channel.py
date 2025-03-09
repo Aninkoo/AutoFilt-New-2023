@@ -32,6 +32,7 @@ async def media(bot, message):
     search = f"{mv_naam} {year}" if year else mv_naam
     movies = await get_poster(search)
     season = await getSeason(mv_naamf)
+    episode = await getEpisode(mv_naamf)
     # Fetch the last message from UPDATES_CHNL
     last_messages = await bot.get_chat_history(UPDATES_CHNL, limit=1)
     if last_messages:
@@ -51,7 +52,6 @@ async def media(bot, message):
                 await bot.delete_messages(UPDATES_CHNL, last_msg.message_id)
     if season == None:
         season = 1
-    episode = await getEpisode(mv_naamf)
 
     caption = f" "
     if year and year.isdigit():
