@@ -48,7 +48,7 @@ async def media(bot, message):
         else:
             caption = f"<b>#SeriesUpdate:\n\n<blockquote>🧿 <u>𝐍𝐚𝐦𝐞</u> : <code>{mv_naam}</code>\n\n🔢 <u>𝐒𝐞𝐚𝐬𝐨𝐧</u> : {season}\n\n⏳ <u>𝐄𝐩𝐢𝐬𝐨𝐝𝐞</u> : {episode}\n\n"
     if movies and movies.get('genres'):
-        caption += f"🎭<u>𝐠𝐞𝐧𝐫𝐞𝐬</u> : {movies.get('genres')}/n/n"
+        caption += f"🎭<u>𝐠𝐞𝐧𝐫𝐞𝐬</u> : {movies.get('genres')}\n\n"
     if languages_str:
         caption += f"🎙️<u>𝐋𝐚𝐧𝐠𝐮𝐚𝐠𝐞</u> : {languages_str}</blockquote>\n\n"
     else:
