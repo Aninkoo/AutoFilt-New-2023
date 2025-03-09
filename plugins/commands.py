@@ -170,7 +170,7 @@ async def start(client, message):
 
     if data.split("-", 1)[0] == "SEARCH":
         stick = await message.reply_sticker(sticker="CAACAgUAAx0CZjyOqQACMCpl_EX_Ak6ilEi7sdys1ec9ozSwvQAC3AIAAq9qOVVmHNMuomHDLB4E")
-        await asyncio.sleep(1)
+        
         title = data.split("-", 1)[1]
         mov_name = title.replace("_", " ")
         req = message.from_user.id if message.from_user else 0
@@ -190,14 +190,13 @@ async def start(client, message):
         for file in files:
             files_link += f"""\n<blockquote><b>🎬 𝐅𝐢𝐥𝐞: <a href=https://t.me/{temp.U_NAME}?start={pre}_{file.file_id}>{file.file_name}</a></blockquote>\n📁 𝐒𝐢𝐳𝐞: {get_size(file.file_size)}</b>\n"""
             
-        btn.insert(0, 
-            [
-                InlineKeyboardButton(f'📮 Info', 'tips'),
-                InlineKeyboardButton(f'🎁 𝖳𝗂𝗉𝗌', 'info')
-            ]
-            )
+        
         btn.insert(0,
-               [InlineKeyboardButton("𝚂𝚎𝚕𝚎𝚌𝚝 𝙻𝚊𝚗𝚐𝚞𝚊𝚐𝚎", callback_data=f"languages#{key}#{req}#{offset}")]
+               [
+                   InlineKeyboardButton("Lᴀɴɢᴜᴀɢᴇ", callback_data=f"languages#{key}#{req}#{offset}"),
+                   InlineKeyboardButton("Sᴇᴀsᴏɴ", callback_data=f"seasons#{key}#{req}#{offset}"),
+                   InlineKeyboardButton("Qᴜᴀʟɪᴛʏ", callback_data=f"qualities#{key}#{req}#{offset}")
+               ]
               )   
         btn.insert(0, [
             InlineKeyboardButton(f'🎬 {mov_name} 🎬', 'rkbtn')
