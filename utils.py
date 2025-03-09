@@ -543,6 +543,11 @@ async def add_chnl_message(file_name):
             mov_name = file_name.lower()
             list1 = []
             language_keywords = ["tamil", "telugu", "malayalam", "kannada", "english", "hindi", "korean", "japanese"]
+            episode = await getEpisode(file_name)
+            if episode:
+                return movie_name, year, None
+            else:
+                continue 
             for lang in language_keywords:
                 substring_index = mov_name.find(lang)
                 if substring_index != -1:
