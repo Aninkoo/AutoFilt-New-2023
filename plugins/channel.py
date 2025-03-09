@@ -21,25 +21,32 @@ async def media(bot, message):
         logging.info(f"Duplicate file detected: {media.file_name}")
         #return
 
-    cap_txt = media.caption if media.caption else media.file_name
+    cap_txt = media.file_name if media.file_name else media.caption
     mv_naam, year, languages = await add_chnl_message(cap_txt)
-    #if not mv_naam:
-        #return
+    if not mv_naam:
+        return
 
     languages_str = " ".join(languages) if languages else None
-    mv_naamf = media.file_name.replace(".", " ").replace("_", " ")
-    season = await getSeason(mv_naamf) or (1 if await getEpisode(mv_naamf) else None)
+    mv_naam = mv_naam.replace(".", " ").replace("_", " ").replace("-", " ")
+    mv_naamf = media.file_name.replace(".", " ").replace("_", " ").replace("-", " ")
+    season = await getSeason(mv_naamf) or (1 if await getSeason(mv_naamf) is None)
     episode = await getEpisode(mv_naamf)
 
-    caption = f"<b>#SeriesUpdate:\n\n<blockquote>🧿 <u>𝐍𝐚𝐦𝐞</u> : <code>{mv_naam}</code>\n"
+    caption = f" "
     if year and year.isdigit():
-        caption = f"<b>#MovieUpdate:\n\n<blockquote>🧿 <u>𝐍𝐚𝐦𝐞</u> : <code>{mv_naam}</code>\n📆 <u>𝐘𝐞𝐚𝐫</u> : {year}\n"
-    if season is not None and episode is not None:
-        caption += f"🔢 <u>𝐒𝐞𝐚𝐬𝐨𝐧</u> : {season}\n⏳ <u>𝐄𝐩𝐢𝐬𝐨𝐝𝐞</u> : {episode}\n"
+        if episode is None:
+            caption = f"<b>#MovieUpdate:\n\n<blockquote>🧿 <u>𝐍𝐚𝐦𝐞</u> : <code>{mv_naam}</code>\n\n📆 <u>𝐘𝐞𝐚𝐫</u> : {year}\n\n"
+        else:
+            caption = f"<b>#SeriesUpdate:\n\n<blockquote>🧿 <u>𝐍𝐚𝐦𝐞</u> : <code>{mv_naam}</code>\n\n📆 <u>𝐘𝐞𝐚𝐫</u> : {year}\n\n🔢 <u>𝐒𝐞𝐚𝐬𝐨𝐧</u> : {season}\n\n⏳ <u>𝐄𝐩𝐢𝐬𝐨𝐝𝐞</u> : {episode}\n\n"
+    else:
+        if episode is None:
+            caption = f"<b>#MovieUpdate:\n\n<blockquote>🧿 <u>𝐍𝐚𝐦𝐞</u> : <code>{mv_naam}</code>\n\n"
+        else:
+            caption = f"<b>#SeriesUpdate:\n\n<blockquote>🧿 <u>𝐍𝐚𝐦𝐞</u> : <code>{mv_naam}</code>\n\n🔢 <u>𝐒𝐞𝐚𝐬𝐨𝐧</u> : {season}\n\n⏳ <u>𝐄𝐩𝐢𝐬𝐨𝐝𝐞</u> : {episode}\n\n"
     if languages_str:
         caption += f"🎙️<u>𝐋𝐚𝐧𝐠𝐮𝐚𝐠𝐞</u> : {languages_str}</blockquote>\n\n"
     else:
-        caption += "</blockquote>\n"
+        caption += "</blockquote>\n\n"
     caption += "Click the above name to Copy and Paste In PaxMOVIES' Group to Download👇\n<a href=https://t.me/paxmovies> 𝐏𝐚𝐱𝐌𝐎𝐕𝐈𝐄𝐒' 𝐆𝐫𝐨𝐮𝐩</a></b>"
 
     search = f"{mv_naam} {year}" if year else mv_naam
