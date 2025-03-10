@@ -9,7 +9,7 @@ from utils import add_chnl_message, get_poster, temp, getEpisode, getSeason
 
 media_filter = filters.document | filters.video
 
-@Client.on_message(filters.chat(CHANNELS) & media_filter)
+@Client.on_message(filters.chat(CHANNELS) & media_filter & filters.incoming & filters.text)
 async def media(bot, message):
     media = message.document or message.video
     if not media or not str(media.file_name).lower().endswith(tuple(INDEX_EXTENSIONS)):
