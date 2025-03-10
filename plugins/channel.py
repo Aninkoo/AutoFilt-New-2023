@@ -33,25 +33,7 @@ async def media(bot, message):
     movies = await get_poster(search)
     season = await getSeason(mv_naamf)
     episode = await getEpisode(mv_naamf)
-    # Fetch the last message from UPDATES_CHNL
-    
-    
-    last_messages = await bot.get_messages(UPDATES_CHNL, 1)
-    last_msg = last_messages[0]
-    last_text = last_msg.text or ""
-
-    # Extract Name and Episode from the last message
-    last_name_match = re.search(r"🧿𝐍𝐚𝐦𝐞: (.+)", last_text)
-    last_episode_match = re.search(r"⏳𝐄𝐩𝐢𝐬𝐨𝐝𝐞: (\d+)", last_text)
-
-    if last_name_match and last_episode_match:
-        last_name = last_name_match.group(1).strip()
-        last_episode = int(last_episode_match.group(1))
-
-        # Delete last message if conditions match
-        if last_name == mv_naam and last_episode > (episode or 0):
-            await bot.delete_messages(UPDATES_CHNL, last_msg.message_id)
-    
+        
     if season == None:
         season = 1
 
@@ -105,3 +87,48 @@ async def media(bot, message):
         )
     # logger.info(f'{mv_naam} {year} - Update Sent to Channel!')
     await asyncio.sleep(1)
+
+@Client.on_message(filters.chat(UPDATES_CHNL) & filters.incoming & filters.text)
+async def text_compare(bot, message):
+    """
+    This function checks incoming text or caption messages in a specific Telegram channel.
+    If a new message is found with the same Name but a higher Episode number,
+    it deletes the previous message.
+    """
+    
+    # Get the message ID and text content of the latest message
+    last_id = message.message_id  # Use message_id directly from message
+    last_text = message.text if message.text else message.caption  # Handle both text and caption
+    
+    if not last_text:
+        return  # Exit if there's no text or caption
+    
+    # Get the previous message
+    pre_id = last_id - 1  # Previous message ID
+    try:
+        pre_msg = await bot.get_messages(UPDATES_CHNL, pre_id)  # Fetch previous message
+        pre_text = pre_msg.text if pre_msg.text else pre_msg.caption  # Handle both text and caption
+    except Exception as e:
+        print(f"Error fetching previous message: {e}")
+        return  # Exit if previous message can't be fetched
+    
+    # Extract Name and Episode from the last message
+    last_name_match = re.search(r"🧿𝐍𝐚𝐦𝐞: (.+)", last_text)
+    last_episode_match = re.search(r"⏳𝐄𝐩𝐢𝐬𝐨𝐝𝐞: (\d+)", last_text)
+    
+    # Extract Name and Episode from the previous message
+    pre_name_match = re.search(r"🧿𝐍𝐚𝐦𝐞: (.+)", pre_text)
+    pre_episode_match = re.search(r"⏳𝐄𝐩𝐢𝐬𝐨𝐝𝐞: (\d+)", pre_text)
+    
+    # Ensure both messages have valid Name and Episode data
+    if last_name_match and last_episode_match and pre_name_match and pre_episode_match:
+        last_name = last_name_match.group(1).strip()
+        last_episode = int(last_episode_match.group(1))
+        pre_name = pre_name_match.group(1).strip()
+        pre_episode = int(pre_episode_match.group(1))
+        
+        # If the names match and the new episode number is higher, delete the previous message
+        if last_name == pre_name and last_episode > pre_episode:
+            await bot.delete_messages(UPDATES_CHNL, pre_id)
+            print(f"Deleted previous message (ID: {pre_id}) for {last_name} episode {pre_episode}")
+                
