@@ -34,9 +34,9 @@ async def media(bot, message):
     season = await getSeason(mv_naamf)
     episode = await getEpisode(mv_naamf)
     # Fetch the last message from UPDATES_CHNL
-    '''
-    last_messages = await bot.get_chat_history(UPDATES_CHNL, limit=1)
     
+    
+    last_messages = await bot.get_messages(UPDATES_CHNL, 1)
     last_msg = last_messages[0]
     last_text = last_msg.text or ""
 
@@ -51,7 +51,7 @@ async def media(bot, message):
         # Delete last message if conditions match
         if last_name == mv_naam and last_episode > (episode or 0):
             await bot.delete_messages(UPDATES_CHNL, last_msg.message_id)
-    '''
+    
     if season == None:
         season = 1
 
