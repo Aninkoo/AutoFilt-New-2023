@@ -6,11 +6,16 @@ from info import CHANNELS, INDEX_EXTENSIONS, UPDATES_CHNL
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from database.ia_filterdb import save_file
 from utils import add_chnl_message, get_poster, temp, getEpisode, getSeason
+from collections import deque
 
 media_filter = filters.document | filters.video
+# Store the last 20 messages
+sent_messages = deque(maxlen=20)
 
 @Client.on_message(filters.chat(CHANNELS) & media_filter)
 async def media(bot, message):
+    global sent_messages  # Ensure we modify the global deque
+
     media = message.document or message.video
     if not media or not str(media.file_name).lower().endswith(tuple(INDEX_EXTENSIONS)):
         return
@@ -33,8 +38,8 @@ async def media(bot, message):
     movies = await get_poster(search)
     season = await getSeason(mv_naamf)
     episode = await getEpisode(mv_naamf)
-        
-    if season == None:
+
+    if season is None:
         season = 1
 
     caption = f" "
@@ -49,20 +54,21 @@ async def media(bot, message):
         else:
             caption = f"<b>#SeriesUpdate:\n\n<blockquote>🧿 <u>𝐍𝐚𝐦𝐞</u> : <code>{mv_naam}</code>\n\n🔢 <u>𝐒𝐞𝐚𝐬𝐨𝐧</u> : {season}\n\n⏳ <u>𝐄𝐩𝐢𝐬𝐨𝐝𝐞</u> : {episode}\n\n"
     if movies and movies.get('genres'):
-        caption += f"🎭<u>𝐠𝐞𝐧𝐫𝐞𝐬</u> : {movies.get('genres')}\n\n"
+        caption += f"🎭 <u>𝐆𝐞𝐧𝐫𝐞𝐬</u> : {movies.get('genres')}\n\n"
     if languages_str:
-        caption += f"🎙️<u>𝐋𝐚𝐧𝐠𝐮𝐚𝐠𝐞</u> : {languages_str}</blockquote>\n\n"
+        caption += f"🎙️ <u>𝐋𝐚𝐧𝐠𝐮𝐚𝐠𝐞</u> : {languages_str}</blockquote>\n\n"
     else:
         caption += "</blockquote>\n\n"
     caption += "Click the above name to Copy and Paste In PaxMOVIES' Group to Download👇\n<a href=https://t.me/paxmovies> 𝐏𝐚𝐱𝐌𝐎𝐕𝐈𝐄𝐒' 𝐆𝐫𝐨𝐮𝐩</a></b>"
 
-    
     search_with_underscore = search.replace(" ", "_")
     markup = InlineKeyboardMarkup([[InlineKeyboardButton('📥 ᴅᴏᴡɴʟᴏᴀᴅ ɴᴏᴡ 📥', url=f"http://t.me/{temp.U_NAME}?start=SEARCH-{search_with_underscore}")]])
 
+    # Send message and get the sent message ID
+    sent_msg = None
     if movies and movies.get('poster'):
         try:
-            await bot.send_photo(
+            sent_msg = await bot.send_photo(
                 chat_id=UPDATES_CHNL,
                 photo=movies.get('poster'),
                 caption=caption,
@@ -70,7 +76,7 @@ async def media(bot, message):
                 parse_mode=enums.ParseMode.HTML
             )
         except BadRequest as e:
-            await bot.send_message(
+            sent_msg = await bot.send_message(
                 chat_id=UPDATES_CHNL,
                 text=caption,
                 reply_markup=markup,
@@ -78,57 +84,33 @@ async def media(bot, message):
                 parse_mode=enums.ParseMode.HTML
             )
     else:
-        await bot.send_message(
+        sent_msg = await bot.send_message(
             chat_id=UPDATES_CHNL,
             text=caption,
             reply_markup=markup,
             disable_web_page_preview=True,
             parse_mode=enums.ParseMode.HTML
         )
-    # logger.info(f'{mv_naam} {year} - Update Sent to Channel!')
-    await asyncio.sleep(1)
 
-@Client.on_message(filters.chat(UPDATES_CHNL) & filters.incoming & filters.text)
-async def text_compare(bot, message):
-    """
-    This function checks incoming text or caption messages in a specific Telegram channel.
-    If a new message is found with the same Name but a higher Episode number,
-    it deletes the previous message.
-    """
-    
-    # Get the message ID and text content of the latest message
-    last_id = message.message_id  # Use message_id directly from message
-    last_text = message.text if message.text else message.caption  # Handle both text and caption
-    
-    if not last_text:
-        return  # Exit if there's no text or caption
-    
-    # Get the previous message
-    pre_id = last_id - 1  # Previous message ID
-    try:
-        pre_msg = await bot.get_messages(UPDATES_CHNL, pre_id)  # Fetch previous message
-        pre_text = pre_msg.text if pre_msg.text else pre_msg.caption  # Handle both text and caption
-    except Exception as e:
-        print(f"Error fetching previous message: {e}")
-        return  # Exit if previous message can't be fetched
-    
-    # Extract Name and Episode from the last message
-    last_name_match = re.search(r"🧿𝐍𝐚𝐦𝐞: (.+)", last_text)
-    last_episode_match = re.search(r"⏳𝐄𝐩𝐢𝐬𝐨𝐝𝐞: (\d+)", last_text)
-    
-    # Extract Name and Episode from the previous message
-    pre_name_match = re.search(r"🧿𝐍𝐚𝐦𝐞: (.+)", pre_text)
-    pre_episode_match = re.search(r"⏳𝐄𝐩𝐢𝐬𝐨𝐝𝐞: (\d+)", pre_text)
-    
-    # Ensure both messages have valid Name and Episode data
-    if last_name_match and last_episode_match and pre_name_match and pre_episode_match:
-        last_name = last_name_match.group(1).strip()
-        last_episode = int(last_episode_match.group(1))
-        pre_name = pre_name_match.group(1).strip()
-        pre_episode = int(pre_episode_match.group(1))
-        
-        # If the names match and the new episode number is higher, delete the previous message
-        if last_name == pre_name and last_episode > pre_episode:
-            await bot.delete_messages(UPDATES_CHNL, pre_id)
-            print(f"Deleted previous message (ID: {pre_id}) for {last_name} episode {pre_episode}")
+    # Store the latest message details in deque
+    sent_messages.append({
+        "mv_naam": mv_naam,
+        "season": season,
+        "episode": episode,
+        "message_id": sent_msg.message_id
+    })
+
+    # Check if the new message has the same 'mv_naam' but a higher episode than any previous ones
+    for msg in list(sent_messages)[:-1]:  # Exclude the newest message
+        if msg["mv_naam"] == mv_naam and msg["season"] == season and episode is not None:
+            if episode > msg["episode"]:
+                # Delete the older message
+                try:
+                    await bot.delete_messages(chat_id=UPDATES_CHNL, message_ids=msg["message_id"])
+                except Exception as e:
+                    logging.error(f"Failed to delete message {msg['message_id']}: {e}")
                 
+                # Remove from deque
+                sent_messages.remove(msg)
+
+    await asyncio.sleep(1)
