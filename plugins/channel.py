@@ -55,6 +55,8 @@ async def media(bot, message):
             caption = f"<b>#SeriesUpdate:\n\n<blockquote>🧿 <u>𝐍𝐚𝐦𝐞</u> : <code>{mv_naam}</code>\n\n🔢 <u>𝐒𝐞𝐚𝐬𝐨𝐧</u> : {season}\n\n⏳ <u>𝐄𝐩𝐢𝐬𝐨𝐝𝐞</u> : {episode}\n\n"
     if movies and movies.get('genres'):
         caption += f"🎭 <u>𝐆𝐞𝐧𝐫𝐞𝐬</u> : {movies.get('genres')}\n\n"
+    if movies and movies.get('countries'):
+        caption += f"🌍 <u>𝐂𝐨𝐮𝐧𝐭𝐫𝐲</u> : {movies.get('countries')}\n\n"
     if languages_str:
         caption += f"🎙️ <u>𝐋𝐚𝐧𝐠𝐮𝐚𝐠𝐞</u> : {languages_str}</blockquote>\n\n"
     else:
@@ -100,6 +102,20 @@ async def media(bot, message):
         "message_id": sent_msg.id
     })
 
+    # Check if the new message has the same 'mv_naam', 'season', and 'episode' as any previous ones
+    for msg in list(sent_messages)[:-1]:  # Exclude the newest message initially
+        if msg["mv_naam"] == mv_naam and msg["season"] == season and msg["episode"] == episode:
+            try:
+                # Delete the new message
+                await bot.delete_messages(chat_id=UPDATES_CHNL, message_ids=sent_messages[-1]["message_id"])
+                logging.info(f"Deleted duplicate new message for {mv_naam}, Season {season}, Episode {episode}")
+            except Exception as e:
+                logging.error(f"Failed to delete new duplicate message {sent_messages[-1]['message_id']}: {e}")
+
+            # Remove only the new message from deque
+            sent_messages.pop()
+            break  # Exit loop after deleting the new message
+    
     # Check if the new message has the same 'mv_naam' but a higher episode than any previous ones
     for msg in list(sent_messages)[:-1]:  # Exclude the newest message
         if msg["mv_naam"] == mv_naam and msg["season"] == season and episode is not None:
