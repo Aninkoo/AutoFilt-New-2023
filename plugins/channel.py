@@ -144,4 +144,4 @@ async def media(bot, message):
                 sent_messages.remove(msg)
                 break  # Exit loop after deleting the previous message
 
-    await asyncio.sleep(1)
+    #await asyncio.sleep(1)
