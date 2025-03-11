@@ -97,7 +97,7 @@ async def media(bot, message):
         "mv_naam": mv_naam,
         "season": season,
         "episode": episode,
-        "message_id": sent_msg.message_id
+        "message_id": sent_msg.id
     })
 
     # Check if the new message has the same 'mv_naam' but a higher episode than any previous ones
