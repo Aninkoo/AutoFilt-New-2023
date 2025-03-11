@@ -103,30 +103,45 @@ async def media(bot, message):
     })
 
     # Check if the new message has the same 'mv_naam', 'season', and 'episode' as any previous ones
+    # 1. Check if the new message has an earlier episode than any in the list
     for msg in list(sent_messages)[:-1]:  # Exclude the newest message initially
-        if msg["mv_naam"] == mv_naam and msg["season"] == season and msg["episode"] == episode:
-            try:
-                # Delete the new message
-                await bot.delete_messages(chat_id=UPDATES_CHNL, message_ids=sent_messages[-1]["message_id"])
-                logging.info(f"Deleted duplicate new message for {mv_naam}, Season {season}, Episode {episode}")
-            except Exception as e:
-                logging.error(f"Failed to delete new duplicate message {sent_messages[-1]['message_id']}: {e}")
+        if msg["mv_naam"] == mv_naam and msg["season"] == season and episode is not None:
+            if episode < msg["episode"]:  # New episode is earlier than an existing one
+                try:
+                    # Delete the new message
+                    await bot.delete_messages(chat_id=UPDATES_CHNL, message_ids=sent_messages[-1]["message_id"])
+                    logging.info(f"Deleted new message with earlier episode: {mv_naam}, Season {season}, Episode {episode}")
+                except Exception as e:
+                    logging.error(f"Failed to delete earlier episode message {sent_messages[-1]['message_id']}: {e}")
+            
+                # Remove only the new message from deque
+                sent_messages.pop()
+                break  # Exit loop after deleting the new message
+            elif episode == msg["episode"]:  # New episode is the same as an existing one
+                try:
+                    # Delete the new message
+                    await bot.delete_messages(chat_id=UPDATES_CHNL, message_ids=sent_messages[-1]["message_id"])
+                    logging.info(f"Deleted new message with the same episode: {mv_naam}, Season {season}, Episode {episode}")
+                except Exception as e:
+                    logging.error(f"Failed to delete same episode message {sent_messages[-1]['message_id']}: {e}")
+            
+                # Remove only the new message from deque
+                sent_messages.pop()
+                break  # Exit loop after deleting the new message
 
-            # Remove only the new message from deque
-            sent_messages.pop()
-            break  # Exit loop after deleting the new message
-    
-    # Check if the new message has the same 'mv_naam' but a higher episode than any previous ones
+    # 2. If none of the above happens, check for previous message with an earlier episode than the new one
     for msg in list(sent_messages)[:-1]:  # Exclude the newest message
         if msg["mv_naam"] == mv_naam and msg["season"] == season and episode is not None:
-            if episode > msg["episode"]:
-                # Delete the older message
+            if episode > msg["episode"]:  # New episode is later than an existing one
                 try:
+                    # Delete the previous message with the earlier episode
                     await bot.delete_messages(chat_id=UPDATES_CHNL, message_ids=msg["message_id"])
+                    logging.info(f"Deleted previous message with earlier episode: {mv_naam}, Season {season}, Episode {episode}")
                 except Exception as e:
-                    logging.error(f"Failed to delete message {msg['message_id']}: {e}")
-                
+                    logging.error(f"Failed to delete earlier episode message {msg['message_id']}: {e}")
+            
                 # Remove from deque
                 sent_messages.remove(msg)
+                break  # Exit loop after deleting the previous message
 
     await asyncio.sleep(1)
