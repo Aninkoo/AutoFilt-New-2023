@@ -2,18 +2,29 @@ import asyncio
 import logging
 from pyrogram import Client, filters, enums
 from pyrogram.errors import BadRequest, FloodWait
-from info import CHANNELS, INDEX_EXTENSIONS, UPDATES_CHNL
+from info import CHANNELS, INDEX_EXTENSIONS, UPDATES_CHNL, ASIA_CHNL, ENG_CHNL
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from database.ia_filterdb import save_file
 from utils import add_chnl_message, get_poster, temp, getEpisode, getSeason
 from collections import deque
 
 media_filter = filters.document | filters.video
-# Store the last 20 messages
-sent_messages = deque(maxlen=20)
+# Store the last 50 messages
+sent_messages = deque(maxlen=50)
 
 @Client.on_message(filters.chat(CHANNELS) & media_filter)
 async def media(bot, message):
+    media = message.document or message.video
+    if not media or not str(media.file_name).lower().endswith(tuple(INDEX_EXTENSIONS)):
+        return
+
+    text, dup = await save_file(media)
+    if dup != 1:
+        logging.info(f"Duplicate file detected: {media.file_name}")
+        return
+
+@Client.on_message(filters.chat(ENG_CHNL) & media_filter)
+async def eng_media(bot, message):
     global sent_messages  # Ensure we modify the global deque
 
     media = message.document or message.video
@@ -45,12 +56,16 @@ async def media(bot, message):
     caption = f" "
     if year and year.isdigit():
         if episode is None:
-            caption = f"<b>#MovieUpdate:\n\n<blockquote>🧿 <u>𝐍𝐚𝐦𝐞</u> : <code>{mv_naam}</code>\n\n📆 <u>𝐘𝐞𝐚𝐫</u> : {year}\n\n"
+            caption = f"<b>#NowAvailable \n#Movie:\n\n<blockquote>🧿 <u>𝐍𝐚𝐦𝐞</u> : <code>{mv_naam}</code>\n\n📆 <u>𝐘𝐞𝐚𝐫</u> : {year}\n\n"
+        elif episode == 1:
+            caption = f"<b>#NowAvailable \n#Series:\n\n<blockquote>🧿 <u>𝐍𝐚𝐦𝐞</u> : <code>{mv_naam}</code>\n\n📆 <u>𝐘𝐞𝐚𝐫</u> : {year}\n\n🔢 <u>𝐒𝐞𝐚𝐬𝐨𝐧</u> : {season}\n\n⏳ <u>𝐄𝐩𝐢𝐬𝐨𝐝𝐞</u> : {episode}\n\n"
         else:
             caption = f"<b>#SeriesUpdate:\n\n<blockquote>🧿 <u>𝐍𝐚𝐦𝐞</u> : <code>{mv_naam}</code>\n\n📆 <u>𝐘𝐞𝐚𝐫</u> : {year}\n\n🔢 <u>𝐒𝐞𝐚𝐬𝐨𝐧</u> : {season}\n\n⏳ <u>𝐄𝐩𝐢𝐬𝐨𝐝𝐞</u> : {episode}\n\n"
     else:
         if episode is None:
-            caption = f"<b>#MovieUpdate:\n\n<blockquote>🧿 <u>𝐍𝐚𝐦𝐞</u> : <code>{mv_naam}</code>\n\n"
+            caption = f"<b>#NowAvailable \n#Movie:\n\n<blockquote>🧿 <u>𝐍𝐚𝐦𝐞</u> : <code>{mv_naam}</code>\n\n"
+        elif episode == 1:
+            caption = f"<b>#NowAvailable \n#Series:\n\n<blockquote>🧿 <u>𝐍𝐚𝐦𝐞</u> : <code>{mv_naam}</code>\n\n🔢 <u>𝐒𝐞𝐚𝐬𝐨𝐧</u> : {season}\n\n⏳ <u>𝐄𝐩𝐢𝐬𝐨𝐝𝐞</u> : {episode}\n\n"
         else:
             caption = f"<b>#SeriesUpdate:\n\n<blockquote>🧿 <u>𝐍𝐚𝐦𝐞</u> : <code>{mv_naam}</code>\n\n🔢 <u>𝐒𝐞𝐚𝐬𝐨𝐧</u> : {season}\n\n⏳ <u>𝐄𝐩𝐢𝐬𝐨𝐝𝐞</u> : {episode}\n\n"
     if movies and movies.get('genres'):
@@ -58,7 +73,10 @@ async def media(bot, message):
     if movies and movies.get('countries'):
         caption += f"🌍 <u>𝐂𝐨𝐮𝐧𝐭𝐫𝐲</u> : {movies.get('countries')}\n\n"
     if languages_str:
-        caption += f"🎙️ <u>𝐋𝐚𝐧𝐠𝐮𝐚𝐠𝐞</u> : {languages_str}</blockquote>\n\n"
+        caption += f"🎙️ <u>𝐋𝐚𝐧𝐠𝐮𝐚𝐠𝐞</u> : {languages_str}"
+    if episode == 1 or is None:
+        if movies and movie.get('plot'):
+            caption += f"📋 <u>𝐏𝐥𝐨𝐭</u> : {movie.get('plot')} </blockquote>\n\n"
     else:
         caption += "</blockquote>\n\n"
     caption += "Click the above name to Copy and Paste In PaxMOVIES' Group to Download👇\n<a href=https://t.me/paxmovies> 𝐏𝐚𝐱𝐌𝐎𝐕𝐈𝐄𝐒' 𝐆𝐫𝐨𝐮𝐩</a></b>"
