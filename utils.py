@@ -163,8 +163,9 @@ async def mdlapi(title):
         return await result.json()
         
 async def mdlsearch(query):
-    if " " in query:
+    if query:
         title = query.strip()  # Ensure query is clean
+        tittle = tittle.replace(" ", "_")
         movies = await mdlapi(title)
         res = movies.get("results", {}).get("dramas", [])
         if not res:
