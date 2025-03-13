@@ -75,7 +75,7 @@ async def eng_media(bot, message):
     if languages_str:
         caption += f"🎙️ <u>𝐋𝐚𝐧𝐠𝐮𝐚𝐠𝐞</u> : #{languages_str}"
     if episode == 1 or episode is None:
-        if movies and movie.get('plot'):
+        if movies and movies.get('plot'):
             caption += f"📋 <u>𝐏𝐥𝐨𝐭</u> : {movie.get('plot')} </blockquote>\n\n"
     else:
         caption += "</blockquote>\n\n"
