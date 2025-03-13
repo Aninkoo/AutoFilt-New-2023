@@ -1,3 +1,6 @@
+from httpx import AsyncClient, Timeout
+import aiohttp
+import json
 import logging
 from pyrogram.errors import InputUserDeactivated, UserNotParticipant, FloodWait, UserIsBlocked, PeerIdInvalid
 from info import AUTH_CHANNEL, LONG_IMDB_DESCRIPTION, MAX_LIST_ELM, CUSTOM_FILE_CAPTION, UPDATES_CHNL, SHORTLINK_URL
@@ -35,6 +38,17 @@ SMART_OPEN = '“'
 SMART_CLOSE = '”'
 START_CHAR = ('\'', '"', SMART_OPEN)
 update_list = set()
+
+# HTTPx Async Client
+fetch = AsyncClient(
+    verify=False,
+    headers={
+        "Accept-Language": "en-US,en;q=0.9,id-ID;q=0.8,id;q=0.7",
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36 Edge/107.0.1418.42",
+    },
+    timeout=Timeout(20),
+)
+
 
 # temp db for banned 
 class temp(object):
@@ -154,6 +168,45 @@ async def get_poster(query, bulk=False, id=False, file=None):
         'rating': str(movie.get("rating")),
         'url':f'https://www.imdb.com/title/tt{movieid}'
     }
+
+async def mdlapi(title):
+    link = f"https://kuryana.vercel.app/search/q/{title}"
+    async with aiohttp.ClientSession() as ses, ses.get(link) as result:
+        return await result.json()
+        
+async def mdlsearch(query):
+    if query:
+        title = query.strip()  # Ensure query is clean
+        tittle = tittle.replace(" ", "_")
+        movies = await mdlapi(title)
+        res = movies.get("results", {}).get("dramas", [])
+        if not res:
+            return None
+        
+        # Get the most recent movie based on 'year'
+        check = max(res, key=lambda x: int(x.get('year', 0) or 0))['slug']
+        
+        async with fetch as client:
+            response = await client.get(f"https://kuryana.vercel.app/id/{check}")
+            ress = response.json()
+        
+        data = ress.get('data', {})
+        details = data.get('details', {})
+        others = data.get('others', {})
+        
+        Title = data.get('title', 'N/A')
+        Rating = details.get('score', 'N/A')
+        Type = details.get('type', 'N/A')
+        Country = details.get('country', 'N/A')
+        Released_date = details.get('release_date', 'N/A')
+        Episodes = details.get('episodes', 'N/A')
+        Aired_on = details.get('aired_on', 'N/A')
+        Genre = others.get('genres', 'N/A')
+        Synopsis = data.get('synopsis', 'N/A')
+        Poster = data.get('poster', 'N/A')
+        
+        return Title, Rating, Type, Country, Released_date, Episodes, Genre, Synopsis, Poster
+
 
 async def broadcast_messages(user_id, message):
     try:
