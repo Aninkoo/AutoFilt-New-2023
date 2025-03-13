@@ -76,7 +76,7 @@ async def eng_media(bot, message):
         caption += f"🎙️ <u>𝐋𝐚𝐧𝐠𝐮𝐚𝐠𝐞</u> : #{languages_str}"
     if episode == 1 or episode is None:
         if movies and movies.get('plot'):
-            caption += f"📋 <u>𝐏𝐥𝐨𝐭</u> : {movie.get('plot')} </blockquote>\n\n"
+            caption += f"📋 <u>𝐏𝐥𝐨𝐭</u> : {movies.get('plot')} </blockquote>\n\n"
     else:
         caption += "</blockquote>\n\n"
     caption += "Click the above name to Copy and Paste In PaxMOVIES' Group to Download👇\n<a href=https://t.me/paxmovies> 𝐏𝐚𝐱𝐌𝐎𝐕𝐈𝐄𝐒' 𝐆𝐫𝐨𝐮𝐩</a></b>"
@@ -150,7 +150,7 @@ async def eng_media(bot, message):
     # 2. If none of the above happens, check for previous message with an earlier episode than the new one
     for msg in list(sent_messages)[:-1]:  # Exclude the newest message
         if msg["mv_naam"] == mv_naam and msg["season"] == season and episode is not None:
-            if episode > msg["episode"]:  # New episode is later than an existing one
+            if msg["episode"] > 1 and episode > msg["episode"]:  # New episode is later than an existing one
                 try:
                     # Delete the previous message with the earlier episode
                     await bot.delete_messages(chat_id=UPDATES_CHNL, message_ids=msg["message_id"])
@@ -291,7 +291,7 @@ async def asia_media(bot, message):
     # 2. If none of the above happens, check for previous message with an earlier episode than the new one
     for msg in list(sent_messages)[:-1]:  # Exclude the newest message
         if msg["mv_naam"] == mv_naam and msg["season"] == season and episode is not None:
-            if episode > msg["episode"]:  # New episode is later than an existing one
+            if msg["episode"] > 1 and episode > msg["episode"]:  # New episode is later than an existing one
                 try:
                     # Delete the previous message with the earlier episode
                     await bot.delete_messages(chat_id=UPDATES_CHNL, message_ids=msg["message_id"])
