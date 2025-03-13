@@ -165,7 +165,7 @@ async def get_poster(query, bulk=False, id=False, file=None):
         'genres': list_to_str(movie.get("genres")),
         'poster': movie.get('full-size cover url'),
         'plot': plot,
-        'plots: movie.get('plot'),
+        'plots': movie.get('plot'),
         'rating': str(movie.get("rating")),
         'url':f'https://www.imdb.com/title/tt{movieid}'
     }
