@@ -172,13 +172,13 @@ async def get_poster(query, bulk=False, id=False, file=None):
 
 async def mdlapi(title):
     link = f"https://kuryana.vercel.app/search/q/{title}"
-    async with aiohttp.ClientSession() as ses, ses.get(link) as result:
-        return await result.json()
+    async with aiohttp.ClientSession() as ses:
+        async with ses.get(link) as result:
+            return await result.json()
         
 async def mdlsearch(query):
     if query:
-        title = query.strip()  # Ensure query is clean
-        title = title.replace(" ", "_")
+        title = query.strip().replace(" ", "_")
         movies = await mdlapi(title)
         res = movies.get("results", {}).get("dramas", [])
         if not res:
@@ -187,27 +187,25 @@ async def mdlsearch(query):
         # Get the most recent movie based on 'year'
         check = max(res, key=lambda x: int(x.get('year', 0) or 0))['slug']
         
-        async with fetch as client:
-            response = await client.get(f"https://kuryana.vercel.app/id/{check}")
-            ress = response.json()
+        response = await fetch.get(f"https://kuryana.vercel.app/id/{check}")
+        ress = await response.json()  # FIXED: Added `await`
         
         data = ress.get('data', {})
         details = data.get('details', {})
         others = data.get('others', {})
-        
-        Title = data.get('title', 'N/A')
-        Rating = details.get('score', 'N/A')
-        Type = details.get('type', 'N/A')
-        Country = details.get('country', 'N/A')
-        Released_date = details.get('release_date', 'N/A')
-        Episodes = details.get('episodes', 'N/A')
-        Aired_on = details.get('aired_on', 'N/A')
-        Genre = others.get('genres', 'N/A')
-        Synopsis = data.get('synopsis', 'N/A')
-        Poster = data.get('poster', 'N/A')
-        
-        return Title, Rating, Type, Country, Released_date, Episodes, Genre, Synopsis, Poster
 
+        return {
+            "Title": data.get('title'),
+            "Rating": details.get('score'),
+            "Type": details.get('type'),
+            "Country": details.get('country'),
+            "Released_date": details.get('release_date'),
+            "Episodes": details.get('episodes'),
+            "Aired_on": details.get('aired_on'),
+            "Genre": others.get('genres'),
+            "Synopsis": data.get('synopsis'),
+            "Poster": data.get('poster')
+    }
 
 async def broadcast_messages(user_id, message):
     try:
