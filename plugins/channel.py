@@ -56,20 +56,20 @@ async def eng_media(bot, message):
     caption = f" "
     if year and year.isdigit():
         if episode is None:
-            caption = f"<b>#NowAvailable \n#Movie:\n\n<blockquote>🧿 <u>𝐍𝐚𝐦𝐞</u> : <code>{mv_naam}</code>\n\n📆 <u>𝐘𝐞𝐚𝐫</u> : {year}\n\n"
+            caption = f"<b>#Movie:\n\n<blockquote>🧿 <u>𝐍𝐚𝐦𝐞</u> : <code>{mv_naam}</code>\n\n📆 <u>𝐘𝐞𝐚𝐫</u> : {year}\n\n"
         elif episode == 1:
-            caption = f"<b>#NowAvailable \n#Series:\n\n<blockquote>🧿 <u>𝐍𝐚𝐦𝐞</u> : <code>{mv_naam}</code>\n\n📆 <u>𝐘𝐞𝐚𝐫</u> : {year}\n\n🔢 <u>𝐒𝐞𝐚𝐬𝐨𝐧</u> : {season}\n\n⏳ <u>𝐄𝐩𝐢𝐬𝐨𝐝𝐞</u> : {episode}\n\n"
+            caption = f"#Series:\n\n<blockquote>🧿 <u>𝐍𝐚𝐦𝐞</u> : <code>{mv_naam}</code>\n\n📆 <u>𝐘𝐞𝐚𝐫</u> : {year}\n\n🔢 <u>𝐒𝐞𝐚𝐬𝐨𝐧</u> : {season}\n\n⏳ <u>𝐄𝐩𝐢𝐬𝐨𝐝𝐞</u> : {episode}\n\n"
         else:
             caption = f"<b>#SeriesUpdate:\n\n<blockquote>🧿 <u>𝐍𝐚𝐦𝐞</u> : <code>{mv_naam}</code>\n\n📆 <u>𝐘𝐞𝐚𝐫</u> : {year}\n\n🔢 <u>𝐒𝐞𝐚𝐬𝐨𝐧</u> : {season}\n\n⏳ <u>𝐄𝐩𝐢𝐬𝐨𝐝𝐞</u> : {episode}\n\n"
     else:
         if episode is None:
-            caption = f"<b>#NowAvailable \n#Movie:\n\n<blockquote>🧿 <u>𝐍𝐚𝐦𝐞</u> : <code>{mv_naam}</code>\n\n"
+            caption = f"<b>#Movie:\n\n<blockquote>🧿 <u>𝐍𝐚𝐦𝐞</u> : <code>{mv_naam}</code>\n\n"
         elif episode == 1:
-            caption = f"<b>#NowAvailable \n#Series:\n\n<blockquote>🧿 <u>𝐍𝐚𝐦𝐞</u> : <code>{mv_naam}</code>\n\n🔢 <u>𝐒𝐞𝐚𝐬𝐨𝐧</u> : {season}\n\n⏳ <u>𝐄𝐩𝐢𝐬𝐨𝐝𝐞</u> : {episode}\n\n"
+            caption = f"<b>#Series:\n\n<blockquote>🧿 <u>𝐍𝐚𝐦𝐞</u> : <code>{mv_naam}</code>\n\n🔢 <u>𝐒𝐞𝐚𝐬𝐨𝐧</u> : {season}\n\n⏳ <u>𝐄𝐩𝐢𝐬𝐨𝐝𝐞</u> : {episode}\n\n"
         else:
             caption = f"<b>#SeriesUpdate:\n\n<blockquote>🧿 <u>𝐍𝐚𝐦𝐞</u> : <code>{mv_naam}</code>\n\n🔢 <u>𝐒𝐞𝐚𝐬𝐨𝐧</u> : {season}\n\n⏳ <u>𝐄𝐩𝐢𝐬𝐨𝐝𝐞</u> : {episode}\n\n"
     if movies and movies.get('genres'):
-        caption += f"🎭 <u>𝐆𝐞𝐧𝐫𝐞𝐬</u> : #{movies.get('genres')}\n\n"
+        caption += f"🎭 <u>𝐆𝐞𝐧𝐫𝐞𝐬</u> : {' '.join(f'#{genre}' for genre in movies.get('genres', []))}\n\n"
     if movies and movies.get('countries'):
         caption += f"🌍 <u>𝐂𝐨𝐮𝐧𝐭𝐫𝐲</u> : #{movies.get('countries')}\n\n"
     if languages_str:
@@ -187,7 +187,7 @@ async def asia_media(bot, message):
     mv_naam = mv_naam.replace(".", " ").replace("_", " ").replace("-", " ")
     mv_naamf = media.file_name.replace(".", " ").replace("_", " ").replace("-", " ")
     search = f"{mv_naam} {year}" if year else mv_naam
-    Title, Rating, Type, Country, Released_date, Episodes, Genre, Synopsis, Poster = await mdlsearch(search)
+    Movies = await mdlsearch(search)
     season = await getSeason(mv_naamf)
     episode = await getEpisode(mv_naamf)
 
@@ -197,27 +197,27 @@ async def asia_media(bot, message):
     caption = f" "
     if year and year.isdigit():
         if episode is None:
-            caption = f"<b>#NowAvailable \n#Movie:\n\n<blockquote>🧿 <u>𝐍𝐚𝐦𝐞</u> : <code>{mv_naam}</code>\n\n📆 <u>𝐘𝐞𝐚𝐫</u> : {year}\n\n"
+            caption = f"<b>#Movie:\n\n<blockquote>🧿 <u>𝐍𝐚𝐦𝐞</u> : <code>{mv_naam}</code>\n\n📆 <u>𝐘𝐞𝐚𝐫</u> : {year}\n\n"
         elif episode == 1:
-            caption = f"<b>#NowAvailable \n#Drama:\n\n<blockquote>🧿 <u>𝐍𝐚𝐦𝐞</u> : <code>{mv_naam}</code>\n\n📆 <u>𝐘𝐞𝐚𝐫</u> : {year}\n\n🔢 <u>𝐒𝐞𝐚𝐬𝐨𝐧</u> : {season}\n\n⏳ <u>𝐄𝐩𝐢𝐬𝐨𝐝𝐞</u> : {episode}\n\n"
+            caption = f"<b>#Drama:\n\n<blockquote>🧿 <u>𝐍𝐚𝐦𝐞</u> : <code>{mv_naam}</code>\n\n📆 <u>𝐘𝐞𝐚𝐫</u> : {year}\n\n🔢 <u>𝐒𝐞𝐚𝐬𝐨𝐧</u> : {season}\n\n⏳ <u>𝐄𝐩𝐢𝐬𝐨𝐝𝐞</u> : {episode}\n\n"
         else:
             caption = f"<b>#DramaUpdate:\n\n<blockquote>🧿 <u>𝐍𝐚𝐦𝐞</u> : <code>{mv_naam}</code>\n\n📆 <u>𝐘𝐞𝐚𝐫</u> : {year}\n\n🔢 <u>𝐒𝐞𝐚𝐬𝐨𝐧</u> : {season}\n\n⏳ <u>𝐄𝐩𝐢𝐬𝐨𝐝𝐞</u> : {episode}\n\n"
     else:
         if episode is None:
-            caption = f"<b>#NowAvailable \n#Movie:\n\n<blockquote>🧿 <u>𝐍𝐚𝐦𝐞</u> : <code>{mv_naam}</code>\n\n"
+            caption = f"<b>#Movie:\n\n<blockquote>🧿 <u>𝐍𝐚𝐦𝐞</u> : <code>{mv_naam}</code>\n\n"
         elif episode == 1:
-            caption = f"<b>#NowAvailable \n#Drama:\n\n<blockquote>🧿 <u>𝐍𝐚𝐦𝐞</u> : <code>{mv_naam}</code>\n\n🔢 <u>𝐒𝐞𝐚𝐬𝐨𝐧</u> : {season}\n\n⏳ <u>𝐄𝐩𝐢𝐬𝐨𝐝𝐞</u> : {episode}\n\n"
+            caption = f"<b>#Drama:\n\n<blockquote>🧿 <u>𝐍𝐚𝐦𝐞</u> : <code>{mv_naam}</code>\n\n🔢 <u>𝐒𝐞𝐚𝐬𝐨𝐧</u> : {season}\n\n⏳ <u>𝐄𝐩𝐢𝐬𝐨𝐝𝐞</u> : {episode}\n\n"
         else:
             caption = f"<b>#DramaUpdate:\n\n<blockquote>🧿 <u>𝐍𝐚𝐦𝐞</u> : <code>{mv_naam}</code>\n\n🔢 <u>𝐒𝐞𝐚𝐬𝐨𝐧</u> : {season}\n\n⏳ <u>𝐄𝐩𝐢𝐬𝐨𝐝𝐞</u> : {episode}\n\n"
-    if Genre:
-        caption += f"🎭 <u>𝐆𝐞𝐧𝐫𝐞𝐬</u> : #{Genre}\n\n"
-    if Country:
-        caption += f"🌍 <u>𝐂𝐨𝐮𝐧𝐭𝐫𝐲</u> : #{Country}\n\n"
+    if Movies and others.get('genres'):
+        caption += f"🎭 <u>𝐆𝐞𝐧𝐫𝐞𝐬</u> : {' '.join(f'#{genre}' for genre in others.get('genres', []))}\n\n"
+    if Movies and details.get('country'):
+        caption += f"🌍 <u>𝐂𝐨𝐮𝐧𝐭𝐫𝐲</u> : #{details.get('country')}\n\n"
     if languages_str:
         caption += f"🎙️ <u>𝐋𝐚𝐧𝐠𝐮𝐚𝐠𝐞</u> : #{languages_str}"
     if episode == 1 or episode is None:
-        if Synopsis:
-            caption += f"📋 <u>𝐒𝐲𝐧𝐨𝐩𝐬𝐢𝐬</u> : {Synopsis} </blockquote>\n\n"
+        if Movies and data.get('synopsis'):
+            caption += f"📋 <u>𝐒𝐲𝐧𝐨𝐩𝐬𝐢𝐬</u> : {data.get('synopsis')} </blockquote>\n\n"
     else:
         caption += "</blockquote>\n\n"
     caption += "Click the above name to Copy and Paste In PaxMOVIES' Group to Download👇\n<a href=https://t.me/paxmovies> 𝐏𝐚𝐱𝐌𝐎𝐕𝐈𝐄𝐒' 𝐆𝐫𝐨𝐮𝐩</a></b>"
@@ -227,11 +227,11 @@ async def asia_media(bot, message):
 
     # Send message and get the sent message ID
     sent_msg = None
-    if Poster:
+    if Movies and data.get('poster'):
         try:
             sent_msg = await bot.send_photo(
                 chat_id=UPDATES_CHNL,
-                photo=Poster,
+                photo=data.get('poster'),
                 caption=caption,
                 reply_markup=markup,
                 parse_mode=enums.ParseMode.HTML
