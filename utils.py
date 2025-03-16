@@ -1,4 +1,3 @@
-from httpx import AsyncClient, Timeout
 import aiohttp
 import json
 import logging
@@ -19,7 +18,9 @@ from typing import List, Any, Union, Optional, AsyncGenerator
 from database.users_chats_db import db
 from bs4 import BeautifulSoup
 import requests
+from fuzzywuzzy import fuzz  # For fuzzy string matching
 from shortzy import Shortzy
+import httpx
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
@@ -170,42 +171,65 @@ async def get_poster(query, bulk=False, id=False, file=None):
         'url':f'https://www.imdb.com/title/tt{movieid}'
     }
 
-async def mdlapi(title):
-    link = f"https://kuryana.vercel.app/search/q/{title}"
-    async with aiohttp.ClientSession() as ses:
-        async with ses.get(link) as result:
-            return await result.json()
-        
-async def mdlsearch(query):
-    if query:
-        title = query.strip().replace(" ", "_")
-        movies = await mdlapi(title)
-        res = movies.get("results", {}).get("dramas", [])
-        if not res:
-            return None
-        
-        # Get the most recent movie based on 'year'
-        check = max(res, key=lambda x: int(x.get('year', 0) or 0))['slug']
-        
-        response = await fetch.get(f"https://kuryana.vercel.app/id/{check}")
-        ress = await response.json()  # FIXED: Added `await`
-        
-        data = ress.get('data', {})
-        details = data.get('details', {})
-        others = data.get('others', {})
+async def filter_dramas(query: str, max_retries: int = 20) -> str:
+    """
+    Searches for dramas with the external API using API_URL.
+    Retries up to `max_retries` times if the result is empty.
+    Returns the 'slug' of the best matching drama or movie (based on title similarity),
+    excluding dramas or movies with a year greater than the current year.
+    """
+    retries = 0
+    current_year = datetime.now().year  # Get the current year
 
-        return {
-            "Title": data.get('title'),
-            "Rating": details.get('score'),
-            "Type": details.get('type'),
-            "Country": details.get('country'),
-            "Released_date": details.get('release_date'),
-            "Episodes": details.get('episodes'),
-            "Aired_on": details.get('aired_on'),
-            "Genre": others.get('genres'),
-            "Synopsis": data.get('synopsis'),
-            "Poster": data.get('poster')
-    }
+    async with httpx.AsyncClient() as client:
+        while retries < max_retries:
+            try:
+                response = await client.get(
+                    f"https://kuryana.vercel.app/search/q/{query}",
+                    headers={"User-Agent": "Mozilla/5.0"},
+                )
+                if response.status_code == 200:
+                    data = response.json()
+                    dramas = data.get("results", {}).get("dramas", [])
+                    if dramas:  # If dramas are found, proceed to find the best match
+                        # Calculate similarity scores for each drama's title
+                        best_match = None
+                        best_score = 0  # Initialize with the lowest possible score
+
+                        for drama in dramas:
+                            year = drama.get("year", 0)  # Get the year, default to 0 if not available
+                            # Skip dramas or movies with a year greater than the current year
+                            if year > current_year:
+                                continue
+
+                            title = drama.get("title", "")
+                            # Calculate similarity score between query and title
+                            score = fuzz.ratio(query.lower(), title.lower())
+                            # Update best match if the current score is higher
+                            if score > best_score:
+                                best_score = score
+                                best_match = drama
+
+                        # Return the 'slug' of the best matching drama
+                        if best_match:
+                            return best_match.get("slug", "")
+                        else:
+                            return ""  # No match found
+                    else:  # If dramas are empty, retry
+                        retries += 1
+                        print(f"Retry {retries}: No results found. Retrying...")
+                        await asyncio.sleep(1)  # Use asyncio.sleep instead of time.sleep
+                else:
+                    print(f"Error: API returned status code {response.status_code}")
+                    retries += 1
+                    await asyncio.sleep(1)  # Use asyncio.sleep instead of time.sleep
+            except Exception as e:
+                print(f"An error occurred: {e}")
+                retries += 1
+                await asyncio.sleep(1)  # Use asyncio.sleep instead of time.sleep
+
+    print(f"Max retries ({max_retries}) reached. Returning empty string.")
+    return ""  # Return an empty string if no results are found after retries    
 
 async def broadcast_messages(user_id, message):
     try:
