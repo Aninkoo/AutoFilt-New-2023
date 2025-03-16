@@ -5,7 +5,7 @@ from pyrogram.errors import BadRequest, FloodWait
 from info import CHANNELS, INDEX_EXTENSIONS, UPDATES_CHNL, ASIA_CHNL, ENG_CHNL
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from database.ia_filterdb import save_file
-from utils import add_chnl_message, get_poster, temp, getEpisode, getSeason, mdlsearch, fetch 
+from utils import add_chnl_message, get_poster, temp, getEpisode, getSeason, mdlsearch, fetch_with_retries 
 from collections import deque
 
 media_filter = filters.document | filters.video
@@ -190,7 +190,7 @@ async def asia_media(bot, message):
     search = f"{mv_naam} {year}" if year else mv_naam
     asia_drama = f"{mv_drama}"
     Movies = await filter_dramas(asia_drama)
-    res = (await fetch.get(f"https://kuryana.vercel.app/id/{Movies}")).json()
+    res = (await fetch_with_retries(f"https://kuryana.vercel.app/id/{Movies}")).json()
     season = await getSeason(mv_naamf)
     episode = await getEpisode(mv_naamf)
 
