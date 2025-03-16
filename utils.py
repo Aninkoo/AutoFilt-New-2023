@@ -21,6 +21,7 @@ import requests
 from fuzzywuzzy import fuzz  # For fuzzy string matching
 from shortzy import Shortzy
 import httpx
+from httpx import AsyncClient, Timeout
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
@@ -66,6 +67,21 @@ class temp(object):
     FILES_IDS = {}
     SPELL_CHECK = {}
     BOT = None
+
+async def fetch_with_retries(url, max_retries=10):
+    retries = 0
+    while retries < max_retries:
+        try:
+            response = await fetch.get(url)
+            response.raise_for_status()  # Raise an exception for HTTP errors (4xx, 5xx)
+            return response  # Return the response if successful
+        except Exception as e:
+            retries += 1
+            print(f"Attempt {retries} failed: {e}")
+            if retries >= max_retries:
+                raise  # Re-raise the exception if max retries reached
+            await asyncio.sleep(1)
+    return None  # Return None if all retries fail
 
 async def is_subscribed(bot, query):
     try:
