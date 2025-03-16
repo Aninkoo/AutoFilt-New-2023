@@ -17,4 +17,4 @@ psutil==5.9.4
 telegraph
 httpx[http2]
 httpx
-fuzzywussy
+fuzzywuzzy
