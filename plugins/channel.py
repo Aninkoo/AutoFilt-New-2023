@@ -5,7 +5,7 @@ from pyrogram.errors import BadRequest, FloodWait
 from info import CHANNELS, INDEX_EXTENSIONS, UPDATES_CHNL, ASIA_CHNL, ENG_CHNL
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from database.ia_filterdb import save_file
-from utils import add_chnl_message, get_poster, temp, getEpisode, getSeason, mdlsearch
+from utils import add_chnl_message, get_poster, temp, getEpisode, getSeason, mdlsearch, fetch 
 from collections import deque
 
 media_filter = filters.document | filters.video
@@ -186,8 +186,11 @@ async def asia_media(bot, message):
     languages_str = " ".join(languages) if languages else None
     mv_naam = mv_naam.replace(".", " ").replace("_", " ").replace("-", " ")
     mv_naamf = media.file_name.replace(".", " ").replace("_", " ").replace("-", " ")
+    mv_drama = mv_naam.replace(" ", "-")
     search = f"{mv_naam} {year}" if year else mv_naam
-    Movies = await mdlsearch(search)
+    asia_drama = f"{mv_drama}"
+    Movies = await filter_dramas(asia_drama)
+    res = (await fetch.get(f"https://kuryana.vercel.app/id/{Movies}")).json()
     season = await getSeason(mv_naamf)
     episode = await getEpisode(mv_naamf)
 
@@ -199,25 +202,25 @@ async def asia_media(bot, message):
         if episode is None:
             caption = f"<b>#Movie:\n\n<blockquote>🧿 <u>𝐍𝐚𝐦𝐞</u> : <code>{mv_naam}</code>\n\n📆 <u>𝐘𝐞𝐚𝐫</u> : {year}\n\n"
         elif episode == 1:
-            caption = f"<b>#Drama:\n\n<blockquote>🧿 <u>𝐍𝐚𝐦𝐞</u> : <code>{mv_naam}</code>\n\n📆 <u>𝐘𝐞𝐚𝐫</u> : {year}\n\n🔢 <u>𝐒𝐞𝐚𝐬𝐨𝐧</u> : {season}\n\n⏳ <u>𝐄𝐩𝐢𝐬𝐨𝐝𝐞</u> : {episode}\n\n"
+            caption = f"<b>#Drama:\n\n<blockquote>🧿 <u>𝐍𝐚𝐦𝐞</u> : <code>{mv_naam}</code>\n\n📆 <u>𝐘𝐞𝐚𝐫</u> : {year}\n\n🔢 <u>𝐒𝐞𝐚𝐬𝐨𝐧</u> : {season}\n\n⏳ <u>𝐄𝐩𝐢𝐬𝐨𝐝𝐞</u> : {episode} of {res['data']['details']['episodes'] if Movies else 'Unknown'}\n\n"
         else:
-            caption = f"<b>#DramaUpdate:\n\n<blockquote>🧿 <u>𝐍𝐚𝐦𝐞</u> : <code>{mv_naam}</code>\n\n📆 <u>𝐘𝐞𝐚𝐫</u> : {year}\n\n🔢 <u>𝐒𝐞𝐚𝐬𝐨𝐧</u> : {season}\n\n⏳ <u>𝐄𝐩𝐢𝐬𝐨𝐝𝐞</u> : {episode}\n\n"
+            caption = f"<b>#DramaUpdate:\n\n<blockquote>🧿 <u>𝐍𝐚𝐦𝐞</u> : <code>{mv_naam}</code>\n\n📆 <u>𝐘𝐞𝐚𝐫</u> : {year}\n\n🔢 <u>𝐒𝐞𝐚𝐬𝐨𝐧</u> : {season}\n\n⏳ <u>𝐄𝐩𝐢𝐬𝐨𝐝𝐞</u> : {episode} of {res['data']['details']['episodes'] if Movies else 'Unknown'}\n\n"
     else:
         if episode is None:
             caption = f"<b>#Movie:\n\n<blockquote>🧿 <u>𝐍𝐚𝐦𝐞</u> : <code>{mv_naam}</code>\n\n"
         elif episode == 1:
-            caption = f"<b>#Drama:\n\n<blockquote>🧿 <u>𝐍𝐚𝐦𝐞</u> : <code>{mv_naam}</code>\n\n🔢 <u>𝐒𝐞𝐚𝐬𝐨𝐧</u> : {season}\n\n⏳ <u>𝐄𝐩𝐢𝐬𝐨𝐝𝐞</u> : {episode}\n\n"
+            caption = f"<b>#Drama:\n\n<blockquote>🧿 <u>𝐍𝐚𝐦𝐞</u> : <code>{mv_naam}</code>\n\n🔢 <u>𝐒𝐞𝐚𝐬𝐨𝐧</u> : {season}\n\n⏳ <u>𝐄𝐩𝐢𝐬𝐨𝐝𝐞</u> : {episode} of {res['data']['details']['episodes'] if Movies else 'Unknown'}\n\n"
         else:
-            caption = f"<b>#DramaUpdate:\n\n<blockquote>🧿 <u>𝐍𝐚𝐦𝐞</u> : <code>{mv_naam}</code>\n\n🔢 <u>𝐒𝐞𝐚𝐬𝐨𝐧</u> : {season}\n\n⏳ <u>𝐄𝐩𝐢𝐬𝐨𝐝𝐞</u> : {episode}\n\n"
-    if Movies and others.get('genres'):
-        caption += f"🎭 <u>𝐆𝐞𝐧𝐫𝐞𝐬</u> : {' '.join(f'#{genre}' for genre in others.get('genres', []))}\n\n"
-    if Movies and details.get('country'):
-        caption += f"🌍 <u>𝐂𝐨𝐮𝐧𝐭𝐫𝐲</u> : #{details.get('country')}\n\n"
+            caption = f"<b>#DramaUpdate:\n\n<blockquote>🧿 <u>𝐍𝐚𝐦𝐞</u> : <code>{mv_naam}</code>\n\n🔢 <u>𝐒𝐞𝐚𝐬𝐨𝐧</u> : {season}\n\n⏳ <u>𝐄𝐩𝐢𝐬𝐨𝐝𝐞</u> : {episode} of {res['data']['details']['episodes'] if Movies else 'Unknown'}\n\n"
+    if Movies:
+        caption += f"🎭 <u>𝐆𝐞𝐧𝐫𝐞𝐬</u> : {res['data']['others']['genres']}\n\n"
+    if Movies:
+        caption += f"🌍 <u>𝐂𝐨𝐮𝐧𝐭𝐫𝐲</u> : #{res['data']['details']['country']}\n\n"
     if languages_str:
         caption += f"🎙️ <u>𝐋𝐚𝐧𝐠𝐮𝐚𝐠𝐞</u> : #{languages_str}"
     if episode == 1 or episode is None:
-        if Movies and data.get('synopsis'):
-            caption += f"📋 <u>𝐒𝐲𝐧𝐨𝐩𝐬𝐢𝐬</u> : {data.get('synopsis')} </blockquote>\n\n"
+        if Movies:
+            caption += f"📋 <u>𝐒𝐲𝐧𝐨𝐩𝐬𝐢𝐬</u> : {res['data']['synopsis']} </blockquote>\n\n"
     else:
         caption += "</blockquote>\n\n"
     caption += "Click the above name to Copy and Paste In PaxMOVIES' Group to Download👇\n<a href=https://t.me/paxmovies> 𝐏𝐚𝐱𝐌𝐎𝐕𝐈𝐄𝐒' 𝐆𝐫𝐨𝐮𝐩</a></b>"
@@ -227,11 +230,11 @@ async def asia_media(bot, message):
 
     # Send message and get the sent message ID
     sent_msg = None
-    if Movies and data.get('poster'):
+    if Movies and res['data']['poster']:
         try:
             sent_msg = await bot.send_photo(
                 chat_id=UPDATES_CHNL,
-                photo=data.get('poster'),
+                photo=res['data']['poster'],
                 caption=caption,
                 reply_markup=markup,
                 parse_mode=enums.ParseMode.HTML
@@ -302,4 +305,3 @@ async def asia_media(bot, message):
                 # Remove from deque
                 sent_messages.remove(msg)
                 break  # Exit loop after deleting the previous message
-
