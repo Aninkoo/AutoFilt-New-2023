@@ -18,3 +18,4 @@ telegraph
 httpx[http2]
 httpx
 fuzzywuzzy
+python-Levenshtein
