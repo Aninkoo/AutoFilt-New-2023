@@ -1879,7 +1879,7 @@ async def auto_filter(client, msg, spoll=False):
         stick = await msg.reply_sticker(sticker="CAACAgQAAxkBAdumNGfK4Rcgb3VPtirCHpiZTsf8fExbAAKmDwACdo5YU0nvPPPp_97lNgQ")
         message = msg
         settings = await get_settings(message.chat.id)
-        if re.findall("((^\/|^,|^!|^\.|^[\U0001F600-\U000E007F]).*)", message.text):
+        if re.findall(r"((^\/|^,|^!|^\.|^[\U0001F600-\U000E007F]).*)", message.text):
             await stick.delete()
             return
         if len(message.text) < 100:
