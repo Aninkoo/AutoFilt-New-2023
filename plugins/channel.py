@@ -5,7 +5,7 @@ from pyrogram.errors import BadRequest, FloodWait
 from info import CHANNELS, INDEX_EXTENSIONS, UPDATES_CHNL, ASIA_CHNL, ENG_CHNL
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from database.ia_filterdb import save_file
-from utils import add_chnl_message, get_poster, temp, getEpisode, getSeason, fetch_with_retries 
+from utils import add_chnl_message, get_poster, temp, getEpisode, getSeason, fetch_with_retries, filter_dramas
 from collections import deque
 
 media_filter = filters.document | filters.video
