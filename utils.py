@@ -68,7 +68,7 @@ class temp(object):
     SPELL_CHECK = {}
     BOT = None
 
-async def fetch_with_retries(url, max_retries=10):
+async def fetch_with_retries(url, max_retries=60):
     retries = 0
     while retries < max_retries:
         try:
@@ -187,7 +187,7 @@ async def get_poster(query, bulk=False, id=False, file=None):
         'url':f'https://www.imdb.com/title/tt{movieid}'
     }
 
-async def filter_dramas(query: str, max_retries: int = 20) -> str:
+async def filter_dramas(query: str, max_retries: int = 60) -> str:
     """
     Searches for dramas with the external API using API_URL.
     Retries up to `max_retries` times if the result is empty.
