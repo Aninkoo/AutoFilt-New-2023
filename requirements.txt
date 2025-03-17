@@ -1,7 +1,7 @@
 pyrogram
 pyrofork
 tgcrypto
-pymongo[srv]==
+pymongo[srv]
 motor
 marshmallow
 umongo
