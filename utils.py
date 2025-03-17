@@ -74,7 +74,7 @@ async def fetch_with_retries(url, max_retries=10):
         try:
             response = await fetch.get(url)
             response.raise_for_status()  # Raise an exception for HTTP errors (4xx, 5xx)
-            return response  # Return the response if successful
+            return response.json()  # Return parsed JSON directly
         except Exception as e:
             retries += 1
             print(f"Attempt {retries} failed: {e}")
