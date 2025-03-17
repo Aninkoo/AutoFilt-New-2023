@@ -190,7 +190,7 @@ async def asia_media(bot, message):
     search = f"{mv_naam} {year}" if year else mv_naam
     asia_drama = f"{mv_drama}"
     Movies = await filter_dramas(asia_drama)
-    res = (await fetch_with_retries(f"https://kuryana.vercel.app/id/{Movies}")).json()
+    res = await fetch_with_retries(f"https://kuryana.vercel.app/id/{Movies}")
     season = await getSeason(mv_naamf)
     episode = await getEpisode(mv_naamf)
 
