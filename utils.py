@@ -74,7 +74,7 @@ async def fetch_with_retries(url, max_retries=10):
         try:
             response = await fetch.get(url)
             response.raise_for_status()  # Raise an exception for HTTP errors (4xx, 5xx)
-            return await response.json()  # ✅ FIX: Await the async method
+            return response.json()  # ✅ FIX: No need to await
         except Exception as e:
             retries += 1
             print(f"Attempt {retries} failed: {e}")
@@ -82,6 +82,7 @@ async def fetch_with_retries(url, max_retries=10):
                 raise  # Re-raise the exception if max retries reached
             await asyncio.sleep(1)
     return None  # Return None if all retries fail
+    
 async def is_subscribed(bot, query):
     try:
         user = await bot.get_chat_member(AUTH_CHANNEL, query.from_user.id)
