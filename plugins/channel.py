@@ -196,7 +196,7 @@ async def asia_media(bot, message):
     mv_naamf = media.file_name.replace(".", " ").replace("_", " ").replace("-", " ")
     mv_clean = re.sub(r"[](.*?)[]", r"\1", mv_naam)
     pattern = r"(@\w+|E\d{1,2}|S\d{1,2}E\d{1,2})"
-    escaped_mv_naam = re.sub(pattern, r"\\\1", mv_clean)
+    escaped_mv_naam = re.sub(pattern, "", mv_clean).strip()
     mv_drama = escaped_mv_naam.replace(" ", "-")
     search = f"{mv_naam} {year}" if year else mv_naam
     asia_drama = f"{mv_drama}"
