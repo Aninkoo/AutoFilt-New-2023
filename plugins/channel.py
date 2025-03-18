@@ -70,13 +70,13 @@ async def eng_media(bot, message):
             caption = f"<b>#SeriesUpdate:\n\n<blockquote>🧿 <u>𝐍𝐚𝐦𝐞</u> : <code>{mv_naam}</code>\n\n🔢 <u>𝐒𝐞𝐚𝐬𝐨𝐧</u> : {season}\n\n⏳ <u>𝐄𝐩𝐢𝐬𝐨𝐝𝐞</u> : {episode}\n\n"
     if movies and movies.get('genres'):
         genres = movies.get('genres')
-        # If genres is a string, split it into a list
+        # Ensure genres is a list
         if isinstance(genres, str):
-            genres = genres.split(', ')  # Adjust delimiter based on actual format
+            genres = [genre.strip() for genre in genres.split(',') if genre.strip()]
         caption += f"🎭 <u>𝐆𝐞𝐧𝐫𝐞𝐬</u> : {' '.join(f'#{genre.replace(" ", "")}' for genre in genres)}\n\n"
     if movies and movies.get('countries'):
         countries = movies.get('countries')
-        formatted_countries = ' '.join(f"#{country.replace(' ', '')}" for country in countries)
+        formatted_countries = ' '.join(f"#{country.replace(' ', '')}" for country in movies.get('countries', []))
         caption += f"🌍 <u>𝐂𝐨𝐮𝐧𝐭𝐫𝐲</u> : {formatted_countries}\n\n"
     if languages_str:
         caption += f"🎙️ <u>𝐋𝐚𝐧𝐠𝐮𝐚𝐠𝐞</u> : #{languages_str}"
@@ -208,16 +208,16 @@ async def asia_media(bot, message):
         if episode is None:
             caption = f"<b>#Movie:\n\n<blockquote>🧿 <u>𝐍𝐚𝐦𝐞</u> : <code>{mv_naam}</code>\n\n📆 <u>𝐘𝐞𝐚𝐫</u> : {year}\n\n"
         elif int(episode) == 1:
-            caption = f"<b>#Drama:\n\n<blockquote>🧿 <u>𝐍𝐚𝐦𝐞</u> : <code>{mv_naam}</code>\n\n📆 <u>𝐘𝐞𝐚𝐫</u> : {year}\n\n🔢 <u>𝐒𝐞𝐚𝐬𝐨𝐧</u> : {season}\n\n⏳ <u>𝐄𝐩𝐢𝐬𝐨𝐝𝐞</u> : {episode} of {res['data']['details']['episodes'] if Movies else 'Unknown'}\n\n"
+            caption = f"<b>#Drama:\n\n<blockquote>🧿 <u>𝐍𝐚𝐦𝐞</u> : <code>{mv_naam}</code>\n\n📆 <u>𝐘𝐞𝐚𝐫</u> : {year}\n\n🔢 <u>𝐒𝐞𝐚𝐬𝐨𝐧</u> : {season}\n\n⏳ <u>𝐄𝐩𝐢𝐬𝐨𝐝𝐞</u> : {int(episode)} of {res['data']['details']['episodes'] if Movies else 'Unknown'}\n\n"
         else:
-            caption = f"<b>#DramaUpdate:\n\n<blockquote>🧿 <u>𝐍𝐚𝐦𝐞</u> : <code>{mv_naam}</code>\n\n📆 <u>𝐘𝐞𝐚𝐫</u> : {year}\n\n🔢 <u>𝐒𝐞𝐚𝐬𝐨𝐧</u> : {season}\n\n⏳ <u>𝐄𝐩𝐢𝐬𝐨𝐝𝐞</u> : {episode} of {res['data']['details']['episodes'] if Movies else 'Unknown'}\n\n"
+            caption = f"<b>#DramaUpdate:\n\n<blockquote>🧿 <u>𝐍𝐚𝐦𝐞</u> : <code>{mv_naam}</code>\n\n📆 <u>𝐘𝐞𝐚𝐫</u> : {year}\n\n🔢 <u>𝐒𝐞𝐚𝐬𝐨𝐧</u> : {season}\n\n⏳ <u>𝐄𝐩𝐢𝐬𝐨𝐝𝐞</u> : {int(episode)} of {res['data']['details']['episodes'] if Movies else 'Unknown'}\n\n"
     else:
         if episode is None:
             caption = f"<b>#Movie:\n\n<blockquote>🧿 <u>𝐍𝐚𝐦𝐞</u> : <code>{mv_naam}</code>\n\n"
         elif int(episode) == 1:
-            caption = f"<b>#Drama:\n\n<blockquote>🧿 <u>𝐍𝐚𝐦𝐞</u> : <code>{mv_naam}</code>\n\n🔢 <u>𝐒𝐞𝐚𝐬𝐨𝐧</u> : {season}\n\n⏳ <u>𝐄𝐩𝐢𝐬𝐨𝐝𝐞</u> : {episode} of {res['data']['details']['episodes'] if Movies else 'Unknown'}\n\n"
+            caption = f"<b>#Drama:\n\n<blockquote>🧿 <u>𝐍𝐚𝐦𝐞</u> : <code>{mv_naam}</code>\n\n🔢 <u>𝐒𝐞𝐚𝐬𝐨𝐧</u> : {season}\n\n⏳ <u>𝐄𝐩𝐢𝐬𝐨𝐝𝐞</u> : {int(episode)} of {res['data']['details']['episodes'] if Movies else 'Unknown'}\n\n"
         else:
-            caption = f"<b>#DramaUpdate:\n\n<blockquote>🧿 <u>𝐍𝐚𝐦𝐞</u> : <code>{mv_naam}</code>\n\n🔢 <u>𝐒𝐞𝐚𝐬𝐨𝐧</u> : {season}\n\n⏳ <u>𝐄𝐩𝐢𝐬𝐨𝐝𝐞</u> : {episode} of {res['data']['details']['episodes'] if Movies else 'Unknown'}\n\n"
+            caption = f"<b>#DramaUpdate:\n\n<blockquote>🧿 <u>𝐍𝐚𝐦𝐞</u> : <code>{mv_naam}</code>\n\n🔢 <u>𝐒𝐞𝐚𝐬𝐨𝐧</u> : {season}\n\n⏳ <u>𝐄𝐩𝐢𝐬𝐨𝐝𝐞</u> : {int(episode)} of {res['data']['details']['episodes'] if Movies else 'Unknown'}\n\n"
     if Movies:
         genres = res['data']['others']['genres']
         caption += f"🎭 <u>𝐆𝐞𝐧𝐫𝐞𝐬</u> : {' '.join(f'#{genre}' for genre in genres)}\n\n"
