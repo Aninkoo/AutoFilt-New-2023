@@ -215,7 +215,7 @@ async def filter_dramas(query: str, max_retries: int = 60) -> str:
                         for drama in dramas:
                             year = drama.get("year", 0)  # Get the year, default to 0 if not available
                             # Skip dramas or movies with a year greater than the current year
-                            if year > current_year:
+                            if int(year) > int(current_year):
                                 continue
 
                             title = drama.get("title", "")
