@@ -40,6 +40,7 @@ async def eng_media(bot, message):
         return
 
     cap_txt = media.file_name if media.file_name else media.caption
+    cap_txt = re.sub(r"[](.*?)[]", r"\1", cap_txt)
     mv_naam, year, languages = await add_chnl_message(cap_txt)
     if not mv_naam:
         return
@@ -47,6 +48,7 @@ async def eng_media(bot, message):
     languages_str = " ".join(languages) if languages else None
     mv_naam = mv_naam.replace(".", " ").replace("_", " ").replace("-", " ")
     mv_naamf = media.file_name.replace(".", " ").replace("_", " ").replace("-", " ")
+    mv_naamf = re.sub(r"[](.*?)[]", r"\1", mv_naamf)
     search = f"{mv_naam} {year}" if year else mv_naam
     movies = await get_poster(search)
     season = await getSeason(mv_naamf)
@@ -60,16 +62,16 @@ async def eng_media(bot, message):
         if episode is None:
             caption = f"<b>#Movie:\n\n<blockquote>🧿 <u>𝐍𝐚𝐦𝐞</u> : <code>{mv_naam}</code>\n\n📆 <u>𝐘𝐞𝐚𝐫</u> : {year}\n\n"
         elif int(episode) == 1:
-            caption = f"#Series:\n\n<blockquote>🧿 <u>𝐍𝐚𝐦𝐞</u> : <code>{mv_naam}</code>\n\n📆 <u>𝐘𝐞𝐚𝐫</u> : {year}\n\n🔢 <u>𝐒𝐞𝐚𝐬𝐨𝐧</u> : {season}\n\n⏳ <u>𝐄𝐩𝐢𝐬𝐨𝐝𝐞</u> : {episode}\n\n"
+            caption = f"#Series:\n\n<blockquote>🧿 <u>𝐍𝐚𝐦𝐞</u> : <code>{mv_naam}</code>\n\n📆 <u>𝐘𝐞𝐚𝐫</u> : {year}\n\n🔢 <u>𝐒𝐞𝐚𝐬𝐨𝐧</u> : {season}\n\n⏳ <u>𝐄𝐩𝐢𝐬𝐨𝐝𝐞</u> : {int(episode)}\n\n"
         else:
-            caption = f"<b>#SeriesUpdate:\n\n<blockquote>🧿 <u>𝐍𝐚𝐦𝐞</u> : <code>{mv_naam}</code>\n\n📆 <u>𝐘𝐞𝐚𝐫</u> : {year}\n\n🔢 <u>𝐒𝐞𝐚𝐬𝐨𝐧</u> : {season}\n\n⏳ <u>𝐄𝐩𝐢𝐬𝐨𝐝𝐞</u> : {episode}\n\n"
+            caption = f"<b>#SeriesUpdate:\n\n<blockquote>🧿 <u>𝐍𝐚𝐦𝐞</u> : <code>{mv_naam}</code>\n\n📆 <u>𝐘𝐞𝐚𝐫</u> : {year}\n\n🔢 <u>𝐒𝐞𝐚𝐬𝐨𝐧</u> : {season}\n\n⏳ <u>𝐄𝐩𝐢𝐬𝐨𝐝𝐞</u> : {int(episode)}\n\n"
     else:
         if episode is None:
             caption = f"<b>#Movie:\n\n<blockquote>🧿 <u>𝐍𝐚𝐦𝐞</u> : <code>{mv_naam}</code>\n\n"
         elif int(episode) == 1:
-            caption = f"<b>#Series:\n\n<blockquote>🧿 <u>𝐍𝐚𝐦𝐞</u> : <code>{mv_naam}</code>\n\n🔢 <u>𝐒𝐞𝐚𝐬𝐨𝐧</u> : {season}\n\n⏳ <u>𝐄𝐩𝐢𝐬𝐨𝐝𝐞</u> : {episode}\n\n"
+            caption = f"<b>#Series:\n\n<blockquote>🧿 <u>𝐍𝐚𝐦𝐞</u> : <code>{mv_naam}</code>\n\n🔢 <u>𝐒𝐞𝐚𝐬𝐨𝐧</u> : {season}\n\n⏳ <u>𝐄𝐩𝐢𝐬𝐨𝐝𝐞</u> : {int(episode)}\n\n"
         else:
-            caption = f"<b>#SeriesUpdate:\n\n<blockquote>🧿 <u>𝐍𝐚𝐦𝐞</u> : <code>{mv_naam}</code>\n\n🔢 <u>𝐒𝐞𝐚𝐬𝐨𝐧</u> : {season}\n\n⏳ <u>𝐄𝐩𝐢𝐬𝐨𝐝𝐞</u> : {episode}\n\n"
+            caption = f"<b>#SeriesUpdate:\n\n<blockquote>🧿 <u>𝐍𝐚𝐦𝐞</u> : <code>{mv_naam}</code>\n\n🔢 <u>𝐒𝐞𝐚𝐬𝐨𝐧</u> : {season}\n\n⏳ <u>𝐄𝐩𝐢𝐬𝐨𝐝𝐞</u> : {int(episode)}\n\n"
     if movies and movies.get('genres'):
         genres = movies.get('genres')
         # Ensure genres is a list
@@ -187,6 +189,7 @@ async def asia_media(bot, message):
         return
 
     cap_txt = media.file_name if media.file_name else media.caption
+    cap_txt = re.sub(r"[](.*?)[]", r"\1", cap_txt)
     mv_naam, year, languages = await add_chnl_message(cap_txt)
     if not mv_naam:
         return
@@ -194,10 +197,10 @@ async def asia_media(bot, message):
     languages_str = " ".join(languages) if languages else None
     mv_naam = mv_naam.replace(".", " ").replace("_", " ").replace("-", " ")
     mv_naamf = media.file_name.replace(".", " ").replace("_", " ").replace("-", " ")
-    mv_clean = re.sub(r"[](.*?)[]", r"\1", mv_naam)
+    mv_naamf = re.sub(r"[](.*?)[]", r"\1", mv_naamf)
     pattern = r"(@\w+|E\d{1,2}|S\d{1,2}E\d{1,2})"
-    escaped_mv_naam = re.sub(pattern, "", mv_clean).strip()
-    mv_drama = escaped_mv_naam.replace(" ", "-")
+    mv_naam = re.sub(pattern, "", mv_naam).strip()
+    mv_drama = mv_naam.replace(" ", "-")
     search = f"{mv_naam} {year}" if year else mv_naam
     asia_drama = f"{mv_drama}"
     Movies = await filter_dramas(asia_drama)
