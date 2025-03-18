@@ -213,18 +213,19 @@ async def filter_dramas(query: str, max_retries: int = 60) -> str:
                         best_score = 0  # Initialize with the lowest possible score
 
                         for drama in dramas:
-                            year = drama.get("year", 0)  # Get the year, default to 0 if not available
-                            # Skip dramas or movies with a year greater than the current year
-                            if int(year) > int(current_year):
-                                continue
+                            year = drama.get("year")  # Get the year, might be None
+                            if year is None:
+                                year = 0  # Default to 0 if year is None
+    
+                            # Ensure year is a string before converting to int
+                            if isinstance(year, (int, float, str)):
+                                year = int(year)
+                            else:
+                                year = 0  # Fallback in case of unexpected type
 
-                            title = drama.get("title", "")
-                            # Calculate similarity score between query and title
-                            score = fuzz.ratio(query.lower(), title.lower())
-                            # Update best match if the current score is higher
-                            if score > best_score:
-                                best_score = score
-                                best_match = drama
+                            # Skip dramas or movies with a year greater than the current year
+                            if year > int(current_year):
+                                continue
 
                         # Return the 'slug' of the best matching drama
                         if best_match:
