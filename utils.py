@@ -7,7 +7,6 @@ from imdb import Cinemagoer
 import asyncio
 from pyrogram.types import Message, InlineKeyboardButton, InlineKeyboardMarkup
 from pyrogram import enums
-#from typing import Union
 from random import choice 
 import re
 import os
@@ -27,10 +26,10 @@ logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
 TOT_SHORT = len(SHORTLINK_URL)
-tot_short = TOT_SHORT- 1
+tot_short = TOT_SHORT - 1
 
 BTN_URL_REGEX = re.compile(
-    r"(\[([^\[]+?)\]\((buttonurl|buttonalert):(?:/{0,2})(.+?)(:same)?\))"
+    r"(([^]+?)(buttonurl|buttonalert):(?:/{0,2})(.+?)(:same)?)"
 )
 
 imdb = Cinemagoer() 
@@ -51,13 +50,12 @@ fetch = AsyncClient(
     timeout=Timeout(20),
 )
 
-
-# temp db for banned 
-class temp(object):
+# Temporary database for banned users and other settings
+class Temp:
     BANNED_USERS = []
     BANNED_CHATS = []
     ME = None
-    CURRENT=int(os.environ.get("SKIP", 2))
+    CURRENT = int(os.environ.get("SKIP", 2))
     CANCEL = False
     MELCOW = {}
     FILES = {}
@@ -77,84 +75,67 @@ async def fetch_with_retries(url, max_retries=60):
             return response.json()  # ✅ FIX: No need to await
         except Exception as e:
             retries += 1
-            print(f"Attempt {retries} failed: {e}")
+            logger.warning(f"Attempt {retries} failed: {e}")
             if retries >= max_retries:
                 raise  # Re-raise the exception if max retries reached
             await asyncio.sleep(1)
     return None  # Return None if all retries fail
-    
+
 async def is_subscribed(bot, query):
     try:
         user = await bot.get_chat_member(AUTH_CHANNEL, query.from_user.id)
     except UserNotParticipant:
-        pass
+        return False
     except Exception as e:
         logger.exception(e)
-    else:
-        if user.status != enums.ChatMemberStatus.BANNED:
-            return True
-
-    return False
+        return False
+    return user.status != enums.ChatMemberStatus.BANNED
 
 async def getEpisode(filename):
     match = re.search(r'(?ix)(?:E(\d{1,2})|S\d{1,2}E(\d{1,2})|Ep(\d{1,2})|episode (\d+))', filename)
     if match:
-            return match.group(1) or match.group(2) or match.group(3) or match.group(4)
+        return match.group(1) or match.group(2) or match.group(3) or match.group(4)
+    return None
 
 async def getSeason(filename):
     match = re.search(r'(?ix)(?:season (\d{1,2})|S(\d{1,2}))', filename)
     if match:
-            return match.group(1) or match.group(2)
+        return match.group(1) or match.group(2)
+    return None
 
 async def get_poster(query, bulk=False, id=False, file=None):
     if not id and query is not None:
-        #query = (str(query).strip()).lower()
-        
-        query = (query.strip()).lower()
+        query = query.strip().lower()
         title = query
         year = re.findall(r'[1-2]\d{3}$', query, re.IGNORECASE)
         if year:
-            year = list_to_str(year[:1])
-            title = (query.replace(year, "")).strip()
+            year = year[0]
+            title = query.replace(year, "").strip()
         elif file is not None:
             year = re.findall(r'[1-2]\d{3}', file, re.IGNORECASE)
             if year:
-                year = list_to_str(year[:1]) 
+                year = year[0]
         else:
             year = None
-        movieid = imdb.search_movie(title.lower(), results=10)
-        if not movieid:
+
+        movie_list = imdb.search_movie(title, results=10)
+        if not movie_list:
             return None
-        if year:
-            filtered=list(filter(lambda k: str(k.get('year')) == str(year), movieid))
-            if not filtered:
-                filtered = movieid
-        else:
-            filtered = movieid
-        movieid=list(filter(lambda k: k.get('kind') in ['movie', 'tv series'], filtered))
-        if not movieid:
-            movieid = filtered
-        if bulk:
-            return movieid
-        movieid = movieid[0].movieID
+
+        filtered = [m for m in movie_list if str(m.get('year')) == str(year)] if year else movie_list
+        movie_list = [m for m in filtered if m.get('kind') in ['movie', 'tv series']] or filtered
+
+        if not movie_list:
+            return None
+        movie_id = movie_list[0].movieID
     else:
-        movieid = query
-    movie = imdb.get_movie(movieid)
-    if movie.get("original air date"):
-        date = movie["original air date"]
-    elif movie.get("year"):
-        date = movie.get("year")
-    else:
-        date = "N/A"
-    plot = ""
-    if not LONG_IMDB_DESCRIPTION:
-        plot = movie.get('plot')
-        if plot and len(plot) > 0:
-            plot = plot[0]
-    else:
-        plot = movie.get('plot outline')
+        movie_id = query
+
+    movie = imdb.get_movie(movie_id)
+    date = movie.get("original air date") or movie.get("year") or "N/A"
+    plot = movie.get('plot outline') if LONG_IMDB_DESCRIPTION else (movie.get('plot') or [""])[0]
     if plot and len(plot) > 800:
-        plot = plot[0:800] + "..."
+        plot = plot[:800] + "..."
 
     return {
         'title': movie.get('title'),
@@ -171,10 +152,10 @@ async def get_poster(query, bulk=False, id=False, file=None):
         "certificates": list_to_str(movie.get("certificates")),
         "languages": list_to_str(movie.get("languages")),
         "director": list_to_str(movie.get("director")),
-        "writer":list_to_str(movie.get("writer")),
-        "producer":list_to_str(movie.get("producer")),
-        "composer":list_to_str(movie.get("composer")) ,
-        "cinematographer":list_to_str(movie.get("cinematographer")),
+        "writer": list_to_str(movie.get("writer")),
+        "producer": list_to_str(movie.get("producer")),
+        "composer": list_to_str(movie.get("composer")),
+        "cinematographer": list_to_str(movie.get("cinematographer")),
         "music_team": list_to_str(movie.get("music department")),
         "distributors": list_to_str(movie.get("distributors")),
         'release_date': date,
@@ -184,15 +165,14 @@ async def get_poster(query, bulk=False, id=False, file=None):
         'plot': plot,
         'plots': movie.get('plot'),
         'rating': str(movie.get("rating")),
-        'url':f'https://www.imdb.com/title/tt{movieid}'
-    }
+        'url': f'https://www.imdb.com/title/tt{movie_id}'
+}
 
 async def filter_dramas(query: str, max_retries: int = 60) -> str:
     """
-    Searches for dramas with the external API using API_URL.
-    Retries up to `max_retries` times if the result is empty.
-    Returns the 'slug' of the best matching drama or movie (based on title similarity),
-    excluding dramas or movies with a year greater than the current year.
+    Searches for dramas using an external API.
+    Retries up to `max_retries` times if no result is found.
+    Returns the 'slug' of the best matching drama, excluding those with a year greater than the current year.
     """
     retries = 0
     current_year = datetime.now().year  # Get the current year
@@ -207,46 +187,23 @@ async def filter_dramas(query: str, max_retries: int = 60) -> str:
                 if response.status_code == 200:
                     data = response.json()
                     dramas = data.get("results", {}).get("dramas", [])
-                    if dramas:  # If dramas are found, proceed to find the best match
-                        # Calculate similarity scores for each drama's title
-                        best_match = None
-                        best_score = 0  # Initialize with the lowest possible score
-
-                        for drama in dramas:
-                            year = drama.get("year")  # Get the year, might be None
-                            if year is None:
-                                year = 0  # Default to 0 if year is None
-    
-                            # Ensure year is a string before converting to int
-                            if isinstance(year, (int, float, str)):
-                                year = int(year)
-                            else:
-                                year = 0  # Fallback in case of unexpected type
-
-                            # Skip dramas or movies with a year greater than the current year
-                            if year > int(current_year):
-                                continue
-
-                        # Return the 'slug' of the best matching drama
-                        if best_match:
-                            return best_match.get("slug", "")
-                        else:
-                            return ""  # No match found
-                    else:  # If dramas are empty, retry
-                        retries += 1
-                        print(f"Retry {retries}: No results found. Retrying...")
-                        await asyncio.sleep(1)  # Use asyncio.sleep instead of time.sleep
-                else:
-                    print(f"Error: API returned status code {response.status_code}")
-                    retries += 1
-                    await asyncio.sleep(1)  # Use asyncio.sleep instead of time.sleep
-            except Exception as e:
-                print(f"An error occurred: {e}")
+                    if dramas:
+                        best_match = max(
+                            (d for d in dramas if int(d.get("year", 0)) <= current_year),
+                            key=lambda d: fuzz.ratio(query.lower(), d.get("title", "").lower()),
+                            default=None,
+                        )
+                        return best_match.get("slug", "") if best_match else ""
                 retries += 1
-                await asyncio.sleep(1)  # Use asyncio.sleep instead of time.sleep
+                logger.warning(f"Retry {retries}: No results found. Retrying...")
+                await asyncio.sleep(1)
+            except Exception as e:
+                logger.error(f"An error occurred: {e}")
+                retries += 1
+                await asyncio.sleep(1)
 
-    print(f"Max retries ({max_retries}) reached. Returning empty string.")
-    return ""  # Return an empty string if no results are found after retries    
+    logger.warning(f"Max retries ({max_retries}) reached. Returning empty string.")
+    return ""
 
 async def broadcast_messages(user_id, message):
     try:
@@ -254,115 +211,115 @@ async def broadcast_messages(user_id, message):
         await message.pin()
         return True, "Success"
     except FloodWait as e:
-        await asyncio.sleep(e.x)
+        await asyncio.sleep(e.value)
         return await broadcast_messages(user_id, message)
     except InputUserDeactivated:
         await db.delete_user(int(user_id))
-        logging.info(f"{user_id}-Removed from Database, since deleted account.")
+        logger.info(f"{user_id} - Removed from Database (deleted account).")
         return False, "Deleted"
     except UserIsBlocked:
-        logging.info(f"{user_id} -Blocked the bot.")
+        logger.info(f"{user_id} - Blocked the bot.")
         return False, "Blocked"
     except PeerIdInvalid:
         await db.delete_user(int(user_id))
-        logging.info(f"{user_id} - PeerIdInvalid")
+        logger.info(f"{user_id} - PeerIdInvalid.")
         return False, "Error"
     except Exception as e:
+        logger.error(f"Unexpected error: {e}")
         return False, "Error"
 
 async def broadcast_messages_group(chat_id, message):
     try:
-        kd = await message.copy(chat_id=chat_id)
+        msg = await message.copy(chat_id=chat_id)
         try:
-            await kd.pin()
-        except:
+            await msg.pin()
+        except Exception:
             pass
-        return True, "Succes"
+        return True, "Success"
     except FloodWait as e:
-        await asyncio.sleep(e.x)
+        await asyncio.sleep(e.value)
         return await broadcast_messages_group(chat_id, message)
     except Exception as e:
+        logger.error(f"Unexpected error: {e}")
         return False, "Error"
 
 async def search_gagala(text):
-    usr_agent = {
+    """Performs a Google search and returns a list of result titles."""
+    headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) '
-        'Chrome/61.0.3163.100 Safari/537.36'
-        }
-    text = text.replace(" ", '+')
+                      'Chrome/61.0.3163.100 Safari/537.36'
+    }
+    text = text.replace(" ", "+")
     url = f'https://www.google.com/search?q={text}'
-    response = requests.get(url, headers=usr_agent)
+
+    response = requests.get(url, headers=headers)
     response.raise_for_status()
+    
     soup = BeautifulSoup(response.text, 'html.parser')
-    titles = soup.find_all( 'h3' )
+    titles = soup.find_all('h3')
     return [title.getText() for title in titles]
 
-
 async def get_settings(group_id):
-    settings = temp.SETTINGS.get(group_id)
+    """Fetches group settings from cache or database."""
+    settings = Temp.SETTINGS.get(group_id)
     if not settings:
         settings = await db.get_settings(group_id)
-        temp.SETTINGS[group_id] = settings
+        Temp.SETTINGS[group_id] = settings
     return settings
-    
+
 async def save_group_settings(group_id, key, value):
+    """Saves updated group settings to cache and database."""
     current = await get_settings(group_id)
     current[key] = value
-    temp.SETTINGS[group_id] = current
+    Temp.SETTINGS[group_id] = current
     await db.update_settings(group_id, current)
-    
-def get_size(size):
-    """Get size in readable format"""
 
+def get_size(size):
+    """Converts file size into human-readable format."""
     units = ["Bytes", "KB", "MB", "GB", "TB", "PB", "EB"]
     size = float(size)
     i = 0
-    while size >= 1024.0 and i < len(units):
+    while size >= 1024.0 and i < len(units) - 1:
         i += 1
         size /= 1024.0
     return "%.2f %s" % (size, units[i])
 
-def split_list(l, n):
-    for i in range(0, len(l), n):
-        yield l[i:i + n]  
+def split_list(lst, n):
+    """Splits a list into smaller lists of size n."""
+    for i in range(0, len(lst), n):
+        yield lst[i:i + n]
 
 def get_file_id(msg: Message):
+    """Extracts the file ID from a media message."""
     if msg.media:
         for message_type in (
-            "photo",
-            "animation",
-            "audio",
-            "document",
-            "video",
-            "video_note",
-            "voice",
-            "sticker"
+            "photo", "animation", "audio", "document", "video",
+            "video_note", "voice", "sticker"
         ):
-            obj = getattr(msg, message_type)
+            obj = getattr(msg, message_type, None)
             if obj:
                 setattr(obj, "message_type", message_type)
                 return obj
+    return None
 
 def extract_user(message: Message) -> Union[int, str]:
-    """extracts the user from a message"""
+    """Extracts user ID and first name from a message."""
     user_id = None
     user_first_name = None
+
     if message.reply_to_message:
         user_id = message.reply_to_message.from_user.id
         user_first_name = message.reply_to_message.from_user.first_name
-
     elif len(message.command) > 1:
         if (
             len(message.entities) > 1 and
             message.entities[1].type == enums.MessageEntityType.TEXT_MENTION
         ):
-           
             required_entity = message.entities[1]
             user_id = required_entity.user.id
             user_first_name = required_entity.user.first_name
         else:
             user_id = message.command[1]
-            # don't want to make a request -_-
             user_first_name = user_id
         try:
             user_id = int(user_id)
@@ -371,42 +328,45 @@ def extract_user(message: Message) -> Union[int, str]:
     else:
         user_id = message.from_user.id
         user_first_name = message.from_user.first_name
-    return (user_id, user_first_name)
+
+    return user_id, user_first_name
 
 def list_to_str(k):
+    """Converts a list to a string with elements separated by commas."""
     if not k:
         return "N/A"
     elif len(k) == 1:
         return str(k[0])
     elif MAX_LIST_ELM:
         k = k[:int(MAX_LIST_ELM)]
-        return ' '.join(f'{elem}, ' for elem in k)
+        return ', '.join(k)
     else:
-        return ' '.join(f'{elem}, ' for elem in k)
+        return ', '.join(k)
 
 def last_online(from_user):
-    time = ""
+    """Returns a formatted string representing the last online status of a user."""
     if from_user.is_bot:
-        time += "🤖 Bot :("
+        return "🤖 Bot :("
     elif from_user.status == enums.UserStatus.RECENTLY:
-        time += "Recently"
+        return "Recently"
     elif from_user.status == enums.UserStatus.LAST_WEEK:
-        time += "Within the last week"
+        return "Within the last week"
     elif from_user.status == enums.UserStatus.LAST_MONTH:
-        time += "Within the last month"
+        return "Within the last month"
     elif from_user.status == enums.UserStatus.LONG_AGO:
-        time += "A long time ago :("
+        return "A long time ago :("
     elif from_user.status == enums.UserStatus.ONLINE:
-        time += "Currently Online"
+        return "Currently Online"
     elif from_user.status == enums.UserStatus.OFFLINE:
-        time += from_user.last_online_date.strftime("%a, %d %b %Y, %H:%M:%S")
-    return time
+        return from_user.last_online_date.strftime("%a, %d %b %Y, %H:%M:%S")
+    return "Unknown"
 
-
-def split_quotes(text: str) -> List:
+def split_quotes(text: str) -> List[str]:
+    """Splits a string based on quotation marks."""
     if not any(text.startswith(char) for char in START_CHAR):
         return text.split(None, 1)
-    counter = 1  # ignore first char -> is some kind of quote
+
+    counter = 1
     while counter < len(text):
         if text[counter] == "\\":
             counter += 1
@@ -416,36 +376,33 @@ def split_quotes(text: str) -> List:
     else:
         return text.split(None, 1)
 
-    # 1 to avoid starting quote, and counter is exclusive so avoids ending
     key = remove_escapes(text[1:counter].strip())
-    # index will be in range, or `else` would have been executed and returned
     rest = text[counter + 1:].strip()
-    if not key:
-        key = text[0] + text[0]
     return list(filter(None, [key, rest]))
 
 def gfilterparser(text, keyword):
+    """Parses text to extract buttons and alerts for inline keyboard formatting."""
     if "buttonalert" in text:
-        text = (text.replace("\n", "\\n").replace("\t", "\\t"))
+        text = text.replace("\n", "\\n").replace("\t", "\\t")
+
     buttons = []
     note_data = ""
     prev = 0
     i = 0
     alerts = []
+
     for match in BTN_URL_REGEX.finditer(text):
-        # Check if btnurl is escaped
         n_escapes = 0
         to_check = match.start(1) - 1
         while to_check > 0 and text[to_check] == "\\":
             n_escapes += 1
             to_check -= 1
 
-        # if even, not escaped -> create button
         if n_escapes % 2 == 0:
             note_data += text[prev:match.start(1)]
             prev = match.end(1)
+
             if match.group(3) == "buttonalert":
-                # create a thruple with button label, url, and newline status
                 if bool(match.group(5)) and buttons:
                     buttons[-1].append(InlineKeyboardButton(
                         text=match.group(2),
@@ -468,40 +425,37 @@ def gfilterparser(text, keyword):
                     text=match.group(2),
                     url=match.group(4).replace(" ", "")
                 )])
-
         else:
             note_data += text[prev:to_check]
             prev = match.start(1) - 1
     else:
         note_data += text[prev:]
 
-    try:
-        return note_data, buttons, alerts
-    except:
-        return note_data, buttons, None
+    return note_data, buttons, alerts if alerts else None
 
 def parser(text, keyword):
+    """Similar to gfilterparser but used for normal parsing."""
     if "buttonalert" in text:
-        text = (text.replace("\n", "\\n").replace("\t", "\\t"))
+        text = text.replace("\n", "\\n").replace("\t", "\\t")
+
     buttons = []
     note_data = ""
     prev = 0
     i = 0
     alerts = []
+
     for match in BTN_URL_REGEX.finditer(text):
-        # Check if btnurl is escaped
         n_escapes = 0
         to_check = match.start(1) - 1
         while to_check > 0 and text[to_check] == "\\":
             n_escapes += 1
             to_check -= 1
 
-        # if even, not escaped -> create button
         if n_escapes % 2 == 0:
             note_data += text[prev:match.start(1)]
             prev = match.end(1)
+
             if match.group(3) == "buttonalert":
-                # create a thruple with button label, url, and newline status
                 if bool(match.group(5)) and buttons:
                     buttons[-1].append(InlineKeyboardButton(
                         text=match.group(2),
@@ -524,170 +478,193 @@ def parser(text, keyword):
                     text=match.group(2),
                     url=match.group(4).replace(" ", "")
                 )])
-
         else:
             note_data += text[prev:to_check]
             prev = match.start(1) - 1
     else:
         note_data += text[prev:]
 
-    try:
-        return note_data, buttons, alerts
-    except:
-        return note_data, buttons, None
+    return note_data, buttons, alerts if alerts else None
 
 def remove_escapes(text: str) -> str:
+    """Removes escape characters from text."""
     res = ""
     is_escaped = False
-    for counter in range(len(text)):
+    for char in text:
         if is_escaped:
-            res += text[counter]
+            res += char
             is_escaped = False
-        elif text[counter] == "\\":
+        elif char == "\\":
             is_escaped = True
         else:
-            res += text[counter]
+            res += char
     return res
 
 async def send_react(chat_info, message):
+    """Sends a random reaction emoji in a chat."""
     available_reactions = chat_info.available_reactions
-    
     full_emoji_set = {
-        "🙏",
-        "🤗",
-        "👾",
-        "🤝",
-        "🎉",
-        "🌚",
-        "👨‍💻",
-        "😎",
-        "😇",
-        "🕊",
-        "💘",
-        "🔥",
-        "🥰",
-        "🗿",
-        "❤️‍🔥",
-        "🍾",
-        "🎃",
-        "👻",
-        "🏆",
-        "☃️",
-        "💯",
-        "⚡",
-        "🙈",
-        "😘",
-        "🤩",
-        "😍",
+        "🙏", "🤗", "👾", "🤝", "🎉", "🌚", "👨‍💻", "😎", "😇",
+        "🕊", "💘", "🔥", "🥰", "🗿", "❤️‍🔥", "🍾", "🎃",
+        "👻", "🏆", "☃️", "💯", "⚡", "🙈", "😘", "🤩", "😍"
     }
     if available_reactions:
         if getattr(available_reactions, "all_are_enabled", False):
             emojis = full_emoji_set
         else:
-            emojis = {
-                reaction.emoji for reaction in available_reactions.reactions
-            }
+            emojis = {reaction.emoji for reaction in available_reactions.reactions}
         await message.react(choice(list(emojis)), big=True)
 
 async def get_verify_status(user_id):
-    verify = await db.get_verify_status(user_id)
-    return verify
+    """Fetches verification status for a user."""
+    return await db.get_verify_status(user_id)
 
 async def update_verify_status(user_id, verify_token="", is_verified=False, verified_time=0, link="", no_short=None):
+    """Updates verification status for a user."""
     current = await get_verify_status(user_id)
     current['verify_token'] = verify_token
     current['is_verified'] = is_verified
     current['verified_time'] = verified_time
     current['link'] = link
     if no_short is not None:
-        if no_short > tot_short:
-            no_short = 0
-        current['no_short'] = no_short
+        current['no_short'] = min(no_short, tot_short)
     await db.update_verify_status(user_id, current)
-    
 
 async def get_shortlink(url, api, link):
+    """Generates a short link using the Shortzy API."""
     shortzy = Shortzy(api_key=api, base_site=url)
-    link = await shortzy.convert(link)
-    return link
+    return await shortzy.convert(link)
 
 def get_readable_time(seconds):
+    """Converts seconds into a human-readable time format."""
     periods = [('day', 86400), ('hours', 3600), ('mins', 60), ('secs', 1)]
     result = ''
     for period_name, period_seconds in periods:
         if seconds >= period_seconds:
             period_value, seconds = divmod(seconds, period_seconds)
-            result += f'{int(period_value)}{period_name}'
-    return result
+            result += f'{int(period_value)}{period_name} '
+    return result.strip()
 
 async def add_chnl_message(file_name):
-    pattern = [
-        (r'^([\w\s-]+)\s(S\d{2})\s?(E(P|p)|E)\d{2}\s'),
-        (r'^([\w\.-]+)\.(S\d{2})(E(P|p)|E|e)\d{2}\.'),
-        (r'^([\w\s]+)\s(\d{4})\s(.*?)\s'),
-        (r'^([\w\.]+)\.(\d{4})\.(.*?)\.')
+    """Extracts movie name, year, and language from the file name."""
+    patterns = [
+        r'^([\w\s-]+)\s(S\d{2})\s?(E(P|p)|E)\d{2}\s',
+        r'^([\w\.-]+)\.(S\d{2})(E(P|p)|E|e)\d{2}\.',
+        r'^([\w\s]+)\s(\d{4})\s(.*?)\s',
+        r'^([\w\.]+)\.(\d{4})\.(.*?)\.'
     ]
-    
-    for pat in pattern:
+
+    for pat in patterns:
         match = re.match(pat, file_name)
         if match:
             movie_name = match.group(1)
-            year = match.group(2) if len(match.groups()) > 1  else None
+            year = match.group(2) if len(match.groups()) > 1 else None
             mov_name = file_name.lower()
-            list1 = []
+            detected_languages = []
             language_keywords = ["tamil", "telugu", "malayalam", "kannada", "english", "hindi", "korean", "japanese"]
             episode = await getEpisode(file_name)
+
             if episode:
                 return movie_name, year, None
+
             for lang in language_keywords:
-                substring_index = mov_name.find(lang)
-                if substring_index != -1:
-                    capitalized_lang = lang.capitalize()
-                    list1.append(capitalized_lang.strip())
-            if len(list1) >= 1:
-                if (movie_name, list1[0]) in update_list:
-                    return None, None, None
+                if lang in mov_name:
+                    detected_languages.append(lang.capitalize())
+
+            if detected_languages:
+                key = (movie_name, detected_languages[0])
             else:
-                if (movie_name, 'No Lang') in update_list:
-                    return None, None, None
-            if len(list1) >= 1:
-                update_list.add((movie_name, list1[0]))
-                return movie_name, year, list1
-            else:
-                update_list.add((movie_name, 'No Lang'))
-                return movie_name, year, None
-    else:
-        return None, None, None
+                key = (movie_name, "No Lang")
+
+            if key in update_list:
+                return None, None, None
+
+            update_list.add(key)
+            return movie_name, year, detected_languages if detected_languages else None
+
+    return None, None, None
 
 def humanbytes(size):
+    """Converts file size into a human-readable format."""
     if not size:
         return ""
     power = 2**10
     n = 0
-    Dic_powerN = {0: ' ', 1: 'Ki', 2: 'Mi', 3: 'Gi', 4: 'Ti'}
-    while size > power:
+    unit_dict = {0: '', 1: 'Ki', 2: 'Mi', 3: 'Gi', 4: 'Ti'}
+    while size >= power and n < len(unit_dict) - 1:
         size /= power
         n += 1
-    return str(round(size, 2)) + " " + Dic_powerN[n] + 'B'
+    return f"{round(size, 2)} {unit_dict[n]}B"
 
 async def send_all(bot, userid, files, ident):
+    """Sends cached media files to a user with a custom caption."""
     for file in files:
         f_caption = file.caption
         title = file.file_name
         size = get_size(file.file_size)
+
         if CUSTOM_FILE_CAPTION:
             try:
-                f_caption = CUSTOM_FILE_CAPTION.format(file_name='' if title is None else title,
-                                                        file_size='' if size is None else size,
-                                                        file_caption='' if f_caption is None else f_caption)
+                f_caption = CUSTOM_FILE_CAPTION.format(
+                    file_name=title or "",
+                    file_size=size or "",
+                    file_caption=f_caption or ""
+                )
             except Exception as e:
-                print(e)
-                f_caption = f_caption
-        if f_caption is None:
-            f_caption = f"{title}"
+                logger.error(f"Error formatting caption: {e}")
+                f_caption = f_caption or title
+
         await bot.send_cached_media(
             chat_id=userid,
             file_id=file.file_id,
-            caption=f_caption,
+            caption=f_caption or title,
             protect_content=True if ident == "filep" else False,
-            reply_markup=InlineKeyboardMarkup( [ [ InlineKeyboardButton('⚔️ 𝖯𝖨𝖱𝖮 𝖴𝖯𝖣𝖠𝖳𝖤𝖲 ⚔️', url="https://t.me/piroxbots") ] ] ))
+            reply_markup=InlineKeyboardMarkup([
+                [InlineKeyboardButton('⚔️ 𝖯𝖨𝖱𝖮 𝖴𝖯𝖣𝖠𝖳𝖤𝖲 ⚔️', url="https://t.me/piroxbots")]
+            ])
+    )
+
+async def get_movie_details(title: str):
+    """Fetches movie details from IMDb based on the given title."""
+    search_results = imdb.search_movie(title, results=5)
+    if not search_results:
+        return None
+
+    movie_id = search_results[0].movieID
+    movie = imdb.get_movie(movie_id)
+
+    details = {
+        "title": movie.get("title"),
+        "year": movie.get("year"),
+        "rating": movie.get("rating"),
+        "genres": list_to_str(movie.get("genres")),
+        "cast": list_to_str(movie.get("cast")),
+        "director": list_to_str(movie.get("director")),
+        "plot": movie.get("plot outline", "No plot available."),
+        "poster": movie.get("full-size cover url"),
+        "url": f"https://www.imdb.com/title/tt{movie_id}/"
+    }
+    return details
+
+async def shorten_url(long_url: str):
+    """Shortens a given URL using a predefined shortening service."""
+    try:
+        response = await fetch.get(f"https://api.shrtco.de/v2/shorten?url={long_url}")
+        data = response.json()
+        return data.get("result", {}).get("short_link", long_url)
+    except Exception as e:
+        logger.error(f"Error shortening URL: {e}")
+        return long_url
+
+def sanitize_filename(filename: str) -> str:
+    """Removes invalid characters from filenames."""
+    return re.sub(r'[\\/*?:"<>|]', "", filename)
+
+def format_message(text: str, max_length: int = 4000):
+    """Truncates a message if it exceeds the max length."""
+    return text if len(text) <= max_length else text[:max_length] + "..."
+
+async def delete_message(bot, chat_id, message_id, delay: int = 5):
+    """Deletes a message after a given delay."""
+    await asyncio.sleep(delay)
+    await bot.delete_messages(chat_id, message_id)
