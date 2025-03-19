@@ -188,6 +188,7 @@ async def get_poster(query, bulk=False, id=False, file=None):
         'url': f'https://www.imdb.com/title/tt{movieid}'
     }
 
+
 async def filter_dramas(query: str, max_retries: int = 60) -> str:
     """
     Searches for dramas with the external API using API_URL.
@@ -217,7 +218,7 @@ async def filter_dramas(query: str, max_retries: int = 60) -> str:
                         for drama in dramas:
                             year = drama.get("year", 0)  # Get the year, default to 0 if not available
                             # Skip dramas or movies with a year greater than the current year
-                            if int(year) > int(current_year):
+                            if year is None or int(year) > int(current_year):
                                 continue
 
                             title = drama.get("title", "")
@@ -244,10 +245,10 @@ async def filter_dramas(query: str, max_retries: int = 60) -> str:
             except Exception as e:
                 print(f"An error occurred: {e}")
                 retries += 1
-                await asyncio.sleep(1)  # Use asyncio.sleep instead of time.sleep
+                await asyncio.sleep(2)  # Use asyncio.sleep instead of time.sleep
 
     print(f"Max retries ({max_retries}) reached. Returning empty string.")
-    return ""  # Return an empty string if no results are found after retries
+    return None  # Return None if no results are found after retries
 
 
 async def broadcast_messages(user_id, message):
