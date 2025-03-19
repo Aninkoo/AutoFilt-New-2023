@@ -102,7 +102,7 @@ async def eng_media(bot, message):
         caption += f"🌍 <u>𝐂𝐨𝐮𝐧𝐭𝐫𝐲</u> : {formatted_countries}\n\n"
 
     if languages_str:
-        caption += f"🎙️ <u>𝐋𝐚𝐧𝐠𝐮𝐚𝐠𝐞</u> : #{languages_str}"
+        caption += f"🎙️ <u>𝐋𝐚𝐧𝐠𝐮𝐚𝐠𝐞</u> : #{languages_str}\n\n"
 
     if episode is None or int(episode) == 1:
         if movies and movies.get('plot'):
