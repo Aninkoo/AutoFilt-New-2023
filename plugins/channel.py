@@ -53,7 +53,7 @@ async def eng_media(bot, message):
     cap_txt = media.file_name if media.file_name else media.caption
     cap_txt = re.sub(r"[](.*?)[]", r"\1", cap_txt)  # Remove unwanted characters
     cap_txt = re.sub(r"[\[\]()]", " ", cap_txt)  # Replace square brackets and parentheses with spaces
-
+    cap_txt = re.sub(r"\s+", " ", cap_txt)  # Replace multiple spaces with a single space
     mv_naam, year, languages = await add_chnl_message(cap_txt)
     if not mv_naam:
         return
