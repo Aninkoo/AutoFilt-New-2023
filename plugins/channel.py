@@ -49,8 +49,11 @@ async def eng_media(bot, message):
         logging.info(f"Duplicate file detected: {media.file_name}")
         return
 
+    # Handle square brackets and parentheses in file names
     cap_txt = media.file_name if media.file_name else media.caption
-    cap_txt = re.sub(r"[](.*?)[]", r"\1", cap_txt)
+    cap_txt = re.sub(r"[](.*?)[]", r"\1", cap_txt)  # Remove unwanted characters
+    cap_txt = re.sub(r"[\[\]()]", " ", cap_txt)  # Replace square brackets and parentheses with spaces
+
     mv_naam, year, languages = await add_chnl_message(cap_txt)
     if not mv_naam:
         return
@@ -59,6 +62,8 @@ async def eng_media(bot, message):
     mv_naam = mv_naam.replace(".", " ").replace("_", " ").replace("-", " ")
     mv_naamf = media.file_name.replace(".", " ").replace("_", " ").replace("-", " ")
     mv_naamf = re.sub(r"[](.*?)[]", r"\1", mv_naamf)
+    mv_naamf = re.sub(r"[\[\]()]", " ", mv_naamf)  # Replace square brackets and parentheses with spaces
+
     search = f"{mv_naam} {year}" if year else mv_naam
     movies = await get_poster(search)
     season = await getSeason(mv_naamf)
