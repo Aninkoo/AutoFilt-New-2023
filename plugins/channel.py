@@ -84,7 +84,7 @@ async def eng_media(bot, message):
         caption += f"🌍 <u>𝐂𝐨𝐮𝐧𝐭𝐫𝐲</u> : {formatted_countries}\n\n"
     if languages_str:
         caption += f"🎙️ <u>𝐋𝐚𝐧𝐠𝐮𝐚𝐠𝐞</u> : #{languages_str}"
-    if int(episode) == 1 or episode is None:
+    if episode is None or int(episode) == 1:
         if movies and movies.get('plot'):
             caption += f"📋 <u>𝐏𝐥𝐨𝐭</u> : {movies.get('plot')} </blockquote>\n\n"
     else:
@@ -235,7 +235,7 @@ async def asia_media(bot, message):
         caption += f"🌍 <u>𝐂𝐨𝐮𝐧𝐭𝐫𝐲</u> : {formatted_country}\n\n"
     if languages_str:
         caption += f"🎙️ <u>𝐋𝐚𝐧𝐠𝐮𝐚𝐠𝐞</u> : #{languages_str}"
-    if int(episode) == 1 or episode is None:
+    if episode is None or int(episode) == 1:
         if Movies:
             caption += f"📋 <u>𝐒𝐲𝐧𝐨𝐩𝐬𝐢𝐬</u> : {res['data']['synopsis']} </blockquote>\n\n"
     else:
