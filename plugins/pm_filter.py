@@ -107,13 +107,25 @@ async def pv_filter(client, message):
         return
     user_id = message.from_user.id
     if user_id in ADMINS:
+        admin_search = message.text.strip()
+        admin_search = admin_search.replace(" ", "_")
+        stick = await message.reply_sticker(sticker="CAACAgQAAxkBAdumNGfK4Rcgb3VPtirCHpiZTsf8fExbAAKmDwACdo5YU0nvPPPp_97lNgQ")
+        btn = [[
+            InlineKeyboardButton('📥 Search Now! 📥', url=f"http://t.me/{temp.U_NAME}?start=SEARCH-{admin_search}")
+        ]]
+        pvt_msg = await message.reply_text(f'👋 𝖧𝖾𝗒 <b>{message.from_user.mention}</b> \n <b>👇 Search here 👇</b>"', reply_markup=InlineKeyboardMarkup(btn), quote=True)
+        await stick.delete()
+        await asyncio.sleep(120)
+        await pvt_msg.delete()
+        await message.delete()
         return # ignore admins
     stick = await message.reply_sticker(sticker="CAACAgQAAxkBAdumNGfK4Rcgb3VPtirCHpiZTsf8fExbAAKmDwACdo5YU0nvPPPp_97lNgQ")
     search = message.text
     files, n_offset, total = await get_search_results(0, query=search.lower(), offset=0, filter=True)
     if int(total) != 0:
         btn = [[
-            InlineKeyboardButton('PaxMOVIES Group', url="https://t.me/paxmovies")
+            InlineKeyboardButton('PaxMOVIES Group', url="https://t.me/paxmovies"),
+            #InlineKeyboardButton('📥 Search Now! 📥', url=f"http://t.me/{temp.U_NAME}?start=SEARCH-{search_with_underscore}")
         ]]
         pvt_msg = await message.reply_text(f'👋 𝖧𝖾𝗒 <b>{message.from_user.mention}</b> \n📁 <b>{str(total)}</b> 𝖱𝖾𝗌𝗎𝗅𝗍𝗌 𝖺𝗋𝖾 𝖿𝗈𝗎𝗇𝖽 𝖿𝗈𝗋 𝗒𝗈𝗎𝗋 𝗊𝗎𝖾𝗋𝗒: <b>{search}</b>.\n\nBut you can not get it here! \n <b>👇 Search here 👇</b>"', reply_markup=InlineKeyboardMarkup(btn), quote=True)
         await stick.delete()
