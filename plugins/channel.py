@@ -80,6 +80,9 @@ async def eng_media(bot, message):
         caption += f"🎭 <u>𝐆𝐞𝐧𝐫𝐞𝐬</u> : {' '.join(f'#{genre.replace(" ", "")}' for genre in genres)}\n\n"
     if movies and movies.get('countries'):
         countries = movies.get('countries')
+        # Ensure countries is a list, even if it's a single string
+        if isinstance(countries, str):
+            countries = [countries]
         formatted_countries = ', '.join(f"#{country.replace(' ', '')}" for country in countries)
         caption += f"🌍 <u>𝐂𝐨𝐮𝐧𝐭𝐫𝐲</u> : {formatted_countries}\n\n"
     if languages_str:
