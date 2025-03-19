@@ -1,18 +1,28 @@
 import asyncio
 import logging
-from pyrogram import Client, filters, enums
-from pyrogram.errors import BadRequest, FloodWait
-from info import CHANNELS, INDEX_EXTENSIONS, UPDATES_CHNL, ASIA_CHNL, ENG_CHNL
-from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
-from database.ia_filterdb import save_file
-from utils import add_chnl_message, get_poster, temp, getEpisode, getSeason, fetch_with_retries, filter_dramas
 import re
 from collections import deque
 
+from pyrogram import Client, filters, enums
+from pyrogram.errors import BadRequest, FloodWait
+from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
-media_filter = filters.document | filters.video
+from info import CHANNELS, INDEX_EXTENSIONS, UPDATES_CHNL, ASIA_CHNL, ENG_CHNL
+from database.ia_filterdb import save_file
+from utils import (
+    add_chnl_message,
+    get_poster,
+    temp,
+    getEpisode,
+    getSeason,
+    fetch_with_retries,
+    filter_dramas,
+)
+
 # Store the last 50 messages
 sent_messages = deque(maxlen=50)
+
+media_filter = filters.document | filters.video
 
 @Client.on_message(filters.chat(CHANNELS) & media_filter)
 async def media(bot, message):
@@ -72,36 +82,34 @@ async def eng_media(bot, message):
             caption = f"<b>#Series:\n\n<blockquote>🧿 <u>𝐍𝐚𝐦𝐞</u> : <code>{mv_naam}</code>\n\n🔢 <u>𝐒𝐞𝐚𝐬𝐨𝐧</u> : {season}\n\n⏳ <u>𝐄𝐩𝐢𝐬𝐨𝐝𝐞</u> : {int(episode)}\n\n"
         else:
             caption = f"<b>#SeriesUpdate:\n\n<blockquote>🧿 <u>𝐍𝐚𝐦𝐞</u> : <code>{mv_naam}</code>\n\n🔢 <u>𝐒𝐞𝐚𝐬𝐨𝐧</u> : {season}\n\n⏳ <u>𝐄𝐩𝐢𝐬𝐨𝐝𝐞</u> : {int(episode)}\n\n"
+
     if movies and movies.get('genres'):
         genres = movies.get('genres')
-        # Ensure genres is a list
         if isinstance(genres, str):
             genres = [genre.strip() for genre in genres.split(',') if genre.strip()]
         caption += f"🎭 <u>𝐆𝐞𝐧𝐫𝐞𝐬</u> : {' '.join(f'#{genre.replace(" ", "")}' for genre in genres)}\n\n"
+
     if movies and movies.get('countries'):
         countries = movies.get('countries')
-    
-        # Ensure countries is a list
         if isinstance(countries, str):
-            # If it's a single string, split by commas (if multiple countries) or treat as a single country
             countries = [country.strip() for country in countries.split(',')]
-    
-        # Format the countries
         formatted_countries = ', '.join(f"#{country.replace(' ', '')}" for country in countries)
         caption += f"🌍 <u>𝐂𝐨𝐮𝐧𝐭𝐫𝐲</u> : {formatted_countries}\n\n"
+
     if languages_str:
         caption += f"🎙️ <u>𝐋𝐚𝐧𝐠𝐮𝐚𝐠𝐞</u> : #{languages_str}"
+
     if episode is None or int(episode) == 1:
         if movies and movies.get('plot'):
             caption += f"📋 <u>𝐏𝐥𝐨𝐭</u> : {movies.get('plot')} </blockquote>\n\n"
     else:
         caption += "</blockquote>\n\n"
+
     caption += "Click the above name to Copy and Paste In PaxMOVIES' Group to Download👇\n<a href=https://t.me/paxmovies> 𝐏𝐚𝐱𝐌𝐎𝐕𝐈𝐄𝐒' 𝐆𝐫𝐨𝐮𝐩</a></b>"
 
     search_with_underscore = search.replace(" ", "_")
     markup = InlineKeyboardMarkup([[InlineKeyboardButton('📥 ᴅᴏᴡɴʟᴏᴀᴅ ɴᴏᴡ 📥', url=f"http://t.me/{temp.U_NAME}?start=SEARCH-{search_with_underscore}")]])
 
-    # Send message and get the sent message ID
     sent_msg = None
     if movies and movies.get('poster'):
         try:
@@ -178,8 +186,6 @@ async def eng_media(bot, message):
                 # Remove from deque
                 sent_messages.remove(msg)
                 break  # Exit loop after deleting the previous message
-
-    #await asyncio.sleep(1)
 
 @Client.on_message(filters.chat(ASIA_CHNL) & media_filter)
 async def asia_media(bot, message):
