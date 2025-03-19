@@ -203,7 +203,8 @@ async def filter_dramas(query: str, max_retries: int = 60) -> str:
             try:
                 response = await client.get(
                     f"https://kuryana.vercel.app/search/q/{query}",
-                    headers={"User-Agent": "Mozilla/5.0"},
+                    headers = {"User-Agent": "Mozilla/5.0 (Linux; Android 10; SM-A505FN) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.120 Mobile Safari/537.36"},
+                    follow_redirects=True
                 )
                 if response.status_code == 200:
                     data = response.json()
