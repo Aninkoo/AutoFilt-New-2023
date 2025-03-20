@@ -146,10 +146,10 @@ async def start(client, message):
             reply_markup = None
         else:
             btn = [[
-                InlineKeyboardButton("📥   Dᴏᴡɴʟᴏᴀᴅ ʜᴇᴛᴇ   📥", url=f'https://t.me/{temp.U_NAME}?start={verify_status["link"]}')
+                InlineKeyboardButton("📥   Dᴏᴡɴʟᴏᴀᴅ Hᴇʀᴇ   📥", url=f'https://t.me/{temp.U_NAME}?start={verify_status["link"]}')
             ]]
             reply_markup = InlineKeyboardMarkup(btn)
-        await message.reply(f"✅ Yᴏᴜ'ᴠᴇ sᴜᴄᴄᴇsғᴜʟʏ ᴠᴇʀɪғɪᴇᴅ ᴏɴ PaxMOVIES.\n\n <b>Vᴀʟɪᴅɪᴛʏ:</b> {get_readable_time(VERIFY_EXPIRE)}\n\n<blockquote>Get back to the Group, search and download as you desire till your next verification!</blockquote>\n\n ◦•●◉✿👇 <b>Yᴏᴜʀ Fɪʟᴇ Hᴇᴀʀ</b> 👇✿◉●•◦", reply_markup=reply_markup, quote=True, protect_content=False)
+        await message.reply(f"✅ Yᴏᴜ'ᴠᴇ sᴜᴄᴄᴇsғᴜʟʏ ᴠᴇʀɪғɪᴇᴅ ᴏɴ PaxMOVIES.\n\n <b>Vᴀʟɪᴅɪᴛʏ:</b> {get_readable_time(VERIFY_EXPIRE)}\n\n<blockquote>Get back to the Group, search and download as you desire till your next verification!</blockquote>\n\n ◦•●◉✿👇 <b>Yᴏᴜʀ Fɪʟᴇ Hᴇʀᴇ</b> 👇✿◉●•◦", reply_markup=reply_markup, quote=True, protect_content=False)
         return
     
     verify_status = await get_verify_status(message.from_user.id)
@@ -165,7 +165,7 @@ async def start(client, message):
         ],[
             InlineKeyboardButton("⁉️ ʜᴏᴡ ᴛᴏ ᴠᴇʀɪꜰʏ ⁉️", url=f'https://t.me/c/2065329199/2403')
         ]]
-        await message.reply(f"👋 ʜᴇʏ ᴛʜᴇʀᴇ,\n\n📌 ʏᴏᴜ'ʀᴇ ɴᴏᴛ ᴠᴇʀɪꜰɪᴇᴅ ᴏʀ ʏᴏᴜʀ ᴠᴇʀɪғɪᴄᴀᴛɪᴏɴ ʜᴀs ᴇxᴘɪʀᴇᴅ\n\n <b>Vᴇʀɪғɪᴄᴀᴛɪᴏɴ Tɪᴍᴇᴏᴜᴛ:</b> {get_readable_time(VERIFY_EXPIRE)}\n <u>ᴘʟᴇᴀꜱᴇ ᴠᴇʀɪꜰʏ ᴀɴᴅ ɢᴇᴛ ᴜɴʟɪᴍɪᴛᴇᴅ ᴀᴄᴄᴇꜱꜱ ᴛɪʟʟ ɴᴇxᴛ ᴠᴇʀɪꜰɪᴄᴀᴛɪᴏɴ</u>.", reply_markup=InlineKeyboardMarkup(btn), protect_content=True)        
+        await message.reply(f"👋 ʜᴇʏ ᴛʜᴇʀᴇ,\n\n📌 ʏᴏᴜ'ʀᴇ ɴᴏᴛ ᴠᴇʀɪꜰɪᴇᴅ ᴏʀ ʏᴏᴜʀ ᴠᴇʀɪғɪᴄᴀᴛɪᴏɴ ʜᴀs ᴇxᴘɪʀᴇᴅ\n\n <b>Vᴇʀɪғɪᴄᴀᴛɪᴏɴ Tɪᴍᴇᴏᴜᴛ:</b> {get_readable_time(VERIFY_EXPIRE)}\n\n <u>ᴘʟᴇᴀꜱᴇ ᴠᴇʀɪꜰʏ ᴀɴᴅ ɢᴇᴛ ᴜɴʟɪᴍɪᴛᴇᴅ ᴀᴄᴄᴇꜱꜱ ᴛɪʟʟ ɴᴇxᴛ ᴠᴇʀɪꜰɪᴄᴀᴛɪᴏɴ</u>.", reply_markup=InlineKeyboardMarkup(btn), protect_content=True)        
         return
 
     if data.split("-", 1)[0] == "SEARCH":
