@@ -159,7 +159,7 @@ async def start(client, message):
         await update_verify_status(message.from_user.id, verify_token=token, link="" if data == 'inline_verify' else data)
         s = verify_status['no_short']
         pax = f"https://telegram.me/{temp.U_NAME}?start=verify_{token}"
-        link = f"https://paxmovies.site/#{pax}"
+        link = f"https://paxmovies.xyz/#{pax}"
         btn = [[
             InlineKeyboardButton(text="♻️ ᴄʟɪᴄᴋ ʜᴇʀᴇ ᴛᴏ ᴠᴇʀɪꜰʏ ♻️", web_app=WebAppInfo(url=link))
         ],[
@@ -176,7 +176,7 @@ async def start(client, message):
         req = message.from_user.id if message.from_user else 0
         key = f"{message.from_user.id}"
         BUTTONS[key] = mov_name
-        cap = f"<b>🧿 ᴛɪᴛʟᴇ : <code>{mov_name}</code>\n📝 ʀᴇǫᴜᴇsᴛᴇᴅ ʙʏ : {message.from_user.mention}\n⚜️ ᴘᴏᴡᴇʀᴇᴅ ʙʏ : 👇\n⚡ {message.chat.title} \n\n</b>"
+        cap = f"<b>🧿 ᴛɪᴛʟᴇ : <code>{mov_name}</code>\n📝 ʀᴇǫᴜᴇsᴛᴇᴅ ʙʏ : {message.from_user.mention}\n⚜️ ᴘᴏᴡᴇʀᴇᴅ ʙʏ : 👇\n⚡ PaxTV \n\n</b>"
         CAP[key] = cap
         pre = 'file'
         files, offset, total_results = await get_search_results(message.chat.id , mov_name.lower(), offset=0, filter=True)
@@ -188,7 +188,7 @@ async def start(client, message):
         btn = []
         end_cap = f"""© @paxtv"""
         for file in files:
-            files_link += f"""\n<blockquote><b>🎬 𝐅𝐢𝐥𝐞: <a href=https://t.me/{temp.U_NAME}?start={pre}_{file.file_id}>{file.file_name}</a></blockquote>\n📁 𝐒𝐢𝐳𝐞: {get_size(file.file_size)}</b>\n"""
+            files_link += f"<b>📁 {get_size(file.file_size)} <a href=https://t.me/{temp.U_NAME}?start={pre}_{file.file_id}> ▷ {' '.join(filter(lambda x: not x.startswith('[') and not x.startswith('@') and not x.startswith('www.'), file.file_name.split()))}\n\n</a></b>"
             
         
         btn.insert(0,
