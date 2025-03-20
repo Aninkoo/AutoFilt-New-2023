@@ -9,7 +9,7 @@ CMD = ["/", "."]
 
 @Client.on_message(filters.command("alive", CMD))
 async def check_alive(_, message):
-    await message.reply_text("<blockquote><b>Alive? I am Perfect 💥 Since You Came Here are Some Goodies For You 💕</b>\n</blockquote>Click ➠ /start For Start Menu.\n\nClick ➠ /help For Search Help.\n\nClick ➠ /donate For Respect++.\n<blockquote><b>Have a Great Day Ahead ❣️</b></blockquote>")
+    await message.reply_text("<blockquote><b>Alive? I am Perfectly fine💥 </b>\n\n</blockquote> Waiting For Your Search!\n\n<blockquote><b>Have a Great Day Ahead ❣️</b></blockquote>")
 
 @Client.on_message(filters.command("help", CMD))
 async def help(_, message):
@@ -28,9 +28,6 @@ async def series(_, message):
     await asyncio.sleep(60)
     await k.delete()
 
-@Client.on_message(filters.command("donate", CMD))
-async def tutorial(_, message):
-    await message.reply_text("<b>If You Like Our Service Please Consider Donation, UPI ID and QR Code Available here👇\n\nClick ➠ https://t.me/isaimini_donation/5 \n<blockquote></b>\"<i>The smallest act of kindness is worth more than the grandest intention.\n\nமகத்தான நோக்கத்தை விட சிறிய கருணை செயலே மதிப்புள்ளது</i>\"\n</blockquote><b>~ Oscar Wilde</b>", disable_web_page_preview=True, quote=True)
 
 @Client.on_message(filters.command("ping", CMD))
 async def ping(_, message):
