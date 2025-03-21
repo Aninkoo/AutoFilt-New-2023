@@ -64,6 +64,9 @@ async def stream_downloader(bot, query):
     
 @Client.on_message(filters.group & filters.text & filters.incoming)
 async def give_filter(client, message):
+    if message.left_chat_member:
+        # Delete the message
+        await message.delete()
     if message.chat.id == SUPPORT_CHAT_ID:
         search = message.text
         temp_files, temp_offset, total_results = await get_search_results(chat_id=message.chat.id, query=search.lower(), offset=0, filter=True)
