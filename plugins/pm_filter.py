@@ -61,11 +61,15 @@ async def stream_downloader(bot, query):
             ]
         ]
     ))
-    
+
+@Client.on_message(filters.group & filters.incoming)
+async def left_chat(client, message):
+    if message.left_chat_member:
+        await client.delete_messages(message.chat.id, message.message_id)
+
 @Client.on_message(filters.group & filters.text & filters.incoming)
 async def give_filter(client, message):
-    if message.new_chat_members or message.left_chat_member:
-        await client.delete_messages(message.chat.id, message.message_id)
+    
     if message.chat.id == SUPPORT_CHAT_ID:
         search = message.text
         temp_files, temp_offset, total_results = await get_search_results(chat_id=message.chat.id, query=search.lower(), offset=0, filter=True)
