@@ -62,7 +62,7 @@ async def stream_downloader(bot, query):
         ]
     ))
 
-@Client.on_message(filters.group & filters.incoming)
+@Client.on_message(filters.group & filters.left_chat_member)
 async def left_chat(client, message):
     if message.left_chat_member:
         await client.delete_messages(message.chat.id, message.message_id)
@@ -519,7 +519,7 @@ async def qualities_cb_handler(client: Client, query: CallbackQuery):
     if int(req) != query.from_user.id:
         return await query.answer(script.ALRT_TXT.format(query.from_user.first_name), show_alert=True)
 
-    qualis = ['360p', '480p', '520p', '720p', '1080p', '2400p']
+    qualis = ['360p', '480p', '540p', '720p', '1080p', '2400p']
     
     btn = [
         [
