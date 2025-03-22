@@ -62,10 +62,9 @@ async def stream_downloader(bot, query):
         ]
     ))
 
-@Client.on_message(filters.group & filters.left_chat_member)
+@Client.on_message(filters.group & filters.service)
 async def left_chat(client, message):
-    if message.left_chat_member:
-        await client.delete_messages(message.chat.id, message.message_id)
+    await message.delete()
 
 @Client.on_message(filters.group & filters.text & filters.incoming)
 async def give_filter(client, message):
