@@ -53,7 +53,7 @@ async def save_file(media):
             file_name=file_name,
             file_size=media.file_size,
             mime_type=media.mime_type,
-            caption=media.caption if media.caption else file_name,
+            caption=file_name,
         )
     except ValidationError:
         logger.exception('Error occurred while saving file in database')
