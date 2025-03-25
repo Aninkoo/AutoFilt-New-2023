@@ -112,17 +112,11 @@ async def pv_filter(client, message):
         return
     user_id = message.from_user.id
     if user_id in ADMINS:
-        admin_search = message.text.strip()
-        admin_search = admin_search.replace(" ", "_")
-        stick = await message.reply_sticker(sticker="CAACAgQAAxkBAdumNGfK4Rcgb3VPtirCHpiZTsf8fExbAAKmDwACdo5YU0nvPPPp_97lNgQ")
-        btn = [[
-            InlineKeyboardButton('📥 Search Now! 📥', url=f"http://t.me/{temp.U_NAME}?start=SEARCH-{admin_search}")
-        ]]
-        pvt_msg = await message.reply_text(f'👋 𝖧𝖾𝗒 <b>{message.from_user.mention}</b> \n <b>👇 Search here 👇</b>"', reply_markup=InlineKeyboardMarkup(btn), quote=True)
-        await stick.delete()
-        await asyncio.sleep(120)
-        await pvt_msg.delete()
-        await message.delete()
+        glob = await global_filters(client, message)
+        if glob == False:
+            manual = await manual_filters(client, message)
+            if manual == False:
+                await auto_filter(client, message)
         return # ignore admins
     stick = await message.reply_sticker(sticker="CAACAgQAAxkBAdumNGfK4Rcgb3VPtirCHpiZTsf8fExbAAKmDwACdo5YU0nvPPPp_97lNgQ")
     search = message.text
