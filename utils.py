@@ -651,15 +651,20 @@ async def add_chnl_message(file_name):
             year = match.group(2) if len(match.groups()) > 1 else None
             mov_name = file_name.lower()
             list1 = []
-            language_keywords = ["tamil", "telugu", "malayalam", "kannada", "english", "hindi", "korean", "japanese"]
+            language_keywords = ["tamil", "telugu", "malayalam", "kannada", "english", "hindi", "korean", "japanese", "spanish"]
             episode = await getEpisode(file_name)
-            if episode:
-                return movie_name, year, None
+            
             for lang in language_keywords:
                 substring_index = mov_name.find(lang)
                 if substring_index != -1:
                     capitalized_lang = lang.capitalize()
                     list1.append(capitalized_lang.strip())
+            if len(list1) >= 1:
+                if episode:
+                    return movie_name, year, list1
+            if len(list1) < 1:
+                if episode:
+                    return movie_name, year, None
             if len(list1) >= 1:
                 if (movie_name, list1[0]) in update_list:
                     return None, None, None
