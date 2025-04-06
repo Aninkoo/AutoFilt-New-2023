@@ -2,7 +2,7 @@ import aiohttp
 import json
 import logging
 from pyrogram.errors import InputUserDeactivated, UserNotParticipant, FloodWait, UserIsBlocked, PeerIdInvalid
-from info import AUTH_CHANNEL, LONG_IMDB_DESCRIPTION, MAX_LIST_ELM, CUSTOM_FILE_CAPTION, UPDATES_CHNL, SHORTLINK_URL
+from info import AUTH_CHANNEL, LONG_IMDB_DESCRIPTION, MAX_LIST_ELM, CUSTOM_FILE_CAPTION, UPDATES_CHNL, SHORTLINK_URL, TDMB_API_KEY
 from imdb import Cinemagoer
 import asyncio
 from pyrogram.types import Message, InlineKeyboardButton, InlineKeyboardMarkup
@@ -106,6 +106,57 @@ async def getSeason(filename):
     match = re.search(r'(?ix)(?:season (\d{1,2})|S(\d{1,2}))', filename)
     if match:
         return match.group(1) or match.group(2)
+
+async def movie_id(
+    query: str, 
+    year: Optional[int] = None, 
+    language: str = "en-US"
+) -> Optional[int]:
+    """
+    Fetch TMDB movie ID based on query and optional year.
+    
+    Args:
+        query: Movie title to search for
+        year: Optional release year to narrow down results
+        language: Language for results (default: "en-US")
+        
+    Returns:
+        movie_id if found, None otherwise
+        
+    Raises:
+        ValueError: If API request fails
+    """
+    base_url = "https://api.themoviedb.org/3/search/movie"
+    
+    params = {
+        "api_key": API_KEY,
+        "query": query,
+        "language": language,
+        "page": 1,
+        "include_adult": "false"
+    }
+    
+    if year is not None:
+        params["primary_release_year"] = year  # More precise than just 'year'
+    
+    async with aiohttp.ClientSession() as session:
+        try:
+            async with session.get(base_url, params=params) as response:
+                response.raise_for_status()  # Raises exception for 4XX/5XX status
+                data = await response.json()
+                
+                if not data["results"]:
+                    return None
+                
+                # Return the ID of the most relevant result
+                return data["results"][0]["id"]
+                
+        except aiohttp.ClientResponseError as e:
+            raise ValueError(f"TMDB API request failed: {e.status} {e.message}")
+        except aiohttp.ClientError as e:
+            raise ValueError(f"Network error: {str(e)}")
+        except (KeyError, IndexError, TypeError) as e:
+            raise ValueError(f"Unexpected response format: {str(e)}")
 
 
 async def get_poster(query, bulk=False, id=False, file=None):
