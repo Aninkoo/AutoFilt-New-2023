@@ -17,6 +17,8 @@ from utils import (
     getSeason,
     fetch_with_retries,
     filter_dramas,
+    movie_id,
+    series_id,
 )
 
 # Store the last 50 messages
@@ -64,10 +66,13 @@ async def eng_media(bot, message):
     mv_naamf = re.sub(r"[](.*?)[]", r"\1", mv_naamf)
     mv_naamf = re.sub(r"[\[\]()]", " ", mv_naamf)  # Replace square brackets and parentheses with spaces
 
-    search = f"{mv_naam} {year}" if year else mv_naam
-    movies = await get_poster(search)
     season = await getSeason(mv_naamf)
     episode = await getEpisode(mv_naamf)
+    search = f"{mv_naam}"
+    if episode > 0:
+        movies = await series_id(search, year) if year else await series_id(search)
+    else:
+        movies = await movie_id(search, year) if year else await movie_id(search)
 
     if season is None:
         season = 1
