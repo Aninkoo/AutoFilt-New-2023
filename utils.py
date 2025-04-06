@@ -2,7 +2,7 @@ import aiohttp
 import json
 import logging
 from pyrogram.errors import InputUserDeactivated, UserNotParticipant, FloodWait, UserIsBlocked, PeerIdInvalid
-from info import AUTH_CHANNEL, LONG_IMDB_DESCRIPTION, MAX_LIST_ELM, CUSTOM_FILE_CAPTION, UPDATES_CHNL, SHORTLINK_URL, TDMB_API_KEY
+from info import AUTH_CHANNEL, LONG_IMDB_DESCRIPTION, MAX_LIST_ELM, CUSTOM_FILE_CAPTION, UPDATES_CHNL, SHORTLINK_URL, TMDB_API_KEY
 from imdb import Cinemagoer
 import asyncio
 from pyrogram.types import Message, InlineKeyboardButton, InlineKeyboardMarkup
@@ -22,6 +22,9 @@ from shortzy import Shortzy
 import httpx
 from httpx import AsyncClient, Timeout
 
+# Global TMDB API key loaded from environment variables
+API_KEY = TMDB_API_KEY
+        
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
@@ -143,6 +146,58 @@ async def movie_id(
         try:
             async with session.get(base_url, params=params) as response:
                 response.raise_for_status()  # Raises exception for 4XX/5XX status
+                data = await response.json()
+                
+                if not data["results"]:
+                    return None
+                
+                # Return the ID of the most relevant result
+                return data["results"][0]["id"]
+                
+        except aiohttp.ClientResponseError as e:
+            raise ValueError(f"TMDB API request failed: {e.status} {e.message}")
+        except aiohttp.ClientError as e:
+            raise ValueError(f"Network error: {str(e)}")
+        except (KeyError, IndexError, TypeError) as e:
+            raise ValueError(f"Unexpected response format: {str(e)}")
+
+
+async def series_id(
+    query: str, 
+    year: Optional[int] = None, 
+    language: str = "en-US"
+) -> Optional[int]:
+    """
+    Fetch TMDB TV show ID based on query and optional year.
+    
+    Args:
+        query: TV show title to search for
+        year: Optional first air year to narrow down results
+        language: Language for results (default: "en-US")
+        
+    Returns:
+        tv_show_id if found, None otherwise
+        
+    Raises:
+        ValueError: If API request fails
+    """
+    base_url = "https://api.themoviedb.org/3/search/tv"  # Changed to TV endpoint
+    
+    params = {
+        "api_key": API_KEY,
+        "query": query,
+        "language": language,
+        "page": 1,
+        "include_adult": "false"
+    }
+    
+    if year is not None:
+        params["first_air_date_year"] = year  # TV shows use first_air_date_year
+    
+    async with aiohttp.ClientSession() as session:
+        try:
+            async with session.get(base_url, params=params) as response:
+                response.raise_for_status()
                 data = await response.json()
                 
                 if not data["results"]:
