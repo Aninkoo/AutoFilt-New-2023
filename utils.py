@@ -13,7 +13,7 @@ import os
 import time
 import pytz
 from datetime import datetime
-from typing import List, Any, Union, Optional, AsyncGenerator
+from typing import List, Any, Union, Optional, AsyncGenerator, Dict
 from database.users_chats_db import db
 from bs4 import BeautifulSoup
 import requests
@@ -111,27 +111,48 @@ async def getSeason(filename):
         return match.group(1) or match.group(2)
 
 async def movie_id(
-    query: str, 
-    year: Optional[int] = None, 
-    language: str = "en-US"
-) -> Optional[int]:
+    query: str,
+    year: Optional[int] = None,
+    language: str = "en-US",
+    max_retries: int = 5,
+    retry_delay: float = 1.0
+) -> Optional[Dict[str, Any]]:
     """
-    Fetch TMDB movie ID based on query and optional year.
+    Search for a movie with retry logic, then fetch its details.
     
     Args:
         query: Movie title to search for
-        year: Optional release year to narrow down results
+        year: Optional release year to filter results
         language: Language for results (default: "en-US")
+        max_retries: Maximum number of retry attempts (default: 5)
+        retry_delay: Delay between retries in seconds (default: 1.0)
         
     Returns:
-        movie_id if found, None otherwise
+        Dictionary containing movie details or None if not found
         
     Raises:
-        ValueError: If API request fails
+        ValueError: After all retries are exhausted
     """
-    base_url = "https://api.themoviedb.org/3/search/movie"
-    
-    params = {
+    async def make_request(url: str, params: dict, session: aiohttp.ClientSession) -> dict:
+        for attempt in range(max_retries):
+            try:
+                async with session.get(url, params=params) as response:
+                    response.raise_for_status()
+                    return await response.json()
+            except aiohttp.ClientResponseError as e:
+                if e.status == 404:
+                    raise  # Don't retry on 404
+                if attempt == max_retries - 1:
+                    raise
+                await asyncio.sleep(retry_delay * (attempt + 1))  # Exponential backoff
+            except aiohttp.ClientError as e:
+                if attempt == max_retries - 1:
+                    raise ValueError(f"Network error: {str(e)}")
+                await asyncio.sleep(retry_delay * (attempt + 1))
+        raise ValueError("Max retries reached")
+
+    search_url = "https://api.themoviedb.org/3/search/movie"
+    search_params = {
         "api_key": API_KEY,
         "query": query,
         "language": language,
@@ -140,78 +161,135 @@ async def movie_id(
     }
     
     if year is not None:
-        params["primary_release_year"] = year  # More precise than just 'year'
-    
+        search_params["primary_release_year"] = year
+
     async with aiohttp.ClientSession() as session:
         try:
-            async with session.get(base_url, params=params) as response:
-                response.raise_for_status()  # Raises exception for 4XX/5XX status
-                data = await response.json()
+            # Step 1: Get movie ID with retry
+            search_data = await make_request(search_url, search_params, session)
+            
+            if not search_data.get("results"):
+                return None
                 
-                if not data["results"]:
-                    return None
-                
-                # Return the ID of the most relevant result
-                return data["results"][0]["id"]
-                
+            movie_id = search_data["results"][0]["id"]
+            
+            # Step 2: Get movie details with retry
+            details_url = f"https://api.themoviedb.org/3/movie/{movie_id}"
+            details_params = {"api_key": API_KEY, "language": language}
+            details_data = await make_request(details_url, details_params, session)
+            
+            return {
+                "released_date": details_data.get("release_date", ""),
+                "plot": details_data.get("overview", ""),
+                "genres": [genre["name"] for genre in details_data.get("genres", [])],
+                "countries": [country["name"] for country in details_data.get("production_countries", [])],
+                "id": movie_id
+            }
+            
         except aiohttp.ClientResponseError as e:
-            raise ValueError(f"TMDB API request failed: {e.status} {e.message}")
-        except aiohttp.ClientError as e:
-            raise ValueError(f"Network error: {str(e)}")
-        except (KeyError, IndexError, TypeError) as e:
-            raise ValueError(f"Unexpected response format: {str(e)}")
+            if e.status == 404:
+                return None  # Movie not found
+            raise ValueError(f"TMDB API request failed after {max_retries} attempts: {e.status} {e.message}")
+        except Exception as e:
+            raise ValueError(f"Failed after {max_retries} attempts: {str(e)}")
 
 
 async def series_id(
-    query: str, 
-    year: Optional[int] = None, 
-    language: str = "en-US"
-) -> Optional[int]:
+    query: str,
+    season: int,
+    year: Optional[int] = None,
+    language: str = "en-US",
+    max_retries: int = 5,
+    retry_delay: float = 1.0
+) -> Optional[Dict[str, Any]]:
     """
-    Fetch TMDB TV show ID based on query and optional year.
+    Search for a TV show and get season details with retry logic.
     
     Args:
         query: TV show title to search for
-        year: Optional first air year to narrow down results
+        season: Season number (1-based index)
+        year: Optional release year to filter results
         language: Language for results (default: "en-US")
+        max_retries: Maximum retry attempts (default: 5)
+        retry_delay: Delay between retries in seconds (default: 1.0)
         
     Returns:
-        tv_show_id if found, None otherwise
+        Dictionary containing:
+        - released_date: First air date of the season
+        - genres: List of genre names
+        - episode_count: Total episodes in the season
+        - countries: List of production country names
+        - plot: Season overview
+        - show_id: TV show ID
+        - season_number: Season number
         
-    Raises:
-        ValueError: If API request fails
+        Returns None if not found
     """
-    base_url = "https://api.themoviedb.org/3/search/tv"  # Changed to TV endpoint
-    
-    params = {
-        "api_key": API_KEY,
-        "query": query,
-        "language": language,
-        "page": 1,
-        "include_adult": "false"
-    }
-    
-    if year is not None:
-        params["first_air_date_year"] = year  # TV shows use first_air_date_year
-    
+    async def make_request(url: str, params: dict, session: aiohttp.ClientSession) -> dict:
+        for attempt in range(max_retries):
+            try:
+                async with session.get(url, params=params) as response:
+                    response.raise_for_status()
+                    return await response.json()
+            except aiohttp.ClientResponseError as e:
+                if e.status == 404:
+                    raise
+                if attempt == max_retries - 1:
+                    raise
+                await asyncio.sleep(retry_delay * (attempt + 1))
+            except aiohttp.ClientError as e:
+                if attempt == max_retries - 1:
+                    raise ValueError(f"Network error: {str(e)}")
+                await asyncio.sleep(retry_delay * (attempt + 1))
+        raise ValueError("Max retries reached")
+
     async with aiohttp.ClientSession() as session:
         try:
-            async with session.get(base_url, params=params) as response:
-                response.raise_for_status()
-                data = await response.json()
+            # Step 1: Search for TV show
+            search_url = "https://api.themoviedb.org/3/search/tv"
+            search_params = {
+                "api_key": API_KEY,
+                "query": query,
+                "language": language,
+                "page": 1,
+                "include_adult": "false"
+            }
+            
+            if year is not None:
+                search_params["first_air_date_year"] = year
+
+            search_data = await make_request(search_url, search_params, session)
+            
+            if not search_data.get("results"):
+                return None
                 
-                if not data["results"]:
-                    return None
-                
-                # Return the ID of the most relevant result
-                return data["results"][0]["id"]
-                
+            show_id = search_data["results"][0]["id"]
+            
+            # Step 2: Get TV show details (for genres and countries)
+            show_url = f"https://api.themoviedb.org/3/tv/{show_id}"
+            show_params = {"api_key": API_KEY, "language": language}
+            show_data = await make_request(show_url, show_params, session)
+            
+            # Step 3: Get season details
+            season_url = f"https://api.themoviedb.org/3/tv/{show_id}/season/{season}"
+            season_data = await make_request(season_url, show_params, session)
+            
+            return {
+                "released_date": season_data.get("air_date", ""),
+                "genres": [genre["name"] for genre in show_data.get("genres", [])],
+                "episode_count": season_data.get("episode_count", 0),
+                "countries": [country["name"] for country in show_data.get("origin_country", [])],
+                "plot": season_data.get("overview", ""),
+                "show_id": show_id,
+                "season_number": season
+            }
+            
         except aiohttp.ClientResponseError as e:
-            raise ValueError(f"TMDB API request failed: {e.status} {e.message}")
-        except aiohttp.ClientError as e:
-            raise ValueError(f"Network error: {str(e)}")
-        except (KeyError, IndexError, TypeError) as e:
-            raise ValueError(f"Unexpected response format: {str(e)}")
+            if e.status == 404:
+                return None
+            raise ValueError(f"TMDB API request failed after {max_retries} attempts: {e.status} {e.message}")
+        except Exception as e:
+            raise ValueError(f"Failed after {max_retries} attempts: {str(e)}")
 
 
 async def get_poster(query, bulk=False, id=False, file=None):
