@@ -17,8 +17,8 @@ from utils import (
     getSeason,
     fetch_with_retries,
     filter_dramas,
-    movie_id,
-    series_id,
+    get_movie_id,
+    get_series_id,
 )
 
 # Store the last 50 messages
@@ -68,39 +68,39 @@ async def eng_media(bot, message):
 
     season = await getSeason(mv_naamf)
     episode = await getEpisode(mv_naamf)
+    movies = None
     search = f"{mv_naam}"
-    if episode > 0:
-        movies = await series_id(search, year) if year else await series_id(search)
-    else:
-        movies = await movie_id(search, year) if year else await movie_id(search)
-
     if season is None:
         season = 1
+    if int(episode) > 0:
+        movies = await get_series_id(search, int(season), year) if year else await get_series_id(search, int(season))
+    else:
+        movies = await get_movie_id(search, year) if year else await get_movie_id(search)
 
     caption = f" "
     if year and year.isdigit():
         if episode is None:
-            caption = f"<b>#Movie:\n\n<blockquote>🧿 <u>𝐍𝐚𝐦𝐞</u> : <code>{mv_naam}</code>\n\n📆 <u>𝐘𝐞𝐚𝐫</u> : {year}\n\n"
+            caption = f"<b>#Movie:\n\n<blockquote>🧿 <u>𝐍𝐚𝐦𝐞</u> : <code>{mv_naam}</code>\n\n📆 <u>𝐘𝐞𝐚𝐫</u> : {year}\n\n🏹 <u>𝐑𝐞𝐥𝐞𝐚𝐬𝐞𝐝</u> : {movies['released_date']}\n\n"
         elif int(episode) == 1:
-            caption = f"#Series:\n\n<blockquote>🧿 <u>𝐍𝐚𝐦𝐞</u> : <code>{mv_naam}</code>\n\n📆 <u>𝐘𝐞𝐚𝐫</u> : {year}\n\n🔢 <u>𝐒𝐞𝐚𝐬𝐨𝐧</u> : {season}\n\n⏳ <u>𝐄𝐩𝐢𝐬𝐨𝐝𝐞</u> : {int(episode)}\n\n"
+            caption = f"#Series:\n\n<blockquote>🧿 <u>𝐍𝐚𝐦𝐞</u> : <code>{mv_naam}</code>\n\n📆 <u>𝐘𝐞𝐚𝐫</u> : {year}\n\n🔢 <u>𝐒𝐞𝐚𝐬𝐨𝐧</u> : {season}\n\n⏳ <u>𝐄𝐩𝐢𝐬𝐨𝐝𝐞</u> : {int(episode)} of {movies['episode_count']}\n\n🏹 <u>𝐑𝐞𝐥𝐞𝐚𝐬𝐞𝐝</u> : {movies['released_date']}\n\n"
         else:
-            caption = f"<b>#SeriesUpdate:\n\n<blockquote>🧿 <u>𝐍𝐚𝐦𝐞</u> : <code>{mv_naam}</code>\n\n📆 <u>𝐘𝐞𝐚𝐫</u> : {year}\n\n🔢 <u>𝐒𝐞𝐚𝐬𝐨𝐧</u> : {season}\n\n⏳ <u>𝐄𝐩𝐢𝐬𝐨𝐝𝐞</u> : {int(episode)}\n\n"
+            caption = f"<b>#SeriesUpdate:\n\n<blockquote>🧿 <u>𝐍𝐚𝐦𝐞</u> : <code>{mv_naam}</code>\n\n📆 <u>𝐘𝐞𝐚𝐫</u> : {year}\n\n🔢 <u>𝐒𝐞𝐚𝐬𝐨𝐧</u> : {season}\n\n⏳ <u>𝐄𝐩𝐢𝐬𝐨𝐝𝐞</u> : {int(episode)} of {movies['episode_count']}\n\n"
     else:
         if episode is None:
-            caption = f"<b>#Movie:\n\n<blockquote>🧿 <u>𝐍𝐚𝐦𝐞</u> : <code>{mv_naam}</code>\n\n"
+            caption = f"<b>#Movie:\n\n<blockquote>🧿 <u>𝐍𝐚𝐦𝐞</u> : <code>{mv_naam}</code>\n\n🏹 <u>𝐑𝐞𝐥𝐞𝐚𝐬𝐞𝐝</u> : {movies['released_date']}\n\n"
         elif int(episode) == 1:
-            caption = f"<b>#Series:\n\n<blockquote>🧿 <u>𝐍𝐚𝐦𝐞</u> : <code>{mv_naam}</code>\n\n🔢 <u>𝐒𝐞𝐚𝐬𝐨𝐧</u> : {season}\n\n⏳ <u>𝐄𝐩𝐢𝐬𝐨𝐝𝐞</u> : {int(episode)}\n\n"
+            caption = f"<b>#Series:\n\n<blockquote>🧿 <u>𝐍𝐚𝐦𝐞</u> : <code>{mv_naam}</code>\n\n🔢 <u>𝐒𝐞𝐚𝐬𝐨𝐧</u> : {season}\n\n⏳ <u>𝐄𝐩𝐢𝐬𝐨𝐝𝐞</u> : {int(episode)} of {movies['episode_count']}\n\n🏹 <u>𝐑𝐞𝐥𝐞𝐚𝐬𝐞𝐝</u> : {movies['released_date']}\n\n"
         else:
-            caption = f"<b>#SeriesUpdate:\n\n<blockquote>🧿 <u>𝐍𝐚𝐦𝐞</u> : <code>{mv_naam}</code>\n\n🔢 <u>𝐒𝐞𝐚𝐬𝐨𝐧</u> : {season}\n\n⏳ <u>𝐄𝐩𝐢𝐬𝐨𝐝𝐞</u> : {int(episode)}\n\n"
+            caption = f"<b>#SeriesUpdate:\n\n<blockquote>🧿 <u>𝐍𝐚𝐦𝐞</u> : <code>{mv_naam}</code>\n\n🔢 <u>𝐒𝐞𝐚𝐬𝐨𝐧</u> : {season}\n\n⏳ <u>𝐄𝐩𝐢𝐬𝐨𝐝𝐞</u> : {int(episode)} of {movies['episode_count']}\n\n"
 
-    if movies and movies.get('genres'):
-        genres = movies.get('genres')
+    if movies:
+        genres = movies['genres']
         if isinstance(genres, str):
             genres = [genre.strip() for genre in genres.split(',') if genre.strip()]
         caption += f"🎭 <u>𝐆𝐞𝐧𝐫𝐞𝐬</u> : {' '.join(f'#{genre.replace(" ", "")}' for genre in genres)}\n\n"
 
-    if movies and movies.get('countries'):
-        countries = movies.get('countries')
+    if movies:
+        countries = movies['countries']
         if isinstance(countries, str):
             countries = [country.strip() for country in countries.split(',')]
         formatted_countries = ', '.join(f"#{country.replace(' ', '')}" for country in countries)
@@ -110,8 +110,8 @@ async def eng_media(bot, message):
         caption += f"🎙️ <u>𝐋𝐚𝐧𝐠𝐮𝐚𝐠𝐞</u> : #{languages_str}\n\n"
 
     if episode is None or int(episode) == 1:
-        if movies and movies.get('plot'):
-            caption += f"📋 <u>𝐏𝐥𝐨𝐭</u> : {movies.get('plot')} </blockquote>\n\n"
+        if movies:
+            caption += f"📋 <u>𝐏𝐥𝐨𝐭</u> : {movies.['plot']} </blockquote>\n\n"
     else:
         caption += "</blockquote>\n\n"
 
@@ -121,11 +121,11 @@ async def eng_media(bot, message):
     markup = InlineKeyboardMarkup([[InlineKeyboardButton('📥 ᴅᴏᴡɴʟᴏᴀᴅ ɴᴏᴡ 📥', url=f"http://t.me/{temp.U_NAME}?start=SEARCH-{search_with_underscore}")]])
 
     sent_msg = None
-    if movies and movies.get('poster'):
+    if movies and movies['poster']:
         try:
             sent_msg = await bot.send_photo(
                 chat_id=UPDATES_CHNL,
-                photo=movies.get('poster'),
+                photo=movies['poster'],
                 caption=caption,
                 reply_markup=markup,
                 parse_mode=enums.ParseMode.HTML
