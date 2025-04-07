@@ -111,7 +111,7 @@ async def eng_media(bot, message):
 
     if episode is None or int(episode) == 1:
         if movies:
-            caption += f"📋 <u>𝐏𝐥𝐨𝐭</u> : {movies.['plot']} </blockquote>\n\n"
+            caption += f"📋 <u>𝐏𝐥𝐨𝐭</u> : {movies['plot']} </blockquote>\n\n"
     else:
         caption += "</blockquote>\n\n"
 
