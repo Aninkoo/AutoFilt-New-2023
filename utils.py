@@ -110,7 +110,7 @@ async def getSeason(filename):
     if match:
         return match.group(1) or match.group(2)
 
-async def movie_id(
+async def get_movie_id(
     query: str,
     year: Optional[int] = None,
     language: str = "en-US",
@@ -118,7 +118,7 @@ async def movie_id(
     retry_delay: float = 1.0
 ) -> Optional[Dict[str, Any]]:
     """
-    Search for a movie with retry logic, then fetch its details.
+    Search for a movie with retry logic, then fetch its details including poster.
     
     Args:
         query: Movie title to search for
@@ -128,7 +128,15 @@ async def movie_id(
         retry_delay: Delay between retries in seconds (default: 1.0)
         
     Returns:
-        Dictionary containing movie details or None if not found
+        Dictionary containing:
+        - released_date: Movie release date
+        - plot: Movie overview
+        - genres: List of genre names
+        - countries: List of production countries
+        - poster: URL of the movie poster
+        - id: TMDB movie ID
+        
+        Returns None if movie not found
         
     Raises:
         ValueError: After all retries are exhausted
@@ -172,17 +180,22 @@ async def movie_id(
                 return None
                 
             movie_id = search_data["results"][0]["id"]
+            poster_path = search_data["results"][0].get("poster_path")  # Get poster path from search results
             
             # Step 2: Get movie details with retry
             details_url = f"https://api.themoviedb.org/3/movie/{movie_id}"
             details_params = {"api_key": API_KEY, "language": language}
             details_data = await make_request(details_url, details_params, session)
             
+            # Construct full poster URL if available
+            poster_url = f"https://image.tmdb.org/t/p/original{poster_path}" if poster_path else None
+            
             return {
                 "released_date": details_data.get("release_date", ""),
                 "plot": details_data.get("overview", ""),
                 "genres": [genre["name"] for genre in details_data.get("genres", [])],
                 "countries": [country["name"] for country in details_data.get("production_countries", [])],
+                "poster": poster_url,
                 "id": movie_id
             }
             
@@ -194,7 +207,7 @@ async def movie_id(
             raise ValueError(f"Failed after {max_retries} attempts: {str(e)}")
 
 
-async def series_id(
+async def get_series_id(
     query: str,
     season: int,
     year: Optional[int] = None,
@@ -203,7 +216,7 @@ async def series_id(
     retry_delay: float = 1.0
 ) -> Optional[Dict[str, Any]]:
     """
-    Search for a TV show and get season details with retry logic.
+    Search for a TV show and get season details including poster.
     
     Args:
         query: TV show title to search for
@@ -220,6 +233,7 @@ async def series_id(
         - episode_count: Total episodes in the season
         - countries: List of production country names
         - plot: Season overview
+        - poster: URL of the TV show poster
         - show_id: TV show ID
         - season_number: Season number
         
@@ -264,6 +278,7 @@ async def series_id(
                 return None
                 
             show_id = search_data["results"][0]["id"]
+            poster_path = search_data["results"][0].get("poster_path")
             
             # Step 2: Get TV show details (for genres and countries)
             show_url = f"https://api.themoviedb.org/3/tv/{show_id}"
@@ -274,12 +289,16 @@ async def series_id(
             season_url = f"https://api.themoviedb.org/3/tv/{show_id}/season/{season}"
             season_data = await make_request(season_url, show_params, session)
             
+            # Construct poster URL if available
+            poster_url = f"https://image.tmdb.org/t/p/original{poster_path}" if poster_path else None
+            
             return {
                 "released_date": season_data.get("air_date", ""),
                 "genres": [genre["name"] for genre in show_data.get("genres", [])],
                 "episode_count": season_data.get("episode_count", 0),
                 "countries": [country["name"] for country in show_data.get("origin_country", [])],
                 "plot": season_data.get("overview", ""),
+                "poster": poster_url,
                 "show_id": show_id,
                 "season_number": season
             }
