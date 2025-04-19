@@ -20,7 +20,7 @@ instance = Instance.from_db(db)
 
 @instance.register
 class Media(Document):
-    file_id = fields.StrField(attribute='_id')
+    file_id = fields.StrField(attribute='_id', missing="")
     file_ref = fields.StrField(allow_none=True, missing=None)
     file_name = fields.StrField(required=True)
     file_size = fields.IntField(required=True)
