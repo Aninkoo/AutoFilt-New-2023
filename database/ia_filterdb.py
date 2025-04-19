@@ -7,8 +7,7 @@ from pymongo.errors import DuplicateKeyError
 from umongo import Instance, Document, fields
 from motor.motor_asyncio import AsyncIOMotorClient
 from marshmallow.exceptions import ValidationError
-from info import DATABASE_URI, DATABASE_NAME, COLLECTION_NAME, USE_CAPTION_FILTER, MAX_B_TN, INDEX_EXTENSIONS
-from utils import get_settings, save_group_settings
+from info import DATABASE_URI, DATABASE_NAME, COLLECTION_NAME, USE_CAPTION_FILTER, MAX_B_TN
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
@@ -20,17 +19,18 @@ instance = Instance.from_db(db)
 
 @instance.register
 class Media(Document):
-    file_id = fields.StringField(attribute='_id', required=True)
-    file_ref = fields.StringField(allow_none=True)
-    file_name = fields.StringField(required=True)
-    file_size = fields.IntegerField(required=True)
-    file_type = fields.StringField(allow_none=True)
-    mime_type = fields.StringField(allow_none=True)
-    caption = fields.StringField(allow_none=True)
+    file_id = fields.StringField(attribute='_id', required=True, default='')
+    file_ref = fields.StringField(allow_none=True, default=None)
+    file_name = fields.StringField(required=True, default='')
+    file_size = fields.IntegerField(required=True, default=0)
+    file_type = fields.StringField(allow_none=True, default=None)
+    mime_type = fields.StringField(allow_none=True, default=None)
+    caption = fields.StringField(allow_none=True, default=None)
 
     class Meta:
         collection_name = COLLECTION_NAME
         indexes = ['$file_name']  # Text index on file_name
+
 
 async def get_all_files():
     files = []
