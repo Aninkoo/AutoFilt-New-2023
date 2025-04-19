@@ -18,16 +18,64 @@ client = AsyncIOMotorClient(DATABASE_URI, serverSelectionTimeoutMS=5000)
 db = client[DATABASE_NAME]
 instance = Instance.from_db(db)
 
-# Define fields with explicit marshmallow kwargs
+# Custom field class to avoid the default attribute issue
+class SafeStringField(fields.StringField):
+    def __init__(self, **kwargs):
+        if 'default' not in kwargs:
+            kwargs['missing'] = None
+        super().__init__(**kwargs)
+
 @instance.register
 class Media(Document):
-    file_id = fields.StringField(attribute='_id', required=True)
-    file_ref = fields.StringField(allow_none=True)
-    file_name = fields.StringField(required=True)
-    file_size = fields.IntegerField(required=True)
-    file_type = fields.StringField(allow_none=True)
-    mime_type = fields.StringField(allow_none=True)
-    caption = fields.StringField(allow_none=True)
+    file_id = SafeStringField(attribute='_id', required=True)
+    file_ref = SafeStringField(allow_none=True)
+    file_name = SafeStringField(required=True)
+    file_size = fields.IntField(required=True)
+    file_type = SafeStringField(allow_none=True)
+    mime_type = SafeStringField(allow_none=True)
+    caption = SafeStringField(allow_none=True)
+
+    class Meta:
+        indexes = ('$file_name', )
+        collection_name = COLLECTION_NAME
+
+# [Rest of your existing code remains exactly the same...]
+# Keep all your existing functions (get_all_files, save_file, etc.) unchangedimport logging
+from struct import pack
+import re
+import base64
+from pyrogram.file_id import FileId
+from pymongo.errors import DuplicateKeyError
+from umongo import Instance, Document, fields
+from motor.motor_asyncio import AsyncIOMotorClient
+from marshmallow.exceptions import ValidationError
+from info import DATABASE_URI, DATABASE_NAME, COLLECTION_NAME, USE_CAPTION_FILTER, MAX_B_TN, INDEX_EXTENSIONS
+from utils import get_settings, save_group_settings
+
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
+
+# Initialize MongoDB connection
+client = AsyncIOMotorClient(DATABASE_URI, serverSelectionTimeoutMS=5000)
+db = client[DATABASE_NAME]
+instance = Instance.from_db(db)
+
+# Custom field class to avoid the default attribute issue
+class SafeStringField(fields.StringField):
+    def __init__(self, **kwargs):
+        if 'default' not in kwargs:
+            kwargs['missing'] = None
+        super().__init__(**kwargs)
+
+@instance.register
+class Media(Document):
+    file_id = SafeStringField(attribute='_id', required=True)
+    file_ref = SafeStringField(allow_none=True)
+    file_name = SafeStringField(required=True)
+    file_size = fields.IntField(required=True)
+    file_type = SafeStringField(allow_none=True)
+    mime_type = SafeStringField(allow_none=True)
+    caption = SafeStringField(allow_none=True)
 
     class Meta:
         indexes = ('$file_name', )
