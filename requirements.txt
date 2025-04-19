@@ -3,7 +3,7 @@ pyrofork
 tgcrypto
 pymongo[srv]
 motor
-marshmallow==4.0.0
+marshmallow==3.20.2
 umongo==3.1.0
 requests
 bs4
