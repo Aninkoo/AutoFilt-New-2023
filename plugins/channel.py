@@ -19,7 +19,7 @@ from utils import (
     filter_dramas,
 )
 
-# Store the last 50 messages
+# Store the last 50 message
 sent_messages = deque(maxlen=50)
 
 media_filter = filters.document | filters.video
