@@ -20,17 +20,17 @@ instance = Instance.from_db(db)
 
 @instance.register
 class Media(Document):
-    file_id = fields.StrField(attribute='_id', missing="")
-    file_ref = fields.StrField(allow_none=True, missing=None)
+    file_id = fields.StrField(attribute='_id')
+    file_ref = fields.StrField(allow_none=True, default=None)
     file_name = fields.StrField(required=True)
     file_size = fields.IntField(required=True)
-    file_type = fields.StrField(allow_none=True, missing=None)
-    mime_type = fields.StrField(allow_none=True, missing=None)
-    caption = fields.StrField(allow_none=True, missing=None)
+    file_type = fields.StrField(allow_none=True, default=None)
+    mime_type = fields.StrField(allow_none=True, default=None)
+    caption = fields.StrField(allow_none=True, default=None)
 
     class Meta:
         indexes = ('$file_name', )
-        collection_name = COLLECTION_NAME 
+        collection_name = COLLECTION_NAME
 
 async def get_all_files():
     """Get all files from database"""
