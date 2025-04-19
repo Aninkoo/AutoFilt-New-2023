@@ -13,8 +13,8 @@ from utils import get_settings, save_group_settings
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
-
-client = AsyncIOMotorClient(DATABASE_URI)
+# Initialize MongoDB connection with modern settings
+client = AsyncIOMotorClient(DATABASE_URI, serverSelectionTimeoutMS=5000)
 db = client[DATABASE_NAME]
 instance = Instance.from_db(db)
 
@@ -34,16 +34,14 @@ class Media(Document):
 
 async def get_all_files():
     files = []
-    logger.info(f'Fetching Files...')
+    logger.info('Fetching Files...')
     async for file in Media.find({}):
         files.append(file)
-    logger.info(f'Fetched all Files...')
+    logger.info('Fetched all Files...')
     return files
 
 async def save_file(media):
     """Save file in database"""
-
-    # TODO: Find better way to get same file_id for same media to avoid duplicates
     file_id, file_ref = unpack_new_file_id(media.file_id)
     file_name = re.sub(r"(_|\-|\.|\+)", " ", str(media.file_name))
     try:
@@ -55,43 +53,32 @@ async def save_file(media):
             mime_type=media.mime_type,
             caption=file_name,
         )
-    except ValidationError:
-        logger.exception('Error occurred while saving file in database')
+    except ValidationError as e:
+        logger.exception('Error occurred while saving file in database: %s', str(e))
         return False, 2
     else:
         try:
             await file.commit()
-        except DuplicateKeyError:      
+        except DuplicateKeyError:
             logger.warning(
-                f'{getattr(media, "file_size", "NO_FILE")} is already saved in database'
+                '%s is already saved in database',
+                getattr(media, "file_size", "NO_FILE")
             )
-
             return False, 0
+        except Exception as e:
+            logger.error('Unexpected error saving file: %s', str(e))
+            return False, 2
         else:
-            logger.info(f'{getattr(media, "file_size", "NO_FILE")} is saved to database')
+            logger.info('%s is saved to database', getattr(media, "file_size", "NO_FILE"))
             return True, 1
 
 async def get_search_results(chat_id, query, file_type=None, max_results=10, offset=0, filter=False, lang=None):
     """For given query return (results, next_offset)"""
     if chat_id is not None:
         settings = await get_settings(int(chat_id))
-        try:
-            if settings['max_btn']:
-                max_results = 10
-            else:
-                max_results = int(MAX_B_TN)
-        except KeyError:
-            await save_group_settings(int(chat_id), 'max_btn', False)
-            settings = await get_settings(int(chat_id))
-            if settings['max_btn']:
-                max_results = 10
-            else:
-                max_results = int(MAX_B_TN)
+        max_results = 10 if settings.get('max_btn', False) else int(MAX_B_TN)
+    
     query = query.strip()
-    #if filter:
-        #better ?
-        #query = query.replace(' ', r'(\s|\.|\+|\-|_)')
-        #raw_pattern = r'(\s|_|\-|\.|\+)' + query + r'(\s|_|\-|\.|\+)'
     if not query:
         raw_pattern = '.'
     elif ' ' not in query:
@@ -101,52 +88,45 @@ async def get_search_results(chat_id, query, file_type=None, max_results=10, off
     
     try:
         regex = re.compile(raw_pattern, flags=re.IGNORECASE)
-    except:
-        return []
+    except re.error as e:
+        logger.error('Regex compilation error: %s', str(e))
+        return [], '', 0
 
-    if USE_CAPTION_FILTER:
-        filter = {'$or': [{'file_name': regex}, {'caption': regex}]}
-    else:
-        filter = {'file_name': regex}
+    filter_query = {'$or': [{'file_name': regex}, {'caption': regex}]} if USE_CAPTION_FILTER else {'file_name': regex}
 
     if file_type:
-        filter['file_type'] = file_type
+        filter_query['file_type'] = file_type
 
-    cursor = Media.find(filter)
-    # Sort by recent
-    cursor.sort('$natural', -1)
+    try:
+        if lang:
+            # More efficient language filtering using MongoDB's $regex
+            lang_filter = {'$or': [
+                {'caption': {'$regex': lang, '$options': 'i'}},
+                {'file_name': {'$regex': lang, '$options': 'i'}}
+            ]}
+            combined_filter = {'$and': [filter_query, lang_filter]}
+            
+            total_results = await Media.count_documents(combined_filter)
+            cursor = Media.find(combined_filter).sort('$natural', -1)
+            
+            files = await cursor.skip(offset).limit(max_results).to_list(length=max_results)
+        else:
+            total_results = await Media.count_documents(filter_query)
+            cursor = Media.find(filter_query).sort('$natural', -1)
+            files = await cursor.skip(offset).limit(max_results).to_list(length=max_results)
 
-    if lang:
-        lang_files = [
-            file async for file in cursor 
-            if (file.caption and lang in file.caption.lower()) or (file.file_name and lang in file.file_name.lower())
-        ]
-        files = lang_files[offset:][:max_results]
-        total_results = len(lang_files)
         next_offset = offset + max_results
-        if next_offset > total_results:
+        if next_offset >= total_results:
             next_offset = ''
+
         return files, next_offset, total_results
-
-    total_results = await Media.count_documents(filter)
-    next_offset = offset + max_results
-
-    if next_offset > total_results:
-        next_offset = ''
-    # Slice files according to offset and max results
-    cursor.skip(offset).limit(max_results)
-    # Get list of files
-    files = await cursor.to_list(length=max_results)
-
-    return files, next_offset, total_results
+    except Exception as e:
+        logger.error('Error in get_search_results: %s', str(e))
+        return [], '', 0
 
 async def get_bad_files(query, file_type=None, filter=False):
     """For given query return (results, next_offset)"""
     query = query.strip()
-    #if filter:
-        #better ?
-        #query = query.replace(' ', r'(\s|\.|\+|\-|_)')
-        #raw_pattern = r'(\s|_|\-|\.|\+)' + query + r'(\s|_|\-|\.|\+)'
     if not query:
         raw_pattern = '.'
     elif ' ' not in query:
@@ -156,33 +136,31 @@ async def get_bad_files(query, file_type=None, filter=False):
     
     try:
         regex = re.compile(raw_pattern, flags=re.IGNORECASE)
-    except:
-        return []
+    except re.error as e:
+        logger.error('Regex compilation error: %s', str(e))
+        return [], 0
 
-    if USE_CAPTION_FILTER:
-        filter = {'$or': [{'file_name': regex}, {'caption': regex}]}
-    else:
-        filter = {'file_name': regex}
+    filter_query = {'$or': [{'file_name': regex}, {'caption': regex}]} if USE_CAPTION_FILTER else {'file_name': regex}
 
     if file_type:
-        filter['file_type'] = file_type
+        filter_query['file_type'] = file_type
 
-    total_results = await Media.count_documents(filter)
-
-    cursor = Media.find(filter)
-    # Sort by recent
-    cursor.sort('$natural', -1)
-    # Get list of files
-    files = await cursor.to_list(length=total_results)
-
-    return files, total_results
+    try:
+        total_results = await Media.count_documents(filter_query)
+        cursor = Media.find(filter_query).sort('$natural', -1)
+        files = await cursor.to_list(length=total_results)
+        return files, total_results
+    except Exception as e:
+        logger.error('Error in get_bad_files: %s', str(e))
+        return [], 0
 
 async def get_file_details(query):
-    filter = {'file_id': query}
-    cursor = Media.find(filter)
-    filedetails = await cursor.to_list(length=1)
-    return filedetails
-
+    try:
+        filedetails = await Media.find_one({'file_id': query})
+        return [filedetails] if filedetails else []
+    except Exception as e:
+        logger.error('Error in get_file_details: %s', str(e))
+        return []
 
 def encode_file_id(s: bytes) -> str:
     r = b""
@@ -195,15 +173,12 @@ def encode_file_id(s: bytes) -> str:
             if n:
                 r += b"\x00" + bytes([n])
                 n = 0
-
             r += bytes([i])
 
     return base64.urlsafe_b64encode(r).decode().rstrip("=")
 
-
 def encode_file_ref(file_ref: bytes) -> str:
     return base64.urlsafe_b64encode(file_ref).decode().rstrip("=")
-
 
 def unpack_new_file_id(new_file_id):
     """Return file_id, file_ref"""
