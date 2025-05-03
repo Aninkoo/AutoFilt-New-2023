@@ -110,6 +110,12 @@ async def getSeason(filename):
     if match:
         return match.group(1) or match.group(2)
 
+import aiohttp
+import asyncio
+from typing import Optional, Dict, Any
+
+API_KEY = "your_tmdb_api_key_here"  # Replace with your actual TMDb API key
+
 async def get_movie_id(
     query: str,
     year: Optional[int] = None,
@@ -117,53 +123,72 @@ async def get_movie_id(
     max_retries: int = 5,
     retry_delay: float = 1.0
 ) -> Optional[Dict[str, Any]]:
+    
     async def make_request(url: str, params: dict, session: aiohttp.ClientSession) -> dict:
-        # ... (keep existing retry logic) ...
+        for attempt in range(max_retries):
+            try:
+                async with session.get(url, params=params) as response:
+                    response.raise_for_status()
+                    return await response.json()
+            except aiohttp.ClientResponseError as e:
+                if e.status == 404:
+                    return {}
+                if attempt == max_retries - 1:
+                    raise
+                await asyncio.sleep(retry_delay)
+            except aiohttp.ClientError:
+                if attempt == max_retries - 1:
+                    raise
+                await asyncio.sleep(retry_delay)
 
     async with aiohttp.ClientSession() as session:
         try:
-            # Search for movie
+            # Search for the movie
+            search_params = {
+                "api_key": API_KEY,
+                "query": query,
+                "language": language,
+            }
+            if year:
+                search_params["primary_release_year"] = year
+
             search_data = await make_request(
                 "https://api.themoviedb.org/3/search/movie",
-                {
-                    "api_key": API_KEY,
-                    "query": query,
-                    "language": language,
-                    **({"primary_release_year": year} if year else {})
-                },
+                search_params,
                 session
             )
-            
+
             if not search_data.get("results"):
                 return None
-                
-            movie_id = search_data["results"][0]["id"]
-            poster_path = search_data["results"][0].get("poster_path")
-            
+
+            movie = search_data["results"][0]
+            movie_id = movie["id"]
+            poster_path = movie.get("poster_path")
+
             # Get movie details
             details_data = await make_request(
                 f"https://api.themoviedb.org/3/movie/{movie_id}",
                 {"api_key": API_KEY, "language": language},
                 session
             )
-            
+
             return {
                 "released_date": details_data.get("release_date", ""),
                 "plot": details_data.get("overview", ""),
                 "genres": [genre["name"] for genre in details_data.get("genres", [])],
-                "countries": [country["iso_3166_1"] for country in details_data.get("production_countries", [])],
+                "countries": [country["name"] for country in details_data.get("production_countries", [])],
                 "poster": f"https://image.tmdb.org/t/p/original{poster_path}" if poster_path else None,
                 "id": movie_id
             }
-            
+
         except aiohttp.ClientResponseError as e:
             if e.status == 404:
                 return None
             raise ValueError(f"Movie API failed: {e.status}")
         except Exception as e:
             raise ValueError(f"Movie search failed: {str(e)}")
-
-
+            
+            
 async def get_series_id(
     query: str,
     season: int,
