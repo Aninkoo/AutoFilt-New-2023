@@ -17,6 +17,7 @@ from typing import List, Any, Union, Optional, AsyncGenerator, Dict
 from database.users_chats_db import db
 from bs4 import BeautifulSoup
 import requests
+import pycountry
 from fuzzywuzzy import fuzz  # For fuzzy string matching
 from shortzy import Shortzy
 import httpx
@@ -244,9 +245,10 @@ async def get_series_id(
             return {
                 "released_date": season_data.get("air_date", ""),
                 "genres": [genre["name"] for genre in show_data.get("genres", [])],
-                "episode_count": season_data.get("episodes") and len(season_data.get("episodes", [])),
-                "countries": show_data.get("origin_country", []),
-                "plot": season_data.get("overview", ""),
+                "episode_count": season_data.get("episode_count", 0),
+                "countries": [pycountry.countries.get(alpha_2=code).name if pycountry.countries.get(alpha_2=code) else code
+                    for code in show_data.get("origin_country", [])],
+                "plot": season_data.get("overview") or show_data.get("overview", ""),
                 "poster": f"https://image.tmdb.org/t/p/original{poster_path}" if poster_path else None,
                 "show_id": show_id,
                 "season_number": season
