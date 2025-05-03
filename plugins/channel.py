@@ -68,11 +68,12 @@ async def eng_media(bot, message):
 
     season = await getSeason(mv_naamf)
     episode = await getEpisode(mv_naamf)
+    episode = int(episode) if episode and str(episode).isdigit() else None
     movies = None
     search = f"{mv_naam}"
     if season is None:
         season = 1
-    if int(episode) > 0:
+    if episode and episode > 0:
         movies = await get_series_id(search, int(season), year) if year else await get_series_id(search, int(season))
     else:
         movies = await get_movie_id(search, year) if year else await get_movie_id(search)
