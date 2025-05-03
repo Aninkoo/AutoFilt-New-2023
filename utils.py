@@ -192,6 +192,20 @@ async def get_series_id(
     max_retries: int = 5,
     retry_delay: float = 1.0
 ) -> Optional[Dict[str, Any]]:
+    async def make_request(url: str, params: dict, session: aiohttp.ClientSession) -> dict:
+        # Your retry logic here (as in get_movie_id)
+        for attempt in range(max_retries):
+            try:
+                async with session.get(url, params=params) as resp:
+                    resp.raise_for_status()
+                    return await resp.json()
+            except aiohttp.ClientResponseError as e:
+                if e.status == 404:
+                    return {}
+                elif attempt + 1 == max_retries:
+                    raise
+                await asyncio.sleep(retry_delay)
+
     async with aiohttp.ClientSession() as session:
         try:
             # Search for TV show
@@ -200,36 +214,38 @@ async def get_series_id(
                 {
                     "api_key": API_KEY,
                     "query": query,
+                    "language": language,
                     **({"first_air_date_year": year} if year else {})
                 },
                 session
             )
             
-            if not search_data.get("results"):
+            results = search_data.get("results", [])
+            if not results:
                 return None
                 
-            show_id = search_data["results"][0]["id"]
-            poster_path = search_data["results"][0].get("poster_path")
+            show_id = results[0]["id"]
+            poster_path = results[0].get("poster_path")
             
-            # Get show and season details
+            # Get show and season details concurrently
             show_data, season_data = await asyncio.gather(
                 make_request(
                     f"https://api.themoviedb.org/3/tv/{show_id}",
-                    {"api_key": API_KEY},
+                    {"api_key": API_KEY, "language": language},
                     session
                 ),
                 make_request(
                     f"https://api.themoviedb.org/3/tv/{show_id}/season/{season}",
-                    {"api_key": API_KEY},
+                    {"api_key": API_KEY, "language": language},
                     session
                 )
             )
-            
+
             return {
                 "released_date": season_data.get("air_date", ""),
                 "genres": [genre["name"] for genre in show_data.get("genres", [])],
-                "episode_count": season_data.get("episode_count", 0),
-                "countries": show_data.get("origin_country", []),  # This is already a list of country codes
+                "episode_count": season_data.get("episodes") and len(season_data.get("episodes", [])),
+                "countries": show_data.get("origin_country", []),
                 "plot": season_data.get("overview", ""),
                 "poster": f"https://image.tmdb.org/t/p/original{poster_path}" if poster_path else None,
                 "show_id": show_id,
