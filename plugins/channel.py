@@ -94,15 +94,12 @@ async def eng_media(bot, message):
             caption = f"<b>#SeriesUpdate:\n\n<blockquote>🧿 <u>𝐍𝐚𝐦𝐞</u> : <code>{mv_naam}</code>\n\n🔢 <u>𝐒𝐞𝐚𝐬𝐨𝐧</u> : {season}\n\n⏳ <u>𝐄𝐩𝐢𝐬𝐨𝐝𝐞</u> : {int(episode)} of {movies['episode_count']}\n\n"
 
     if movies:
-        genres = movies['genres']
-        if isinstance(genres, str):
-            genres = [genre.strip() for genre in genres.split(',') if genre.strip()]
+        genres = movies.get('genres', [])
         caption += f"🎭 <u>𝐆𝐞𝐧𝐫𝐞𝐬</u> : {' '.join(f'#{genre.replace(" ", "")}' for genre in genres)}\n\n"
 
     if movies:
         countries = movies['countries']
-        if isinstance(countries, str):
-            countries = [country.strip() for country in countries.split(',')]
+        countries = [country.strip() for country in countries.split(',')]
         formatted_countries = ', '.join(f"#{country.replace(' ', '')}" for country in countries)
         caption += f"🌍 <u>𝐂𝐨𝐮𝐧𝐭𝐫𝐲</u> : {formatted_countries}\n\n"
 
