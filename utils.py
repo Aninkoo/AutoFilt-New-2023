@@ -110,11 +110,6 @@ async def getSeason(filename):
     if match:
         return match.group(1) or match.group(2)
 
-import aiohttp
-import asyncio
-from typing import Optional, Dict, Any
-
-API_KEY = "your_tmdb_api_key_here"  # Replace with your actual TMDb API key
 
 async def get_movie_id(
     query: str,
