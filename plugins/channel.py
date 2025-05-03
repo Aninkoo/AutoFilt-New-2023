@@ -100,7 +100,6 @@ async def eng_media(bot, message):
 
     if movies:
         countries = movies['countries']
-        countries = [country.strip() for country in countries.split(',')]
         formatted_countries = ', '.join(f"#{country.replace(' ', '')}" for country in countries)
         caption += f"🌍 <u>𝐂𝐨𝐮𝐧𝐭𝐫𝐲</u> : {formatted_countries}\n\n"
 
