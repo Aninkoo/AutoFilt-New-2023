@@ -242,10 +242,15 @@ async def get_series_id(
                 )
             )
 
+            # Get expected episode count with fallback
+            episode_count = season_data.get("episode_count")
+            if not episode_count or episode_count == 0:
+                episode_count = len(season_data.get("episodes", []))
+
             return {
                 "released_date": season_data.get("air_date", ""),
                 "genres": [genre["name"] for genre in show_data.get("genres", [])],
-                "episode_count": season_data.get("episode_count", 0),
+                "episode_count": episode_count,
                 "countries": [pycountry.countries.get(alpha_2=code).name if pycountry.countries.get(alpha_2=code) else code
                     for code in show_data.get("origin_country", [])],
                 "plot": season_data.get("overview") or show_data.get("overview", ""),
