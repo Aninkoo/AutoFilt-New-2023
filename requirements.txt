@@ -1,6 +1,6 @@
 pyrogram
 #pyrofork==2.3.61
-kurigram
+#kurigram
 tgcrypto
 pymongo[srv]==4.6.0
 motor
