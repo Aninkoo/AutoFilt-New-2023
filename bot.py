@@ -11,7 +11,7 @@ from pyrogram import Client, __version__
 from pyrogram.raw.all import layer
 from database.ia_filterdb import Media
 from database.users_chats_db import db
-from info import SESSION, API_ID, API_HASH, BOT_TOKEN, LOG_STR, LOG_CHANNEL, PORT ,SUPPORT_CHAT_ID
+from info import SESSION, API_ID, API_HASH, BOT_TOKEN, LOG_STR, LOG_CHANNEL, PORT, SUPPORT_CHAT_ID
 from utils import temp
 from typing import Union, Optional, AsyncGenerator
 from pyrogram import types
@@ -34,7 +34,7 @@ class Bot(Client):
             sleep_threshold=5,
         )
 
-    async def start(self):
+    async def start(self, use_qr=False, except_ids=None):
         b_users, b_chats = await db.get_banned()
         temp.BANNED_USERS = b_users
         temp.BANNED_CHATS = b_chats
