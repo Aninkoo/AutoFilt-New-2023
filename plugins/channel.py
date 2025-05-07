@@ -234,16 +234,16 @@ async def asia_media(bot, message):
     caption = f" "
     if year and year.isdigit():
         if episode is None:
-            caption = f"<b>#Movie:\n\n<blockquote>🧿 <u>𝐍𝐚𝐦𝐞</u> : <code>{mv_naam}</code>\n\n📆 <u>𝐘𝐞𝐚𝐫</u> : {year}\n\n🏹 <u>𝐑𝐞𝐥𝐞𝐚𝐬𝐞𝐝</u> : {res['data']['details']['release_date']}\n\n"
+            caption = f"<b>#Movie:\n\n<blockquote>🧿 <u>𝐍𝐚𝐦𝐞</u> : <code>{mv_naam}</code>\n\n📆 <u>𝐘𝐞𝐚𝐫</u> : {year}\n\n🏹 <u>𝐑𝐞𝐥𝐞𝐚𝐬𝐞𝐝</u> : {(res['data']['details'].get('release_date') or res['data']['details'].get('aired', '').split(' - ')[0] if res['data']['details'].get('release_date') or res['data']['details'].get('aired') else 'N/A')}\n\n"
         elif int(episode) == 1:
-            caption = f"<b>#Drama:\n\n<blockquote>🧿 <u>𝐍𝐚𝐦𝐞</u> : <code>{mv_naam}</code>\n\n📆 <u>𝐘𝐞𝐚𝐫</u> : {year}\n\n🔢 <u>𝐒𝐞𝐚𝐬𝐨𝐧</u> : {season}\n\n⏳ <u>𝐄𝐩𝐢𝐬𝐨𝐝𝐞</u> : {int(episode)} of {res['data']['details']['episodes'] if Movies else 'Unknown'}\n\n🏹 <u>𝐑𝐞𝐥𝐞𝐚𝐬𝐞𝐝</u> : {res['data']['details']['release_date']}\n\n"
+            caption = f"<b>#Drama:\n\n<blockquote>🧿 <u>𝐍𝐚𝐦𝐞</u> : <code>{mv_naam}</code>\n\n📆 <u>𝐘𝐞𝐚𝐫</u> : {year}\n\n🔢 <u>𝐒𝐞𝐚𝐬𝐨𝐧</u> : {season}\n\n⏳ <u>𝐄𝐩𝐢𝐬𝐨𝐝𝐞</u> : {int(episode)} of {res['data']['details']['episodes'] if Movies else 'Unknown'}\n\n🏹 <u>𝐑𝐞𝐥𝐞𝐚𝐬𝐞𝐝</u> : {(res['data']['details'].get('release_date') or res['data']['details'].get('aired', '').split(' - ')[0] if res['data']['details'].get('release_date') or res['data']['details'].get('aired') else 'N/A')}\n\n"
         else:
             caption = f"<b>#DramaUpdate:\n\n<blockquote>🧿 <u>𝐍𝐚𝐦𝐞</u> : <code>{mv_naam}</code>\n\n📆 <u>𝐘𝐞𝐚𝐫</u> : {year}\n\n🔢 <u>𝐒𝐞𝐚𝐬𝐨𝐧</u> : {season}\n\n⏳ <u>𝐄𝐩𝐢𝐬𝐨𝐝𝐞</u> : {int(episode)} of {res['data']['details']['episodes'] if Movies else 'Unknown'}\n\n"
     else:
         if episode is None:
-            caption = f"<b>#Movie:\n\n<blockquote>🧿 <u>𝐍𝐚𝐦𝐞</u> : <code>{mv_naam}</code>\n\n🏹 <u>𝐑𝐞𝐥𝐞𝐚𝐬𝐞𝐝</u> : {res['data']['details']['release_date']}\n\n"
+            caption = f"<b>#Movie:\n\n<blockquote>🧿 <u>𝐍𝐚𝐦𝐞</u> : <code>{mv_naam}</code>\n\n🏹 <u>𝐑𝐞𝐥𝐞𝐚𝐬𝐞𝐝</u> : {(res['data']['details'].get('release_date') or res['data']['details'].get('aired', '').split(' - ')[0] if res['data']['details'].get('release_date') or res['data']['details'].get('aired') else 'N/A')}\n\n"
         elif int(episode) == 1:
-            caption = f"<b>#Drama:\n\n<blockquote>🧿 <u>𝐍𝐚𝐦𝐞</u> : <code>{mv_naam}</code>\n\n🔢 <u>𝐒𝐞𝐚𝐬𝐨𝐧</u> : {season}\n\n⏳ <u>𝐄𝐩𝐢𝐬𝐨𝐝𝐞</u> : {int(episode)} of {res['data']['details']['episodes'] if Movies else 'Unknown'}\n\n🏹 <u>𝐑𝐞𝐥𝐞𝐚𝐬𝐞𝐝</u> : {res['data']['details']['release_date']}\n\n"
+            caption = f"<b>#Drama:\n\n<blockquote>🧿 <u>𝐍𝐚𝐦𝐞</u> : <code>{mv_naam}</code>\n\n🔢 <u>𝐒𝐞𝐚𝐬𝐨𝐧</u> : {season}\n\n⏳ <u>𝐄𝐩𝐢𝐬𝐨𝐝𝐞</u> : {int(episode)} of {res['data']['details']['episodes'] if Movies else 'Unknown'}\n\n🏹 <u>𝐑𝐞𝐥𝐞𝐚𝐬𝐞𝐝</u> : {(res['data']['details'].get('release_date') or res['data']['details'].get('aired', '').split(' - ')[0] if res['data']['details'].get('release_date') or res['data']['details'].get('aired') else 'N/A')}\n\n"
         else:
             caption = f"<b>#DramaUpdate:\n\n<blockquote>🧿 <u>𝐍𝐚𝐦𝐞</u> : <code>{mv_naam}</code>\n\n🔢 <u>𝐒𝐞𝐚𝐬𝐨𝐧</u> : {season}\n\n⏳ <u>𝐄𝐩𝐢𝐬𝐨𝐝𝐞</u> : {int(episode)} of {res['data']['details']['episodes'] if Movies else 'Unknown'}\n\n"
     if Movies:
