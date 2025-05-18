@@ -2133,9 +2133,9 @@ async def advantage_spell_chok(client, message):
     search = message.text
     google_search = search.replace(" ", "+")
     encoded_search = quote(search)
-    button = [
+    button = [[
         InlineKeyboardButton("🔎 Sᴇᴀʀᴄʜ ɪɴ Gᴏᴏɢʟᴇ 🔍", url=f"https://www.google.com/search?q={google_search}")
-    ]
+    ]]
     query = re.sub(
         r"\b(pl(i|e)*?(s|z+|ease|se|ese|(e+)s(e)?)|((send|snd|gib)(\sme)?)|season|episode|movie(s)?|latest|br((o|u)h?)*|^h(e|a)?(l)*(o)*|mal(ayalam)?|t(h)?amil|dub(b)?ed|file)",
         "", search, flags=re.IGNORECASE)  # pls contribute some common words
