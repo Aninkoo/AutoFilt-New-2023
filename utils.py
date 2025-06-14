@@ -23,7 +23,7 @@ from shortzy import Shortzy
 import httpx
 from httpx import AsyncClient, Timeout
 
-# Global TMDB API key loaded from environment variables
+# Global TMDB API key loaded from environment variabless
 API_KEY = TMDB_API_KEY
         
 logger = logging.getLogger(__name__)
