@@ -41,7 +41,7 @@ async def get_all_files():
     return files
 
 async def save_file(media):
-    """Save file in database"""
+    """Save file in the database"""
 
     # TODO: Find better way to get same file_id for same media to avoid duplicates
     file_id, file_ref = unpack_new_file_id(media.file_id)
