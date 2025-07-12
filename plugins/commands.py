@@ -224,8 +224,9 @@ async def start(client, message):
 
     if data.split("-", 1)[0] == "WEB":
         stick = await message.reply_sticker(sticker="CAACAgUAAx0CZjyOqQACMCpl_EX_Ak6ilEi7sdys1ec9ozSwvQAC3AIAAq9qOVVmHNMuomHDLB4E")
-        
-        title = f"❌ I am still working on this! \nContinue to use the Group for now."
+        await asyncio.sleep(1)
+        await stick.delete()
+        title = f"❌ <b>I am still working on this! \nContinue to use the Group for now.</b>"
         fuk = await message.reply_text(text=title, parse_mode=enums.ParseMode.HTML)
         await asyncio.sleep(30)
         await fuk.delete()
