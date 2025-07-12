@@ -222,12 +222,23 @@ async def start(client, message):
         await message.delete()
         return
 
+    if data.split("-", 1)[0] == "WEB":
+        stick = await message.reply_sticker(sticker="CAACAgUAAx0CZjyOqQACMCpl_EX_Ak6ilEi7sdys1ec9ozSwvQAC3AIAAq9qOVVmHNMuomHDLB4E")
+        
+        title = f"❌ I am still working on this! \nContinue to use the Group for now."
+        fuk = await message.reply_text(text=title, parse_mode=enums.ParseMode.HTML)
+        await asyncio.sleep(30)
+        await fuk.delete()
+        await message.delete()
+        return
+
     try:
         pre, file_id = data.split('_', 1)
     except:
         file_id = data
         pre = ""
 
+    
     if data.split("-", 1)[0] == "BATCH":
         sts = await message.reply_sticker(sticker="CAACAgUAAx0CZjyOqQACMCpl_EX_Ak6ilEi7sdys1ec9ozSwvQAC3AIAAq9qOVVmHNMuomHDLB4E")
         file_id = data.split("-", 1)[1]
