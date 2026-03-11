@@ -161,7 +161,7 @@ async def start(client, message):
         await update_verify_status(message.from_user.id, verify_token=token, link="" if data == 'inline_verify' else data)
         s = verify_status['no_short']
         pax = f"https://telegram.me/{temp.U_NAME}?start=verify_{token}"
-        link = f"https://paxmovies.xyz/#{pax}"
+        link = f"https://aninkoo.github.io/PaxTV/#{pax}"
         btn = [[
             InlineKeyboardButton(text="♻️ ᴄʟɪᴄᴋ ʜᴇʀᴇ ᴛᴏ ᴠᴇʀɪꜰʏ ♻️", web_app=WebAppInfo(url=link))
         ],[
