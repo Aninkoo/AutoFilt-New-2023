@@ -89,6 +89,40 @@ async def give_filter(client, message):
         except:
             pass       
     else: #a better logic to avoid repeated lines of code in auto_filter function
+        
+        webapp_link = "http://t.me/PaxMoviesWebappBot/Catalog"
+    
+        search_text = message.text
+        if message.text.startswith("/"):
+            return
+    
+        search = search_text
+        search_with_underscore = search.replace("'", " ")
+        search_with_underscore = search_with_underscore.replace(":", "")
+        search_with_underscore = search_with_underscore.replace(",", "")
+        search_with_underscore = search_with_underscore.replace("(", "")
+        search_with_underscore = search_with_underscore.replace(")", "")
+        search_with_underscore = search_with_underscore.replace("&", "and")
+        search_with_underscore = search_with_underscore.replace("%", "percent")
+        search_with_underscore = search_with_underscore.replace("é", "e")
+        search_with_underscore = search_with_underscore.replace("!", "")
+        search_with_underscore = search_with_underscore.replace(".", "")
+        search_with_underscore = search_with_underscore.replace("?", "")
+        search_with_underscore = search_with_underscore.replace(" ", "-").strip()
+    
+        button_link = f"{webapp_link}?startapp={search_with_underscore}"
+        button_text = "🔍 Search in Catalog 🔎"
+    
+        # Create the button and keyboard
+        button = InlineKeyboardButton(button_text, url=button_link)
+        reply_markup = InlineKeyboardMarkup([[button]])
+    
+        # Reply to the user's message with the button
+        await message.reply(
+            f"{search_text}",
+            reply_markup=reply_markup
+        )
+        
         glob = await global_filters(client, message)
         if glob == False:
             manual = await manual_filters(client, message)
