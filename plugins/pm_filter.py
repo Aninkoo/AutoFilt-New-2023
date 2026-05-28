@@ -95,6 +95,10 @@ async def give_filter(client, message):
         search_text = message.text
         if message.text.startswith("/"):
             return
+        if "@" in message.text:
+            return
+        if "/" in message.text:
+            return
     
         search = search_text
         search_with_underscore = search.replace("'", " ")
